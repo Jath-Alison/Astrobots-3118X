@@ -22,7 +22,7 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.3162
           ]
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\memory(2741): message : see reference to function template instantiation 'std::_Ref_count_obj2<Box>::_Ref_count_obj2<int&,int&,int&,int&,int64_t&>(int &,int &,int &,int &,int64_t &)' being compiled
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\memory(2742): message : see reference to function template instantiation 'std::_Ref_count_obj2<Box>::_Ref_count_obj2<int&,int&,int&,int&,int64_t&>(int &,int &,int &,int &,int64_t &)' being compiled
-C:\Users\jatha\Repos\Astrobots-3118C\ScreenConfigDev\ScreenConfigDev\Screen.h(47): message : see reference to function template instantiation 'std::shared_ptr<Box> std::make_shared<Box,int&,int&,int&,int&,int64_t&>(int &,int &,int &,int &,int64_t &)' being compiled
+C:\Users\jatha\Repos\Astrobots-3118C\ScreenConfigDev\ScreenConfigDev\Screen.h(57): message : see reference to function template instantiation 'std::shared_ptr<Box> std::make_shared<Box,int&,int&,int&,int&,int64_t&>(int &,int &,int &,int &,int64_t &)' being compiled
   main.cpp
 C:\Users\jatha\Repos\Astrobots-3118C\ScreenConfigDev\ScreenConfigDev\Box.h(15,49): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
@@ -47,6 +47,6 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.3162
           ]
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\memory(2741): message : see reference to function template instantiation 'std::_Ref_count_obj2<Box>::_Ref_count_obj2<int&,int&,int&,int&,int64_t&>(int &,int &,int &,int &,int64_t &)' being compiled
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\memory(2742): message : see reference to function template instantiation 'std::_Ref_count_obj2<Box>::_Ref_count_obj2<int&,int&,int&,int&,int64_t&>(int &,int &,int &,int &,int64_t &)' being compiled
-C:\Users\jatha\Repos\Astrobots-3118C\ScreenConfigDev\ScreenConfigDev\Screen.h(47): message : see reference to function template instantiation 'std::shared_ptr<Box> std::make_shared<Box,int&,int&,int&,int&,int64_t&>(int &,int &,int &,int &,int64_t &)' being compiled
+C:\Users\jatha\Repos\Astrobots-3118C\ScreenConfigDev\ScreenConfigDev\Screen.h(57): message : see reference to function template instantiation 'std::shared_ptr<Box> std::make_shared<Box,int&,int&,int&,int&,int64_t&>(int &,int &,int &,int &,int64_t &)' being compiled
   Generating Code...
   ScreenConfigDev.vcxproj -> C:\Users\jatha\Repos\Astrobots-3118C\ScreenConfigDev\x64\Debug\ScreenConfigDev.exe

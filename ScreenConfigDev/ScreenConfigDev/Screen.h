@@ -30,7 +30,7 @@ public:
 		tinyxml2::XMLElement* items = screen->FirstChildElement();
 		while (items) {
 
-			std::cout << "     " << items->Name() << " x:" << items->Attribute("x") << " y:" << items->Attribute("y") << std::endl;
+			//std::cout << "     " << items->Name() << " x:" << items->Attribute("x") << " y:" << items->Attribute("y") << std::endl;
 
 			std::string name = items->Name();
 
@@ -38,22 +38,41 @@ public:
 			if (name == "Box") {
 				int x, y, width, height;
 				int64_t col;
-				items->QueryIntAttribute("x", &x);
-				items->QueryIntAttribute("y", &y);
-				items->QueryIntAttribute("width", &width);
-				items->QueryIntAttribute("height", &height);
-				items->QueryInt64Attribute("cosl", &col);
-				if (items->Attribute("col") == NULL) { col = 0xFFFFFFFF; }
+				
+				if (items->Attribute("x") == NULL) { x = 10; } 
+				else { items->QueryIntAttribute("x", &x); }
+
+				if (items->Attribute("y") == NULL) { y = 10; } 
+				else { items->QueryIntAttribute("y", &y); }
+
+				if (items->Attribute("width") == NULL) { width = 10; }
+				else { items->QueryIntAttribute("width", &width); }
+
+				if (items->Attribute("height") == NULL) { height = 10; }
+				else { items->QueryIntAttribute("height", &height); }
+
+				if (items->Attribute("col") == NULL) { col = 0xFFFFFFFF; } 
+				else { items->QueryInt64Attribute("col", &col); }
+
 				m_displayables.push_back(std::make_shared<Box>(x, y, width, height, col));
 			}
 			else if (name == "Circle") {
 				int x, y, radius;
 				int64_t col;
-				items->QueryIntAttribute("x", &x);
-				items->QueryIntAttribute("y", &y);
-				items->QueryIntAttribute("radius", &radius);
-				items->QueryInt64Attribute("col", &col);
+
+				if (items->Attribute("x") == NULL) { x = 10; }
+				else { items->QueryIntAttribute("x", &x); }
+
+				if (items->Attribute("y") == NULL) { y = 10; }
+				else { items->QueryIntAttribute("y", &y); }
+
+				if (items->Attribute("radius") == NULL) { radius = 10; }
+				else { items->QueryIntAttribute("radius", &radius); }
+
+
 				if (items->Attribute("col") == NULL) { col = 0xFFFFFFFF; }
+				else { items->QueryInt64Attribute("col", &col); }
+
 				m_displayables.push_back(std::make_shared<Circle>(x, y, radius, col));
 			}
 

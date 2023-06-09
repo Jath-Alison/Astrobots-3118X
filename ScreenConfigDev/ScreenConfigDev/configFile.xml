@@ -4,9 +4,10 @@
 		<Text x="50" y="50">
 			Hello World
 		</Text>
-		<Box x="100" y="75" width="150" height="30" cols="0x00FFFFF"/>
-		<Circle x="100" y="275" radius="30" cols="0xFF00FFFF"/>
-		<Box x="100" y="175" width="150" height="300" col="0xFF00FFFF"/>
+		<Box x="100" y="75" width="150" height="30" col="0xFFFFFFF"/>
+		<Box/>
+		<Circle x="100" y="275" radius="30" col="0xFFFFFFFF"/>
+		<Box x="100" y="175" width="150" height="300" col="0xFFFFFFFF"/>
 		<Div x="100" y="75" width="150" height="30" r="0" g="128" b="255"/>
 	</screen>
 	<screen name="Auton">

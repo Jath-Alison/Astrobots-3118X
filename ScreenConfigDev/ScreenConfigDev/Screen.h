@@ -10,6 +10,7 @@
 
 #include "Box.h"
 #include "Circle.h"
+#include "Text.h"
 
 class Screen
 {
@@ -18,7 +19,6 @@ public:
 	Screen(std::vector <std::shared_ptr<displayable>> displayables) : m_displayables(displayables) {};
 	Screen(tinyxml2::XMLElement* screen) {
 		load(screen);
-		
 	}
 
 	void load(tinyxml2::XMLElement* screen) {
@@ -35,9 +35,9 @@ public:
 			std::string name = items->Name();
 
 
-			if (name == "Box") {
+			if (name == "box") {
 				int x, y, width, height;
-				int64_t col;
+				int64_t color;
 				
 				if (items->Attribute("x") == NULL) { x = 10; } 
 				else { items->QueryIntAttribute("x", &x); }
@@ -51,14 +51,14 @@ public:
 				if (items->Attribute("height") == NULL) { height = 10; }
 				else { items->QueryIntAttribute("height", &height); }
 
-				if (items->Attribute("col") == NULL) { col = 0xFFFFFFFF; } 
-				else { items->QueryInt64Attribute("col", &col); }
+				if (items->Attribute("color") == NULL) { color = 0xFFFFFFFF; } 
+				else { items->QueryInt64Attribute("color", &color); }
 
-				m_displayables.push_back(std::make_shared<Box>(x, y, width, height, col));
+				m_displayables.push_back(std::make_shared<Box>(x, y, width, height, color));
 			}
-			else if (name == "Circle") {
+			else if (name == "circle") {
 				int x, y, radius;
-				int64_t col;
+				int64_t color;
 
 				if (items->Attribute("x") == NULL) { x = 10; }
 				else { items->QueryIntAttribute("x", &x); }
@@ -70,10 +70,33 @@ public:
 				else { items->QueryIntAttribute("radius", &radius); }
 
 
-				if (items->Attribute("col") == NULL) { col = 0xFFFFFFFF; }
-				else { items->QueryInt64Attribute("col", &col); }
+				if (items->Attribute("color") == NULL) { color = 0xFFFFFFFF; }
+				else { items->QueryInt64Attribute("color", &color); }
 
-				m_displayables.push_back(std::make_shared<Circle>(x, y, radius, col));
+				m_displayables.push_back(std::make_shared<Circle>(x, y, radius, color));
+			}
+			else if (name == "text") {
+				int x, y, size;
+				const char* text;
+				int64_t color;
+
+				if (items->Attribute("x") == NULL) { x = 10; }
+				else { items->QueryIntAttribute("x", &x); }
+
+				if (items->Attribute("y") == NULL) { y = 10; }
+				else { items->QueryIntAttribute("y", &y); }
+
+				if (items->Attribute("text") == NULL) { text = "No Text"; }
+				else { items->QueryStringAttribute("text", &text); }
+
+				if (items->Attribute("size") == NULL) { size = NULL; }
+				else { items->QueryIntAttribute("size", &size); }
+
+
+				if (items->Attribute("color") == NULL) { color = 0xFFFFFFFF; }
+				else { items->QueryInt64Attribute("color", &color); }
+
+				m_displayables.push_back(std::make_shared<Text>(x, y, text, size, color));
 			}
 
 			items = items->NextSiblingElement();

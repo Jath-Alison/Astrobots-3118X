@@ -2,6 +2,8 @@
 
 #include "Screen.h"
 
+sf::Font Calibri;
+
 Box Box1(10, 10, 100, 200, 0x33FF99FF);
 Box Box2(110, 10, 100, 200, 0xFF3399FF);
 Box Box3(210, 10, 100, 200, 0xFF9933FF);
@@ -19,11 +21,13 @@ sf::RenderWindow window(sf::VideoMode(500, 750), "SFML works!");
 
 int main()
 {
+    Calibri.loadFromFile("Calibri Light.ttf");
 
     tinyxml2::XMLDocument doc;
     doc.LoadFile("configFile.xml");
     tinyxml2::XMLElement* root = doc.FirstChildElement();
-    tinyxml2::XMLElement* screens = root->FirstChildElement();
+    tinyxml2::XMLElement* shades = root->FirstChildElement("shades");
+    tinyxml2::XMLElement* screens = shades->FirstChildElement("screen");
  
 
     //Screen testScreen(displayables);

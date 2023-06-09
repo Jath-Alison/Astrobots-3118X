@@ -1,33 +1,60 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-	<screen name="Home">
-		<Text x="50" y="50">
-			Hello World
-		</Text>
-		<Box x="100" y="75" width="150" height="30" col="0xFFFFFFF"/>
-		<Box/>
-		<Circle x="100" y="275" radius="30" col="0xFFFFFFFF"/>
-		<Box x="100" y="175" width="150" height="300" col="0xFFFFFFFF"/>
-		<Div x="100" y="75" width="150" height="30" r="0" g="128" b="255"/>
-	</screen>
-	<screen name="Auton">
-		<Text x="50" y="50">
-			Auton
-		</Text>
-		<Button x="100" y="75" width="150" height="30" r="0" g="128" b="255" onPress="auton1Press">
-			1st Auton Button
-		</Button>
-		<Box x="100" y="75" width="150" height="30" col="0xFFFFFFFF"/>
-		<Circle x="300" y="275" radius="30" col="0xFFFFFFFF"/>
-		<Box x="100" y="175" width="150" height="30" col="0xFFFFFFFF"/>
-		<Circle x="125" y="675" radius="90" col="0xFFFFFFFF"/>
-	</screen>
-	<screen name="Status">
-		<Text x="50" y="50">
-			Status
-		</Text>
-		<Text x="50" y="50" value="var1">
-			Var1 : 
-		</Text>
-	</screen>
+	<notes>
+		Screen Dimentions: x-480px y-240px
+
+		Find out text height in pixels
+
+		Collisions and such would benefit from a Vector2 class
+
+		Screens have:
+		Name (for navigation)
+		Color (bkg color) - Black if none
+
+		All displayables (except text) have:
+		position
+		dimentions
+		color (if availible)
+		Pressed and Released event callbacks
+	</notes>
+
+	<features>
+		<tags>
+			<var name="" value="" />
+			<screen name="" color="optional"/>
+			<displayables>
+				<displayable x="" y="" width="" height="" color="" pressed="" released=""/>
+				<box/>
+				<circle/>
+				<text/>
+				<image/>
+			</displayables>
+		</tags>
+		<functionality>
+			Easily modifyable displays
+			No need for recompilation or redownloading code
+			SFML based preview window (Works in Windows-64bit)
+			Integrated into code using callbacks to user created code
+		</functionality>
+	</features>
+
+	<shades>
+
+		<var name="var1" value="1" />
+		<var name="var2" value="2.0" />
+		<var name="var3" value="Three" />
+
+		<screen name="home">
+			<box x="25" y="25" width="100" height="50" color="0x00AA77FF"/>
+			<text x="35" y="35" text="Hello World" color="0xFFFFFFFF" />
+			<circle x="170" y="45" radius="20" color="0xAA7700FF" pressed="goTo1st"/>
+			<text x="160" y="15" text="1st"/>
+			<image x="25" y="100" src="logo.png" />
+		</screen>
+
+		<screen name="first" color="0xFFFFFFFF">
+			<image x="25" y="25" src="home.png" pressed="goToHome" />
+			<displayable x="" y="" width="" height="" color="" pressed="" released=""/>
+		</screen>
+	</shades>
 </root>

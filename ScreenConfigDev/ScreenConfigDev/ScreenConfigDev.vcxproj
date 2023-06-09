@@ -139,6 +139,7 @@
     <ClInclude Include="Circle.h" />
     <ClInclude Include="displayable.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="tinyxml2.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>

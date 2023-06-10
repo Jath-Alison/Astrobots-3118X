@@ -17,7 +17,7 @@ std::vector <std::shared_ptr<displayable>> displayables{
     std::make_shared<Circle>(125 + 31, 250, 125, 0xFF000077)
 };
 
-sf::RenderWindow window(sf::VideoMode(500, 750), "SFML works!");
+sf::RenderWindow window(sf::VideoMode(480, 240), "Vexcode project");
 
 int main()
 {

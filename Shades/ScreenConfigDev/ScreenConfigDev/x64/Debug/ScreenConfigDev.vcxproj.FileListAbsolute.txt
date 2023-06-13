@@ -1,1 +1,2 @@
 C:\Users\jatha\Repos\Astrobots-3118C\ScreenConfigDev\ScreenConfigDev\x64\Debug\ScreenConfigDev.vcxproj.CopyComplete
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\x64\Debug\ScreenConfigDev.vcxproj.CopyComplete

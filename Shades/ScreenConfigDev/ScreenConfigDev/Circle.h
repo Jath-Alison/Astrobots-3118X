@@ -8,7 +8,7 @@ class Circle : public displayable
 {
 public:
 
-	Circle(int x, int y, int radius, uint32_t color) : m_x(x), m_y(y), m_radius(radius), m_color(color) {}
+	Circle(std::string id, int x, int y, int radius, uint32_t color) :displayable(id), m_x(x), m_y(y), m_radius(radius), m_color(color) {}
 
 	void display() {
 		if (!m_active) { return; }

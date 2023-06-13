@@ -53,7 +53,7 @@
       <Filter>Header Files\Displayables</Filter>
     </ClInclude>
     <ClInclude Include="Text.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Displayables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

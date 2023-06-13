@@ -4,17 +4,17 @@
 
 sf::Font Calibri;
 
-Box Box1(10, 10, 100, 200, 0x33FF99FF);
-Box Box2(110, 10, 100, 200, 0xFF3399FF);
-Box Box3(210, 10, 100, 200, 0xFF9933FF);
+Box Box1("",10, 10, 100, 200, 0x33FF99FF);
+Box Box2("",110, 10, 100, 200, 0xFF3399FF);
+Box Box3("",210, 10, 100, 200, 0xFF9933FF);
 
-Circle Cir1(125+31, 250, 125, 0xFF000077);
-Circle Cir2(250, 250+125, 125, 0x00FF0077);
-Circle Cir3(375-31, 250, 125, 0x0000FF77);
+Circle Cir1("",125+31, 250, 125, 0xFF000077);
+Circle Cir2("",250, 250+125, 125, 0x00FF0077);
+Circle Cir3("",375-31, 250, 125, 0x0000FF77);
 
 std::vector <std::shared_ptr<displayable>> displayables{
-    std::make_shared<Box>(10, 10, 100, 200, 0x33FF99FF),
-    std::make_shared<Circle>(125 + 31, 250, 125, 0xFF000077)
+    std::make_shared<Box>("",10, 10, 100, 200, 0x33FF99FF),
+    std::make_shared<Circle>("",125 + 31, 250, 125, 0xFF000077)
 };
 
 sf::RenderWindow window(sf::VideoMode(480, 240), "Vexcode project");
@@ -46,12 +46,18 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-            if (event.type == sf::Event::KeyPressed && counter < displayables.size()) {
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A) {
+                    
+            }
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::C) {
+                counter++;
+            }
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
                 testScreen.load(screens);
             }
         }
 
-        
+        testScreen.getElementById("title")->setText("Counter: %d", counter);
 
         window.clear();
         testScreen.display();

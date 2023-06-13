@@ -8,7 +8,7 @@ class Box : public displayable
 {
 public:
 
-	Box(int x, int y, int width, int height, uint32_t color) : m_x(x), m_y(y), m_width(width), m_height(height), m_color(color){}
+	Box(std::string id, int x, int y, int width, int height, uint32_t color) :displayable(id), m_x(x), m_y(y), m_width(width), m_height(height), m_color(color){}
 
 	void display() {
 		if (!m_active) { return; }

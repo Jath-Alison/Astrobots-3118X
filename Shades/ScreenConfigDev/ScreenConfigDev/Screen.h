@@ -36,8 +36,12 @@ public:
 
 
 			if (name == "box") {
+				const char* id;
 				int x, y, width, height;
 				int64_t color;
+				
+				if (items->Attribute("id") == NULL) { id = ""; }
+				else { items->QueryStringAttribute("id", &id); }
 				
 				if (items->Attribute("x") == NULL) { x = 10; } 
 				else { items->QueryIntAttribute("x", &x); }
@@ -54,11 +58,15 @@ public:
 				if (items->Attribute("color") == NULL) { color = 0xFFFFFFFF; } 
 				else { items->QueryInt64Attribute("color", &color); }
 
-				m_displayables.push_back(std::make_shared<Box>(x, y, width, height, color));
+				m_displayables.push_back(std::make_shared<Box>(id, x, y, width, height, color));
 			}
 			else if (name == "circle") {
+				const char* id;
 				int x, y, radius;
 				int64_t color;
+
+				if (items->Attribute("id") == NULL) { id = ""; }
+				else { items->QueryStringAttribute("id", &id); }
 
 				if (items->Attribute("x") == NULL) { x = 10; }
 				else { items->QueryIntAttribute("x", &x); }
@@ -73,12 +81,16 @@ public:
 				if (items->Attribute("color") == NULL) { color = 0xFFFFFFFF; }
 				else { items->QueryInt64Attribute("color", &color); }
 
-				m_displayables.push_back(std::make_shared<Circle>(x, y, radius, color));
+				m_displayables.push_back(std::make_shared<Circle>(id, x, y, radius, color));
 			}
 			else if (name == "text") {
+				const char* id;
 				int x, y, size;
 				const char* text;
 				int64_t color;
+				
+				if (items->Attribute("id") == NULL) { id = ""; }
+				else { items->QueryStringAttribute("id", &id); }
 
 				if (items->Attribute("x") == NULL) { x = 10; }
 				else { items->QueryIntAttribute("x", &x); }
@@ -96,22 +108,44 @@ public:
 				if (items->Attribute("color") == NULL) { color = 0xFFFFFFFF; }
 				else { items->QueryInt64Attribute("color", &color); }
 
-				m_displayables.push_back(std::make_shared<Text>(x, y, text, size, color));
+				m_displayables.push_back(std::make_shared<Text>(id, x, y, text, size, color));
 			}
 
 			items = items->NextSiblingElement();
 		}
 	}
 
-	void addData(std::string name, double* dataPtr);
+	void addData(std::string name, double* dataPtr) {
+		m_data[name] = dataPtr;
+	}
 
-	void display();
+	void display() {
+		for (size_t i = 0; i < m_displayables.size(); i++)
+		{
+			if (m_displayables[i]) {
+				m_displayables[i]->display();
+			}
+			else {
+				m_displayables.erase(m_displayables.begin() + i);
+			}
+		}
+	}
 
 	void clear() {
 		for (size_t i = 0; i < m_displayables.size(); i++)
 		{
 			m_displayables[i] = nullptr;
 		}
+	}
+
+	std::shared_ptr<displayable>getElementById(std::string id) {
+		for (size_t i = 0; i < m_displayables.size(); i++)
+		{
+			if (m_displayables[i]->getId() == id) {
+				return m_displayables[i];
+			}
+		}
+		return nullptr;
 	}
 
 private:

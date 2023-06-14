@@ -54,10 +54,11 @@ int main()
             }
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
                 testScreen.load(screens);
+                //testScreen.clear();
             }
         }
 
-        testScreen.getElementById("title")->setText("Counter: %d", counter);
+        if (testScreen.getElementById("title") != nullptr) { testScreen.getElementById("title")->setText("Counter: %d", counter); }
 
         window.clear();
         testScreen.display();

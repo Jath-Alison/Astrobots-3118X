@@ -11,6 +11,7 @@
 #include "Box.h"
 #include "Circle.h"
 #include "Text.h"
+#include "Image.h"
 
 class Screen
 {
@@ -110,6 +111,27 @@ public:
 
 				m_displayables.push_back(std::make_shared<Text>(id, x, y, text, size, color));
 			}
+			else if (name == "image") {
+				const char* id;
+				int x, y, size;
+				const char* src;
+				int64_t color;
+
+				if (items->Attribute("id") == NULL) { id = ""; }
+				else { items->QueryStringAttribute("id", &id); }
+
+				if (items->Attribute("x") == NULL) { x = 10; }
+				else { items->QueryIntAttribute("x", &x); }
+
+				if (items->Attribute("y") == NULL) { y = 10; }
+				else { items->QueryIntAttribute("y", &y); }
+
+				if (items->Attribute("src") == NULL) { src = "Image.png"; }
+				else { items->QueryStringAttribute("src", &src); }
+
+
+				m_displayables.push_back(std::make_shared<Image>(id, x, y, src));
+			}
 
 			items = items->NextSiblingElement();
 		}
@@ -132,17 +154,19 @@ public:
 	}
 
 	void clear() {
-		for (size_t i = 0; i < m_displayables.size(); i++)
-		{
-			m_displayables[i] = nullptr;
-		}
+		m_displayables.clear();
 	}
 
 	std::shared_ptr<displayable>getElementById(std::string id) {
 		for (size_t i = 0; i < m_displayables.size(); i++)
 		{
-			if (m_displayables[i]->getId() == id) {
-				return m_displayables[i];
+			if (m_displayables[i]) {
+				if (m_displayables[i]->getId() == id) {
+					return m_displayables[i];
+				}
+			}
+			else {
+				m_displayables.erase(m_displayables.begin() + i);
 			}
 		}
 		return nullptr;

@@ -19,9 +19,15 @@ public:
 
 		m_text = text;
 	};
+
+	void setSrc(std::string src) {
+		m_src = src;
+	}
+
 	std::string getId() { return m_id; }
 protected:
 	bool m_active{ true };
 	std::string m_id;
 	std::string m_text;
+	std::string m_src;
 };

@@ -135,6 +135,7 @@
     <Xml Include="configFile.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Image.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="displayable.h" />
@@ -145,6 +146,10 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="Calibri Light.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Home.png" />
+    <Image Include="Image.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

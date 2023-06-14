@@ -55,10 +55,21 @@
     <ClInclude Include="Text.h">
       <Filter>Header Files\Displayables</Filter>
     </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Header Files\Displayables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Calibri Light.ttf">
       <Filter>Resource Files</Filter>
     </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Home.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

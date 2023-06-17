@@ -2,8 +2,10 @@
 
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include <string>
 #include <iostream>
+#include <functional>
 #include <memory>
 
 #include "tinyxml2.h"
@@ -137,8 +139,8 @@ public:
 		}
 	}
 
-	void addData(std::string name, double* dataPtr) {
-		m_data[name] = dataPtr;
+	void setData(std::string name, double data) {
+		m_data[name] = data;
 	}
 
 	void display() {
@@ -174,6 +176,7 @@ public:
 
 private:
 	std::vector <std::shared_ptr< displayable>> m_displayables;
-	std::map <std::string, double*> m_data;
+	std::unordered_map <std::string, double> m_data;
+	std::unordered_map <std::string, std::function<void(void)>> m_functions;
 };
 

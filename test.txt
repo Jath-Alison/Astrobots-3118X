@@ -1,1 +1,3 @@
 initial commit!
+
+Chaiscript appears to be a good library, but it is very large. We'll explore using it for shades v2 

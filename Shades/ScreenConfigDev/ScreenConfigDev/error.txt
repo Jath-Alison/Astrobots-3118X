@@ -1,0 +1,68 @@
+Build started...
+1>------ Build started: Project: ScreenConfigDev, Configuration: Debug x64 ------
+1>Screen.cpp
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Box.h(15,49): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+1>        with
+1>        [
+1>            T=float
+1>        ]
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Box.h(15,40): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+1>        with
+1>        [
+1>            T=float
+1>        ]
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Box.h(16,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Box.h(16,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Circle.h(15,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Circle.h(16,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Circle.h(16,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Text.h(24,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Text.h(24,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Image.h(27,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Image.h(27,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Screen.h(124,15): warning C4101: 'size': unreferenced local variable
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Screen.h(126,13): warning C4101: 'color': unreferenced local variable
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\xutility(265,77): warning C4244: 'argument': conversion from 'int64_t' to 'uint32_t', possible loss of data
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\memory(2092,13): message : see reference to function template instantiation 'void std::_Construct_in_place<_Ty,const char*&,int&,int&,int&,int&,int64_t&>(_Ty &,const char *&,int &,int &,int &,int &,int64_t &) noexcept(false)' being compiled
+1>        with
+1>        [
+1>            _Ty=Box
+1>        ]
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\memory(2765,46): message : see reference to function template instantiation 'std::_Ref_count_obj2<Box>::_Ref_count_obj2<const char*&,int&,int&,int&,int&,int64_t&>(const char *&,int &,int &,int &,int &,int64_t &)' being compiled
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Screen.h(70,35): message : see reference to function template instantiation 'std::shared_ptr<Box> std::make_shared<Box,const char*&,int&,int&,int&,int&,int64_t&>(const char *&,int &,int &,int &,int &,int64_t &)' being compiled
+1>main.cpp
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Box.h(15,49): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+1>        with
+1>        [
+1>            T=float
+1>        ]
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Box.h(15,40): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+1>        with
+1>        [
+1>            T=float
+1>        ]
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Box.h(16,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Box.h(16,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Circle.h(15,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Circle.h(16,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Circle.h(16,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Text.h(24,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Text.h(24,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Image.h(27,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Image.h(27,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Screen.h(124,15): warning C4101: 'size': unreferenced local variable
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Screen.h(126,13): warning C4101: 'color': unreferenced local variable
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\xutility(265,77): warning C4244: 'argument': conversion from 'int64_t' to 'uint32_t', possible loss of data
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\memory(2092,13): message : see reference to function template instantiation 'void std::_Construct_in_place<_Ty,const char*&,int&,int&,int&,int&,int64_t&>(_Ty &,const char *&,int &,int &,int &,int &,int64_t &) noexcept(false)' being compiled
+1>        with
+1>        [
+1>            _Ty=Box
+1>        ]
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\memory(2765,46): message : see reference to function template instantiation 'std::_Ref_count_obj2<Box>::_Ref_count_obj2<const char*&,int&,int&,int&,int&,int64_t&>(const char *&,int &,int &,int &,int &,int64_t &)' being compiled
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\ScreenConfigDev\Screen.h(70,35): message : see reference to function template instantiation 'std::shared_ptr<Box> std::make_shared<Box,const char*&,int&,int&,int&,int&,int64_t&>(const char *&,int &,int &,int &,int &,int64_t &)' being compiled
+1>Generating Code...
+1>Screen.obj : error LNK2005: "void __cdecl printttt(void)" (?printttt@@YAXXZ) already defined in main.obj
+1>C:\Users\jatha\Repos\Astrobots-3118C\Shades\ScreenConfigDev\x64\Debug\ScreenConfigDev.exe : fatal error LNK1169: one or more multiply defined symbols found
+1>Done building project "ScreenConfigDev.vcxproj" -- FAILED.
+========== Build: 0 succeeded, 1 failed, 0 up-to-date, 0 skipped ==========
+========== Build started at 10:10 AM and took 02.453 seconds ==========

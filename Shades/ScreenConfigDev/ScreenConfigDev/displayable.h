@@ -1,4 +1,6 @@
 #pragma once
+#include "window.h"
+
 class displayable
 {
 public:
@@ -7,6 +9,8 @@ public:
 
 	virtual void display() = 0;
 	void setActive(bool active) { m_active = active; };
+
+	virtual void clickEvent(ClickTypes type, int x, int y) = 0;
 
 	template<typename ... Args>
 	void setText(const std::string& format, Args ... args) {
@@ -24,10 +28,31 @@ public:
 		m_src = src;
 	}
 
+	void setCallbackFunc(std::string callbackFunc) {
+		m_callbackFunc = callbackFunc;
+	}
+
+	void waitForCallback() {
+		m_waitingForCallback = true;
+	}
+
+	bool isWaitingForCallback() {
+		return m_waitingForCallback;
+	}
+
+	std::string execCallBackFunc() {
+		m_waitingForCallback = false;
+		return m_callbackFunc;
+	}
+
 	std::string getId() { return m_id; }
 protected:
 	bool m_active{ true };
+
+	bool m_waitingForCallback = false;
+
 	std::string m_id;
 	std::string m_text;
 	std::string m_src;
+	std::string m_callbackFunc = "none";
 };

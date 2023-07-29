@@ -37,7 +37,8 @@ int main()
 
     window.setFramerateLimit(30);
 
-    int counter = 0;
+    testScreen.setData("counter", 0);
+    testScreen.getElementById("box")->setCallbackFunc("print");
 
     while (window.isOpen())
     {
@@ -47,22 +48,28 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A) {
-                    
+                testScreen.getElementById("box")->waitForCallback();
             }
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::C) {
-                counter++;
+                testScreen.setData("counter", testScreen.getData("counter") + 1);
             }
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
                 testScreen.load(screens);
                 //testScreen.clear();
             }
+            if (event.type == sf::Event::MouseButtonPressed) {
+                testScreen.handleClick(PRESSED, event.mouseButton.x, event.mouseButton.y);
+            }
         }
 
-        if (testScreen.getElementById("title") != nullptr) { testScreen.getElementById("title")->setText("Counter: %d", counter); }
+        //if (testScreen.getElementById("title") != nullptr) { testScreen.getElementById("title")->setText("Counter: %d", counter); }
+        testScreen.setElementText("title", "Counter: %d", (int)testScreen.getData("counter"));
 
         window.clear();
         testScreen.display();
         window.display();
+
+        testScreen.handleCallbacks();
     }
 
     return 0;

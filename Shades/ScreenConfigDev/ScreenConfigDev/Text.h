@@ -1,7 +1,6 @@
 #pragma once
 
 #include "displayable.h"
-#include "window.h"
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <string>
@@ -26,6 +25,10 @@ public:
 		temp.setFillColor(sf::Color(m_color));
 		window.draw(temp);
 	};
+
+	void clickEvent(ClickTypes type, int x, int y) {
+		//Lets say its unclickable for now
+	}
 	
 private:
 	int m_x, m_y;

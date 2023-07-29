@@ -17,6 +17,16 @@ public:
 		temp.setFillColor(sf::Color(m_color));
 		window.draw(temp);
 	};
+
+	void clickEvent(ClickTypes type, int x, int y) {
+		if( x > m_x &&
+			y > m_y &&
+			x < m_x + m_width &&
+			y < m_y + m_height){
+			waitForCallback();
+		}
+	}
+
 private:
 	int m_x, m_y;
 	int m_width, m_height;

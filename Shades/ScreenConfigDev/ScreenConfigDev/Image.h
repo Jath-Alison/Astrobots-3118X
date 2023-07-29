@@ -1,7 +1,6 @@
 #pragma once
 
 #include "displayable.h"
-#include "window.h"
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <string>
@@ -28,6 +27,15 @@ public:
 		m_sprite.setPosition(m_x, m_y);
 		window.draw(m_sprite);
 	};
+
+	void clickEvent(ClickTypes type, int x, int y) {
+		if (x > m_x &&
+			y > m_y &&
+			x < m_x + m_sprite.getGlobalBounds().width &&
+			y < m_y + m_sprite.getGlobalBounds().height) {
+			waitForCallback();
+		}
+	}
 
 private:
 	sf::Texture texture;

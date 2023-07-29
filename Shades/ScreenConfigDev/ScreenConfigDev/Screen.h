@@ -15,12 +15,18 @@
 #include "Text.h"
 #include "Image.h"
 
+inline void printttt() {
+	std::cout << "print just ran \n";
+}
+
 class Screen
 {
 public:
-	Screen() {};
-	Screen(std::vector <std::shared_ptr<displayable>> displayables) : m_displayables(displayables) {};
+
+	Screen() { m_functions["print"] = printttt; };
+	//Screen(std::vector <std::shared_ptr<displayable>> displayables) : m_displayables(displayables) {};
 	Screen(tinyxml2::XMLElement* screen) {
+		m_functions["print"] = printttt;
 		load(screen);
 	}
 
@@ -142,6 +148,12 @@ public:
 	void setData(std::string name, double data) {
 		m_data[name] = data;
 	}
+	double getData(std::string name) {
+		if (m_data.find(name) != m_data.end()) {
+			return m_data[name];
+		}
+		return NULL;
+	}
 
 	void display() {
 		for (size_t i = 0; i < m_displayables.size(); i++)
@@ -159,6 +171,25 @@ public:
 		m_displayables.clear();
 	}
 
+	void handleClick(ClickTypes type, int x, int y) {
+		for (size_t i = 0; i < m_displayables.size(); i++)
+		{
+			m_displayables[i]->clickEvent( type, x, y);
+		}
+	}
+	
+	void handleCallbacks() {
+		for (size_t i = 0; i < m_displayables.size(); i++)
+		{
+			if (m_displayables[i]->isWaitingForCallback()) {
+				std::string callback = m_displayables[i]->execCallBackFunc();
+				if (m_functions.find(callback) != m_functions.end()) {
+					m_functions[m_displayables[i]->execCallBackFunc()]();
+				}
+			}
+		}
+	}
+
 	std::shared_ptr<displayable>getElementById(std::string id) {
 		for (size_t i = 0; i < m_displayables.size(); i++)
 		{
@@ -174,8 +205,29 @@ public:
 		return nullptr;
 	}
 
+	template<typename ... Args>
+	void setElementText(std::string id, std::string text, Args... args) {
+		int size_s = std::snprintf(nullptr, 0, text.c_str(), args ...) + 1; // Extra space for '\0'
+		if (size_s <= 0) { throw std::runtime_error("Error during formatting."); }
+		auto size = static_cast<size_t>(size_s);
+		std::unique_ptr<char[]> buf(new char[size]);
+		std::snprintf(buf.get(), size, text.c_str(), args ...);
+		std::string formattedText = std::string(buf.get(), buf.get() + size - 1); // We don't want the '\0' inside
+
+		if ( getElementById(id) != nullptr ) { getElementById(id)->setText(formattedText); }
+	}
+
+	void setElementSrc(std::string id, std::string text) {
+		if (getElementById(id) != nullptr) { getElementById(id)->setSrc(text); }
+	}
+
+	void setElementCallbackFunc(std::string id, std::string callbackFunc) {
+		if (getElementById(id) != nullptr) { getElementById(id)->setCallbackFunc(callbackFunc); }
+	}
+
 private:
-	std::vector <std::shared_ptr< displayable>> m_displayables;
+
+	std::vector <std::shared_ptr<displayable>> m_displayables;
 	std::unordered_map <std::string, double> m_data;
 	std::unordered_map <std::string, std::function<void(void)>> m_functions;
 };

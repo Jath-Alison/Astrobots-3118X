@@ -49,13 +49,13 @@
 			<text id="title" x="35" y="35" text="Hello World" color="0xFFFFFFFF" />
 			<circle id="cir" x="170" y="45" radius="20" color="0xAA7700FF" pressed="goTo1st"/>
 			<text x="160" y="15" text="1st"/>
-			<image x="25" y="100" src="Home.png" />
+			<image x="25" y="100" src="ahfe.png" />
 		</screen>
 
 		<screen name="first" color="0xFFFFFFFF">
 			<text id="title" x="35" y="35" text="Hello World" color="0xFFFFFFFF" />
 			<box id="box" x="100" y="100" width="25" height="25" color="0xAA7700FF"/>
-			<image x="25" y="100" src="ahfe.png" />
+			<image x="25" y="100" src="Home.png" />
 		</screen>
 	</shades>
 </root>

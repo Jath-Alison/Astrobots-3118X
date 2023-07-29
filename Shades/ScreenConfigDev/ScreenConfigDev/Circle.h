@@ -17,6 +17,12 @@ public:
 		temp.setFillColor(sf::Color(m_color));
 		window.draw(temp);
 	};
+
+	void clickEvent(ClickTypes type, int x, int y) {
+		if ( sqrt( pow(m_x-x,2) + pow(m_y - y, 2) ) < m_radius) {
+			waitForCallback();
+		}
+	}
 private:
 	int m_x, m_y;
 	int m_radius;

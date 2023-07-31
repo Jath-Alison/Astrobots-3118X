@@ -1,0 +1,22 @@
+﻿  Screen.cpp
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\ShadesDev\Box.h(19,50): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\ShadesDev\Box.h(19,41): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\ShadesDev\Box.h(20,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\ShadesDev\Box.h(20,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\xutility(265,77): warning C4244: 'argument': conversion from 'int64_t' to 'uint32_t', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\memory(2092,13): message : see reference to function template instantiation 'void std::_Construct_in_place<_Ty,const char*&,int&,int&,int&,int&,int64_t&>(_Ty &,const char *&,int &,int &,int &,int &,int64_t &) noexcept(false)' being compiled
+          with
+          [
+              _Ty=sds::Box
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\memory(2765,46): message : see reference to function template instantiation 'std::_Ref_count_obj2<sds::Box>::_Ref_count_obj2<const char*&,int&,int&,int&,int&,int64_t&>(const char *&,int &,int &,int &,int &,int64_t &)' being compiled
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\ShadesDev\Screen.cpp(76,35): message : see reference to function template instantiation 'std::shared_ptr<sds::Box> std::make_shared<sds::Box,const char*&,int&,int&,int&,int&,int64_t&>(const char *&,int &,int &,int &,int &,int64_t &)' being compiled
+  ShadesDev.vcxproj -> C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\x64\Debug\ShadesDev.exe

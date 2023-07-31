@@ -71,107 +71,16 @@ namespace sds {
 
 
 			if (name == "box") {
-				const char* id;
-				int x, y, width, height;
-				int64_t color;
-				const char* callbackId;
-
-				if (items->Attribute("id") == NULL) { id = ""; }
-				else { items->QueryStringAttribute("id", &id); }
-
-				if (items->Attribute("x") == NULL) { x = 10; }
-				else { items->QueryIntAttribute("x", &x); }
-
-				if (items->Attribute("y") == NULL) { y = 10; }
-				else { items->QueryIntAttribute("y", &y); }
-
-				if (items->Attribute("width") == NULL) { width = 10; }
-				else { items->QueryIntAttribute("width", &width); }
-
-				if (items->Attribute("height") == NULL) { height = 10; }
-				else { items->QueryIntAttribute("height", &height); }
-
-				if (items->Attribute("color") == NULL) { color = 0xFFFFFFFF; }
-				else { items->QueryInt64Attribute("color", &color); }
-
-				m_displayables.push_back(std::make_shared<Box>(id, x, y, width, height, color));
-
-				if (items->Attribute("callback") == NULL) { callbackId = "none"; }
-				else { 
-					callbackId = items->Attribute("callback");
-					m_displayables.back()->registerCallback(callbackId); 
-				}
+				m_displayables.push_back(std::make_shared<Box>(items));
 			}
 			else if (name == "circle") {
-				const char* id;
-				int x, y, radius;
-				int64_t color;
-
-				if (items->Attribute("id") == NULL) { id = ""; }
-				else { items->QueryStringAttribute("id", &id); }
-
-				if (items->Attribute("x") == NULL) { x = 10; }
-				else { items->QueryIntAttribute("x", &x); }
-
-				if (items->Attribute("y") == NULL) { y = 10; }
-				else { items->QueryIntAttribute("y", &y); }
-
-				if (items->Attribute("radius") == NULL) { radius = 10; }
-				else { items->QueryIntAttribute("radius", &radius); }
-
-
-				if (items->Attribute("color") == NULL) { color = 0xFFFFFFFF; }
-				else { items->QueryInt64Attribute("color", &color); }
-
-				m_displayables.push_back(std::make_shared<Circle>(id, x, y, radius, color));
+				m_displayables.push_back(std::make_shared<Circle>(items));
 			}
 			else if (name == "text") {
-				const char* id;
-				int x, y, size;
-				const char* text;
-				int64_t color;
-
-				if (items->Attribute("id") == NULL) { id = ""; }
-				else { items->QueryStringAttribute("id", &id); }
-
-				if (items->Attribute("x") == NULL) { x = 10; }
-				else { items->QueryIntAttribute("x", &x); }
-
-				if (items->Attribute("y") == NULL) { y = 10; }
-				else { items->QueryIntAttribute("y", &y); }
-
-				if (items->Attribute("text") == NULL) { text = "No Text"; }
-				else { items->QueryStringAttribute("text", &text); }
-
-				if (items->Attribute("size") == NULL) { size = NULL; }
-				else { items->QueryIntAttribute("size", &size); }
-
-
-				if (items->Attribute("color") == NULL) { color = 0xFFFFFFFF; }
-				else { items->QueryInt64Attribute("color", &color); }
-
-				m_displayables.push_back(std::make_shared<Text>(id, x, y, text, size, color));
+				m_displayables.push_back(std::make_shared<Text>(items));
 			}
 			else if (name == "image") {
-				const char* id;
-				int x, y, size;
-				const char* src;
-				int64_t color;
-
-				if (items->Attribute("id") == NULL) { id = ""; }
-				else { items->QueryStringAttribute("id", &id); }
-
-				if (items->Attribute("x") == NULL) { x = 10; }
-				else { items->QueryIntAttribute("x", &x); }
-
-				if (items->Attribute("y") == NULL) { y = 10; }
-				else { items->QueryIntAttribute("y", &y); }
-
-				if (items->Attribute("src") == NULL) { src = "Image.png"; }
-				else { items->QueryStringAttribute("src", &src); }
-
-
-				m_displayables.push_back(std::make_shared<Image>(id, x, y, src));
+				m_displayables.push_back(std::make_shared<Image>(items));
 			}
 
 			items = items->NextSiblingElement();

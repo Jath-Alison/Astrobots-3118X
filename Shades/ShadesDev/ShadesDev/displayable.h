@@ -21,7 +21,7 @@ namespace sds {
 		void registerCallback(std::string callbackId);
 		void executeCallback();
 
-	private:
+	protected:
 
 		std::string m_id;
 		std::string m_callbackId;

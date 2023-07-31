@@ -29,7 +29,9 @@ namespace sds {
 
 		static void executeCallback(std::string callbackId);
 
-		std::shared_ptr <displayable> getElementById(std::string id);
+		static void handleClick(int x, int y);
+
+		static std::shared_ptr <displayable> getElementById(std::string id);
 
 	private:
 		Screen();
@@ -41,7 +43,7 @@ namespace sds {
 		
 		static tinyxml2::XMLDocument m_doc;
 		static tinyxml2::XMLElement* m_shadesXml;
-		//static std::map <std::string, tinyxml2::XMLElement> m_screens;
+		static std::map <std::string, tinyxml2::XMLElement*> m_screens;
 	};
 
 }

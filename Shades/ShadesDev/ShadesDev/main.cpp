@@ -4,8 +4,11 @@
 
 sf::RenderWindow window(sf::VideoMode(480, 240), "Vexcode project");
 
+sf::Font Calibri;
 int main()
 {
+
+    Calibri.loadFromFile("Calibri Light.ttf");
 
     //tinyxml2::XMLDocument doc;
     //doc.LoadFile("configFile.xml");
@@ -29,8 +32,12 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-            if (event.type == sf::Event::MouseButtonPressed){}
-                //testScreen.
+            if (event.type == sf::Event::MouseButtonPressed)
+                sds::Screen::handleClick(event.mouseButton.x, event.mouseButton.y);
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A)
+                sds::Screen::executeCallback("home");
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::B)
+                sds::Screen::executeCallback("first");
         }
 
         window.clear();

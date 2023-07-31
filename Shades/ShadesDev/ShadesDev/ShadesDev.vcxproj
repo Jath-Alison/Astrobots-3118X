@@ -137,8 +137,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box.h" />
+    <ClInclude Include="Circle.h" />
     <ClInclude Include="displayable.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="tinyxml2.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
@@ -149,6 +152,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </Xsd>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Home.png" />
+    <Image Include="Image.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

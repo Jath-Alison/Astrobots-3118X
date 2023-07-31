@@ -52,10 +52,27 @@
     <ClInclude Include="Box.h">
       <Filter>Header Files\displayables</Filter>
     </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Header Files\displayables</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Header Files\displayables</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>Header Files\displayables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xsd Include="configFile.xml">
       <Filter>Resource Files</Filter>
     </Xsd>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Home.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

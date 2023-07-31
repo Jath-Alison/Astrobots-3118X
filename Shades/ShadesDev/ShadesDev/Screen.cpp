@@ -1,6 +1,9 @@
 #include "Screen.h"
 #include "displayable.h"
 #include "Box.h"
+#include "Text.h"
+#include "Image.h"
+#include "Circle.h"
 
 namespace sds {
 
@@ -14,7 +17,7 @@ namespace sds {
 	
 	tinyxml2::XMLDocument Screen::m_doc;
 	tinyxml2::XMLElement* Screen::m_shadesXml = nullptr;
-	//std::map <std::string, tinyxml2::XMLElement> Screen::m_screens = {};
+	std::map <std::string, tinyxml2::XMLElement*> Screen::m_screens = {};
 
 
 	void Screen::initialize()
@@ -23,6 +26,23 @@ namespace sds {
 		tinyxml2::XMLElement* root = m_doc.FirstChildElement();
 		m_shadesXml = root->FirstChildElement("shades");
 		tinyxml2::XMLElement* temp = m_shadesXml->FirstChildElement("screen");
+
+		tinyxml2::XMLElement* screen = m_shadesXml->FirstChildElement("screen");
+		while (screen != nullptr)
+		{
+			if (screen->Attribute("id"))
+			{
+				m_screens[screen->Attribute("id")] = screen;
+			}
+
+			screen = screen->NextSiblingElement("screen");
+		}
+
+		for (auto screen : m_screens)
+		{
+			std::string tempStr = screen.first;
+			m_functions[tempStr] = [=]() { load(tempStr); };
+		}
 
 	}
 
@@ -54,6 +74,7 @@ namespace sds {
 				const char* id;
 				int x, y, width, height;
 				int64_t color;
+				const char* callbackId;
 
 				if (items->Attribute("id") == NULL) { id = ""; }
 				else { items->QueryStringAttribute("id", &id); }
@@ -74,8 +95,14 @@ namespace sds {
 				else { items->QueryInt64Attribute("color", &color); }
 
 				m_displayables.push_back(std::make_shared<Box>(id, x, y, width, height, color));
+
+				if (items->Attribute("callback") == NULL) { callbackId = "none"; }
+				else { 
+					callbackId = items->Attribute("callback");
+					m_displayables.back()->registerCallback(callbackId); 
+				}
 			}
-			/*else if (name == "circle") {
+			else if (name == "circle") {
 				const char* id;
 				int x, y, radius;
 				int64_t color;
@@ -145,7 +172,7 @@ namespace sds {
 
 
 				m_displayables.push_back(std::make_shared<Image>(id, x, y, src));
-			}*/
+			}
 
 			items = items->NextSiblingElement();
 		}
@@ -155,6 +182,16 @@ namespace sds {
 	{
 		if (m_functions.find(callbackId) != m_functions.end()) {
 			m_functions[callbackId]();
+		}
+	}
+
+	void Screen::handleClick(int x, int y)
+	{
+		for (size_t i = 0; i < m_displayables.size(); i++)
+		{
+			if (m_displayables[i]->checkBounds(x, y)) {
+				m_displayables[i]->executeCallback();
+			}
 		}
 	}
 
@@ -171,7 +208,6 @@ namespace sds {
 	}
 	tinyxml2::XMLElement* Screen::getScreen(std::string screenId)
 	{
-		bool temp = m_shadesXml == nullptr;
 		tinyxml2::XMLElement* screen = m_shadesXml->FirstChildElement("screen");
 		while (screen != nullptr)
 		{

@@ -6,8 +6,6 @@
 
 namespace sds {
 
-	class Screen;
-
 	class Box : public displayable
 	{
 	public:

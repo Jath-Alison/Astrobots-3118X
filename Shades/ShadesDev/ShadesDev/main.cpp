@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "tinyxml2.h"
-#include "Screen.h"
+#include "Shades.h"
 
 sf::RenderWindow window(sf::VideoMode(480, 240), "Vexcode project");
 
@@ -38,6 +37,9 @@ int main()
                 sds::Screen::executeCallback("home");
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::B)
                 sds::Screen::executeCallback("first");
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
+                sds::Screen::getElement <sds::Text>("title")->setText("It works!!!");
+            }
         }
 
         window.clear();

@@ -33,6 +33,11 @@ namespace sds {
 
 		static std::shared_ptr <displayable> getElementById(std::string id);
 
+		template <typename Type> 
+		static Type* getElement(std::string id) {
+			return dynamic_cast <Type*> (sds::Screen::getElementById(id).get());
+		}
+
 	private:
 		Screen();
 

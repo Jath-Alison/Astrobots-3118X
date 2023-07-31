@@ -1,2 +1,21 @@
 ﻿  main.cpp
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\ShadesDev\Box.h(17,50): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\ShadesDev\Box.h(17,41): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\ShadesDev\Box.h(18,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\ShadesDev\Box.h(18,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\ShadesDev\Circle.h(16,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\ShadesDev\Circle.h(17,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\ShadesDev\Circle.h(17,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\ShadesDev\Image.h(28,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\ShadesDev\Image.h(28,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\ShadesDev\Text.h(25,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\ShadesDev\Text.h(25,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   ShadesDev.vcxproj -> C:\Users\jatha\Repos\Astrobots-3118C\Shades\ShadesDev\x64\Debug\ShadesDev.exe

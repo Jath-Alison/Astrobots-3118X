@@ -61,6 +61,12 @@
     <ClInclude Include="Circle.h">
       <Filter>Header Files\displayables</Filter>
     </ClInclude>
+    <ClInclude Include="Shades.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="displayables.h">
+      <Filter>Header Files\displayables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xsd Include="configFile.xml">

@@ -33,8 +33,14 @@ namespace sds {
 
 		static std::shared_ptr <displayable> getElementById(std::string id);
 
-		template <typename Type> 
-		static Type* getElement(std::string id) {
+
+		static void setData(std::string key, double data);
+		static double getData(std::string key);
+
+
+		template<typename Type>
+		static Type* getElement(std::string id)
+		{
 			return dynamic_cast <Type*> (sds::Screen::getElementById(id).get());
 		}
 
@@ -45,6 +51,8 @@ namespace sds {
 
 		static std::vector <std::shared_ptr <displayable>> m_displayables;
 		static std::unordered_map < std::string, std::function <void(void)>> m_functions;
+
+		static std::unordered_map <std::string, double> m_data;
 		
 		static tinyxml2::XMLDocument m_doc;
 		static tinyxml2::XMLElement* m_shadesXml;

@@ -143,6 +143,7 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Shades.h" />
+    <ClInclude Include="SmartText.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="tinyxml2.h" />
     <ClInclude Include="window.h" />

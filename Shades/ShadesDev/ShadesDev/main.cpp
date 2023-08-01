@@ -21,6 +21,9 @@ int main()
 
     sds::Screen::load("home");
 
+    sds::Screen::setData("one", 1);
+    sds::Screen::setData("two", 1);
+
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
 
@@ -38,7 +41,9 @@ int main()
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::B)
                 sds::Screen::executeCallback("first");
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
-                sds::Screen::getElement <sds::Text>("title")->setText("It works!!!");
+                //sds::Screen::getElement <sds::Text>("title");
+                sds::Screen::setData("one", sds::Screen::getData("one") + 1);
+                sds::Screen::setData("two", sds::Screen::getData("two") * 2);
             }
         }
 

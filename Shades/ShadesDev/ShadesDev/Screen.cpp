@@ -1,9 +1,6 @@
 #include "Screen.h"
 #include "displayable.h"
-#include "Box.h"
-#include "Text.h"
-#include "Image.h"
-#include "Circle.h"
+#include "displayables.h"
 
 namespace sds {
 
@@ -14,6 +11,7 @@ namespace sds {
 	std::vector <std::shared_ptr <displayable>> Screen::m_displayables = {};
 
 	std::unordered_map < std::string, std::function <void(void)>> Screen::m_functions = {};
+	std::unordered_map <std::string, double> Screen::m_data = {};
 	
 	tinyxml2::XMLDocument Screen::m_doc;
 	tinyxml2::XMLElement* Screen::m_shadesXml = nullptr;
@@ -82,6 +80,9 @@ namespace sds {
 			else if (name == "image") {
 				m_displayables.push_back(std::make_shared<Image>(items));
 			}
+			if (name == "smart_text") {
+				m_displayables.push_back(std::make_shared<SmartText>(items));
+			}
 
 			items = items->NextSiblingElement();
 		}
@@ -115,6 +116,20 @@ namespace sds {
 		}
 		return nullptr;
 	}
+
+	void Screen::setData(std::string key, double data)
+	{
+		m_data[key] = data;
+	}
+
+	double Screen::getData(std::string key)
+	{
+		if (m_data.find(key) != m_data.end()) {
+			return m_data[key];
+		}
+		return 0.0;
+	}
+
 	tinyxml2::XMLElement* Screen::getScreen(std::string screenId)
 	{
 		tinyxml2::XMLElement* screen = m_shadesXml->FirstChildElement("screen");
@@ -129,4 +144,6 @@ namespace sds {
 		}
 		return nullptr;
 	}
+
+
 }

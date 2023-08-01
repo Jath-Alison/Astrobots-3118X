@@ -7,17 +7,20 @@
 		<var name="var3" value="Three" />
 
 		<screen id="home">
-			<box id="box" x="25" y="25" width="100" height="50" callback="first" color="0x00AA77FF"/>
+			<box id="box" x="250" y="180" width="100" height="50" callback="first" color="0x00AA77FF"/>
 			<text id="title" x="35" y="35" text="Hello World" color="0xFFFFFFFF" />
 			<circle id="cir" x="170" y="45" radius="20" color="0xAA7700FF" pressed="goTo1st"/>
-			<text x="160" y="15" text="1st"/>
+			<smart_text x="160" y="15" format="Hello %1.0f World %1.0f">
+				<data id="one"/>
+				<data id="two"/>
+			</smart_text>
 			<image x="25" y="100" src="ahfe.png" />
 		</screen>
 
-		<screen id="first" color="0xFFFFFFFF">
+		<screen id="first">
 			<text id="title" x="35" y="35" text="Hello World" color="0xFFFFFFFF" />
-			<box id="box" x="100" y="100" width="25" height="25" color="0xAA7700FF"/>
-			<image x="25" y="100" src="Home.png" />
+			<box id="box" x="100" y="150" width="25" height="25" color="0xAA7700FF"/>
+			<image x="25" y="150" src="Home.png" callback="home"/>
 		</screen>
 	</shades>
 </root>

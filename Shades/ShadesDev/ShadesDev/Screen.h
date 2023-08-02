@@ -27,6 +27,7 @@ namespace sds {
 
 		static void load(std::string screenId);
 
+		static void registerCallback(std::string id, std::function<void(void)> callback);
 		static void executeCallback(std::string callbackId);
 
 		static void handleClick(int x, int y);

@@ -50,7 +50,7 @@ namespace sds {
 			m_color = color;
 		}
 
-		void display() {
+		void display() override {
 			//if (!m_active) { return; }
 			sf::RectangleShape temp(sf::Vector2f(m_width, m_height));
 			temp.setPosition(m_x, m_y);
@@ -58,7 +58,7 @@ namespace sds {
 			window.draw(temp);
 		};
 
-		bool checkBounds(int x, int y) {
+		bool checkBounds(int x, int y) override {
 			if (x > m_x &&
 				y > m_y &&
 				x < m_x + m_width &&

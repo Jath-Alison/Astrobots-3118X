@@ -65,7 +65,7 @@ namespace sds {
 			window.draw(m_sprite);
 		};
 
-		bool checkBounds(int x, int y) {
+		bool checkBounds(int x, int y) override {
 			if (x > m_x &&
 				y > m_y &&
 				x < m_x + m_sprite.getGlobalBounds().width &&

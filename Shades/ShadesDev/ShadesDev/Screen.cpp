@@ -88,6 +88,11 @@ namespace sds {
 		}
 	}
 
+	void Screen::registerCallback(std::string id, std::function<void(void)> callback)
+	{
+		m_functions[id] = callback;
+	}
+
 	void Screen::executeCallback(std::string callbackId)
 	{
 		if (m_functions.find(callbackId) != m_functions.end()) {

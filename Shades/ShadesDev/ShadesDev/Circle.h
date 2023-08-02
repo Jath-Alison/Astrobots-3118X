@@ -46,14 +46,14 @@ namespace sds {
 			m_color = color;
 		}
 
-		void display() {
+		void display() override {
 			sf::CircleShape temp(m_radius, 100);
 			temp.setPosition(m_x - m_radius, m_y - m_radius);
 			temp.setFillColor(sf::Color(m_color));
 			window.draw(temp);
 		};
 
-		bool checkBounds(int x, int y) {
+		bool checkBounds(int x, int y) override {
 			if (sqrt(pow(m_x - x, 2) + pow(m_y - y, 2)) < m_radius) {
 				return true;
 			}

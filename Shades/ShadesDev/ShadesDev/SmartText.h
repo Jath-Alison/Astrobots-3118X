@@ -88,7 +88,7 @@ namespace sds {
 			window.draw(temp);
 		};
 
-		bool checkBounds(int x, int y) {
+		bool checkBounds(int x, int y) override {
 			//Lets say its unclickable for now
 			return false;
 		}

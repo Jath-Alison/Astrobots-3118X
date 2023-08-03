@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<shades>
+		<screen id="home">
+		
+			<box id="box" x="0" y="0" width="480" height="240" callback="" color="0x11d667FF"/>
+			<text id="title" x="15" y="15" text="3118B - Astrobots" color="0xFFFFFFFF" />
+			<text id="title" x="15" y="45" text="Shades" color="0x000000FF" />
+			
+		</screen>
+	</shades>
+</root>

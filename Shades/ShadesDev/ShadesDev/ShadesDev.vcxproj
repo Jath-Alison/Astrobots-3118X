@@ -138,6 +138,7 @@
   <ItemGroup>
     <ClInclude Include="Box.h" />
     <ClInclude Include="Circle.h" />
+    <ClInclude Include="colorm.h" />
     <ClInclude Include="displayable.h" />
     <ClInclude Include="displayables.h" />
     <ClInclude Include="Image.h" />

@@ -70,6 +70,9 @@
     <ClInclude Include="SmartText.h">
       <Filter>Header Files\displayables</Filter>
     </ClInclude>
+    <ClInclude Include="colorm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xsd Include="configFile.xml">

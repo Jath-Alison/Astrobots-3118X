@@ -158,8 +158,11 @@
     </Xsd>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="AstrobotsLogo.png" />
     <Image Include="Home.png" />
     <Image Include="Image.png" />
+    <Image Include="Motor.png" />
+    <Image Include="Over Under field.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Shades.h"
 
-sf::RenderWindow window(sf::VideoMode(480, 240), "Vexcode project");
+sf::RenderWindow window(sf::VideoMode(480, 272), "Vexcode project");
 
 sf::Font Calibri;
 int main()
@@ -21,9 +21,6 @@ int main()
 
     sds::Screen::load("home");
 
-    sds::Screen::setData("one", 1);
-    sds::Screen::setData("two", 1);
-
     while (window.isOpen())
     {
         sf::Event event;
@@ -33,14 +30,6 @@ int main()
                 window.close();
             if (event.type == sf::Event::MouseButtonPressed)
                 sds::Screen::handleClick(event.mouseButton.x, event.mouseButton.y);
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A)
-                sds::Screen::executeCallback("home");
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::B)
-                sds::Screen::executeCallback("first");
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
-                sds::Screen::setData("one", sds::Screen::getData("one") + 1);
-                sds::Screen::setData("two", sds::Screen::getData("two") * 2);
-            }
         }
 
         window.clear();

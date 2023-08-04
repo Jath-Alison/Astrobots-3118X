@@ -16,6 +16,9 @@
     <Filter Include="Header Files\displayables">
       <UniqueIdentifier>{93138463-06e1-4268-8052-420a93ce407d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\temp">
+      <UniqueIdentifier>{0e14d980-5870-41cf-8a6d-8630e7cae837}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -80,11 +83,20 @@
     </Xsd>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Home.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="Image.png">
       <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Over Under field.png">
+      <Filter>Resource Files\temp</Filter>
+    </Image>
+    <Image Include="AstrobotsLogo.png">
+      <Filter>Resource Files\temp</Filter>
+    </Image>
+    <Image Include="Home.png">
+      <Filter>Resource Files\temp</Filter>
+    </Image>
+    <Image Include="Motor.png">
+      <Filter>Resource Files\temp</Filter>
     </Image>
   </ItemGroup>
 </Project>

@@ -1,0 +1,43 @@
+{
+    "channel": {
+        "context_team_id": "TJJP7J0UB",
+        "created": 1691195588,
+        "creator": "U02EGB2CWRK",
+        "id": "C05LFAANN6P",
+        "is_archived": "False",
+        "is_channel": "True",
+        "is_ext_shared": "False",
+        "is_general": "False",
+        "is_group": "False",
+        "is_im": "False",
+        "is_member": "True",
+        "is_mpim": "False",
+        "is_org_shared": "False",
+        "is_pending_ext_shared": "False",
+        "is_private": "False",
+        "is_shared": "False",
+        "last_read": "1691195589.044229",
+        "name": "scheduler_testing",
+        "name_normalized": "scheduler_testing",
+        "parent_conversation": "None",
+        "pending_connected_team_ids": [],
+        "pending_shared": [],
+        "previous_names": [],
+        "purpose": {
+            "creator": "",
+            "last_set": 0,
+            "value": ""
+        },
+        "shared_team_ids": [
+            "TJJP7J0UB"
+        ],
+        "topic": {
+            "creator": "",
+            "last_set": 0,
+            "value": ""
+        },
+        "unlinked": 0,
+        "updated": 1691195588924
+    },
+    "ok": "True"
+}

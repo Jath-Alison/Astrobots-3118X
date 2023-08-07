@@ -1,0 +1,3367 @@
+{
+    "meta": {
+        "current_page": 1,
+        "first_page_url": "https://www.robotevents.com/api/v2/teams/50607/matches?page=1",
+        "from": 1,
+        "last_page": 12,
+        "last_page_url": "https://www.robotevents.com/api/v2/teams/50607/matches?page=12",
+        "next_page_url": "https://www.robotevents.com/api/v2/teams/50607/matches?page=2",
+        "path": "https://www.robotevents.com/api/v2/teams/50607/matches",
+        "per_page": 50,
+        "prev_page_url": null,
+        "to": 50,
+        "total": 593
+    },
+    "data": [
+        {
+            "id": 17725230,
+            "event": {
+                "id": 43372,
+                "name": "Midwest Live Remote VEX Change Up VRC HS Only Tournament",
+                "code": "RE-VRC-20-3372"
+            },
+            "division": {
+                "id": 0,
+                "name": "Default",
+                "code": null
+            },
+            "round": 1,
+            "instance": 0,
+            "matchnum": 2,
+            "scheduled": "2021-01-21T17:30:00-05:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Practice #2",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 72,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 82420,
+                                "name": "2373A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 84747,
+                                "name": "2373B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 100,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 76774,
+                                "name": "10955M",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17779220,
+            "event": {
+                "id": 43803,
+                "name": "2021 Live Remote VEX Robotics World Championship presented by Northrop Grumman Foundation \u2013 VEX Robotics Competition High School Division (LRT)",
+                "code": "RE-VRC-21-3803"
+            },
+            "division": {
+                "id": 12,
+                "name": "Math B",
+                "code": null
+            },
+            "round": 1,
+            "instance": 0,
+            "matchnum": 3,
+            "scheduled": "2021-05-20T15:44:24-04:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Practice #3",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 107,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 98698,
+                                "name": "4613E",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 49048,
+                                "name": "6105C",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 136,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 107444,
+                                "name": "3547Y",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17725203,
+            "event": {
+                "id": 43363,
+                "name": "VRC Live Remote Tournament presented by the REC Foundation ",
+                "code": "RE-VRC-20-3363"
+            },
+            "division": {
+                "id": 0,
+                "name": "Default",
+                "code": null
+            },
+            "round": 1,
+            "instance": 0,
+            "matchnum": 3,
+            "scheduled": "2021-01-06T18:48:00-05:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Practice #3",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 155,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 89888,
+                                "name": "1826Z",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 64331,
+                                "name": "321J",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 64,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 114738,
+                                "name": "75161S",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15112509,
+            "event": {
+                "id": 33805,
+                "name": "2018 VEX Robotics World Championship - VEX Robotics Competition High School Division",
+                "code": "RE-VRC-17-3805"
+            },
+            "division": {
+                "id": 5,
+                "name": "Arts",
+                "code": null
+            },
+            "round": 1,
+            "instance": 1,
+            "matchnum": 1,
+            "scheduled": "2018-04-26T11:00:00-04:00",
+            "started": "2018-04-26T11:01:05-04:00",
+            "field": "NGF",
+            "scored": true,
+            "name": "Practice #1",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 131,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 70757,
+                                "name": "315G",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 10123,
+                                "name": "8059D",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 79,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 75422,
+                                "name": "44244C",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 35684476,
+            "event": {
+                "id": 49804,
+                "name": "Space City VRC High School",
+                "code": "RE-VRC-22-9804"
+            },
+            "division": {
+                "id": 1,
+                "name": "High School",
+                "code": null
+            },
+            "round": 1,
+            "instance": 1,
+            "matchnum": 1,
+            "scheduled": "2022-11-21T11:00:00-05:00",
+            "started": null,
+            "field": "All Points",
+            "scored": false,
+            "name": "Practice #1",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 0,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 13408,
+                                "name": "2344A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 0,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50606,
+                                "name": "3118A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 87657,
+                                "name": "2335C",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 19234589,
+            "event": {
+                "id": 44817,
+                "name": "Space City VRC High School",
+                "code": "RE-VRC-21-4817"
+            },
+            "division": {
+                "id": 1,
+                "name": "Apollo",
+                "code": null
+            },
+            "round": 1,
+            "instance": 1,
+            "matchnum": 2,
+            "scheduled": "2021-11-22T12:05:00-05:00",
+            "started": "2021-11-22T12:11:45-05:00",
+            "field": "All Points",
+            "scored": false,
+            "name": "Practice #2",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 100,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 64004,
+                                "name": "3674R",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 80,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 124590,
+                                "name": "90475G",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 72423,
+                                "name": "7110W",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17632486,
+            "event": {
+                "id": 41740,
+                "name": "Texas VRC High School Region 3 Championship",
+                "code": "RE-VRC-20-1740"
+            },
+            "division": {
+                "id": 1,
+                "name": "High School",
+                "code": null
+            },
+            "round": 1,
+            "instance": 1,
+            "matchnum": 4,
+            "scheduled": "2021-04-17T10:18:00-04:00",
+            "started": "2021-04-17T10:26:09-04:00",
+            "field": "RECF",
+            "scored": false,
+            "name": "Practice #4",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 32,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50606,
+                                "name": "3118A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 6,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 13408,
+                                "name": "2344A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 124575,
+                                "name": "400Y",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 51634495,
+            "event": {
+                "id": 49725,
+                "name": "2023 VEX Robotics World Championship - VEX Robotics Competition High School Event",
+                "code": "RE-VRC-22-9725"
+            },
+            "division": {
+                "id": 8,
+                "name": "Research",
+                "code": null
+            },
+            "round": 1,
+            "instance": 1,
+            "matchnum": 10,
+            "scheduled": "2023-04-26T09:51:00-04:00",
+            "started": "2023-04-26T09:55:44-04:00",
+            "field": "NGF",
+            "scored": false,
+            "name": "Practice #10",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 244,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 76774,
+                                "name": "10955M",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 38959,
+                                "name": "6008C",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 93,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 118940,
+                                "name": "81785G",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 14971993,
+            "event": {
+                "id": 30291,
+                "name": "2017 VEX Worlds - VEX Robotics Competition High School Division",
+                "code": "RE-VRC-17-4887"
+            },
+            "division": {
+                "id": 4,
+                "name": "Engineering",
+                "code": null
+            },
+            "round": 1,
+            "instance": 1,
+            "matchnum": 12,
+            "scheduled": "2017-04-20T11:42:10-04:00",
+            "started": null,
+            "field": "Dell",
+            "scored": true,
+            "name": "Practice #12",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 17,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 77736,
+                                "name": "200D",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 56016,
+                                "name": "3018",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 27,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 68986,
+                                "name": "2019F",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17725206,
+            "event": {
+                "id": 43363,
+                "name": "VRC Live Remote Tournament presented by the REC Foundation ",
+                "code": "RE-VRC-20-3363"
+            },
+            "division": {
+                "id": 0,
+                "name": "Default",
+                "code": null
+            },
+            "round": 2,
+            "instance": 0,
+            "matchnum": 1,
+            "scheduled": "2021-01-06T19:15:00-05:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Qualifier #1",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 163,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 76774,
+                                "name": "10955M",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 13408,
+                                "name": "2344A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 75,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 57750,
+                                "name": "1104Z",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17725233,
+            "event": {
+                "id": 43372,
+                "name": "Midwest Live Remote VEX Change Up VRC HS Only Tournament",
+                "code": "RE-VRC-20-3372"
+            },
+            "division": {
+                "id": 0,
+                "name": "Default",
+                "code": null
+            },
+            "round": 2,
+            "instance": 0,
+            "matchnum": 2,
+            "scheduled": "2021-01-21T18:00:00-05:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Qualifier #2",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 147,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 76774,
+                                "name": "10955M",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 84,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 94790,
+                                "name": "2373C",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 47897,
+                                "name": "248D",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17779226,
+            "event": {
+                "id": 43803,
+                "name": "2021 Live Remote VEX Robotics World Championship presented by Northrop Grumman Foundation \u2013 VEX Robotics Competition High School Division (LRT)",
+                "code": "RE-VRC-21-3803"
+            },
+            "division": {
+                "id": 12,
+                "name": "Math B",
+                "code": null
+            },
+            "round": 2,
+            "instance": 0,
+            "matchnum": 3,
+            "scheduled": "2021-05-20T16:27:36-04:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Qualifier #3",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 143,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 110588,
+                                "name": "2373R",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 112,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 98698,
+                                "name": "4613E",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 89192,
+                                "name": "89910A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17725236,
+            "event": {
+                "id": 43372,
+                "name": "Midwest Live Remote VEX Change Up VRC HS Only Tournament",
+                "code": "RE-VRC-20-3372"
+            },
+            "division": {
+                "id": 0,
+                "name": "Default",
+                "code": null
+            },
+            "round": 2,
+            "instance": 0,
+            "matchnum": 5,
+            "scheduled": "2021-01-21T18:30:00-05:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Qualifier #5",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 91,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 99104,
+                                "name": "5735F",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 47897,
+                                "name": "248D",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 116,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 108006,
+                                "name": "19355A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17725211,
+            "event": {
+                "id": 43363,
+                "name": "VRC Live Remote Tournament presented by the REC Foundation ",
+                "code": "RE-VRC-20-3363"
+            },
+            "division": {
+                "id": 0,
+                "name": "Default",
+                "code": null
+            },
+            "round": 2,
+            "instance": 0,
+            "matchnum": 6,
+            "scheduled": "2021-01-06T20:00:00-05:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Qualifier #6",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 95,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 107705,
+                                "name": "48425A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 96,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 6726,
+                                "name": "1469A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 79414,
+                                "name": "373A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17725240,
+            "event": {
+                "id": 43372,
+                "name": "Midwest Live Remote VEX Change Up VRC HS Only Tournament",
+                "code": "RE-VRC-20-3372"
+            },
+            "division": {
+                "id": 0,
+                "name": "Default",
+                "code": null
+            },
+            "round": 2,
+            "instance": 0,
+            "matchnum": 9,
+            "scheduled": "2021-01-21T19:10:00-05:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Qualifier #9",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 135,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 25297,
+                                "name": "244B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 83,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 47038,
+                                "name": "248B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 94790,
+                                "name": "2373C",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17725241,
+            "event": {
+                "id": 43372,
+                "name": "Midwest Live Remote VEX Change Up VRC HS Only Tournament",
+                "code": "RE-VRC-20-3372"
+            },
+            "division": {
+                "id": 0,
+                "name": "Default",
+                "code": null
+            },
+            "round": 2,
+            "instance": 0,
+            "matchnum": 10,
+            "scheduled": "2021-01-21T19:20:00-05:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Qualifier #10",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 125,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 82420,
+                                "name": "2373A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 23650,
+                                "name": "288F",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 101,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 47038,
+                                "name": "248B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17779234,
+            "event": {
+                "id": 43803,
+                "name": "2021 Live Remote VEX Robotics World Championship presented by Northrop Grumman Foundation \u2013 VEX Robotics Competition High School Division (LRT)",
+                "code": "RE-VRC-21-3803"
+            },
+            "division": {
+                "id": 12,
+                "name": "Math B",
+                "code": null
+            },
+            "round": 2,
+            "instance": 0,
+            "matchnum": 11,
+            "scheduled": "2021-05-20T17:25:12-04:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Qualifier #11",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 149,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 123333,
+                                "name": "10452A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 9232,
+                                "name": "169E",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 153,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 106410,
+                                "name": "63857E",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17725217,
+            "event": {
+                "id": 43363,
+                "name": "VRC Live Remote Tournament presented by the REC Foundation ",
+                "code": "RE-VRC-20-3363"
+            },
+            "division": {
+                "id": 0,
+                "name": "Default",
+                "code": null
+            },
+            "round": 2,
+            "instance": 0,
+            "matchnum": 12,
+            "scheduled": "2021-01-06T20:54:00-05:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Qualifier #12",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 159,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 122361,
+                                "name": "50075A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 85,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 45877,
+                                "name": "917Y",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 79414,
+                                "name": "373A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17725245,
+            "event": {
+                "id": 43372,
+                "name": "Midwest Live Remote VEX Change Up VRC HS Only Tournament",
+                "code": "RE-VRC-20-3372"
+            },
+            "division": {
+                "id": 0,
+                "name": "Default",
+                "code": null
+            },
+            "round": 2,
+            "instance": 0,
+            "matchnum": 14,
+            "scheduled": "2021-01-21T20:00:00-05:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Qualifier #14",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 99,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 82420,
+                                "name": "2373A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 99104,
+                                "name": "5735F",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 117,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 106870,
+                                "name": "98549C",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17779239,
+            "event": {
+                "id": 43803,
+                "name": "2021 Live Remote VEX Robotics World Championship presented by Northrop Grumman Foundation \u2013 VEX Robotics Competition High School Division (LRT)",
+                "code": "RE-VRC-21-3803"
+            },
+            "division": {
+                "id": 12,
+                "name": "Math B",
+                "code": null
+            },
+            "round": 2,
+            "instance": 0,
+            "matchnum": 16,
+            "scheduled": "2021-05-20T18:01:12-04:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Qualifier #16",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 182,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50576,
+                                "name": "7984A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 96490,
+                                "name": "1274B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 127,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 46750,
+                                "name": "7192A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17725225,
+            "event": {
+                "id": 43363,
+                "name": "VRC Live Remote Tournament presented by the REC Foundation ",
+                "code": "RE-VRC-20-3363"
+            },
+            "division": {
+                "id": 0,
+                "name": "Default",
+                "code": null
+            },
+            "round": 2,
+            "instance": 0,
+            "matchnum": 20,
+            "scheduled": "2021-01-06T22:06:00-05:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Qualifier #20",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 118,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 122361,
+                                "name": "50075A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 57750,
+                                "name": "1104Z",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 137,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 76774,
+                                "name": "10955M",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17779244,
+            "event": {
+                "id": 43803,
+                "name": "2021 Live Remote VEX Robotics World Championship presented by Northrop Grumman Foundation \u2013 VEX Robotics Competition High School Division (LRT)",
+                "code": "RE-VRC-21-3803"
+            },
+            "division": {
+                "id": 12,
+                "name": "Math B",
+                "code": null
+            },
+            "round": 2,
+            "instance": 0,
+            "matchnum": 21,
+            "scheduled": "2021-05-21T15:44:24-04:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Qualifier #21",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 151,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 49048,
+                                "name": "6105C",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 98698,
+                                "name": "4613E",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 122,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 53633,
+                                "name": "9080S",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17779248,
+            "event": {
+                "id": 43803,
+                "name": "2021 Live Remote VEX Robotics World Championship presented by Northrop Grumman Foundation \u2013 VEX Robotics Competition High School Division (LRT)",
+                "code": "RE-VRC-21-3803"
+            },
+            "division": {
+                "id": 12,
+                "name": "Math B",
+                "code": null
+            },
+            "round": 2,
+            "instance": 0,
+            "matchnum": 25,
+            "scheduled": "2021-05-21T16:13:12-04:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Qualifier #25",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 121,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 102409,
+                                "name": "295S",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 125,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 108455,
+                                "name": "98052A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 123333,
+                                "name": "10452A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17779254,
+            "event": {
+                "id": 43803,
+                "name": "2021 Live Remote VEX Robotics World Championship presented by Northrop Grumman Foundation \u2013 VEX Robotics Competition High School Division (LRT)",
+                "code": "RE-VRC-21-3803"
+            },
+            "division": {
+                "id": 12,
+                "name": "Math B",
+                "code": null
+            },
+            "round": 2,
+            "instance": 0,
+            "matchnum": 31,
+            "scheduled": "2021-05-21T16:56:24-04:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Qualifier #31",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 116,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 83750,
+                                "name": "75160Z",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 78,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 46750,
+                                "name": "7192A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 107334,
+                                "name": "15797A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17779262,
+            "event": {
+                "id": 43803,
+                "name": "2021 Live Remote VEX Robotics World Championship presented by Northrop Grumman Foundation \u2013 VEX Robotics Competition High School Division (LRT)",
+                "code": "RE-VRC-21-3803"
+            },
+            "division": {
+                "id": 12,
+                "name": "Math B",
+                "code": null
+            },
+            "round": 2,
+            "instance": 0,
+            "matchnum": 39,
+            "scheduled": "2021-05-21T17:54:00-04:00",
+            "started": null,
+            "field": "LRT",
+            "scored": false,
+            "name": "Qualifier #39",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 166,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 110588,
+                                "name": "2373R",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 157,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50576,
+                                "name": "7984A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 89192,
+                                "name": "89910A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 43816705,
+            "event": {
+                "id": 50052,
+                "name": "Katy Powwow [VRC Blended]",
+                "code": "RE-VRC-23-0052"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 1,
+            "scheduled": "2023-02-04T11:00:00-05:00",
+            "started": "2023-02-04T11:11:16-05:00",
+            "field": "Friend Zone",
+            "scored": false,
+            "name": "Qualifier #1",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 70,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 130595,
+                                "name": "19697W",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50606,
+                                "name": "3118A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 131,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 93018,
+                                "name": "3162H",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 35602347,
+            "event": {
+                "id": 49591,
+                "name": "PISD VRC High School Spin Up",
+                "code": "RE-VRC-22-9591"
+            },
+            "division": {
+                "id": 1,
+                "name": "Default Division",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 1,
+            "scheduled": "2022-11-19T10:00:00-05:00",
+            "started": "2022-11-19T10:46:41-05:00",
+            "field": "NASA",
+            "scored": false,
+            "name": "Qualifier #1",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 40,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 132487,
+                                "name": "77038B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 59,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 111464,
+                                "name": "20002Y",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 112153,
+                                "name": "590Z",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 3044056,
+            "event": {
+                "id": 25857,
+                "name": "Clear Creek VEX",
+                "code": "RE-VRC-13-0266"
+            },
+            "division": {
+                "id": 1,
+                "name": "VEX_main",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 1,
+            "scheduled": "2013-11-23T09:30:00-05:00",
+            "started": null,
+            "field": "Left",
+            "scored": true,
+            "name": "Qualifier #1",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 53,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 39079,
+                                "name": "2344B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 13,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 17914,
+                                "name": "4795A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50594,
+                                "name": "6683",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 8601992,
+            "event": {
+                "id": 28497,
+                "name": "Space City VEX High School",
+                "code": "RE-VRC-15-3028"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 1,
+            "scheduled": "2015-11-16T09:00:00-05:00",
+            "started": null,
+            "field": "Little Joe II",
+            "scored": true,
+            "name": "Qualifier #1",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 17,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 65687,
+                                "name": "624C",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 45,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50610,
+                                "name": "6635A",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 26359,
+                                "name": "231B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 14954896,
+            "event": {
+                "id": 30842,
+                "name": "South Texas Champs - StarStruck",
+                "code": "RE-VRC-17-5443"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 1,
+            "scheduled": "2017-02-25T09:05:00-05:00",
+            "started": null,
+            "field": "Uno",
+            "scored": true,
+            "name": "Qualifier #1",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 17,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 17848,
+                                "name": "2587K",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 73746,
+                                "name": "590V",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 25,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 75477,
+                                "name": "32136A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15038058,
+            "event": {
+                "id": 34155,
+                "name": "Montgomery HS In The Zone",
+                "code": "RE-VRC-17-4155"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 1,
+            "scheduled": "2018-01-13T10:00:00-05:00",
+            "started": null,
+            "field": "Field 1",
+            "scored": true,
+            "name": "Qualifier #1",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 93,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 83465,
+                                "name": "1718C",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 67,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 73744,
+                                "name": "590B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 83464,
+                                "name": "1718B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15320528,
+            "event": {
+                "id": 40140,
+                "name": "Rumble in the Boonies",
+                "code": "RE-VRC-19-0140"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 1,
+            "scheduled": "2019-11-02T10:30:00-04:00",
+            "started": "2019-11-02T11:07:57-04:00",
+            "field": "Left Field",
+            "scored": true,
+            "name": "Qualifier #1",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 12,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 98154,
+                                "name": "24626A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 28,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 63437,
+                                "name": "231X",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 97783,
+                                "name": "1765A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 35784977,
+            "event": {
+                "id": 48877,
+                "name": "Greenville Spin Up WEEKDAY Event Thursday (Mixed HS and MS)",
+                "code": "RE-VRC-22-8877"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 2,
+            "scheduled": "2022-12-01T10:56:00-05:00",
+            "started": "2022-12-01T11:10:48-05:00",
+            "field": "Red",
+            "scored": false,
+            "name": "Qualifier #2",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 142,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 142354,
+                                "name": "71651C",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 45,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 94603,
+                                "name": "43272B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 133444,
+                                "name": "71651A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15056419,
+            "event": {
+                "id": 33257,
+                "name": "Battle By the Beach In the Zone",
+                "code": "RE-VRC-17-3257"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 2,
+            "scheduled": "2018-01-27T10:34:00-05:00",
+            "started": null,
+            "field": "Even",
+            "scored": true,
+            "name": "Qualifier #2",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 32,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 65759,
+                                "name": "231M",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 83191,
+                                "name": "398B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 87,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 72466,
+                                "name": "3118C",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15237237,
+            "event": {
+                "id": 35155,
+                "name": "Space City HS EDR Tournament",
+                "code": "RE-VRC-18-5155"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 2,
+            "scheduled": "2019-02-09T10:04:30-05:00",
+            "started": "2019-02-09T10:09:53-05:00",
+            "field": "EVE",
+            "scored": true,
+            "name": "Qualifier #2",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 11,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 64003,
+                                "name": "3674N",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 97644,
+                                "name": "20002X",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 17,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 26359,
+                                "name": "231B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15298902,
+            "event": {
+                "id": 38040,
+                "name": "VEX Robotics Competition Texas State Championship 6A Presented by Texas Instruments ",
+                "code": "RE-VRC-19-8040"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 2,
+            "scheduled": "2019-05-25T10:37:30-04:00",
+            "started": "2019-05-25T10:46:43-04:00",
+            "field": "Northrop Grumman Field",
+            "scored": true,
+            "name": "Qualifier #2",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 8,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 27628,
+                                "name": "2158R",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 19,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 97565,
+                                "name": "136B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 99667,
+                                "name": "5408R",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15636230,
+            "event": {
+                "id": 42534,
+                "name": "VRC, Battle by the Beach Part 1, In person, virtual judging ",
+                "code": "RE-VRC-20-2534"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 3,
+            "scheduled": "2020-11-14T10:55:30-05:00",
+            "started": "2020-11-14T11:29:21-05:00",
+            "field": "Purple",
+            "scored": false,
+            "name": "Qualifier #3",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 67,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 110588,
+                                "name": "2373R",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 1,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 73745,
+                                "name": "590M",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 124575,
+                                "name": "400Y",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15477818,
+            "event": {
+                "id": 40733,
+                "name": "South Texas VEX - Tower Takeover - High School Region 3 Championship",
+                "code": "RE-VRC-19-0733"
+            },
+            "division": {
+                "id": 1,
+                "name": "High School",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 3,
+            "scheduled": "2020-02-22T10:04:30-05:00",
+            "started": "2020-02-22T10:17:09-05:00",
+            "field": "Jacobs",
+            "scored": true,
+            "name": "Qualifier #3",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 24,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 116477,
+                                "name": "83280D",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 81042,
+                                "name": "3162Z",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 7,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 93638,
+                                "name": "8332D",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15193896,
+            "event": {
+                "id": 36740,
+                "name": "Texas City VRC Challenge",
+                "code": "RE-VRC-18-6740"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 3,
+            "scheduled": "2019-01-12T10:12:00-05:00",
+            "started": "2019-01-12T10:18:04-05:00",
+            "field": "Field 1",
+            "scored": true,
+            "name": "Qualifier #3",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 22,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 93698,
+                                "name": "7403B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 8,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 73744,
+                                "name": "590B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 63259,
+                                "name": "400G",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15180855,
+            "event": {
+                "id": 36170,
+                "name": "PISD VEX Turning Point",
+                "code": "RE-VRC-18-6170"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 3,
+            "scheduled": "2018-12-15T10:06:00-05:00",
+            "started": "2018-12-15T10:16:13-05:00",
+            "field": "VOLTAGE",
+            "scored": true,
+            "name": "Qualifier #3",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 10,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 96784,
+                                "name": "11513F",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 10,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 72467,
+                                "name": "5965B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 96783,
+                                "name": "11513E",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 14849264,
+            "event": {
+                "id": 31747,
+                "name": "Space City VEX 2.0",
+                "code": "RE-VRC-16-1747"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 3,
+            "scheduled": "2016-12-01T08:38:00-05:00",
+            "started": null,
+            "field": "Struck",
+            "scored": true,
+            "name": "Qualifier #3",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 23,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 73744,
+                                "name": "590B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 16,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 26359,
+                                "name": "231B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 13411,
+                                "name": "2335A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 35831724,
+            "event": {
+                "id": 48879,
+                "name": "Greenville Spin Up WEEKDAY Event FRIDAY (Mixed HS and MS)",
+                "code": "RE-VRC-22-8879"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 3,
+            "scheduled": "2022-12-02T10:55:00-05:00",
+            "started": "2022-12-02T11:24:03-05:00",
+            "field": "Black",
+            "scored": false,
+            "name": "Qualifier #3",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 124,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 133444,
+                                "name": "71651A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 72,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 129857,
+                                "name": "1082V",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 139577,
+                                "name": "4148V",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15347936,
+            "event": {
+                "id": 38702,
+                "name": "Space City HS VRC Tournament",
+                "code": "RE-VRC-19-8702"
+            },
+            "division": {
+                "id": 1,
+                "name": "Default Division",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 3,
+            "scheduled": "2019-11-23T10:05:00-05:00",
+            "started": "2019-11-23T10:25:30-05:00",
+            "field": "Apollo",
+            "scored": true,
+            "name": "Qualifier #3",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 42,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 67189,
+                                "name": "2587X",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 28,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 112447,
+                                "name": "590W",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 2606,
+                                "name": "1429B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 18933084,
+            "event": {
+                "id": 44770,
+                "name": "Battle by the Beach Signature Event VRC- HS",
+                "code": "RE-VRC-21-4770"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 3,
+            "scheduled": "2021-11-12T15:38:00-05:00",
+            "started": "2021-11-12T17:04:14-05:00",
+            "field": "Tornado FIeld",
+            "scored": false,
+            "name": "Qualifier #3",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 80,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 111464,
+                                "name": "20002Y",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 129859,
+                                "name": "1082K",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 26,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 129751,
+                                "name": "78027B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15650046,
+            "event": {
+                "id": 41739,
+                "name": "Space City VRC High School",
+                "code": "RE-VRC-20-1739"
+            },
+            "division": {
+                "id": 1,
+                "name": "Apollo",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 3,
+            "scheduled": "2020-11-21T10:12:00-05:00",
+            "started": "2020-11-21T10:32:51-05:00",
+            "field": "CCISD",
+            "scored": false,
+            "name": "Qualifier #3",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 19,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 84747,
+                                "name": "2373B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 26359,
+                                "name": "231B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 20,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 111925,
+                                "name": "24626H",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 14927666,
+            "event": {
+                "id": 30819,
+                "name": "Battle By The Beach",
+                "code": "RE-VRC-17-5420"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 3,
+            "scheduled": "2017-01-28T09:38:30-05:00",
+            "started": null,
+            "field": "Odd",
+            "scored": true,
+            "name": "Qualifier #3",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 9,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 75477,
+                                "name": "32136A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 34,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 73744,
+                                "name": "590B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 63235,
+                                "name": "400T",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15018583,
+            "event": {
+                "id": 34112,
+                "name": "PISD VEX In The Zone Tournament ",
+                "code": "RE-VRC-17-4112"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 3,
+            "scheduled": "2017-12-09T10:39:00-05:00",
+            "started": "2017-12-09T10:47:12-05:00",
+            "field": "Field 3",
+            "scored": true,
+            "name": "Qualifier #3",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 67,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 83137,
+                                "name": "590G",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50608,
+                                "name": "7858A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 2,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 87865,
+                                "name": "57865A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 48661790,
+            "event": {
+                "id": 50199,
+                "name": "Texas VRC High School Region 3 Championship",
+                "code": "RE-VRC-22-0199"
+            },
+            "division": {
+                "id": 1,
+                "name": "High School",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 4,
+            "scheduled": "2023-03-04T11:10:45-05:00",
+            "started": "2023-03-04T11:14:40-05:00",
+            "field": "TWC",
+            "scored": false,
+            "name": "Qualifier #4",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 164,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 129533,
+                                "name": "19697Z",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 87,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 111368,
+                                "name": "4583X",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 114838,
+                                "name": "90475A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15262353,
+            "event": {
+                "id": 36597,
+                "name": "South Texas VEX EDR - Turning Point - High School State Tournament",
+                "code": "RE-VRC-18-6597"
+            },
+            "division": {
+                "id": 1,
+                "name": "Division 1",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 4,
+            "scheduled": "2019-02-23T10:13:30-05:00",
+            "started": "2019-02-23T10:31:42-05:00",
+            "field": "EVE",
+            "scored": true,
+            "name": "Qualifier #4",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 9,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 48566,
+                                "name": "6865A",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 16,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 98157,
+                                "name": "24626C",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 98719,
+                                "name": "44366B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17632493,
+            "event": {
+                "id": 41740,
+                "name": "Texas VRC High School Region 3 Championship",
+                "code": "RE-VRC-20-1740"
+            },
+            "division": {
+                "id": 1,
+                "name": "High School",
+                "code": null
+            },
+            "round": 2,
+            "instance": 1,
+            "matchnum": 5,
+            "scheduled": "2021-04-17T10:56:00-04:00",
+            "started": "2021-04-17T10:55:31-04:00",
+            "field": "NASA",
+            "scored": false,
+            "name": "Qualifier #5",
+            "alliances": [
+                {
+                    "color": "blue",
+                    "score": 23,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 107046,
+                                "name": "2854Y",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 50607,
+                                "name": "3118B",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                },
+                {
+                    "color": "red",
+                    "score": 9,
+                    "teams": [
+                        {
+                            "team": {
+                                "id": 46252,
+                                "name": "2585V",
+                                "code": null
+                            },
+                            "sitting": false
+                        },
+                        {
+                            "team": {
+                                "id": 85351,
+                                "name": "285X",
+                                "code": null
+                            },
+                            "sitting": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -24,6 +24,7 @@ namespace sds {
 		static void initialize();
 
 		static void display();
+		static void waitForDisplay();
 
 		static void load(std::string screenId);
 
@@ -47,6 +48,8 @@ namespace sds {
 
 	private:
 		Screen();
+
+		static bool m_changed;
 
 		static tinyxml2::XMLElement* getScreen(std::string namescreenId);
 

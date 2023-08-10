@@ -16,6 +16,7 @@ namespace sds {
 	tinyxml2::XMLDocument Screen::m_doc;
 	tinyxml2::XMLElement* Screen::m_shadesXml = nullptr;
 	std::map <std::string, tinyxml2::XMLElement*> Screen::m_screens = {};
+	bool Screen::m_changed = false;
 
 
 	void Screen::initialize()
@@ -46,14 +47,25 @@ namespace sds {
 
 	void Screen::display()
 	{
+		window.clear();
+		std::cout << "display called \n";
 		for (size_t i = 0; i < m_displayables.size(); i++)
 		{
 			m_displayables[i]->display();
 		}
+		window.display();
+		m_changed = false;
+	}
+
+	void Screen::waitForDisplay()
+	{
+		if (m_changed)
+			display();
 	}
 
 	void Screen::load(std::string screenId)
 	{
+		m_changed = true;
 		m_displayables.clear();
 
 		tinyxml2::XMLElement* screen = getScreen(screenId);

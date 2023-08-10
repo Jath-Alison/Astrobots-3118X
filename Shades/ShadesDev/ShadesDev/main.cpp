@@ -32,9 +32,9 @@ int main()
                 sds::Screen::handleClick(event.mouseButton.x, event.mouseButton.y);
         }
 
-        window.clear();
-        sds::Screen::display();
-        window.display();
+        //sds::Screen::display();
+        sds::Screen::waitForDisplay();
+        
     }
 
     return 0;

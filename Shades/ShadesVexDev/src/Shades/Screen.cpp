@@ -17,6 +17,7 @@ namespace sds {
 	tinyxml2::XMLElement* Screen::m_shadesXml = nullptr;
 	std::map <std::string, tinyxml2::XMLElement*> Screen::m_screens = {};
 
+  int Screen::m_refreshRate = 500;
 
 	void Screen::initialize()
 	{
@@ -43,6 +44,33 @@ namespace sds {
 
 	}
 
+  void Screen::initialize(std::string xml)
+	{
+    m_doc.Parse(xml.c_str());
+		tinyxml2::XMLElement* root = m_doc.FirstChildElement();
+		m_shadesXml = root->FirstChildElement("shades");
+
+		tinyxml2::XMLElement* screen = m_shadesXml->FirstChildElement("screen");
+		while (screen != nullptr)
+		{
+			if (screen->Attribute("id"))
+			{
+				m_screens[screen->Attribute("id")] = screen;
+			}
+
+			screen = screen->NextSiblingElement("screen");
+		}
+
+		for (auto screen : m_screens)
+		{
+			std::string tempStr = screen.first;
+			m_functions[tempStr] = [=]() { load(tempStr); };
+		}
+
+    load("home");
+
+	}
+
   int Screen::eventLoop(){
     while (true){
       if(Brain.Screen.PRESSED){
@@ -52,8 +80,16 @@ namespace sds {
     }
   }
 
+  int Screen::displayLoop(){
+    while (true){
+      display();
+      vex::wait(m_refreshRate,vex::msec);
+    }
+  }
+
 	void Screen::display()
 	{
+    Brain.Screen.clearScreen();
 		for (size_t i = 0; i < m_displayables.size(); i++)
 		{
 			m_displayables[i]->display();
@@ -62,6 +98,7 @@ namespace sds {
 
 	void Screen::load(std::string screenId)
 	{
+    Brain.Screen.clearScreen();
 		m_displayables.clear();
 
 		tinyxml2::XMLElement* screen = getScreen(screenId);

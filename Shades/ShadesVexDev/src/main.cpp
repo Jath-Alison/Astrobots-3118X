@@ -164,7 +164,6 @@ int main() {
       </shades>
     </root>    
   )";
-  std::cout<<"happened";
 
   if(Brain.SDcard.isInserted()){
     sds::Screen::initialize();

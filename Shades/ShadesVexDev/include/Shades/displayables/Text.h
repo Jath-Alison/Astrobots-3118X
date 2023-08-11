@@ -52,7 +52,7 @@ namespace sds {
 		}
 
 		void display() override {
-			Brain.Screen.printAt(m_x, m_y, m_text.c_str());
+			Brain.Screen.printAt(m_x, m_y+12, m_text.c_str());
 		};
 
 		bool checkBounds(int x, int y) override {

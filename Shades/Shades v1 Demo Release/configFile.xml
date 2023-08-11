@@ -3,7 +3,7 @@
 	<shades>
 		<screen id="home">
 			<box id="box" x="0" y="0" width="480" height="272" callback="" color="0x4287F5FF"/>
-			<text id="title" x="15" y="15" text="3118B - Astrobots" color="0xFCB040FF" />
+			<text id="title" x="0" y="0" text="3118B - Astrobots" color="0xFCB040FF" />
 			<text id="title" x="15" y="45" text="Shades" color="0xFCB040FF" />
 
 			<image id="0" x="7" y="147" src="AstrobotsLogo.png" callback="" />
@@ -14,8 +14,14 @@
 			<box id="stats_home_button" x="260" y="100" width="200" height="70" color="0xFFFFFFFF" callback="stats_home" />
 			<text id="0" x="275" y="110" text="Robot Stats" color="0x000000FF" callback="" />
 
-			<box id="0" x="260" y="185" width="200" height="70" color="0xFFFFFFFF" callback="" />
+			<box id="0" x="260" y="185" width="200" height="70" color="0xFFF0FFFF" callback="test" />
 			<text id="0" x="275" y="195" text="Text" color="0x000000FF" callback="" />
+		</screen>
+
+		<screen id="test">
+			<box id="frame" x="0" y="0" width="50" height="50" color="0xFFF00FFF" callback="" />
+			<box id="testBox" x="50" y="50" width="100" height="16" color="0xFFFFFFFF" callback="" />
+			<text id="testText" x="50" y="62" text="text" color="0xFFFFFFFF" callback="" />
 		</screen>
 
 		<screen id="auton">

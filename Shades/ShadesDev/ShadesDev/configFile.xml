@@ -3,7 +3,7 @@
 	<shades>
 		<screen id="home">
 			<box id="box" x="0" y="0" width="480" height="272" callback="" color="0x4287F5FF"/>
-			<text id="title" x="15" y="15" text="3118B - Astrobots" color="0xFCB040FF" />
+			<text id="title" x="0" y="0" text="3118B - Astrobots" color="0xFCB040FF" />
 			<text id="title" x="15" y="45" text="Shades" color="0xFCB040FF" />
 
 			<image id="0" x="7" y="147" src="AstrobotsLogo.png" callback="" />

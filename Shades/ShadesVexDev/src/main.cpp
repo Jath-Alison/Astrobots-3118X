@@ -164,6 +164,7 @@ int main() {
       </shades>
     </root>    
   )";
+  std::cout<<"happened";
 
   if(Brain.SDcard.isInserted()){
     sds::Screen::initialize();
@@ -171,7 +172,6 @@ int main() {
     sds::Screen::initialize(xml);
   }
 
-  sds::Screen::initialize(xml);
   vex::thread eventThread(sds::Screen::eventLoop);
   vex::thread displayThread(sds::Screen::displayLoop);
 

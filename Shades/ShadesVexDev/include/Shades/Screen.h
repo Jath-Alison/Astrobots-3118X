@@ -50,6 +50,8 @@ namespace sds {
 	private:
 		Screen();
 
+    static bool m_changed;
+
 		static tinyxml2::XMLElement* getScreen(std::string namescreenId);
 
 		static std::vector <std::shared_ptr <displayable>> m_displayables;

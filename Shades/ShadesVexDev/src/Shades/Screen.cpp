@@ -17,6 +17,8 @@ namespace sds {
 	tinyxml2::XMLElement* Screen::m_shadesXml = nullptr;
 	std::map <std::string, tinyxml2::XMLElement*> Screen::m_screens = {};
 
+  bool Screen::m_changed = false;
+
   int Screen::m_refreshRate = 500;
 
 	void Screen::initialize()
@@ -41,6 +43,8 @@ namespace sds {
 			std::string tempStr = screen.first;
 			m_functions[tempStr] = [=]() { load(tempStr); };
 		}
+    
+    load("home");
 
 	}
 
@@ -82,7 +86,11 @@ namespace sds {
 
   int Screen::displayLoop(){
     while (true){
-      display();
+      if(m_changed){
+        display();
+        m_changed = false;
+        //Brain.Screen.render();
+      }
       vex::wait(m_refreshRate,vex::msec);
     }
   }
@@ -98,7 +106,9 @@ namespace sds {
 
 	void Screen::load(std::string screenId)
 	{
-    Brain.Screen.clearScreen();
+
+    m_changed = true;
+    
 		m_displayables.clear();
 
 		tinyxml2::XMLElement* screen = getScreen(screenId);

@@ -1,22 +1,118 @@
-import requests
-import json
+import wx
+from data import RobotEventsApi
+
+api = RobotEventsApi()
+
+class HomeFrame(wx.Frame):
+
+    def __init__(self, *args, **kw):
+        # ensure the parent's __init__ is called
+        super(HomeFrame, self).__init__(*args, **kw)
+
+        # create a panel in the frame
+        pnl = wx.Panel(self)
+
+        # put some text with a larger bold font on it
+        st = wx.StaticText(pnl, label="Hello World!")
+        font = st.GetFont()
+        font.PointSize += 10
+        font = font.Bold()
+        st.SetFont(font)
+
+        # and create a sizer to manage the layout of child widgets
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add(st, wx.SizerFlags().Border(wx.TOP|wx.LEFT, 25))
+        pnl.SetSizer(sizer)
+
+        # create a menu bar
+        self.makeMenuBar()
+
+        # and a status bar
+        self.CreateStatusBar()
+        self.SetStatusText("Welcome to wxPython!")
 
 
-URL = "https://www.robotevents.com/api/v2/teams/{}/matches"
-Headers = {"Authorization":"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiNzlmZTBmYWVjNzhjZTlmMmU0M2I3NGM0NmRjMzRhMGZkZGU2MjU5ZGFhZWQ2MDc2MzAwZDFmOWU3Y2RmMGEwNjJjNjc2MTQyMzAxNjgxZTAiLCJpYXQiOjE2OTEzNTkzMTAuNTI2Njc1OSwibmJmIjoxNjkxMzU5MzEwLjUyNjY3OSwiZXhwIjoyNjM4MTM0MTEwLjUxMDc3Niwic3ViIjoiMTEzOTg1Iiwic2NvcGVzIjpbXX0.LIbNy1-LIY68vUD40JEdn6gKahcnFAKD4ytWsBDGrSDhf86tIkkDKhSLqpi1P-xtv1ofltH4qUo5wrVfskuW9Xs311PDbF4dk9BJo921CpnQfvAqEh18y8gG0dSIv8fP5eZWWcItcVncMs7QkAUzmRNrG2P8AswCSPMv57SAh1uIreeIUmmiMGaMN6tmY_gZpzHWlNdHyyrk0_5AmmGhjBY6tUhi-avYjkWCMss1iujxQx3POF2pmpK4RO2K2N-Lh4148moQCVMREIo5LcpB3K_tnS8KVgWvgrY9h5_Z_SsbfFir1_3VJMgAuX4Vwq3LBKg37T6piikRJiIjF2rBf0771i_XbJW0csKGm0TX_fgLWc1mUHCUXy4zVOpPnU55AMC5NQFFKucGwldzNxCZBhmfIQKVXsw5Fx35VHFWPhQsHM0ybiPJlkAPXSJ18DcE0saktLe4J0xhfszoQ-5dNWn1VxXjBJnRxxKFYjNzc8J1Hk82Rt4fc8PlCQH2PFBscw5IkgeOFsyvMjkc5TWfoNnEVwv71xpaMebWwkKPhuF7q36HgaJtWFaAqaSSEPYo5PdaU6GxLKM9YipZU_AS4t_N5FlSOWIQChjeNPfSIHcXcGSVYbwX0y8-lbf1dQhCm9BQqtPSgp2Hs0zYIOWCKwHLCd75Lb8FrU7nS8Qi0_0"}
-payload = {"number":"3118B"}
+    def makeMenuBar(self):
+        """
+        A menu bar is composed of menus, which are composed of menu items.
+        This method builds a set of menus and binds handlers to be called
+        when the menu item is selected.
+        """
 
-URL = URL.format(50607)
-print(URL)
+        # Make a file menu with Hello and Exit items
+        fileMenu = wx.Menu()
+        # The "\t..." syntax defines an accelerator key that also triggers
+        # the same event
+        helloItem = fileMenu.Append(-1, "&Hello...\tCtrl-H",
+                "Help string shown in status bar for this menu item")
+        fileMenu.AppendSeparator()
+        # When using a stock ID we don't need to specify the menu item's
+        # label
+        exitItem = fileMenu.Append(wx.ID_EXIT)
 
-r = requests.get(url=URL,headers=Headers)
+        # Now a help menu for the about item
+        helpMenu = wx.Menu()
+        aboutItem = helpMenu.Append(wx.ID_ABOUT)
+        
+        navMenu = wx.Menu()
+        EventsItem = navMenu.Append(wx.ID_ANY, "Events")
+        TeamsItem = navMenu.Append(wx.ID_ANY, "Teams")
 
-data = r.text
-data = json.loads(data)
-#print(data)
-f = open('output.json', 'w', encoding="utf-8")
-f.write(json.dumps(data, indent=4))
-f.close()
+        # Make the menu bar and add the two menus to it. The '&' defines
+        # that the next letter is the "mnemonic" for the menu item. On the
+        # platforms that support it those letters are underlined and can be
+        # triggered from the keyboard.
+        menuBar = wx.MenuBar()
+        menuBar.Append(fileMenu, "&File")
+        menuBar.Append(helpMenu, "&Help")
+        menuBar.Append(navMenu, "&Navigation")
 
-for d in data["data"]:
-    print(d["event"]["name"])
+        # Give the menu bar to the frame
+        self.SetMenuBar(menuBar)
+
+        # Finally, associate a handler function with the EVT_MENU event for
+        # each of the menu items. That means that when that menu item is
+        # activated then the associated handler function will be called.
+        self.Bind(wx.EVT_MENU, self.OnHello, helloItem)
+        self.Bind(wx.EVT_MENU, self.OnExit,  exitItem)
+        self.Bind(wx.EVT_MENU, self.OnAbout, aboutItem)
+        
+        self.Bind(wx.EVT_MENU, self.OnEvent, EventsItem)
+        self.Bind(wx.EVT_MENU, self.OnTeams, TeamsItem)
+
+
+    def OnExit(self, event):
+        """Close the frame, terminating the application."""
+        self.Close(True)
+
+
+    def OnHello(self, event):
+        """Say hello to the user."""
+        wx.MessageBox("Hello again from wxPython")
+
+
+    def OnAbout(self, event):
+        """Display an About Dialog"""
+        wx.MessageBox("This is a wxPython Hello World sample",
+                      "About Hello World 2",
+                      wx.OK|wx.ICON_INFORMATION)
+        
+    def OnEvent(self, event):
+        tempStr = api.get("/events")["data"]
+        self.listBox = wx.ListBox(self)
+        
+        self.listBox.Set(tempStr)
+        
+        pass
+    def OnTeams(self, event): 
+        api.get("/teams")
+        pass       
+
+
+if __name__ == '__main__':
+    # When this module is run (not imported) then create the app, the
+    # frame, show it, and start the event loop.
+    app = wx.App()
+    frm = HomeFrame(None, title='Home Page', size=wx.Size(500,500))
+    frm.Show()
+    app.MainLoop()

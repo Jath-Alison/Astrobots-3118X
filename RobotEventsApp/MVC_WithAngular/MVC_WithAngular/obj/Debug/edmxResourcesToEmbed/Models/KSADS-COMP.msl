@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="KSADSCOMPModelStoreContainer" CdmEntityContainer="KSADSCOMPEntities">
+    <EntitySetMapping Name="ModuleMsts">
+      <EntityTypeMapping TypeName="KSADSCOMPModel.ModuleMst">
+        <MappingFragment StoreEntitySet="ModuleMst">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+          <ScalarProperty Name="ScreeningGroupID" ColumnName="ScreeningGroupID" />
+          <ScalarProperty Name="ModuleOriginalName" ColumnName="ModuleOriginalName" />
+          <ScalarProperty Name="ModuleOriginalName_Dan" ColumnName="ModuleOriginalName_Dan" />
+          <ScalarProperty Name="ModuleOriginalName_Esp" ColumnName="ModuleOriginalName_Esp" />
+          <ScalarProperty Name="ModuleOriginalName_Dut" ColumnName="ModuleOriginalName_Dut" />
+          <ScalarProperty Name="ModuleOriginalName_Kor" ColumnName="ModuleOriginalName_Kor" />
+          <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+          <ScalarProperty Name="ScreeningOrder" ColumnName="ScreeningOrder" />
+          <ScalarProperty Name="Route" ColumnName="Route" />
+          <ScalarProperty Name="supplementTotalQuestion" ColumnName="supplementTotalQuestion" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QuestionMsts">
+      <EntityTypeMapping TypeName="KSADSCOMPModel.QuestionMst">
+        <MappingFragment StoreEntitySet="QuestionMst">
+          <ScalarProperty Name="FunctionID" ColumnName="FunctionID" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Route4" ColumnName="Route4" />
+          <ScalarProperty Name="Condition4" ColumnName="Condition4" />
+          <ScalarProperty Name="Route3" ColumnName="Route3" />
+          <ScalarProperty Name="Condition3" ColumnName="Condition3" />
+          <ScalarProperty Name="Route2" ColumnName="Route2" />
+          <ScalarProperty Name="Condition2" ColumnName="Condition2" />
+          <ScalarProperty Name="Route1" ColumnName="Route1" />
+          <ScalarProperty Name="Condition1" ColumnName="Condition1" />
+          <ScalarProperty Name="BranchingLogic" ColumnName="BranchingLogic" />
+          <ScalarProperty Name="TotalRoutes" ColumnName="TotalRoutes" />
+          <ScalarProperty Name="AnswerID" ColumnName="AnswerID" />
+          <ScalarProperty Name="QuestionType" ColumnName="QuestionType" />
+          <ScalarProperty Name="Video" ColumnName="Video" />
+          <ScalarProperty Name="QuestionText_Parent_Kor" ColumnName="QuestionText_Parent_Kor" />
+          <ScalarProperty Name="QuestionText_Kor" ColumnName="QuestionText_Kor" />
+          <ScalarProperty Name="QuestionText_Parent_Dut" ColumnName="QuestionText_Parent_Dut" />
+          <ScalarProperty Name="QuestionText_Dut" ColumnName="QuestionText_Dut" />
+          <ScalarProperty Name="QuestionText_Parent_Esp" ColumnName="QuestionText_Parent_Esp" />
+          <ScalarProperty Name="QuestionText_Esp" ColumnName="QuestionText_Esp" />
+          <ScalarProperty Name="QuestionText_Parent_Dan" ColumnName="QuestionText_Parent_Dan" />
+          <ScalarProperty Name="QuestionText_Dan" ColumnName="QuestionText_Dan" />
+          <ScalarProperty Name="QuestionText_Parent" ColumnName="QuestionText_Parent" />
+          <ScalarProperty Name="QuestionText" ColumnName="QuestionText" />
+          <ScalarProperty Name="QuestionSequenceID" ColumnName="QuestionSequenceID" />
+          <ScalarProperty Name="Sub_Symptom" ColumnName="Sub_Symptom" />
+          <ScalarProperty Name="SymptomID" ColumnName="SymptomID" />
+          <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+          <ScalarProperty Name="ScreeningGroupId" ColumnName="ScreeningGroupId" />
+          <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

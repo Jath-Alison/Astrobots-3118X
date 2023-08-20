@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html ng-app="KC_App">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div ng-controller="MyController">
+            <h1>{{MyVal}}</h1>
+            <br />
+
+            <input style="width:300px;" type="text" ng-model="MyVal" />
+            <br />
+            <br />
+            <input type="button" value="Click Me" ng-click="MyFnc()" />
+            <br />
+            <br />
+            <input type="button" value="Call" ng-click="MyFncwithP(MyVal)" />
+        </div>
+        <hr />
+        <div ng-controller="InterviewModulesController">
+            <div>
+                $http - One of the service provided by Angular Js. Its used to make JQUERY based Ajax calls.<br />
+                Syntax:<br />
+                app.controller('InterviewModulesController', function($scope, $http){<br />
+
+                })
+            </div>
+            <br />
+            <input class="btn btn-success" type="button" value="Click here to Invoke http AJAX call to server via Angular JS" ng-click="GetModules()" />
+            <br />
+            <h1>{{Headertext}}</h1>
+            <br />
+            <div class="row" style="max-height:300px; overflow-y:scroll;">
+                <ul class="list-group-item list-unstyled" ng-repeat="mod in ModList">
+                    <li>{{mod.ModuleName}}</li>
+                </ul>
+            </div>
+            <div class="row">
+                <h2>Show it in DropDown</h2>
+                <select ng-model="selval" ng-options="a.ModuleID as a.ModuleName for a in ModList"></select>
+                <p>Selected value: {{selval}}</p>
+            </div>
+            <div class="row">
+                <h2>Show it in Grid</h2>
+                <div class="col-md-6">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>ModuleID</th>
+                            <th>ModuleName</th>
+                        </tr>
+                        <tr ng-repeat="mod in ModList">
+                            <td>{{mod.ModuleID}}</td>
+                            <td>{{mod.ModuleName}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row" ng-controller="InterviewModulesController">
+            <h1>CASCADING A DROPDOWN</h1>
+            <input class="btn btn-success" type="button" value="Click here to Invoke http AJAX call to server via Angular JS" ng-click="GetModules()" />
+            <div ng-controller="QuestionsController">
+                <select ng-model="modid" ng-options="a.ModuleID as a.ModuleName for a in ModList" ng-change="GetQuestionsMyMod(modid)"></select>
+                <select ng-model="QList" ng-options="b.QuestionID as b.QuestionText for b in QuestionList"></select>
+                <br /><br />
+                <p>Also Show in GRID:</p>
+                <input type="text" ng-model="srchtext" />
+                <table class="table table-striped">
+                    <tr>
+                        <th ng-click="Sort('QuestionID')">QuestionID</th>
+                        <th ng-click="Sort('QuestionText')">QuestionText</th>
+                        <th ng-click="Sort('Presentorpast')">Presentorpast</th>
+                        <th ng-click="Sort('Module')">Module</th>
+                    </tr>
+                    <!--<tr ng-repeat="Q in QuestionList | filter:srchtext | orderBy:Key:AscorDesc">-->
+                        <tr dir-paginate="Q in QuestionList | filter:srchtext | orderBy:Key:AscorDesc | itemsPerPage:5">
+                        <td>{{Q.QuestionID}}</td>
+                        <td><textarea cols="60" rows="5" ng-model="Q.QuestionText"></textarea></td>
+                        <td>
+                            <input type="radio" ng-model="Q.Sub_Symptom" value="1" />Present
+                            <input type="radio" ng-model="Q.Sub_Symptom" value="2" />Past
+                        </td>
+                        <td>
+                            <select ng-model="Q.ModuleID" ng-options="a.ModuleID as a.ModuleName | uppercase for a in ModList"></select>
+                        </td>
+                    </tr>
+                </table>
+                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+            </div>
+        </div>
+        <br />
+        <hr />
+        <h1>Services in Angular JS</h1>
+        <div ng-controller="UDServicesController">
+            <h2>Service is an object which contains some functions which perform some operations.</h2>
+            <ul>
+                <li>Eg: $scope, $http are predefined services.</li>
+                <li>We can write user defined services to Perform CRUD operations.</li>
+                <li>We can Invoke these sevices from any controllers.</li>
+                <li>Services can be created using<br />
+                    1. Service Method
+                    2. Factory method
+                </li>
+            </ul>
+            <h4>Service Method - Service: Syntax</h4>
+            <p>app.service('MyService', function(){<br />
+                this.fun1 = function(){<br />
+                ------------------<br />
+                };<br />
+                this.fun2 = function(){<br />
+                -----------------------<br />
+                };<br />
+            });<br /></p>
+
+            <div>
+                Value 1: <input type="text" ng-model="txt1" value="" />&nbsp;Value 2: <input type="text" ng-model="txt2" value="" />
+                <br />
+                <br />
+                &nbsp; The value is {{res}}
+                <br />
+                <br />
+                <input class="btn btn-default" type="button" value="Add" ng-click="Add(txt1, txt2)" />
+                <input class="btn btn-default" type="button" value="Subract" ng-click="Subract(txt1, txt2)" />
+                <input class="btn btn-default" type="button" value="Multiply" ng-click="Multiply(txt1, txt2)" />
+                <input class="btn btn-default" type="button" value="Divide" ng-click="Divide(txt1, txt2)" />
+
+            </div>
+        </div>
+        <h1>CRUD Operations in ANGULAR</h1>
+    </div>
+</body>
+</html>
+<script src="Scripts/angular.js"></script>
+<script src="Scripts/MyApp.js"></script>
+<script src="Scripts/bootstrap.min.js"></script>
+<script src="Scripts/dirPagination.js"></script>

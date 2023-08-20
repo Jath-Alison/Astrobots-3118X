@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html ng-app="">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body ng-init="a=10">
+    <div ng-show="true">
+        {{5+3}}
+        {{a+5;}}
+    </div>
+    <label>BIND a value:</label>
+    <span ng-bind="a"></span>
+   <hr />
+    <label>Angular Two way Binding:</label>
+    <input ng-model="x" type="text" />
+    <span ng-bind="x"></span>
+   <hr />
+    <label>ng-repeat - demo</label>
+    <div ng-init="b=['Apple', 'Mango', 'Grapes', 'Pineapple']">
+
+        <ul ng-repeat="t in b">
+            <li>{{t}}</li>
+        </ul>
+        <hr />
+        <label>ng-repeat with condition(exclude Mango)</label>
+        <ul ng-repeat="t in b">
+            <li ng-if="t != 'Mango'">{{t}}</li>
+        </ul>
+    </div>
+    <hr />
+    <label>Angular ng-model with Radio button</label>
+    <input type="radio" value="Male" ng-model="g" /> Male
+    <input type="radio" value="Female" ng-model="g" /> Female
+    <br />
+    <span>You have selected {{g}}</span>
+    <hr />
+    <label>Angular ng-true-value ng-false-value with the checkbox</label>
+    <input type="checkbox" ng-true-value="'OK'" ng-false-value="'No'" ng-model="cb" /> I Agree...
+    <br />
+    You have checked: {{cb}}
+    <hr />
+    <label>HTML Dropdownlist with Angular ng-repeat</label>
+    <select ng-model="sx">
+        <option ng-repeat="t in b" value="{{t}}">{{t}}</option>
+    </select>
+    <br />
+    <span>You have selected: {{sx}}</span>
+
+    <label>Multiple select dropdowns with ng-options </label>
+    <br />
+    <select multiple ng-model="mx" ng-options="t for t in b"></select>
+    <br />
+    <span>You have selected {{mx}}</span>
+
+</body>
+</html>
+<script src="Scripts/angular.js"></script>

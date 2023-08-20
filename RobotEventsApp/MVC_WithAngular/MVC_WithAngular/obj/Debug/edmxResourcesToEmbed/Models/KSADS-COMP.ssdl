@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KSADSCOMPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ModuleMst">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ModuleID" Type="int" Nullable="false" />
+    <Property Name="ScreeningGroupID" Type="int" Nullable="false" />
+    <Property Name="ModuleOriginalName" Type="nvarchar" MaxLength="250" />
+    <Property Name="ModuleOriginalName_Dan" Type="nvarchar" MaxLength="250" />
+    <Property Name="ModuleOriginalName_Esp" Type="nvarchar" MaxLength="250" />
+    <Property Name="ModuleOriginalName_Dut" Type="nvarchar" MaxLength="250" />
+    <Property Name="ModuleOriginalName_Kor" Type="nvarchar" MaxLength="250" />
+    <Property Name="ModuleName" Type="nvarchar" MaxLength="250" />
+    <Property Name="ScreeningOrder" Type="int" />
+    <Property Name="Route" Type="varchar" MaxLength="50" />
+    <Property Name="supplementTotalQuestion" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="QuestionMst">
+    <Key>
+      <PropertyRef Name="QuestionID" />
+    </Key>
+    <Property Name="QuestionID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ScreeningGroupId" Type="int" />
+    <Property Name="ModuleID" Type="int" Nullable="false" />
+    <Property Name="SymptomID" Type="int" />
+    <Property Name="Sub_Symptom" Type="nvarchar" MaxLength="100" />
+    <Property Name="QuestionSequenceID" Type="nvarchar" MaxLength="10" />
+    <Property Name="QuestionText" Type="nvarchar(max)" />
+    <Property Name="QuestionText_Parent" Type="nvarchar(max)" />
+    <Property Name="QuestionText_Dan" Type="nvarchar(max)" />
+    <Property Name="QuestionText_Parent_Dan" Type="nvarchar(max)" />
+    <Property Name="QuestionText_Esp" Type="nvarchar(max)" />
+    <Property Name="QuestionText_Parent_Esp" Type="nvarchar(max)" />
+    <Property Name="QuestionText_Dut" Type="nvarchar(max)" />
+    <Property Name="QuestionText_Parent_Dut" Type="nvarchar(max)" />
+    <Property Name="QuestionText_Kor" Type="nvarchar(max)" />
+    <Property Name="QuestionText_Parent_Kor" Type="nvarchar(max)" />
+    <Property Name="Video" Type="nvarchar" MaxLength="50" />
+    <Property Name="QuestionType" Type="nvarchar" MaxLength="250" />
+    <Property Name="AnswerID" Type="int" />
+    <Property Name="TotalRoutes" Type="int" />
+    <Property Name="BranchingLogic" Type="nvarchar" MaxLength="2000" />
+    <Property Name="Condition1" Type="nvarchar" MaxLength="2000" />
+    <Property Name="Route1" Type="nvarchar" MaxLength="2000" />
+    <Property Name="Condition2" Type="nvarchar" MaxLength="2000" />
+    <Property Name="Route2" Type="nvarchar" MaxLength="2000" />
+    <Property Name="Condition3" Type="nvarchar" MaxLength="2000" />
+    <Property Name="Route3" Type="nvarchar" MaxLength="2000" />
+    <Property Name="Condition4" Type="nvarchar" MaxLength="2000" />
+    <Property Name="Route4" Type="nvarchar" MaxLength="2000" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="FunctionID" Type="int" />
+  </EntityType>
+  <EntityContainer Name="KSADSCOMPModelStoreContainer">
+    <EntitySet Name="ModuleMst" EntityType="Self.ModuleMst" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QuestionMst" EntityType="Self.QuestionMst" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

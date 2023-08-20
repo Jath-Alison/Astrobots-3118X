@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="KSADSCOMPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ModuleMst">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModuleID" Type="int" Nullable="false" />
+          <Property Name="ScreeningGroupID" Type="int" Nullable="false" />
+          <Property Name="ModuleOriginalName" Type="nvarchar" MaxLength="250" />
+          <Property Name="ModuleOriginalName_Dan" Type="nvarchar" MaxLength="250" />
+          <Property Name="ModuleOriginalName_Esp" Type="nvarchar" MaxLength="250" />
+          <Property Name="ModuleOriginalName_Dut" Type="nvarchar" MaxLength="250" />
+          <Property Name="ModuleOriginalName_Kor" Type="nvarchar" MaxLength="250" />
+          <Property Name="ModuleName" Type="nvarchar" MaxLength="250" />
+          <Property Name="ScreeningOrder" Type="int" />
+          <Property Name="Route" Type="varchar" MaxLength="50" />
+          <Property Name="supplementTotalQuestion" Type="int" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="QuestionMst">
+          <Key>
+            <PropertyRef Name="QuestionID" />
+          </Key>
+          <Property Name="QuestionID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ScreeningGroupId" Type="int" />
+          <Property Name="ModuleID" Type="int" Nullable="false" />
+          <Property Name="SymptomID" Type="int" />
+          <Property Name="Sub_Symptom" Type="nvarchar" MaxLength="100" />
+          <Property Name="QuestionSequenceID" Type="nvarchar" MaxLength="10" />
+          <Property Name="QuestionText" Type="nvarchar(max)" />
+          <Property Name="QuestionText_Parent" Type="nvarchar(max)" />
+          <Property Name="QuestionText_Dan" Type="nvarchar(max)" />
+          <Property Name="QuestionText_Parent_Dan" Type="nvarchar(max)" />
+          <Property Name="QuestionText_Esp" Type="nvarchar(max)" />
+          <Property Name="QuestionText_Parent_Esp" Type="nvarchar(max)" />
+          <Property Name="QuestionText_Dut" Type="nvarchar(max)" />
+          <Property Name="QuestionText_Parent_Dut" Type="nvarchar(max)" />
+          <Property Name="QuestionText_Kor" Type="nvarchar(max)" />
+          <Property Name="QuestionText_Parent_Kor" Type="nvarchar(max)" />
+          <Property Name="Video" Type="nvarchar" MaxLength="50" />
+          <Property Name="QuestionType" Type="nvarchar" MaxLength="250" />
+          <Property Name="AnswerID" Type="int" />
+          <Property Name="TotalRoutes" Type="int" />
+          <Property Name="BranchingLogic" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Condition1" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Route1" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Condition2" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Route2" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Condition3" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Route3" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Condition4" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Route4" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="FunctionID" Type="int" />
+        </EntityType>
+        <EntityContainer Name="KSADSCOMPModelStoreContainer">
+          <EntitySet Name="ModuleMst" EntityType="Self.ModuleMst" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionMst" EntityType="Self.QuestionMst" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KSADSCOMPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ModuleMst">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModuleID" Type="Int32" Nullable="false" />
+          <Property Name="ScreeningGroupID" Type="Int32" Nullable="false" />
+          <Property Name="ModuleOriginalName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ModuleOriginalName_Dan" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ModuleOriginalName_Esp" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ModuleOriginalName_Dut" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ModuleOriginalName_Kor" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ModuleName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ScreeningOrder" Type="Int32" />
+          <Property Name="Route" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="supplementTotalQuestion" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+        </EntityType>
+        <EntityContainer Name="KSADSCOMPEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ModuleMsts" EntityType="Self.ModuleMst" />
+          <EntitySet Name="QuestionMsts" EntityType="KSADSCOMPModel.QuestionMst" />
+        </EntityContainer>
+        <EntityType Name="QuestionMst">
+          <Key>
+            <PropertyRef Name="QuestionID" />
+          </Key>
+          <Property Name="QuestionID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ScreeningGroupId" Type="Int32" />
+          <Property Name="ModuleID" Type="Int32" Nullable="false" />
+          <Property Name="SymptomID" Type="Int32" />
+          <Property Name="Sub_Symptom" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionSequenceID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionText_Parent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionText_Dan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionText_Parent_Dan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionText_Esp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionText_Parent_Esp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionText_Dut" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionText_Parent_Dut" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionText_Kor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionText_Parent_Kor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Video" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionType" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="AnswerID" Type="Int32" />
+          <Property Name="TotalRoutes" Type="Int32" />
+          <Property Name="BranchingLogic" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Condition1" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Route1" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Condition2" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Route2" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Condition3" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Route3" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Condition4" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Route4" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="FunctionID" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KSADSCOMPModelStoreContainer" CdmEntityContainer="KSADSCOMPEntities">
+          <EntitySetMapping Name="ModuleMsts">
+            <EntityTypeMapping TypeName="KSADSCOMPModel.ModuleMst">
+              <MappingFragment StoreEntitySet="ModuleMst">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="ScreeningGroupID" ColumnName="ScreeningGroupID" />
+                <ScalarProperty Name="ModuleOriginalName" ColumnName="ModuleOriginalName" />
+                <ScalarProperty Name="ModuleOriginalName_Dan" ColumnName="ModuleOriginalName_Dan" />
+                <ScalarProperty Name="ModuleOriginalName_Esp" ColumnName="ModuleOriginalName_Esp" />
+                <ScalarProperty Name="ModuleOriginalName_Dut" ColumnName="ModuleOriginalName_Dut" />
+                <ScalarProperty Name="ModuleOriginalName_Kor" ColumnName="ModuleOriginalName_Kor" />
+                <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+                <ScalarProperty Name="ScreeningOrder" ColumnName="ScreeningOrder" />
+                <ScalarProperty Name="Route" ColumnName="Route" />
+                <ScalarProperty Name="supplementTotalQuestion" ColumnName="supplementTotalQuestion" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionMsts">
+            <EntityTypeMapping TypeName="KSADSCOMPModel.QuestionMst">
+              <MappingFragment StoreEntitySet="QuestionMst">
+                <ScalarProperty Name="FunctionID" ColumnName="FunctionID" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Route4" ColumnName="Route4" />
+                <ScalarProperty Name="Condition4" ColumnName="Condition4" />
+                <ScalarProperty Name="Route3" ColumnName="Route3" />
+                <ScalarProperty Name="Condition3" ColumnName="Condition3" />
+                <ScalarProperty Name="Route2" ColumnName="Route2" />
+                <ScalarProperty Name="Condition2" ColumnName="Condition2" />
+                <ScalarProperty Name="Route1" ColumnName="Route1" />
+                <ScalarProperty Name="Condition1" ColumnName="Condition1" />
+                <ScalarProperty Name="BranchingLogic" ColumnName="BranchingLogic" />
+                <ScalarProperty Name="TotalRoutes" ColumnName="TotalRoutes" />
+                <ScalarProperty Name="AnswerID" ColumnName="AnswerID" />
+                <ScalarProperty Name="QuestionType" ColumnName="QuestionType" />
+                <ScalarProperty Name="Video" ColumnName="Video" />
+                <ScalarProperty Name="QuestionText_Parent_Kor" ColumnName="QuestionText_Parent_Kor" />
+                <ScalarProperty Name="QuestionText_Kor" ColumnName="QuestionText_Kor" />
+                <ScalarProperty Name="QuestionText_Parent_Dut" ColumnName="QuestionText_Parent_Dut" />
+                <ScalarProperty Name="QuestionText_Dut" ColumnName="QuestionText_Dut" />
+                <ScalarProperty Name="QuestionText_Parent_Esp" ColumnName="QuestionText_Parent_Esp" />
+                <ScalarProperty Name="QuestionText_Esp" ColumnName="QuestionText_Esp" />
+                <ScalarProperty Name="QuestionText_Parent_Dan" ColumnName="QuestionText_Parent_Dan" />
+                <ScalarProperty Name="QuestionText_Dan" ColumnName="QuestionText_Dan" />
+                <ScalarProperty Name="QuestionText_Parent" ColumnName="QuestionText_Parent" />
+                <ScalarProperty Name="QuestionText" ColumnName="QuestionText" />
+                <ScalarProperty Name="QuestionSequenceID" ColumnName="QuestionSequenceID" />
+                <ScalarProperty Name="Sub_Symptom" ColumnName="Sub_Symptom" />
+                <ScalarProperty Name="SymptomID" ColumnName="SymptomID" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="ScreeningGroupId" ColumnName="ScreeningGroupId" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

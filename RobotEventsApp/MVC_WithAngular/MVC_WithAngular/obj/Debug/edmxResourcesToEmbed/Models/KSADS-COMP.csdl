@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KSADSCOMPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ModuleMst">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ModuleID" Type="Int32" Nullable="false" />
+    <Property Name="ScreeningGroupID" Type="Int32" Nullable="false" />
+    <Property Name="ModuleOriginalName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ModuleOriginalName_Dan" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ModuleOriginalName_Esp" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ModuleOriginalName_Dut" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ModuleOriginalName_Kor" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ModuleName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ScreeningOrder" Type="Int32" />
+    <Property Name="Route" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="supplementTotalQuestion" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+  </EntityType>
+  <EntityContainer Name="KSADSCOMPEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ModuleMsts" EntityType="Self.ModuleMst" />
+    <EntitySet Name="QuestionMsts" EntityType="KSADSCOMPModel.QuestionMst" />
+  </EntityContainer>
+  <EntityType Name="QuestionMst">
+    <Key>
+      <PropertyRef Name="QuestionID" />
+    </Key>
+    <Property Name="QuestionID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ScreeningGroupId" Type="Int32" />
+    <Property Name="ModuleID" Type="Int32" Nullable="false" />
+    <Property Name="SymptomID" Type="Int32" />
+    <Property Name="Sub_Symptom" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="QuestionSequenceID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="QuestionText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="QuestionText_Parent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="QuestionText_Dan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="QuestionText_Parent_Dan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="QuestionText_Esp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="QuestionText_Parent_Esp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="QuestionText_Dut" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="QuestionText_Parent_Dut" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="QuestionText_Kor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="QuestionText_Parent_Kor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Video" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="QuestionType" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="AnswerID" Type="Int32" />
+    <Property Name="TotalRoutes" Type="Int32" />
+    <Property Name="BranchingLogic" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="Condition1" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="Route1" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="Condition2" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="Route2" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="Condition3" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="Route3" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="Condition4" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="Route4" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="FunctionID" Type="Int32" />
+  </EntityType>
+</Schema>

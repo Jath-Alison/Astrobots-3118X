@@ -1,10 +1,15 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
+
+#include "Lexer.h"
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
+
+    Lexer lex;
 
     while (window.isOpen())
     {
@@ -13,6 +18,14 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+            if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+                // Close the window
+                std::cout << lex.getSource() << std::endl;
+            }
+            if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
+                // Close the window
+                lex.loadFromFile("Source.txt");
+            }
         }
 
         window.clear();

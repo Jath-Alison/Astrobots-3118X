@@ -5,10 +5,11 @@
 #include <fstream>
 #include <sstream>
 
+
 class token {
 public:
 	enum class type {
-		/*ASSIGNMENT,
+		ASSIGNMENT,
 		PLUS,
 		MINUS,
 		MULTIPLY,
@@ -24,17 +25,17 @@ public:
 		LESS_THAN_EQUAL_TO,
 		INCREMENT,
 		DECREMENT,
-		COMMA,*/
+		COMMA,
 
-		//IDENTIFIER,
-		//QUOTES,
-		//DOUBLE_QUOTES,
+		IDENTIFIER,
+		QUOTES,
+		DOUBLE_QUOTES,
 		STRING,
 		NUMBER,
-		/*INTEGER,
+		INTEGER,
 		FLOAT,
 		DOUBLE,
-		BOOLEAN,*/
+		BOOLEAN,
 
 		SQUARE_BRACKET_OPEN,
 		SQUARE_BRACKET_CLOSE,
@@ -171,6 +172,7 @@ private:
 			m_pos++;
 			return std::string(1, m_src[m_pos]);
 		}
+		return "\0";
 	}
 	std::string getNexts() {
 		if (m_pos + 1 < m_src.size()) {

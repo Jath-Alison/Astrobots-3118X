@@ -21,10 +21,15 @@ int main()
             if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
                 // Close the window
                 std::cout << lex.getSource() << std::endl;
+                for (size_t i = 0; i < lex.size(); i++)
+                {
+                    std::cout << lex[i].getText() << "\n";
+                }
             }
             if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
                 // Close the window
                 lex.loadFromFile("Source.txt");
+                lex.tokenize();
             }
         }
 

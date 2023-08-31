@@ -38,7 +38,10 @@ int Lexer::tokenize()
             while (inChars(getNextc())) {
                 s += addNext();
             }
-
+            if (s == "true" || s == "false") {
+                m_tokens.push_back(token(token::type::BOOLEAN, s, initm_pos));
+                continue;
+            }
             if (isKeyword(s)) {
                 m_tokens.push_back(token(token::type::KEYWORD, s, initm_pos));
                 continue;
@@ -49,7 +52,7 @@ int Lexer::tokenize()
             }
 
             m_tokens.push_back(token(token::type::IDENTIFIER, s, initm_pos));
-            return 1; //Invalid Keyword
+            continue;
         }
 
         if (m_src[m_pos] == '\'') {//Checks single quotes

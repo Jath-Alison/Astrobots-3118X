@@ -1,5 +1,6 @@
 //"Hello World"
 int main(){
 	print(5+12*3);
+	bool is_cool = true;
 	print('Hello World from \'VexScript"');
 }

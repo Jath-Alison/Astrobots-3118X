@@ -40,6 +40,7 @@ std::map<token::type, std::string> tokenTypeStrings
 		{token::type::CURLY_BRACKETS_CLOSE,"CURLY_BRACKETS_CLOSE"},
 		{token::type::PARENTHESES_OPEN,"PARENTHESES_OPEN"},
 		{token::type::PARENTHESES_CLOSE,"PARENTHESES_CLOSE"},
+		{token::type::COMMA,"COMMA"},
 		{token::type::SEMICOLON,"SEMICOLON"},
 
 		{token::type::KEYWORD,"KEYWORD"},
@@ -69,10 +70,17 @@ int main()
                 window.close();
             if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
                 // Close the window
-                std::cout << lex.getSource() << std::endl;
+				std::cout << lex.getSource() << "\n\n";
                 for (size_t i = 0; i < lex.size(); i++)
                 {
-					std::cout << tokenTypeStrings[lex[i].getType()] << "	value:" << lex[i].getText() << "\n";
+					std::cout
+						<< "Value:" 
+						<< lex[i].getText() 
+						<< "  Pos:"
+						<< lex[i].getStartm_pos() 
+						<< "  Type:"
+						<< tokenTypeStrings[lex[i].getType()] 
+						<< "\n";
                 }
             }
             if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {

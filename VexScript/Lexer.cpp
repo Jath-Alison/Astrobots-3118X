@@ -8,23 +8,18 @@ int Lexer::tokenize()
 
         std::string s(1, m_src[m_pos]);
 
-        if (s == "/") {
+        if (s == "/" && getNexts() == "/") {
+            m_pos++;
             s = addNext();
-            if (s == "/") {
-                s = addNext();
-                while (getNextc() != '\n')
-                {
-                    if (m_pos + 1 < m_src.size()) {
-                        s += addNext();
-                    }
+            while (getNextc() != '\n')
+            {
+                if (m_pos + 1 < m_src.size()) {
+                    s += addNext();
                 }
-                //m_pos++;
-                m_tokens.push_back(token(token::type::COMMENT, s, m_pos));
-                continue;
             }
-            else {
-                m_tokens.push_back(token(token::type::ERROR, s + "     -Invalid Token", m_pos));
-            }
+            //m_pos++;
+            m_tokens.push_back(token(token::type::COMMENT, s, m_pos));
+            continue;
         }
         
         if (inNumChars(m_src[m_pos])) {//Checks Numbers
@@ -53,7 +48,7 @@ int Lexer::tokenize()
                 continue;
             }
 
-            m_tokens.push_back(token(token::type::ERROR, "Invalid Token", initm_pos));
+            m_tokens.push_back(token(token::type::IDENTIFIER, s, initm_pos));
             return 1; //Invalid Keyword
         }
 
@@ -130,8 +125,89 @@ int Lexer::tokenize()
             continue;
         }
 
+        if (s == "=") {//Equals sign
+            m_tokens.push_back(token(token::type::ASSIGNMENT, s, m_pos));
+            continue;
+        }
+
+        if (s == "+") {//Plus sign
+            m_tokens.push_back(token(token::type::PLUS, s, m_pos));
+            continue;
+        }
+
+        if (s == "-") {//Minus sign
+            m_tokens.push_back(token(token::type::MINUS, s, m_pos));
+            continue;
+        }
+        
+        if (s == "*") {//Asterisk
+            m_tokens.push_back(token(token::type::MULTIPLY, s, m_pos));
+            continue;
+        }
+
+        if (s == "/") {//slash
+            m_tokens.push_back(token(token::type::DIVIDE, s, m_pos));
+            continue;
+        }
+
+        if (s == "^") {//caret
+            m_tokens.push_back(token(token::type::EXPONENT, s, m_pos));
+            continue;
+        }
+
+        if (s == "%") {//Percent Sign
+            m_tokens.push_back(token(token::type::MODULO, s, m_pos));
+            continue;
+        }
+
+        if (s == "=" && getNexts() == "=") {//Double Equals Sign
+            m_tokens.push_back(token(token::type::EQUALS, s, m_pos));
+            continue;
+        }
+        if (s == "!") {//Not Equals Sign
+            if (getNexts() == "=") {
+                m_tokens.push_back(token(token::type::NOT_EQUALS, s, m_pos));
+                continue;
+            }
+            else {
+                m_tokens.push_back(token(token::type::NOT, s, m_pos));
+                continue;
+            }
+        }
+
         if (s == ";") {//Semicolon
             m_tokens.push_back(token(token::type::SEMICOLON, s, m_pos));
+            continue;
+        }
+        if (s == ",") {//Comma
+            m_tokens.push_back(token(token::type::COMMA, s, m_pos));
+            continue;
+        }
+
+        if (s == ">") {//Greater Than Sign
+            m_tokens.push_back(token(token::type::GREATER_THAN, s, m_pos));
+            continue;
+        }
+        if (s == "<") {//Less Than Sign
+            m_tokens.push_back(token(token::type::LESS_THAN, s, m_pos));
+            continue;
+        }
+
+        if (s == ">" && getNexts() == "=") {//Greater Than Equal To Sign
+            m_tokens.push_back(token(token::type::GREATER_THAN_EQUAL_TO, s, m_pos));
+            continue;
+        }
+        if (s == "<" && getNexts() == "=") {//Less Than Equal To Sign
+            m_tokens.push_back(token(token::type::LESS_THAN_EQUAL_TO, s, m_pos));
+            continue;
+        }
+
+        if (s == "+" && getNexts() == "+") {//Increment operator
+            m_tokens.push_back(token(token::type::INCREMENT, s, m_pos));
+            continue;
+        }
+        if (s == "-" && getNexts() == "-") {//Decrement operator
+            m_tokens.push_back(token(token::type::DECREMENT, s, m_pos));
             continue;
         }
         

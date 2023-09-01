@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <map>
+#include "RingBuffer.h"
 
 #include "Lexer.h"
 
@@ -61,6 +62,8 @@ int main()
 
     Lexer lex;
 
+	RingBuffer <double, 3> buf;
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -88,6 +91,16 @@ int main()
                 lex.loadFromFile("Source.txt");
                 lex.tokenize();
             }
+			if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+				// Close the window
+				double temp = sf::Mouse::getPosition().x;
+				buf.put(temp);
+			}
+			if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+				double temp;
+				if(buf.get(&temp))
+					std::cout << temp << "\n";
+			}
         }
 
         window.clear();

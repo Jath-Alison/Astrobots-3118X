@@ -1,0 +1,1 @@
+#include "staticType.h"

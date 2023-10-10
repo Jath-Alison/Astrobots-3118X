@@ -53,6 +53,16 @@ void pre_auton(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
+int leftSide(){
+  base.arcade(0, 100, 0);
+  intake.spin(fwd,12,volt);
+  return 0;
+}
+int rightSide(){
+
+  return 0;
+}
+
 void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
@@ -73,7 +83,21 @@ void usercontrol(void) {
   // User control code here, inside the loop
   while (1) {
 
-    base.arcade(Controller1.Axis4.position(), Controller1.Axis3.position(),Controller1.Axis1.position());
+    base.arcade(Controller1.Axis4.position(), -Controller1.Axis3.position(),Controller1.Axis1.position()/1.5);
+
+    if(Controller1.ButtonR1.pressing()){
+      intake.spin(fwd,12,volt);
+    }else if(Controller1.ButtonR2.pressing()){
+      intake.spin(fwd,-12,volt);
+    }else{
+      intake.stop();
+    }
+
+    if(Controller1.ButtonL1.pressing()){
+      wings.open();
+    }else{
+      wings.close();
+    }
 
 
     // This is the main execution loop for the user control program.

@@ -19,6 +19,13 @@ extern motor_group LeftWheels;
 
 extern Jath::TankDrive base;
 
+extern motor intakeLeft;
+extern motor intakeRight;
+extern motor_group intake;
+
+extern pneumatics wings;
+
+
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
  * 

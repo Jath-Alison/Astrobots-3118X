@@ -55,17 +55,21 @@ void pre_auton(void) {
 
 int leftSide(){
   base.arcade(0, 100, 0);
-  intake.spin(fwd,12,volt);
+  // intake.spin(fwd,12,volt);
   return 0;
 }
 int rightSide(){
-
+  base.arcade(0,100,0);
+  base.update();
+  wait(2, seconds);
+  base.arcade(0,0,0);
+  base.update();
   return 0;
 }
 
 void autonomous(void) {
   // ..........................................................................
-  // Insert autonomous user code here.
+  rightSide();
   // ..........................................................................
 }
 
@@ -79,19 +83,34 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
+double scale(double input){return .0001*pow(input, 3);}
+
 void usercontrol(void) {
+
+  double dScale = 1.125;
+  double tScale = 1.0;
+
   // User control code here, inside the loop
   while (1) {
 
-    base.arcade(Controller1.Axis4.position(), -Controller1.Axis3.position(),Controller1.Axis1.position()/1.5);
+    base.arcade(Controller1.Axis4.position(), scale(Controller1.Axis3.position()*dScale),scale(Controller1.Axis1.position()*tScale));
+
+    // if(Controller1.ButtonUp.PRESSED){dScale += 0.05;}
+    // if(Controller1.ButtonDown.PRESSED){dScale -= 0.05;}
+
+    // if(Controller1.ButtonX.PRESSED){tScale += 0.05;}
+    // if(Controller1.ButtonB.PRESSED){tScale -= 0.05;}
+
 
     if(Controller1.ButtonR1.pressing()){
-      intake.spin(fwd,12,volt);
+      cataLeft.set(15);
     }else if(Controller1.ButtonR2.pressing()){
-      intake.spin(fwd,-12,volt);
+      cataLeft.set(0);
     }else{
-      intake.stop();
+      // cataLeft.set(15);
     }
+    cataLeft.update();
+    cataRight.update();
 
     if(Controller1.ButtonL1.pressing()){
       wings.open();
@@ -101,14 +120,15 @@ void usercontrol(void) {
 
 
     // This is the main execution loop for the user control program.
-    // Each time through the loop your program should update motor + servo
-    // values based on feedback from the joysticks.
+    // Each time through the loop your progra m should update motor + servo
+    // values based on feedback from the joys ticks.
 
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
     // ........................................................................
     base.update();
+    
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }

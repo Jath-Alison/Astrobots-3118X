@@ -72,12 +72,12 @@ namespace Jath{
       }
 
       Jath::PID m_pid;
+      vex::motor* m_followMotor{nullptr};
     private:
 
       ControlMode m_controlMode{None};
 
       vex::rotation* m_rot{nullptr};
-      vex::motor* m_followMotor{nullptr};
 
       double m_cmd{0};
       double m_output{0};

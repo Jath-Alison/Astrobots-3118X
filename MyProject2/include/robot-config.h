@@ -1,6 +1,7 @@
 using namespace vex;
 
 #include "JathLib/TankDrive.h"
+#include "JathLib/CustomMotor.h"
 
 extern brain Brain;
 
@@ -19,9 +20,11 @@ extern motor_group LeftWheels;
 
 extern Jath::TankDrive base;
 
-extern motor intakeLeft;
-extern motor intakeRight;
-extern motor_group intake;
+// extern motor cataLeft;
+// extern motor cataRight;
+extern rotation cataRot;
+extern Jath::CustomMotor cataLeft;
+extern Jath::CustomMotor cataRight;
 
 extern pneumatics wings;
 

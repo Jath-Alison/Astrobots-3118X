@@ -22,9 +22,11 @@ motor LeftBack = motor(PORT3, ratio6_1, false);
 motor_group LeftWheels = motor_group(LeftFront, LeftMiddle, LeftBack);
 Jath::TankDrive base(LeftWheels, RightWheels);
 
-motor intakeLeft(PORT5, true);
-motor intakeRight(PORT18, false);
-motor_group intake(intakeLeft, intakeRight);
+// motor cataLeft(PORT5, true);
+// motor cataRight(PORT18, false);
+rotation cataRot(PORT13, true);
+Jath::CustomMotor cataLeft(motor(PORT5,false), &cataRot);
+Jath::CustomMotor cataRight(motor(PORT18, true), &cataRot);
 
 pneumatics wings(Brain.ThreeWirePort.A);
 
@@ -38,6 +40,12 @@ pneumatics wings(Brain.ThreeWirePort.A);
  * This should be called at the start of your int main function.
  */
 void vexcodeInit( void ) {
+  cataRight.setControlMode(Jath::CustomMotor::Follower);
+  cataRight.m_followMotor = &cataLeft;
+
+  cataLeft.setControlMode(Jath::CustomMotor::Angle);
+  cataLeft.m_pid.setConstants(10, 0, 0);
+
   Brain.Screen.print("Device initialization...");
   Brain.Screen.setCursor(2, 1);
   // calibrate the drivetrain gyro

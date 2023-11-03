@@ -72,9 +72,12 @@ namespace sds {
 			double one = Screen::getData(m_dataIds[0]);
 			double two = Screen::getData(m_dataIds[1]);
 
-			setText(m_format,
-				Screen::getData(m_dataIds[0]), Screen::getData(m_dataIds[1]),Screen::getData( m_dataIds[2]), Screen::getData(m_dataIds[3]), Screen::getData(m_dataIds[4]), Screen::getData(m_dataIds[5]), Screen::getData(m_dataIds[6]), Screen::getData(m_dataIds[7]), Screen::getData(m_dataIds[8]), Screen::getData(m_dataIds[9])
-			);
+      std::string temp;
+
+      
+			// setText(m_format,
+			// 	Screen::getData(m_dataIds[0]), Screen::getData(m_dataIds[1]),Screen::getData( m_dataIds[2]), Screen::getData(m_dataIds[3]), Screen::getData(m_dataIds[4]), Screen::getData(m_dataIds[5]), Screen::getData(m_dataIds[6]), Screen::getData(m_dataIds[7]), Screen::getData(m_dataIds[8]), Screen::getData(m_dataIds[9])
+			// );
 
 			Brain.Screen.printAt(m_x, m_y, m_text.c_str());
 		};
@@ -86,22 +89,8 @@ namespace sds {
 
 	private:
 
-		template<typename ... Args>
-		void setText(const std::string& format, Args ... args) {
-
-			int size_s = snprintf(nullptr, 0, format.c_str(), args ...) + 1; // Extra space for '\0'
-			if (size_s <= 0) { throw std::runtime_error("Error during formatting."); }
-			auto size = static_cast<size_t>(size_s);
-			std::unique_ptr<char[]> buf(new char[size]);
-			snprintf(buf.get(), size, format.c_str(), args ...);
-			std::string text = std::string(buf.get(), buf.get() + size - 1); // We don't want the '\0' inside
-
-			m_text = text;
-		};
-
 		int m_x, m_y;
 		uint32_t m_color;
-		std::string m_text;
 
 		std::string m_format;
 		std::array <std::string,10> m_dataIds;

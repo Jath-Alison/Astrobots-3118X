@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <memory>
+#include <stdexcept>
 #include "robot-config.h"
 
 namespace sds {
@@ -21,10 +23,16 @@ namespace sds {
 		void registerCallback(std::string callbackId);
 		void executeCallback();
 
+    // template<typename ... Args>
+		// void setText(const std::string& format, Args ... args);
+    void setText(std::string text);
+
 	protected:
 
 		std::string m_id;
 		std::string m_callbackId;
+
+    std::string m_text;
 
 	};
 

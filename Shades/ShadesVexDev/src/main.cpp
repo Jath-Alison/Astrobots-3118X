@@ -76,6 +76,8 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
 
+    sds::Screen::getElementById("title")->setText("const std::string &format");    
+
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }

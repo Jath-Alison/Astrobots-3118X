@@ -158,6 +158,20 @@
     </Xsd>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame0.jpg" />
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame1.jpg" />
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame10.jpg" />
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame11.jpg" />
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame12.jpg" />
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame2.jpg" />
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame3.jpg" />
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame4.jpg" />
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame5.jpg" />
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame6.jpg" />
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame7.jpg" />
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame8.jpg" />
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame9.jpg" />
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame_00_delay-0.1s.jpg" />
     <Image Include="AstrobotsLogo.png" />
     <Image Include="Home.png" />
     <Image Include="Image.png" />

@@ -19,6 +19,9 @@
     <Filter Include="Resource Files\temp">
       <UniqueIdentifier>{0e14d980-5870-41cf-8a6d-8630e7cae837}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\temp\Gif Frames">
+      <UniqueIdentifier>{9ebdb37f-e8d9-44fc-8e86-9e3fd15b6d30}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -97,6 +100,48 @@
     </Image>
     <Image Include="Motor.png">
       <Filter>Resource Files\temp</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame_00_delay-0.1s.jpg">
+      <Filter>Resource Files\temp</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame0.jpg">
+      <Filter>Resource Files\temp\Gif Frames</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame1.jpg">
+      <Filter>Resource Files\temp\Gif Frames</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame2.jpg">
+      <Filter>Resource Files\temp\Gif Frames</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame3.jpg">
+      <Filter>Resource Files\temp\Gif Frames</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame4.jpg">
+      <Filter>Resource Files\temp\Gif Frames</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame5.jpg">
+      <Filter>Resource Files\temp\Gif Frames</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame6.jpg">
+      <Filter>Resource Files\temp\Gif Frames</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame7.jpg">
+      <Filter>Resource Files\temp\Gif Frames</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame8.jpg">
+      <Filter>Resource Files\temp\Gif Frames</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame9.jpg">
+      <Filter>Resource Files\temp\Gif Frames</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame10.jpg">
+      <Filter>Resource Files\temp\Gif Frames</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame11.jpg">
+      <Filter>Resource Files\temp\Gif Frames</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\ezgif-2-09a852365e-gif-jpg\frame12.jpg">
+      <Filter>Resource Files\temp\Gif Frames</Filter>
     </Image>
   </ItemGroup>
 </Project>

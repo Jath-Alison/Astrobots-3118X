@@ -109,8 +109,16 @@ void usercontrol(void) {
     }else{
       // cataLeft.set(15);
     }
+    Brain.Screen.clearScreen();
+    Brain.Screen.printAt(30, 30, 0, "%f",cataLeft.getOutput());
+    Brain.Screen.printAt(30, 40, 0, "%f",cataLeft.get());
+    Brain.Screen.printAt(30, 50, 0, "%f",cataRot.angle());
     cataLeft.update();
     cataRight.update();
+    if(cataLeft.getOutput() < 0){
+      cataLeft.stop();
+      cataRight.stop();
+    }
 
     if(Controller1.ButtonL1.pressing()){
       wings.open();

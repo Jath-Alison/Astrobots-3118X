@@ -20,11 +20,11 @@ extern motor_group LeftWheels;
 
 extern Jath::TankDrive base;
 
-// extern motor cataLeft;
-// extern motor cataRight;
+extern motor cataLeft;
+extern motor cataRight;
 extern rotation cataRot;
-extern Jath::CustomMotor cataLeft;
-extern Jath::CustomMotor cataRight;
+// extern Jath::CustomMotor cataLeft;
+// extern Jath::CustomMotor cataRight;
 
 extern pneumatics wings;
 

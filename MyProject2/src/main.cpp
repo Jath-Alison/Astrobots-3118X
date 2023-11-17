@@ -103,19 +103,9 @@ void usercontrol(void) {
 
 
     if(Controller1.ButtonR1.pressing()){
-      cataLeft.set(15);
-    }else if(Controller1.ButtonR2.pressing()){
-      cataLeft.set(0);
+      cataLeft.spin(fwd, 12, volt);
+      cataRight.spin(fwd, 12, volt);
     }else{
-      // cataLeft.set(15);
-    }
-    Brain.Screen.clearScreen();
-    Brain.Screen.printAt(30, 30, 0, "%f",cataLeft.getOutput());
-    Brain.Screen.printAt(30, 40, 0, "%f",cataLeft.get());
-    Brain.Screen.printAt(30, 50, 0, "%f",cataRot.angle());
-    cataLeft.update();
-    cataRight.update();
-    if(cataLeft.getOutput() < 0){
       cataLeft.stop();
       cataRight.stop();
     }

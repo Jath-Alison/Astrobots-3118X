@@ -22,11 +22,11 @@ motor LeftBack = motor(PORT3, ratio6_1, false);
 motor_group LeftWheels = motor_group(LeftFront, LeftMiddle, LeftBack);
 Jath::TankDrive base(LeftWheels, RightWheels);
 
-// motor cataLeft(PORT5, true);
-// motor cataRight(PORT18, false);
+motor cataLeft(PORT2, true);
+motor cataRight(PORT18, false);
 rotation cataRot(PORT4, true);
-Jath::CustomMotor cataLeft(motor(PORT2,false), &cataRot);
-Jath::CustomMotor cataRight(motor(PORT18, true), &cataRot);
+// Jath::CustomMotor cataLeft(motor(PORT2,false), &cataRot);
+// Jath::CustomMotor cataRight(motor(PORT18, true), &cataRot);
 
 pneumatics wings(Brain.ThreeWirePort.A);
 
@@ -40,11 +40,11 @@ pneumatics wings(Brain.ThreeWirePort.A);
  * This should be called at the start of your int main function.
  */
 void vexcodeInit( void ) {
-  cataRight.setControlMode(Jath::CustomMotor::Follower);
-  cataRight.m_followMotor = &cataLeft;
+  // cataRight.setControlMode(Jath::CustomMotor::Follower);
+  // cataRight.m_followMotor = &cataLeft;
 
-  cataLeft.setControlMode(Jath::CustomMotor::Angle);
-  cataLeft.m_pid.setConstants(.01, 0, 0);
+  // cataLeft.setControlMode(Jath::CustomMotor::Angle);
+  // cataLeft.m_pid.setConstants(1, 0, 0);
 
   Brain.Screen.print("Device initialization...");
   Brain.Screen.setCursor(2, 1);

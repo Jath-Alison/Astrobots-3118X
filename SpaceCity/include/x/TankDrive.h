@@ -4,6 +4,7 @@
 #include "x/xMotor.h"
 
 #include <string>
+#include <functional>
 #include <map>
 
 namespace x{
@@ -13,12 +14,12 @@ namespace x{
 
       TankDrive(vex::motor_group left, vex::motor_group right) : m_left("leftDrive", left), m_right("rightDrive", right){}
 
-      TankDrive& withScales(double x, double y, double rot){
-        m_xScale = x; m_yScale = y; m_rotScale = rot; return *this;
-      }
-      void setScales(double x, double y, double rot){
-        m_xScale = x; m_yScale = y; m_rotScale = rot;
-      }
+      // TankDrive& withScales(double x, double y, double rot){
+      //   m_xScale = x; m_yScale = y; m_rotScale = rot; return *this;
+      // }
+      // void setScales(double x, double y, double rot){
+      //   m_xScale = x; m_yScale = y; m_rotScale = rot;
+      // }
 
       void arcade(double x, double y, double rot){
         m_cmdX = x;
@@ -32,10 +33,13 @@ namespace x{
       };
 
       void update() {
-        m_left.set(  (m_cmdY * m_yScale) + (m_cmdRot * m_rotScale));
-        m_right.set(-(m_cmdY * m_yScale) + (m_cmdRot * m_rotScale));
+        m_left.set(  (m_yScale(m_cmdY)) + (m_rotScale(m_cmdRot)) );
+        m_right.set(-(m_yScale(m_cmdY)) + (m_rotScale(m_cmdRot)) );
       }
 
+      std::function<double(double)> m_xScale = [](double x){return x; };
+      std::function<double(double)> m_yScale = [](double y){return y; };
+      std::function<double(double)> m_rotScale = [](double rot){return rot; };
       
     protected:
 
@@ -46,9 +50,6 @@ namespace x{
       double m_cmdY{0};
       double m_cmdRot{0};
 
-      double m_xScale{1};
-      double m_yScale{1};
-      double m_rotScale{1};
 
   };
 }

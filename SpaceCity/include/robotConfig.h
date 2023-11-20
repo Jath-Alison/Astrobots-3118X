@@ -5,7 +5,7 @@
 #include "x/TankDrive.h"
 #include "x/leds.h"
 
-extern vex::brain brian;
+extern vex::brain Brain;
 extern vex::controller controller1;
 
 extern addressable_led leds;

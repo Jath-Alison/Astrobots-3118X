@@ -1,0 +1,24 @@
+#include "robotConfig.h"
+#include "x/leds.h"
+
+vex::brain brian;
+vex::controller controller1(vex::primary);
+
+addressable_led leds(brian.ThreeWirePort.G, 30);
+
+vex::motor leftMotorF(vex::PORT1, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorM(vex::PORT2, vex::gearSetting::ratio6_1, false);
+vex::motor leftMotorB(vex::PORT3, vex::gearSetting::ratio6_1, true);
+vex::motor_group leftMotors(leftMotorF, leftMotorM, leftMotorB);
+
+vex::motor rightMotorF(vex::PORT6, vex::gearSetting::ratio6_1, true);
+vex::motor rightMotorM(vex::PORT16, vex::gearSetting::ratio6_1, false);
+vex::motor rightMotorB(vex::PORT9, vex::gearSetting::ratio6_1, true);
+vex::motor_group rightMotors(rightMotorF, rightMotorM, rightMotorB);
+
+x::TankDrive drive = x::TankDrive(leftMotors, rightMotors).withScales(1, 1, 1);
+
+x::xMotor intake = x::xMotor( "intake", vex::motor(vex::PORT19, vex::gearSetting::ratio6_1, true)).withSpeedMode(false);
+x::xMotor flywheel = x::xMotor( "flywheel", vex::motor(vex::PORT5, vex::gearSetting::ratio6_1, false)).withSpeedMode(false);
+
+vex::pneumatics wings(brian.ThreeWirePort.A);

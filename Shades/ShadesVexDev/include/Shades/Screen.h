@@ -22,8 +22,10 @@ namespace sds {
 	{
 	public:
 		static void initialize();
+    static void initialize(std::string xml);
 
     static int eventLoop();
+    static int displayLoop();
 
 		static void display();
 
@@ -48,6 +50,8 @@ namespace sds {
 	private:
 		Screen();
 
+    static bool m_changed;
+
 		static tinyxml2::XMLElement* getScreen(std::string namescreenId);
 
 		static std::vector <std::shared_ptr <displayable>> m_displayables;
@@ -58,6 +62,8 @@ namespace sds {
 		static tinyxml2::XMLDocument m_doc;
 		static tinyxml2::XMLElement* m_shadesXml;
 		static std::map <std::string, tinyxml2::XMLElement*> m_screens;
+
+    static int m_refreshRate;
 	};
 
 }

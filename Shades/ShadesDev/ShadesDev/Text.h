@@ -53,7 +53,7 @@ namespace sds {
 			m_text = text;
 			m_x = x;
 			m_y = y;
-			m_size = size;
+			m_size = 16;
 			m_color = color;
 		}
 

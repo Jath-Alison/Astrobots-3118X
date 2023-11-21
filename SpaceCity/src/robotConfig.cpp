@@ -19,6 +19,6 @@ vex::motor_group rightMotors(rightMotorF, rightMotorM, rightMotorB);
 x::TankDrive drive = x::TankDrive(leftMotors, rightMotors).withScales(1, 1, 1);
 
 x::xMotor intake = x::xMotor( "intake", vex::motor(vex::PORT19, vex::gearSetting::ratio6_1, true)).withSpeedMode(false);
-x::xMotor flywheel = x::xMotor( "flywheel", vex::motor(vex::PORT5, vex::gearSetting::ratio6_1, false)).withSpeedMode(false);
+x::xMotor flywheel = x::xMotor( "flywheel", vex::motor(vex::PORT5, vex::gearSetting::ratio6_1, true)).withSpeedMode(false);
 
 vex::pneumatics wings(Brain.ThreeWirePort.A);

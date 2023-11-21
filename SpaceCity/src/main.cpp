@@ -48,7 +48,40 @@ void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
+
+  // intake.spin(vex::fwd);
+  // wait(.25,vex::sec);
+  // intake.stop();
+
+  // drive.arcade(0,75,0);
+  // wait(1.5,vex::sec);
+  // drive.arcade(0,-50,0);
+  // wait(0.5,vex::sec);
+  // drive.arcade(0,0,0);//right score 1 auton
+
+  wings.open();
+  drive.arcade(0,-35,0);
+  wait(0.35,vex::sec);
+  drive.arcade(0,-25,25);
+  wait(.75,vex::sec);
+  wings.close();
+  drive.arcade(0,50,0);
+  wait(.75,vex::sec);
+  drive.arcade(0,0,0);
+
+  intake.spin(vex::fwd, 5, vex::volt);
+  wait(.25,vex::sec);
+  intake.stop();
+
+  drive.arcade(0,0,-35);
+  wait(.35,vex::sec);
+  drive.arcade(0,75,0);
+  wait(.5,vex::sec);
+  drive.arcade(0,0,-50);
+  wait(.2,vex::sec);
+  drive.arcade(0,20,0);
 }
+
 
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
@@ -74,7 +107,7 @@ void usercontrol(void) {
       leds.clear(vex::color::red);
       intake.set(-100);
     }else if(controller1.ButtonR1.RELEASED ){
-      intake.set(15);
+      intake.set(50);
     } else if(controller1.ButtonR2.RELEASED ){
       intake.set(0);
     }
@@ -90,14 +123,14 @@ void usercontrol(void) {
     }
 
     if(controller1.ButtonL1.pressing()){
-      drive.arcade(0,controller1.Axis3.position(),controller1.Axis1.position());
+      drive.arcade(0,controller1.Axis3.position()/2.f,controller1.Axis1.position()/3.f);
     }else{
       drive.LeftSplitArcade(controller1);
     }
 
-    if(controller1.ButtonL2.pressing()){
+    if(controller1.ButtonL2.PRESSED){
       wings.open();
-    }else{
+    }else if(controller1.ButtonL2.RELEASED){
       wings.close();
     }
 

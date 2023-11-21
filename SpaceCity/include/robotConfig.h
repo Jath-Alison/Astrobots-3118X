@@ -3,11 +3,12 @@
 #include "vex.h"
 #include "x/xMotor.h"
 #include "x/TankDrive.h"
-#include "x/leds.h"
+#include "x/SmartLeds.h"
 
 extern vex::brain Brain;
 extern vex::controller controller1;
 
+extern x::Leds xleds;
 extern addressable_led leds;
 
 extern vex::motor leftMotorF;

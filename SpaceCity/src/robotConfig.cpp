@@ -1,10 +1,10 @@
 #include "robotConfig.h"
-#include "x/leds.h"
 
 vex::brain Brain;
 vex::controller controller1(vex::primary);
 
-addressable_led leds(Brain.ThreeWirePort.G, 30);
+x::Leds xleds(36);
+addressable_led leds(Brain.ThreeWirePort.H, 36);
 
 vex::motor leftMotorF(vex::PORT1, vex::gearSetting::ratio6_1, true);
 vex::motor leftMotorM(vex::PORT2, vex::gearSetting::ratio6_1, false);

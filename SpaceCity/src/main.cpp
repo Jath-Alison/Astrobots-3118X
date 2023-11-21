@@ -10,11 +10,54 @@
 #include "vex.h"
 #include <string>
 #include "robotConfig.h"
-#include "x/leds.h"
 #include "Shades\Shades.h"
 
 // A global instance of competition
 vex::competition Competition;
+namespace x{
+template<typename T>
+  inline T cap(T input, T limit){
+    if(input > limit){
+      return limit;
+    }else {
+      return input;
+    }
+  }
+
+  template<typename T>
+  inline T floor(T input, T limit){
+    if(input < limit){
+      return limit;
+    }else {
+      return input;
+    }
+  }
+}
+void ledTest1(){
+  xleds.setMode(x::Leds::mode::PULSE);
+  xleds.setSpeed(2);
+  xleds.setFillerColor(vex::color(0,0,25));
+  xleds.set(0,5, vex::color::yellow);
+}
+void ledTest2(double pct){
+  xleds.setMode(x::Leds::mode::STATIC);
+  xleds.setPos();
+  xleds.setAll(vex::color(25,25,25));
+  if(pct > 0){
+    xleds.set(0, (xleds.getColors().size()*(pct/100.f)), vex::color(0,100,0));
+  }else if(pct < 0){
+    xleds.set((xleds.getColors().size()* (1-(-pct/100.f)) ) ,xleds.getColors().size(), vex::color(100,0,0));
+  }else{
+
+  }
+
+  
+}
+void ledTest3(){
+  xleds.setSpeed(1);
+  xleds.gradient(0,64,0,300);
+  xleds.setMode(x::Leds::mode::LOOP);
+}
 
 // define your global instances of motors and other devices here
 
@@ -98,13 +141,15 @@ void usercontrol(void) {
 
     // leds.clear();   
 
+    int pct = 0;
+
   while (1) {
 
     if (controller1.ButtonR1.pressing()) {
-      leds.clear(vex::color::green);
+      // leds.clear(vex::color::green);
       intake.set(100);
     }else if (controller1.ButtonR2.pressing()){
-      leds.clear(vex::color::red);
+      // leds.clear(vex::color::red);
       intake.set(-100);
     }else if(controller1.ButtonR1.RELEASED ){
       intake.set(50);
@@ -113,10 +158,10 @@ void usercontrol(void) {
     }
     
     if (controller1.ButtonX.PRESSED) {
-      flywheel.set(flywheel.get()+10);
+      flywheel.set( x::cap<double>( flywheel.get()+10, 100));
       // flywheel.spin(vex::fwd, 12, vex::volt);
     }else if (controller1.ButtonB.PRESSED){
-      flywheel.set(flywheel.get()-10);
+      flywheel.set(x::floor<double>( flywheel.get()-10, -100));
       // flywheel.spin(vex::fwd, 12, vex::volt);
     }else if ( controller1.ButtonA.pressing()){
       flywheel.set(0);
@@ -136,8 +181,8 @@ void usercontrol(void) {
 
     // std::string output = "";
     // output = string_format("Hello World %d", flywheel.get());
-
-    
+    ledTest2(flywheel.get());
+    xleds.update(&leds);
 
     vex::wait(20, vex::msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

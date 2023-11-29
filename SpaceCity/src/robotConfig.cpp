@@ -22,3 +22,5 @@ x::xMotor intake = x::xMotor( "intake", vex::motor(vex::PORT19, vex::gearSetting
 x::xMotor flywheel = x::xMotor( "flywheel", vex::motor(vex::PORT5, vex::gearSetting::ratio6_1, true)).withSpeedMode(false);
 
 vex::pneumatics wings(Brain.ThreeWirePort.A);
+
+vex::inertial inert(vex::PORT11);

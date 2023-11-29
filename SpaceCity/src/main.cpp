@@ -59,6 +59,46 @@ void ledTest3(){
   xleds.setMode(x::Leds::mode::LOOP);
 }
 
+int getSign(double in){
+  if (in<0){return -1;}
+  if (in>0){return 1;}
+  return 0;
+}
+
+void turnToFace(double deg){
+  bool running = true;
+  int count = 0;
+  while(running){
+    double error = deg - inert.yaw();
+    double speed = error*0.5;
+    if(abs(speed) > 50){speed*=.25;} else {speed *= 0.5;}
+    drive.arcade(0, 0, speed + getSign(error)*15);
+    if(abs(error) < 5){count++;}else{count = 0;}
+    if(count > 20){running = false;}
+    wait(0.05, vex::msec);
+  }
+  drive.arcade(0, 0, 0);
+}
+
+
+void driveTo(double inch){
+
+  leftMotors.setPosition(0, vex::deg);
+  rightMotors.setPosition(0, vex::deg);
+  double deg = inch/(3.25 * 3.1415) * 360;
+  double error = deg - (leftMotors.position(vex::degrees) + leftMotors.position(vex::degrees))/2.f;
+  int count = 0;
+  
+  while(count < 20){
+    double error = deg - (leftMotors.position(vex::degrees) + leftMotors.position(vex::degrees))/2.f;
+    double speed = error*0.5;
+    if(abs(speed) > 50){speed*=.25;} else {speed *= 0.25;}
+    drive.arcade(0, speed + getSign(error)*15, 0);
+    if(abs(error) < 5){count++;}else{count = 0;}
+    wait(0.05, vex::msec);
+  }
+  drive.arcade(0, 0, 0);
+}
 // define your global instances of motors and other devices here
 
 /*---------------------------------------------------------------------------*/
@@ -96,33 +136,54 @@ void autonomous(void) {
   // wait(.25,vex::sec);
   // intake.stop();
 
-  // drive.arcade(0,75,0);
-  // wait(1.5,vex::sec);
-  // drive.arcade(0,-50,0);
-  // wait(0.5,vex::sec);
-  // drive.arcade(0,0,0);//right score 1 auton
-
-  wings.open();
-  drive.arcade(0,-35,0);
-  wait(0.35,vex::sec);
-  drive.arcade(0,-25,25);
-  wait(.75,vex::sec);
-  wings.close();
-  drive.arcade(0,50,0);
-  wait(.75,vex::sec);
-  drive.arcade(0,0,0);
-
-  intake.spin(vex::fwd, 5, vex::volt);
-  wait(.25,vex::sec);
-  intake.stop();
-
-  drive.arcade(0,0,-35);
-  wait(.35,vex::sec);
   drive.arcade(0,75,0);
-  wait(.5,vex::sec);
-  drive.arcade(0,0,-50);
-  wait(.2,vex::sec);
-  drive.arcade(0,20,0);
+  wait(1.5,vex::sec);
+  drive.arcade(0,-50,0);
+  wait(0.5,vex::sec);
+  drive.arcade(0,0,0);//right score 1 auton
+
+  // wings.open();
+  // drive.arcade(0,-35,0);
+  // wait(0.35,vex::sec);
+  // drive.arcade(0,-25,25);
+  // wait(.75,vex::sec);
+  // wings.close();
+  // drive.arcade(0,50,0);
+  // wait(.75,vex::sec);
+  // drive.arcade(0,0,0);
+
+  // intake.spin(vex::fwd, 5, vex::volt);
+  // wait(.25,vex::sec);
+  // intake.stop();
+
+  // drive.arcade(0,0,-35);
+  // wait(.35,vex::sec);
+  // drive.arcade(0,75,0);
+  // wait(.5,vex::sec);
+  // drive.arcade(0,0,-50);
+  // wait(.2,vex::sec);
+  // drive.arcade(0,20,0);//left awp
+
+
+  // intake.spin(vex::fwd, 5, vex::volt);
+  // wait(.25,vex::sec);
+  // intake.stop();
+
+  // turnToFace(45);
+  // wait(.25,vex::sec);
+  // driveTo(24);
+  // wait(.25,vex::sec);
+  // turnToFace(0);
+  // drive.arcade(0,100,0);
+  // wait(.125,vex::sec);
+  // driveTo(-10);
+  // wait(.25,vex::sec);
+  // turnToFace(-90);
+  // wait(.25,vex::sec);
+  // driveTo(48);
+
+  
+
 }
 
 
@@ -196,6 +257,7 @@ int main() {
 
   // drive.m_rotScale = [](double rot){}
 
+  inert.calibrate();
 
   // Set up callbacks for autonomous and driver control periods.
   Competition.autonomous(autonomous);

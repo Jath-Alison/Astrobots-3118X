@@ -26,4 +26,6 @@ extern x::TankDrive drive;
 extern x::xMotor intake;
 extern x::xMotor flywheel;
 
+extern vex::inertial inert;
+
 extern vex::pneumatics wings;

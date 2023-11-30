@@ -11,6 +11,8 @@
 #include <string>
 #include "robotConfig.h"
 #include "Shades\Shades.h"
+#include "x\Vec2.h"
+#include "x\Logger.h"
 
 // A global instance of competition
 vex::competition Competition;
@@ -201,6 +203,9 @@ void usercontrol(void) {
   // User control code here, inside the loop
 
     // leds.clear();   
+
+    x::Logger test("test.csv");
+    x::Vec2 origin = x::XandY(0,0);
 
     int pct = 0;
 

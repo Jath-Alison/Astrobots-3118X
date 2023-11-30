@@ -2,6 +2,7 @@
 
 #include "vex.h"
 #include "x/xMotor.h"
+#include "x/Logger.h"
 
 #include <string>
 #include <map>

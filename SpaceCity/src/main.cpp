@@ -13,6 +13,7 @@
 #include "Shades\Shades.h"
 #include "x\Vec2.h"
 #include "x\Logger.h"
+#include "shades+.h"
 
 // A global instance of competition
 vex::competition Competition;
@@ -74,16 +75,16 @@ void turnToFace(double deg){
     double error = deg - inert.yaw();
     double speed = error*0.5;
     if(abs(speed) > 50){speed*=.25;} else {speed *= 0.5;}
-    drive.arcade(0, 0, speed + getSign(error)*15);
+    smartDrive.arcade(0, 0, speed + getSign(error)*15);
     if(abs(error) < 5){count++;}else{count = 0;}
     if(count > 20){running = false;}
     wait(0.05, vex::msec);
   }
-  drive.arcade(0, 0, 0);
+  smartDrive.arcade(0, 0, 0);
 }
 
 
-void driveTo(double inch){
+void DriveTo(double inch){
 
   leftMotors.setPosition(0, vex::deg);
   rightMotors.setPosition(0, vex::deg);
@@ -95,11 +96,11 @@ void driveTo(double inch){
     double error = deg - (leftMotors.position(vex::degrees) + leftMotors.position(vex::degrees))/2.f;
     double speed = error*0.5;
     if(abs(speed) > 50){speed*=.25;} else {speed *= 0.25;}
-    drive.arcade(0, speed + getSign(error)*15, 0);
+    smartDrive.arcade(0, speed + getSign(error)*15, 0);
     if(abs(error) < 5){count++;}else{count = 0;}
     wait(0.05, vex::msec);
   }
-  drive.arcade(0, 0, 0);
+  smartDrive.arcade(0, 0, 0);
 }
 // define your global instances of motors and other devices here
 
@@ -138,33 +139,33 @@ void autonomous(void) {
   // wait(.25,vex::sec);
   // intake.stop();
 
-  drive.arcade(0,75,0);
+  smartDrive.arcade(0,75,0);
   wait(1.5,vex::sec);
-  drive.arcade(0,-50,0);
+  smartDrive.arcade(0,-50,0);
   wait(0.5,vex::sec);
-  drive.arcade(0,0,0);//right score 1 auton
+  smartDrive.arcade(0,0,0);//right score 1 auton
 
   // wings.open();
-  // drive.arcade(0,-35,0);
+  // smartDrive.arcade(0,-35,0);
   // wait(0.35,vex::sec);
-  // drive.arcade(0,-25,25);
+  // smartDrive.arcade(0,-25,25);
   // wait(.75,vex::sec);
   // wings.close();
-  // drive.arcade(0,50,0);
+  // smartDrive.arcade(0,50,0);
   // wait(.75,vex::sec);
-  // drive.arcade(0,0,0);
+  // smartDrive.arcade(0,0,0);
 
   // intake.spin(vex::fwd, 5, vex::volt);
   // wait(.25,vex::sec);
   // intake.stop();
 
-  // drive.arcade(0,0,-35);
+  // smartDrive.arcade(0,0,-35);
   // wait(.35,vex::sec);
-  // drive.arcade(0,75,0);
+  // smartDrive.arcade(0,75,0);
   // wait(.5,vex::sec);
-  // drive.arcade(0,0,-50);
+  // smartDrive.arcade(0,0,-50);
   // wait(.2,vex::sec);
-  // drive.arcade(0,20,0);//left awp
+  // smartDrive.arcade(0,20,0);//left awp
 
 
   // intake.spin(vex::fwd, 5, vex::volt);
@@ -173,16 +174,16 @@ void autonomous(void) {
 
   // turnToFace(45);
   // wait(.25,vex::sec);
-  // driveTo(24);
+  // smartDriveTo(24);
   // wait(.25,vex::sec);
   // turnToFace(0);
-  // drive.arcade(0,100,0);
+  // smartDrive.arcade(0,100,0);
   // wait(.125,vex::sec);
-  // driveTo(-10);
+  // smartDriveTo(-10);
   // wait(.25,vex::sec);
   // turnToFace(-90);
   // wait(.25,vex::sec);
-  // driveTo(48);
+  // smartDriveTo(48);
 
   
 
@@ -204,8 +205,8 @@ void usercontrol(void) {
 
     // leds.clear();   
 
-    x::Logger test("test.csv");
     x::Vec2 origin = x::XandY(0,0);
+
 
     int pct = 0;
 
@@ -233,10 +234,14 @@ void usercontrol(void) {
       flywheel.set(0);
     }
 
+
+    if(controller1.ButtonA.pressing()){
+      smartDrive.driveToPoint(x::XandY(0,0));
+    }else
     if(controller1.ButtonL1.pressing()){
-      drive.arcade(0,controller1.Axis3.position()/2.f,controller1.Axis1.position()/3.f);
+      smartDrive.arcade(0,controller1.Axis3.position()/2.f,controller1.Axis1.position()/3.f);
     }else{
-      drive.LeftSplitArcade(controller1);
+      smartDrive.LeftSplitArcade(controller1);
     }
 
     if(controller1.ButtonL2.PRESSED){
@@ -255,16 +260,21 @@ void usercontrol(void) {
   }
 }
 
+int tracking(){ smartDrive.track(); return 0;}
 //
 // Main will set up the competition functions and callbacks.
 //
 int main() {
 
-  // drive.m_rotScale = [](double rot){}
+  // smartDrive.m_rotScale = [](double rot){}
+
+  shadesInit();
+
+  vex::task track(tracking);
 
   inert.calibrate();
 
-  // Set up callbacks for autonomous and driver control periods.
+  // Set up callbacks for autonomous and smartDriver control periods.
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
 

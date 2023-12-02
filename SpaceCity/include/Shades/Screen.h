@@ -32,6 +32,7 @@ namespace sds {
 		static void load(std::string screenId);
 
 		static void executeCallback(std::string callbackId);
+		static void addCallback(std::string callbackId, std::function <void(void)> function);
 
 		static void handleClick(int x, int y);
 
@@ -49,12 +50,15 @@ namespace sds {
 			return dynamic_cast <Type*> (sds::Screen::getElementById(id).get());
 		}
 
+		static std::string getScreenId();
+
 	private:
 		Screen();
 
     	static bool m_changed;
 
 		static tinyxml2::XMLElement* getScreen(std::string namescreenId);
+		static std::string m_screenId;
 
 		static std::vector <std::shared_ptr <displayable>> m_displayables;
 		static std::unordered_map < std::string, std::function <void(void)>> m_functions;

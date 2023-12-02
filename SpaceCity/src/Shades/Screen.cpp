@@ -1,17 +1,19 @@
 #include "Shades\Screen.h"
 #include "Shades\displayable.h"
 #include "Shades\displayables.h"
+#include "Shades\Screen.h"
 
 namespace sds {
 
-	Screen::Screen()
-	{
+    Screen::Screen(){
 	}
 
 	std::vector <std::shared_ptr <displayable>> Screen::m_displayables = {};
 
 	std::unordered_map < std::string, std::function <void(void)>> Screen::m_functions;
 	std::unordered_map <std::string, double> Screen::m_data;
+
+	std::string Screen::m_screenId = "home";
 	
 	tinyxml2::XMLDocument Screen::m_doc;
 	tinyxml2::XMLElement* Screen::m_shadesXml = nullptr;
@@ -20,6 +22,11 @@ namespace sds {
   bool Screen::m_changed = false;
 
   int Screen::m_refreshRate = 500;
+
+      std::string Screen::getScreenId()
+    {
+        return m_screenId;
+    }
 
 	void Screen::initialize()
 	{
@@ -106,7 +113,7 @@ namespace sds {
 
 	void Screen::load(std::string screenId)
 	{
-
+	m_screenId = screenId;
     m_changed = true;
     
 		m_displayables.clear();
@@ -149,9 +156,12 @@ namespace sds {
 			m_functions[callbackId]();
 		}
 	}
-
-	void Screen::handleClick(int x, int y)
-	{
+    void Screen::addCallback(std::string callbackId, std::function<void(void)> function)
+    {
+		m_functions[callbackId] = function;
+    }
+    void Screen::handleClick(int x, int y)
+    {
 		for (size_t i = 0; i < m_displayables.size(); i++)
 		{
 			if (m_displayables[i]->checkBounds(x, y)) {

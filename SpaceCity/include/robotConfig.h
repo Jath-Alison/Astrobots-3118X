@@ -3,6 +3,7 @@
 #include "vex.h"
 #include "x/xMotor.h"
 #include "x/TankDrive.h"
+#include "x/SmartDrive.h"
 #include "x/SmartLeds.h"
 
 extern vex::brain Brain;
@@ -21,11 +22,18 @@ extern vex::motor rightMotorM;
 extern vex::motor rightMotorB;
 extern vex::motor_group rightMotors;
 
+extern vex::inertial inert;
+
 extern x::TankDrive drive;
+extern x::SmartDrive smartDrive;
+
 
 extern x::xMotor intake;
 extern x::xMotor flywheel;
 
-extern vex::inertial inert;
-
 extern vex::pneumatics wings;
+
+extern x::Vec2 initPos;
+extern x::Angle initDir;
+
+extern std::string AllianceColor;

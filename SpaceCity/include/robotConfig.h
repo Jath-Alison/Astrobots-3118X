@@ -5,6 +5,7 @@
 #include "x/TankDrive.h"
 #include "x/SmartDrive.h"
 #include "x/SmartLeds.h"
+#include "Vision.h"
 
 extern vex::brain Brain;
 extern vex::controller controller1;

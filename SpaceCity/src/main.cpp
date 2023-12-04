@@ -14,6 +14,7 @@
 #include "x\Vec2.h"
 #include "x\Logger.h"
 #include "shades+.h"
+#include "DataSet.h"
 
 // A global instance of competition
 vex::competition Competition;
@@ -131,6 +132,7 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
+  waitUntil(!smartDrive.m_inert.isCalibrating() == false);
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
@@ -203,14 +205,19 @@ void autonomous(void) {
 void usercontrol(void) {
   // User control code here, inside the loop
 
+  waitUntil(!smartDrive.m_inert.isCalibrating() == false);
+
     // leds.clear();   
 
     x::Vec2 origin = x::XandY(0,0);
 
+    smartDrive.m_pos = x::XandY(x::Tiles(-1),x::Tiles(-1));
+    std::cout << "pos: " << x::Distance (smartDrive.m_pos.x).tiles() << "," << x::Distance (smartDrive.m_pos.y).tiles() << "\n";
 
-    int pct = 0;
+    DataSet <10> broadSet;
 
   while (1) {
+    std::cout << "pos: " << x::Distance (smartDrive.m_pos.x).tiles() << ", " << x::Distance (smartDrive.m_pos.y).tiles() << ", " << smartDrive.m_dir.degrees() << "\n";
 
     if (controller1.ButtonR1.pressing()) {
       // leds.clear(vex::color::green);
@@ -236,7 +243,10 @@ void usercontrol(void) {
 
 
     if(controller1.ButtonA.pressing()){
-      smartDrive.driveToPoint(x::XandY(0,0));
+      // smartDrive.turnTo(x::Degrees(0));
+      // smartDrive.driveTo(x::Tiles(1));
+      smartDrive.turnTo(smartDrive.m_pos.angleTo(x::XandY(0,0)));
+      while(smartDrive.driveToPoint(x::XandY(0,0)).inches() > 5){}
     }else
     if(controller1.ButtonL1.pressing()){
       smartDrive.arcade(0,controller1.Axis3.position()/2.f,controller1.Axis1.position()/3.f);
@@ -248,6 +258,34 @@ void usercontrol(void) {
       wings.open();
     }else if(controller1.ButtonL2.RELEASED){
       wings.close();
+    }
+
+    if (controller1.ButtonY.PRESSED) {
+      // std::cout << "avg: " << broadSet.getAverage() << "median: " << broadSet.getMedian() << std::endl;
+      
+      // Vision.takeSnapshot(GREEN_BROAD);
+      // for (size_t i = 0; i < 16; i++)
+      // {
+      //   vision::object obj = Vision.objects[i];
+      //   if (obj.angle != 0 || obj.centerX != 0 || obj.centerY != 0)
+      //   {
+      //     // std::cout << i << ":\n"
+      //     //   << "\t" << "angle: " << obj.angle << "\n"
+      //     //   << "\t" << "centerX: " << obj.centerX << "\n"
+      //     //   << "\t" << "centerY: " << obj.centerY << "\n"
+      //     //   << "\t" << "width: " << obj.width << "\n"
+      //     //   << "\t" << "height: " << obj.height << "\n";
+      //     Brain.Screen.drawRectangle(obj.originX, obj.originY, obj.width, obj.height);
+      //   }
+      // }
+    }
+
+    if (controller1.ButtonY.pressing()) {
+      Vision.takeSnapshot(GREEN_BROAD);
+      broadSet.put(Vision.largestObject.centerX - (315/2.f));
+      intake.set(35);
+      std::cout << "median: " << broadSet.getMedian() << "\n";
+      smartDrive.arcade(0,35, broadSet.getMedian() * .25);
     }
 
     // std::string output = "";

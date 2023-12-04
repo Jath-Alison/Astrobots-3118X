@@ -21,8 +21,8 @@ namespace x{
         void driveTo(Distance target);  
         void turnTo(Angle target);
 
-        void driveToPoint(Vec2 target);
-    private:
+        Distance driveToPoint(Vec2 target);
+    
 
         Angle shortestTurnPath(Angle target);
 

@@ -12,8 +12,11 @@ public:
         m_writeIndex ++;
         if(m_writeIndex >= m_buffer.size()){
             m_writeIndex = 0;
+            m_filled = true;
         }
 	}
+
+    bool filled(){return m_filled;}
 
     double getSum(){
         double sum = 0;
@@ -62,6 +65,7 @@ protected:
     std::array <double ,N> m_buffer;
     std::array <double ,N> m_sortedBuffer;
 	int m_writeIndex = 0;
+    bool m_filled;
 };
 
 

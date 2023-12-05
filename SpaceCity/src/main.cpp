@@ -10,11 +10,11 @@
 #include "vex.h"
 #include <string>
 #include "robotConfig.h"
-#include "Shades\Shades.h"
+// #include "Shades\Shades.h"
 #include "x\Vec2.h"
-#include "x\Logger.h"
-#include "shades+.h"
-#include "DataSet.h"
+// #include "x\Logger.h"
+// #include "shades+.h"
+// #include "DataSet.h"
 
 // A global instance of competition
 vex::competition Competition;
@@ -132,20 +132,24 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  waitUntil(!smartDrive.m_inert.isCalibrating() == false);
+  waitUntil(smartDrive.m_inert.isCalibrating() == false);
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
+
+  intake.set(-75);
+  wait(2,vex::sec);
+  intake.set(0);
 
   // intake.spin(vex::fwd);
   // wait(.25,vex::sec);
   // intake.stop();
 
-  smartDrive.arcade(0,75,0);
-  wait(1.5,vex::sec);
-  smartDrive.arcade(0,-50,0);
-  wait(0.5,vex::sec);
-  smartDrive.arcade(0,0,0);//right score 1 auton
+  // smartDrive.arcade(0,75,0);
+  // wait(1.5,vex::sec);
+  // smartDrive.arcade(0,-50,0);
+  // wait(0.5,vex::sec);
+  // smartDrive.arcade(0,0,0);//right score 1 auton
 
   // wings.open();
   // smartDrive.arcade(0,-35,0);
@@ -205,19 +209,19 @@ void autonomous(void) {
 void usercontrol(void) {
   // User control code here, inside the loop
 
-  waitUntil(!smartDrive.m_inert.isCalibrating() == false);
+  waitUntil(smartDrive.m_inert.isCalibrating() == false);
 
     // leds.clear();   
 
-    x::Vec2 origin = x::XandY(0,0);
+    // x::Vec2 origin = x::XandY(0,0);
 
-    smartDrive.m_pos = x::XandY(x::Tiles(-1),x::Tiles(-1));
-    std::cout << "pos: " << x::Distance (smartDrive.m_pos.x).tiles() << "," << x::Distance (smartDrive.m_pos.y).tiles() << "\n";
+    // smartDrive.m_pos = x::XandY(x::Tiles(-1),x::Tiles(-1));
+    // std::cout << "pos: " << x::Distance (smartDrive.m_pos.x).tiles() << "," << x::Distance (smartDrive.m_pos.y).tiles() << "\n";
 
-    DataSet <10> broadSet;
+    // DataSet <10> broadSet;
 
   while (1) {
-    std::cout << "pos: " << x::Distance (smartDrive.m_pos.x).tiles() << ", " << x::Distance (smartDrive.m_pos.y).tiles() << ", " << smartDrive.m_dir.degrees() << "\n";
+    // std::cout << "pos: " << x::Distance (smartDrive.m_pos.x).tiles() << ", " << x::Distance (smartDrive.m_pos.y).tiles() << ", " << smartDrive.m_dir.degrees() << "\n";
 
     if (controller1.ButtonR1.pressing()) {
       // leds.clear(vex::color::green);
@@ -242,16 +246,22 @@ void usercontrol(void) {
     }
 
 
-    if(controller1.ButtonA.pressing()){
-      // smartDrive.turnTo(x::Degrees(0));
-      // smartDrive.driveTo(x::Tiles(1));
-      smartDrive.turnTo(smartDrive.m_pos.angleTo(x::XandY(0,0)));
-      while(smartDrive.driveToPoint(x::XandY(0,0)).inches() > 5){}
-    }else
+    // if(controller1.ButtonA.pressing()){
+    //   // smartDrive.turnTo(x::Degrees(0));
+    //   // smartDrive.driveTo(x::Tiles(1));
+    //   // smartDrive.turnTo(smartDrive.m_pos.angleTo(x::XandY(0,0)));
+    //   // while(smartDrive.driveToPoint(x::XandY(0,0)).inches() > 5){}
+    // }else
     if(controller1.ButtonL1.pressing()){
       smartDrive.arcade(0,controller1.Axis3.position()/2.f,controller1.Axis1.position()/3.f);
     }else{
       smartDrive.LeftSplitArcade(controller1);
+    }
+
+    if(controller1.ButtonLeft.pressing()){
+      climb.open();
+    }else{
+      climb.close();
     }
 
     if(controller1.ButtonL2.PRESSED){
@@ -281,17 +291,17 @@ void usercontrol(void) {
     }
 
     if (controller1.ButtonY.pressing()) {
-      Vision.takeSnapshot(GREEN_BROAD);
-      broadSet.put(Vision.largestObject.centerX - (315/2.f));
-      intake.set(35);
-      std::cout << "median: " << broadSet.getMedian() << "\n";
-      smartDrive.arcade(0,35, broadSet.getMedian() * .25);
+      // Vision.takeSnapshot(GREEN_BROAD);
+      // broadSet.put(Vision.largestObject.centerX - (315/2.f));
+      // intake.set(35);
+      // std::cout << "median: " << broadSet.getMedian() << "\n";
+      // smartDrive.arcade(0,35, broadSet.getMedian() * .25);
     }
 
     // std::string output = "";
     // output = string_format("Hello World %d", flywheel.get());
-    ledTest2(flywheel.get());
-    xleds.update(&leds);
+    // ledTest2(flywheel.get());
+    // xleds.update(&leds);
 
     vex::wait(20, vex::msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
@@ -306,7 +316,7 @@ int main() {
 
   // smartDrive.m_rotScale = [](double rot){}
 
-  shadesInit();
+  // shadesInit();
 
   vex::task track(tracking);
 

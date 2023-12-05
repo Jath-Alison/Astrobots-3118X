@@ -33,6 +33,7 @@ extern x::xMotor intake;
 extern x::xMotor flywheel;
 
 extern vex::pneumatics wings;
+extern vex::pneumatics climb;
 
 extern x::Vec2 initPos;
 extern x::Angle initDir;

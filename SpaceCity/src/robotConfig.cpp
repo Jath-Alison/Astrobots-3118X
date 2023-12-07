@@ -30,4 +30,6 @@ vex::pneumatics climb(Brain.ThreeWirePort.H);
 x::Vec2 initPos = x::XandY(0,0);
 x::Angle initDir = x::Angle(0);
 
+vex::gps GPS = vex::gps(vex::PORT14, -76.20, -127.00, vex::mm, 180);
+
 std::string AllianceColor = "no color";

@@ -15,94 +15,12 @@
 #include "x\Logger.h"
 #include "shades+.h"
 #include "DataSet.h"
+#include "Autons.h"
+#include "x\Utils.h"
 
 // A global instance of competition
 vex::competition Competition;
-namespace x{
-template<typename T>
-  inline T cap(T input, T limit){
-    if(input > limit){
-      return limit;
-    }else {
-      return input;
-    }
-  }
 
-  template<typename T>
-  inline T floor(T input, T limit){
-    if(input < limit){
-      return limit;
-    }else {
-      return input;
-    }
-  }
-}
-void ledTest1(){
-  xleds.setMode(x::Leds::mode::PULSE);
-  xleds.setSpeed(2);
-  xleds.setFillerColor(vex::color(0,0,25));
-  xleds.set(0,5, vex::color::yellow);
-}
-void ledTest2(double pct){
-  xleds.setMode(x::Leds::mode::STATIC);
-  xleds.setPos();
-  xleds.setAll(vex::color(25,25,25));
-  if(pct > 0){
-    xleds.set(0, (xleds.getColors().size()*(pct/100.f)), vex::color(0,100,0));
-  }else if(pct < 0){
-    xleds.set((xleds.getColors().size()* (1-(-pct/100.f)) ) ,xleds.getColors().size(), vex::color(100,0,0));
-  }else{
-
-  }
-
-  
-}
-void ledTest3(){
-  xleds.setSpeed(1);
-  xleds.gradient(0,64,0,300);
-  xleds.setMode(x::Leds::mode::LOOP);
-}
-
-int getSign(double in){
-  if (in<0){return -1;}
-  if (in>0){return 1;}
-  return 0;
-}
-
-void turnToFace(double deg){
-  bool running = true;
-  int count = 0;
-  while(running){
-    double error = deg - inert.yaw();
-    double speed = error*0.5;
-    if(abs(speed) > 50){speed*=.25;} else {speed *= 0.5;}
-    smartDrive.arcade(0, 0, speed + getSign(error)*15);
-    if(abs(error) < 5){count++;}else{count = 0;}
-    if(count > 20){running = false;}
-    wait(0.05, vex::msec);
-  }
-  smartDrive.arcade(0, 0, 0);
-}
-
-
-void DriveTo(double inch){
-
-  leftMotors.setPosition(0, vex::deg);
-  rightMotors.setPosition(0, vex::deg);
-  double deg = inch/(3.25 * 3.1415) * 360;
-  double error = deg - (leftMotors.position(vex::degrees) + leftMotors.position(vex::degrees))/2.f;
-  int count = 0;
-  
-  while(count < 20){
-    double error = deg - (leftMotors.position(vex::degrees) + leftMotors.position(vex::degrees))/2.f;
-    double speed = error*0.5;
-    if(abs(speed) > 50){speed*=.25;} else {speed *= 0.25;}
-    smartDrive.arcade(0, speed + getSign(error)*15, 0);
-    if(abs(error) < 5){count++;}else{count = 0;}
-    wait(0.05, vex::msec);
-  }
-  smartDrive.arcade(0, 0, 0);
-}
 // define your global instances of motors and other devices here
 
 /*---------------------------------------------------------------------------*/
@@ -138,8 +56,10 @@ void autonomous(void) {
   // ..........................................................................
 
   intake.set(-75);
-  wait(2,vex::sec);
-  intake.set(0);
+  wait(0.25,vex::sec);
+  intake.set(0);//deploy auton
+
+  SkillsTest();
 
   // intake.spin(vex::fwd);
   // wait(.25,vex::sec);
@@ -247,10 +167,12 @@ void usercontrol(void) {
 
 
     if(controller1.ButtonA.pressing()){
-      smartDrive.turnTo(x::Degrees(0));
+      // smartDrive.turnTo(x::Degrees(-70));
       // smartDrive.driveTo(x::Tiles(1));
       // smartDrive.turnTo(smartDrive.m_pos.angleTo(x::XandY(0,0)));
       // while(smartDrive.driveToPoint(x::XandY(0,0)).inches() > 5){}
+      // smartDrive.driveToPoint(x::XandY(0,0));
+      // OverBarrier();
     }else
     if(controller1.ButtonL1.pressing()){
       smartDrive.arcade(0,controller1.Axis3.position()/2.f,controller1.Axis1.position()/3.f);
@@ -302,8 +224,8 @@ void usercontrol(void) {
 
     // std::string output = "";
     // output = string_format("Hello World %d", flywheel.get());
-    ledTest2(flywheel.get());
-    xleds.update(&leds);
+    // ledTest2(flywheel.get());
+    // xleds.update(&leds);
 
     vex::wait(20, vex::msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

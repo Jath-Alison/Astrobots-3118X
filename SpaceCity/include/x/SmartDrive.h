@@ -5,7 +5,9 @@
 #include "x/TankDrive.h"
 #include "x/Vec2.h"
 #include "x/Units.h"
+#include "x/Utils.h"
 
+extern vex::gps GPS;
 namespace x{
 
     class SmartDrive : public TankDrive {
@@ -22,7 +24,6 @@ namespace x{
         void turnTo(Angle target);
 
         Distance driveToPoint(Vec2 target);
-    
 
         Angle shortestTurnPath(Angle target);
 

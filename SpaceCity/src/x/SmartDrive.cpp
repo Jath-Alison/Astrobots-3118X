@@ -1,15 +1,7 @@
 #include "x\SmartDrive.h"
 #include <iostream>
 
-vex::gps GPS = vex::gps(vex::PORT14, -76.20, -127.00, vex::mm, 180);
-
 namespace x{
-
-    int getSign(double in){
-        if (in<0){return -1;}
-        if (in>0){return 1;}
-        return 0;
-    }
 
     SmartDrive::SmartDrive(TankDrive drive, vex::inertial inert) : TankDrive(drive), m_inert(inert)
     {
@@ -19,13 +11,14 @@ namespace x{
     int SmartDrive::track()
     {
         while(m_inert.isCalibrating()){vex::wait(5, vex::msec);}
-        int count = 0;
+        int count = 600;
         while(true){
             count ++;
-            if(count > 200){
-                // m_pos = XandY( GPS.xPosition(vex::inches), GPS.yPosition(vex::inches) );
-                // m_inert.setHeading(GPS.yaw(vex::deg), vex::deg);
+            if(count > 100 && GPS.quality() > .7){
+                m_pos = XandY( Inches(GPS.xPosition(vex::inches)), Inches(GPS.yPosition(vex::inches)) );
+                m_inert.setHeading(GPS.heading(vex::deg), vex::deg);
                 count = 0;
+                std::cout << "-----------------reset-------------------" << std::endl;
             };
             static double prev = 0;
             m_dir = Degrees(m_inert.heading(vex::degrees));
@@ -37,7 +30,7 @@ namespace x{
             m_pos = m_pos + posChange;
 
             prev = (m_left.position(vex::degrees) - m_right.position(vex::degrees))/2.f;
-            // std::cout << posChange.x << ", " << posChange.y << ", " << std::endl;
+            // std::cout << m_pos.x << ", " << m_pos.y << ", " << m_dir.degrees() << std::endl;
             // std::cout << "\ttravel: " << travel.inches() << std::endl;
 
         vex::wait(20, vex::msec);
@@ -74,11 +67,12 @@ namespace x{
         bool running = true;
         int count = 0;
         while(running){
-            double error = target.degrees() - m_inert.yaw();
-            double speed = error*0.5;
+            Angle error = shortestTurnPath(x::Degrees(target.degrees() - m_inert.heading(vex::degrees)) );
+            double speed = error.degrees()*0.5;
             if(abs(speed) > 50){speed*=.25;} else {speed *= 0.5;}
-            arcade(0, 0, speed + getSign(error)*15);
-            if(abs(error) < 5){count++;}else{count = 0;}
+            arcade(0, 0, speed + getSign(error.degrees())*15);
+            if(abs(error.degrees()) < 5){count++;}else{count = 0;}
+            std::cout << error.degrees() << ", " << count << std::endl;
             if(count > 20){running = false;}
             wait(20, vex::msec);
         }
@@ -92,10 +86,14 @@ namespace x{
 
         std::cout << "pos: " << Distance (m_pos.x).tiles() << "," << Distance (m_pos.y).tiles() << "\n";
         std::cout << "target: " << target.x << "," << target.y << "\n";
-        std::cout << "target angle: " << m_pos.angleTo(target) << "\n";
+        std::cout << "target angle: " << Radians(m_pos.angleTo(target)).degrees() << "\n";
         std::cout << "distance: " << dist.inches() << "\n\n";
 
-        arcade(0,dist.inches() * 3, angle.degrees()*.5);
+        if( abs(angle.degrees()) > 15){
+            arcade(0,0 , angle.degrees());
+        }else{
+            arcade(0,dist.inches() * 3, angle.degrees());
+        }
         update();
         return dist;
     }

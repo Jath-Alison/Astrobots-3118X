@@ -104,3 +104,27 @@ namespace x{
         std::vector <uint32_t> m_mirroredBuffer;
     };
 }
+
+// void ledTest1(){
+//   xleds.setMode(x::Leds::mode::PULSE);
+//   xleds.setSpeed(2);
+//   xleds.setFillerColor(vex::color(0,0,25));
+//   xleds.set(0,5, vex::color::yellow);
+// }
+// void ledTest2(double pct){
+//   xleds.setMode(x::Leds::mode::STATIC);
+//   xleds.setPos();
+//   xleds.setAll(vex::color(25,25,25));
+//   if(pct > 0){
+//     xleds.set(0, (xleds.getColors().size()*(pct/100.f)), vex::color(0,100,0));
+//   }else if(pct < 0){
+//     xleds.set((xleds.getColors().size()* (1-(-pct/100.f)) ) ,xleds.getColors().size(), vex::color(100,0,0));
+//   }else{
+
+//   }
+// }
+// void ledTest3(){
+//   xleds.setSpeed(1);
+//   xleds.gradient(0,64,0,300);
+//   xleds.setMode(x::Leds::mode::LOOP);
+// }

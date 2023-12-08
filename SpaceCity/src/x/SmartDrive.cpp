@@ -66,14 +66,17 @@ namespace x{
     {
         bool running = true;
         int count = 0;
+        Angle prev;
         while(running){
             Angle error = shortestTurnPath(x::Degrees(target.degrees() - m_inert.heading(vex::degrees)) );
             double speed = error.degrees()*0.5;
             if(abs(speed) > 50){speed*=.25;} else {speed *= 0.5;}
+            if(Angle(prev - error).degrees() < 5){speed*=1.25;}
             arcade(0, 0, speed + getSign(error.degrees())*15);
             if(abs(error.degrees()) < 5){count++;}else{count = 0;}
             std::cout << error.degrees() << ", " << count << std::endl;
             if(count > 20){running = false;}
+            prev = error;
             wait(20, vex::msec);
         }
         arcade(0, 0, 0);

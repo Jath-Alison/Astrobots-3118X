@@ -18,20 +18,20 @@ void SkillsTest()
 {
 
     smartDrive.m_pos = x::XandY(
-        x::Tiles(1.75), x::Tiles(2.5)//swap
+        x::Tiles(-1.75), x::Tiles(-2.5)//swap
     );
-    smartDrive.m_inert.setHeading(50, vex::degrees);//change to - 90
+    smartDrive.m_inert.setHeading(-90 -30, vex::degrees);//change to - 90
 
     // smartDrive.arcade(0,-15,-30);
     // wait(0.25, vex::seconds);
     // smartDrive.arcade(0,-15,0);
     flywheel.set(-100);
-    wait(3, vex::seconds);//launching 30
+    wait(15, vex::seconds);//launching 30
     flywheel.set(0);
 
-    smartDrive.arcade(0,30,0);
+    smartDrive.arcade(0,-30,0);
     wait(20, vex::msec);
-    smartDrive.turnTo(x::Degrees(-70));// change to 90
+    smartDrive.turnTo(x::Degrees(110));// change to 90
     smartDrive.driveTo(x::Inches(88));
 
     // Brain.resetTimer();
@@ -39,10 +39,10 @@ void SkillsTest()
     //     if(Brain.timer(vex::seconds) > 10) { break; }
     // }
 
-    smartDrive.turnTo(x::Degrees(-135));//change to 45
-    smartDrive.driveTo(x::Inches(20));
-    smartDrive.turnTo(x::Degrees(-165));//change to 45
+    smartDrive.turnTo(x::Degrees(60));//change to 45
     wings.open();
+    smartDrive.driveTo(x::Inches(30));
+    smartDrive.turnTo(x::Degrees(15));//change to 45
 
     smartDrive.arcade(0, 100, 0);
     wait(0.5, vex::sec);
@@ -55,17 +55,32 @@ void SkillsTest()
     wait(0.5, vex::sec);
     wings.close();
 
+    smartDrive.arcade(0, 0, 50);
+    wait(0.25, vex::sec);
+
+    smartDrive.arcade(0, 100, 25);
+    wait(0.5, vex::sec);
+    smartDrive.arcade(0, -50, 0);
+    wait(0.25, vex::sec);
+    smartDrive.arcade(0, 100, 0);
+    wait(0.5, vex::sec);
+
+    smartDrive.arcade(0, -50, 0);
+    wait(0.5, vex::sec);
+    wings.close();
+
     Brain.resetTimer();
-    while(smartDrive.driveToPoint(x::XandY(x::Tiles(-1),x::Tiles(1))).inches() > 5) {//change to 1
-        if(Brain.timer(vex::seconds) > 10) { break; }
+    while(smartDrive.driveToPoint(x::XandY(x::Tiles(.5),x::Tiles(-1))).inches() > 2.5) {//change to 1
+        // if(Brain.timer(vex::seconds) > 10) { break; }
     }
     Brain.resetTimer();
-    while(smartDrive.driveToPoint(x::XandY(0,0)).inches() > 10) {//change to 1
-        if(Brain.timer(vex::seconds) > 10) { break; }
+    while(smartDrive.driveToPoint(x::XandY(x::Tiles(.5),0)).inches() > 5) {//change to 1
+        // if(Brain.timer(vex::seconds) > 10) { break; }
     }
-    smartDrive.turnTo(x::Degrees(-90));
+    smartDrive.turnTo(x::Degrees(70));
 
     wings.open();
+    climb.open();
 
     smartDrive.arcade(0, 100, 0);
     wait(0.5, vex::sec);
@@ -77,6 +92,28 @@ void SkillsTest()
     smartDrive.arcade(0, -50, 0);
     wait(0.5, vex::sec);
     wings.close();
+    climb.close();
+
+    Brain.resetTimer();
+    while(smartDrive.driveToPoint(x::XandY(x::Tiles(1),x::Tiles(.75))).inches() > 5) {//change to 1
+        // if(Brain.timer(vex::seconds) > 10) { break; }
+    }
+    smartDrive.turnTo(x::Degrees(95));
+
+    wings.open();
+    climb.open();
+
+    smartDrive.arcade(0, 100, 0);
+    wait(0.5, vex::sec);
+    smartDrive.arcade(0, -50, 0);
+    wait(0.25, vex::sec);
+    smartDrive.arcade(0, 100, 0);
+    wait(0.5, vex::sec);
+
+    smartDrive.arcade(0, -50, 0);
+    wait(0.5, vex::sec);
+    wings.close();
+    climb.close();
 
     {// Brain.resetTimer();
     // while(smartDrive.driveToPoint(x::XandY(x::Tiles(1),0)).inches() > 5){//change to 1

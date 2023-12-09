@@ -26,7 +26,7 @@ void SkillsTest()
     // wait(0.25, vex::seconds);
     // smartDrive.arcade(0,-15,0);
     flywheel.set(-100);
-    wait(15, vex::seconds);//launching 30
+    wait(30, vex::seconds);//launching 30
     flywheel.set(0);
 
     smartDrive.arcade(0,-30,0);
@@ -83,7 +83,7 @@ void SkillsTest()
     climb.open();
 
     smartDrive.arcade(0, 100, 0);
-    wait(0.5, vex::sec);
+    wait(0.75, vex::sec);
     smartDrive.arcade(0, -50, 0);
     wait(0.25, vex::sec);
     smartDrive.arcade(0, 100, 0);
@@ -98,13 +98,13 @@ void SkillsTest()
     while(smartDrive.driveToPoint(x::XandY(x::Tiles(1),x::Tiles(.75))).inches() > 5) {//change to 1
         // if(Brain.timer(vex::seconds) > 10) { break; }
     }
-    smartDrive.turnTo(x::Degrees(95));
+    smartDrive.turnTo(x::Degrees(80));
 
     wings.open();
     climb.open();
 
     smartDrive.arcade(0, 100, 0);
-    wait(0.5, vex::sec);
+    wait(0.65, vex::sec);
     smartDrive.arcade(0, -50, 0);
     wait(0.25, vex::sec);
     smartDrive.arcade(0, 100, 0);

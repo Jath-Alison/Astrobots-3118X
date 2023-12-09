@@ -166,8 +166,8 @@ void usercontrol(void) {
     }
 
 
-    if(controller1.ButtonA.pressing()){
-      // smartDrive.turnTo(x::Degrees(-70));
+    if(controller1.ButtonA.pressing() &&  controller1.ButtonLeft.pressing()){
+      smartDrive.turnTo(x::Degrees(-70));
       // smartDrive.driveTo(x::Tiles(1));
       // smartDrive.turnTo(smartDrive.m_pos.angleTo(x::XandY(0,0)));
       // while(smartDrive.driveToPoint(x::XandY(0,0)).inches() > 5){}

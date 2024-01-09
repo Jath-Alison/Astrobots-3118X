@@ -102,7 +102,7 @@ void updateTitleText()
     if(sds::Screen::getScreenId() == "home"){
         sds::displayable* title = sds::Screen::getElementById("title2").get();
         if(title){
-            title->setText(AllianceColor + " - " + selectedAuton);
+            title->setText("AutonDisabled");
         }
     }
 }

@@ -59,58 +59,12 @@ void autonomous(void) {
   wait(0.25,vex::sec);
   intake.set(0);//deploy auton
 
-  SkillsTest();
+  // SkillsTest();
 
-  // intake.spin(vex::fwd);
-  // wait(.25,vex::sec);
-  // intake.stop();
+  scoreRight();
 
-  // smartDrive.arcade(0,75,0);
-  // wait(1.5,vex::sec);
-  // smartDrive.arcade(0,-50,0);
-  // wait(0.5,vex::sec);
-  // smartDrive.arcade(0,0,0);//right score 1 auton
-
-  // wings.open();
-  // smartDrive.arcade(0,-35,0);
-  // wait(0.35,vex::sec);
-  // smartDrive.arcade(0,-25,25);
-  // wait(.75,vex::sec);
-  // wings.close();
-  // smartDrive.arcade(0,50,0);
-  // wait(.75,vex::sec);
-  // smartDrive.arcade(0,0,0);
-
-  // intake.spin(vex::fwd, 5, vex::volt);
-  // wait(.25,vex::sec);
-  // intake.stop();
-
-  // smartDrive.arcade(0,0,-35);
-  // wait(.35,vex::sec);
-  // smartDrive.arcade(0,75,0);
-  // wait(.5,vex::sec);
-  // smartDrive.arcade(0,0,-50);
-  // wait(.2,vex::sec);
-  // smartDrive.arcade(0,20,0);//left awp
-
-
-  // intake.spin(vex::fwd, 5, vex::volt);
-  // wait(.25,vex::sec);
-  // intake.stop();
-
-  // turnToFace(45);
-  // wait(.25,vex::sec);
-  // smartDriveTo(24);
-  // wait(.25,vex::sec);
-  // turnToFace(0);
-  // smartDrive.arcade(0,100,0);
-  // wait(.125,vex::sec);
-  // smartDriveTo(-10);
-  // wait(.25,vex::sec);
-  // turnToFace(-90);
-  // wait(.25,vex::sec);
-  // smartDriveTo(48);
-
+  // leftAwp();
+  // redBar();
   
 
 }
@@ -186,10 +140,12 @@ void usercontrol(void) {
       climb.close();
     }
 
-    if(controller1.ButtonL2.PRESSED){
+    if(controller1.ButtonL2.pressing()){
       wings.open();
-    }else if(controller1.ButtonL2.RELEASED){
+      climb.open();
+    }else{
       wings.close();
+      climb.close();
     }
 
     if (controller1.ButtonY.PRESSED) {

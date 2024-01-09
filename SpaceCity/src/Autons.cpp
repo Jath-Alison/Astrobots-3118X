@@ -129,3 +129,75 @@ void SkillsTest()
     // }
     }
 }
+
+void scoreRight()
+{
+    smartDrive.arcade(0,30,30);
+    wait(.35,vex::sec);
+    smartDrive.arcade(0,30,-50);
+    wait(.5,vex::sec);
+
+    smartDrive.arcade(0,100,0);
+    wait(1.5,vex::sec);
+    smartDrive.arcade(0,-50,0);
+
+    wait(0.5,vex::sec);
+
+    smartDrive.arcade(0,100,0);
+    wait(1.5,vex::sec);
+    smartDrive.arcade(0,-50,0);
+
+    wait(0.5,vex::sec);
+    smartDrive.arcade(0,0,0);
+}
+
+
+
+void leftAwp()
+{
+    climb.open();
+    smartDrive.arcade(0,-35,0);
+    wait(0.35,vex::sec);
+    smartDrive.arcade(0,-25,25);
+    wait(.75,vex::sec);
+    climb.close();
+    smartDrive.arcade(0,50,0);
+    wait(.75,vex::sec);
+    smartDrive.arcade(0,0,0);
+
+    // intake.spin(vex::fwd, 5, vex::volt);
+    // wait(.25,vex::sec);
+    // intake.stop();
+
+    smartDrive.arcade(0,0,-35);
+    wait(.35,vex::sec);
+    smartDrive.arcade(0,75,0);
+    wait(.5,vex::sec);
+    smartDrive.arcade(0,0,-50);
+    wait(.2,vex::sec);
+    smartDrive.arcade(0,20,0);//left awp
+}
+
+void redBar()
+{
+    Brain.resetTimer();
+    while(smartDrive.driveToPoint(x::XandY(x::Tiles(-1.5),x::Tiles(-1.5))).inches() > 2.5) {//change to 1
+        // if(Brain.timer(vex::seconds) > 10) { break; }
+    }
+    Brain.resetTimer();
+    while(smartDrive.driveToPoint(x::XandY(x::Tiles(.5),x::Tiles(-2.5))).inches() > 5) {//change to 1
+        // if(Brain.timer(vex::seconds) > 10) { break; }
+    }
+}
+
+void blueBar()
+{
+    Brain.resetTimer();
+    while(smartDrive.driveToPoint(x::XandY(x::Tiles(1.5),x::Tiles(1.5))).inches() > 2.5) {//change to 1
+        // if(Brain.timer(vex::seconds) > 10) { break; }
+    }
+    Brain.resetTimer();
+    while(smartDrive.driveToPoint(x::XandY(x::Tiles(-.5),x::Tiles(2.5))).inches() > 5) {//change to 1
+        // if(Brain.timer(vex::seconds) > 10) { break; }
+    }
+}

@@ -1,0 +1,19 @@
+{
+	"extension": {
+		"version": "0.5.0",
+		"json": 2
+	},
+	"project": {
+		"name": "USTEM-Comp-Code",
+		"description": "Code for the USTEM Comp that I'm rewriting because Space City code should be retired.",
+		"creationDate": "1/9/2024, 10:46:14 AM",
+		"platform": "V5",
+		"language": "cpp",
+		"slot": 1,
+		"sdkVersion": "V5_20220726_10_00_00",
+		"cpp": {
+			"includePath": [],
+			"printf_float": true
+		}
+	}
+}

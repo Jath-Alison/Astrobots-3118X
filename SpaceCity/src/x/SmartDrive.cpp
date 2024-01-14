@@ -72,9 +72,9 @@ namespace x{
             double speed = error.degrees()*0.5;
             if(abs(speed) > 50){speed*=.25;} else {speed *= 0.5;}
             if(Angle(prev - error).degrees() < 5){speed*=2.5;}
-            arcade(0, 0, speed + getSign(error.degrees())*20);
+            arcade(0, 0, speed + getSign(error.degrees())*7.5 - Angle(prev - error).degrees() * 5);
             if(abs(error.degrees()) < 5){count++;}else{count = 0;}
-            std::cout << error.degrees() << ", " << count << std::endl;
+            // std::cout << error.degrees() << ", " << count << std::endl;
             if(count > 20){running = false;}
             prev = error;
             wait(20, vex::msec);

@@ -59,9 +59,9 @@ void autonomous(void) {
   wait(0.25,vex::sec);
   intake.set(0);//deploy auton
 
-  // SkillsTest();
+  SkillsTest();
 
-  scoreRight();
+  // scoreRight();
 
   // leftAwp();
   // redBar();

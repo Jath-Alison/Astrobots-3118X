@@ -5,6 +5,7 @@
 void OverBarrier();
 
 void SkillsTest();
+void newSkills();
 
 void scoreRight();
 

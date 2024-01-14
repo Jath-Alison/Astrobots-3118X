@@ -130,11 +130,16 @@ void SkillsTest()
     }
 }
 
+void newSkills()
+{
+    
+}
+
 void scoreRight()
 {
     smartDrive.arcade(0,30,30);
     wait(.35,vex::sec);
-    smartDrive.arcade(0,30,-50);
+    smartDrive.arcade(0,30,-25);
     wait(.5,vex::sec);
 
     smartDrive.arcade(0,100,0);
@@ -143,11 +148,11 @@ void scoreRight()
 
     wait(0.5,vex::sec);
 
-    smartDrive.arcade(0,100,0);
-    wait(1.5,vex::sec);
-    smartDrive.arcade(0,-50,0);
+    // smartDrive.arcade(0,100,0);
+    // wait(1.5,vex::sec);
+    // smartDrive.arcade(0,-50,0);
 
-    wait(0.5,vex::sec);
+    // wait(0.5,vex::sec);
     smartDrive.arcade(0,0,0);
 }
 
@@ -159,9 +164,9 @@ void leftAwp()
     smartDrive.arcade(0,-35,0);
     wait(0.35,vex::sec);
     smartDrive.arcade(0,-25,25);
-    wait(.75,vex::sec);
+    wait(.95,vex::sec);
     climb.close();
-    smartDrive.arcade(0,50,0);
+    smartDrive.arcade(0,75,0);
     wait(.75,vex::sec);
     smartDrive.arcade(0,0,0);
 
@@ -173,9 +178,14 @@ void leftAwp()
     wait(.35,vex::sec);
     smartDrive.arcade(0,75,0);
     wait(.5,vex::sec);
-    smartDrive.arcade(0,0,-50);
-    wait(.2,vex::sec);
+    smartDrive.arcade(0,0,-70);
+    wait(.20,vex::sec);
     smartDrive.arcade(0,20,0);//left awp
+    wait(.125,vex::sec);
+    smartDrive.arcade(0,60,0);
+    wait(.225,vex::sec);
+    smartDrive.arcade(0,0,0);
+    
 }
 
 void redBar()

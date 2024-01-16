@@ -60,13 +60,18 @@ void autonomous(void) {
 void usercontrol(void) {
   // User control code here, inside the loop
 
-  PID testPID(.75, 0.01, 0.25);
+  PID testPID = PID()
+    .withConstants(.75, 0.01, 0.25)
+    .withIntegralZone(20)
+    .withTimeout(5)
+    .withSettleZone(5)
+    .withSettleTimeout(1);
 
-  testPID.setTimeout(5);
-  testPID.setIntegralZone(20);
+  // testPID.setTimeout(5);
+  // testPID.setIntegralZone(20);
 
-  testPID.setSettleZone(5);
-  testPID.setSettleTimeout(1);
+  // testPID.setSettleZone(5);
+  // testPID.setSettleTimeout(1);
 
   double target = 0;
 

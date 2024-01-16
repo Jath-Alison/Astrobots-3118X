@@ -33,6 +33,7 @@ void PID::setConstants(double kp, double ki, double kd)
     m_ki = ki;
     m_kd = kd;
 }
+PID& PID::withConstants(double kp, double ki, double kd){setConstants(kp, ki, kd); return *this;}
 void PID::setConstants(double kp, double ki, double kd, double ff)
 {
     m_kp = kp;
@@ -40,11 +41,20 @@ void PID::setConstants(double kp, double ki, double kd, double ff)
     m_kd = kd;
     m_ff = ff;
 }
+PID& PID::withConstants(double kp, double ki, double kd, double ff){setConstants(kp, ki, kd, ff); return *this;}
 
 void PID::setIntegralZone(double integralZone){ m_integralZone = integralZone; }
+PID& PID::withIntegralZone(double integralZone){ setIntegralZone( integralZone ); return *this; }
+
 void PID::setTimeout(double timeout){ m_timeout = timeout; }
+PID& PID::withTimeout(double timeout){ setTimeout( timeout ); return *this; }
+
 void PID::setSettleZone(double settleZone){ m_settleZone = settleZone; }
+PID& PID::withSettleZone(double settleZone){ setSettleZone( settleZone ); return *this; }
+
 void PID::setSettleTimeout(double settleTimeout) { m_settleTimeout = settleTimeout; }
+PID& PID::withSettleTimeout(double settleTimeout){ setSettleTimeout( settleTimeout ); return *this; }
+
 
 double PID::calculate(double error){
     m_error = error;

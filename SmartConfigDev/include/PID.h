@@ -11,12 +11,22 @@ public:
     void reset();
 
     void setConstants(double kp, double ki, double kd);
+    PID& withConstants(double kp, double ki, double kd);
     void setConstants(double kp, double ki, double kd, double ff);
+    PID& withConstants(double kp, double ki, double kd, double ff);
 
     void setIntegralZone(double integralZone);
+    PID& withIntegralZone(double integralZone);
+
     void setTimeout(double timeout);
+    PID& withTimeout(double timeout);
+
     void setSettleZone(double settleZone);
+    PID& withSettleZone(double settleZone);
+
     void setSettleTimeout(double settleTimeout);
+    PID& withSettleTimeout(double settleTimeout);
+
 
     double calculate(double error);
     double calculate(double target, double feedback);

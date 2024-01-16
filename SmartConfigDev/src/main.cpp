@@ -8,11 +8,10 @@
 /*----------------------------------------------------------------------------*/
 
 #include "vex.h"
-
-using namespace vex;
+#include "RobotConfig.h"
 
 // A global instance of competition
-competition Competition;
+vex::competition Competition;
 
 // define your global instances of motors and other devices here
 
@@ -60,6 +59,19 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
+
+  PID testPID(.75, 0.01, 0.25);
+
+  testPID.setTimeout(5);
+  testPID.setIntegralZone(20);
+
+  testPID.setSettleZone(5);
+  testPID.setSettleTimeout(1);
+
+  double target = 0;
+
+  Rotation.setPosition(0, vex::deg);
+
   while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
@@ -69,8 +81,34 @@ void usercontrol(void) {
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
     // ........................................................................
+    
+    if( Controller.ButtonY.PRESSED ){ testPID.reset(); target = -90; }
+    if( Controller.ButtonX.PRESSED ){ testPID.reset(); target = 0; }
+    if( Controller.ButtonA.PRESSED ){ testPID.reset(); target = 90; }
+    if( Controller.ButtonB.PRESSED ){ testPID.reset(); target = 180; }
 
-    wait(20, msec); // Sleep the task for a short amount of time to
+
+    double temp = testPID.calculate(target, Rotation.position(vex::degrees));
+    Motor.spin(vex::fwd, -temp * 12.f/100.f, vex::volt);
+
+    int pos = 1;
+    Brain.Screen.setCursor(pos, 1);
+    Brain.Screen.print( "target:%f",target );pos++;
+    Brain.Screen.setCursor(pos, 1);
+    Brain.Screen.print( "angle:%f",Rotation.position(vex::degrees) );pos++;
+    Brain.Screen.setCursor(pos, 1);
+    Brain.Screen.print( "error:%f",target - Rotation.position(vex::degrees) );pos++;
+    Brain.Screen.setCursor(pos, 1);
+    Brain.Screen.print( "outputRPM:%f",temp );pos++;
+    // Brain.Screen.setCursor(1,pos);
+    // Brain.Screen.print( "angle:%f",Rotation.angle() );pos++;
+    // Brain.Screen.setCursor(1,pos);
+    // Brain.Screen.print( "angle:%f",Rotation.angle() );pos++;
+    // Brain.Screen.setCursor(1,pos);
+    // Brain.Screen.print( "angle:%f",Rotation.angle() );pos++;
+
+
+    vex::wait(20, vex::msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
 }
@@ -88,6 +126,6 @@ int main() {
 
   // Prevent main from exiting with an infinite loop.
   while (true) {
-    wait(100, msec);
+    vex::wait(100, vex::msec);
   }
 }

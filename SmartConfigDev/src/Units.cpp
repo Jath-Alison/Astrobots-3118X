@@ -182,3 +182,18 @@ RelativeUnit::operator double()
 {
     return m_value() - m_offset;
 }
+
+Angle shortestTurnPath(Angle target)
+    {
+        Angle angle = target;
+        if (std::abs(angle.revolutions()) < .5) {
+            return angle;
+        }	else {
+            if(angle.revolutions() > 0){
+                return Revolutions(1 - angle.revolutions());
+            }else{
+                return Revolutions(1 + angle.revolutions());
+            }
+        }
+        return Angle();
+    }

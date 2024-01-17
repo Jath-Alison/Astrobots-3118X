@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <cmath>
 
 class RelativeUnit{
 public:
@@ -78,3 +79,4 @@ Angle Degrees(double degrees);
 Angle Radians(double radians);
 Angle Revolutions(double revolutions);
 
+Angle shortestTurnPath(Angle target);

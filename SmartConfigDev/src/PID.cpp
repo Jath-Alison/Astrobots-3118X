@@ -1,8 +1,10 @@
 #include "PID.h"
 
 PID::PID()
-    :m_startTime(std::chrono::high_resolution_clock::now())
-{}
+    : m_startTime( std::chrono::high_resolution_clock::now() )
+{
+    setConstants(1, 0, 0, 0);
+}
 
 PID::PID(double kp, double ki, double kd)
 {

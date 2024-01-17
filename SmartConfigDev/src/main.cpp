@@ -9,8 +9,6 @@
 
 #include "vex.h"
 #include "RobotConfig.h"
-#include <iostream>
-#include <sstream>
 
 // A global instance of competition
 vex::competition Competition;
@@ -69,9 +67,6 @@ void usercontrol(void) {
     .withSettleZone(5)
     .withSettleTimeout(0.25);
 
-  std::stringstream s;
-  s << "target,angle,error,outputRPM,time,timeSettled\n";
-
   // testPID.setTimeout(5);
   // testPID.setIntegralZone(20);
 
@@ -96,7 +91,6 @@ void usercontrol(void) {
     if( Controller.ButtonX.PRESSED ){ testPID.reset(); target = 0; }
     if( Controller.ButtonA.PRESSED ){ testPID.reset(); target = 90; }
     if( Controller.ButtonB.PRESSED ){ testPID.reset(); target = 180; }
-    if( Controller.ButtonLeft.PRESSED ){ std::cout << s.str(); s.clear(); }
 
     while ( !testPID.isCompleted() ){
       double temp = testPID.calculate(target, Rotation.position(vex::degrees));
@@ -106,27 +100,21 @@ void usercontrol(void) {
       int pos = 1;
       Brain.Screen.setCursor(pos, 1);
       Brain.Screen.print( "target:%f",target );pos++;
-      s << target << ",";
 
       Brain.Screen.setCursor(pos, 1);
       Brain.Screen.print( "angle:%f",Rotation.position(vex::degrees) );pos++;
-      s << Rotation.position(vex::degrees) << ",";
 
       Brain.Screen.setCursor(pos, 1);
       Brain.Screen.print( "error:%f",target - Rotation.position(vex::degrees) );pos++;
-      s << target - Rotation.position(vex::degrees) << ",";
 
       Brain.Screen.setCursor(pos, 1);
       Brain.Screen.print( "outputRPM:%f",temp );pos++;
-      s << temp << ",";
 
       Brain.Screen.setCursor(pos, 1);
       Brain.Screen.print( "time:%f",testPID.timePassed() );pos++;
-      s << testPID.timePassed() << ",";
 
       Brain.Screen.setCursor(pos, 1);
       Brain.Screen.print( "timeSettled:%f",testPID.settledTimePassed() );pos++;
-      s << testPID.settledTimePassed() << "," <<"\n";
 
       vex::wait(20, vex::msec); // Sleep the task for a short amount of time to
     }

@@ -15,6 +15,11 @@ public:
     void setConstants(double kp, double ki, double kd, double ff);
     PID& withConstants(double kp, double ki, double kd, double ff);
 
+    double getkp(){return m_kp;}
+    double getki(){return m_ki;}
+    double getkd(){return m_kd;}
+    double getff(){return m_ff;}
+
     void setIntegralZone(double integralZone);
     PID& withIntegralZone(double integralZone);
 

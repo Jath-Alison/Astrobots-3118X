@@ -1,19 +1,54 @@
 #include "SmartMotor.h"
 
+std::map<SmartMotor::ControlMode, std::string> SmartMotor::ModeToString{
+        {SmartMotor::ControlMode::DutyCycle, "DutyCycle"},
+        {SmartMotor::ControlMode::Position, "Position"},
+        {SmartMotor::ControlMode::Angle, "Angle"},
+        {SmartMotor::ControlMode::Velocity, "Velocity"},
+        {SmartMotor::ControlMode::Follower, "Follower"},
+        {SmartMotor::ControlMode::Disabled, "Disabled"},
+    };
 
+std::vector< SmartMotor* > SmartMotor::m_allMotors;
 
-SmartMotor::SmartMotor(std::string name, vex::motor mot) : vex::motor(mot), m_name(name)
+SmartMotor::SmartMotor(std::string name, vex::motor mot) : vex::motor(mot), m_name(name), m_log(name)
 {
-    m_allMotors.push_back(this);
+  m_log.addLogItemD("time", [this]{ return Jath::timePassed(); });
+  m_log.addLogItemS("cmdType", [this]{return ModeToString[getControlMode()]; });
+  m_log.addLogItemD("cmd", [this]{return get(); });
+  m_log.addLogItemD("kp", [this]{return m_pid.getkp(); });
+  m_log.addLogItemD("ki", [this]{return m_pid.getki(); });
+  m_log.addLogItemD("kd", [this]{return m_pid.getkd(); });
+  m_log.addLogItemD("velocity", [this]{ return velocity(vex::rpm); });
+  m_log.addLogItemD("torque", [this]{ return torque(); });
+  m_log.addLogItemD("temprature", [this]{return temperature(); });
+  m_log.addLogItemD("output%", [this]{return getOutput()*100/12.f; });
+  m_log.addLogItemD("pos", [this]{ return position(vex::degrees); }); 
+  if(Brain.SDcard.isInserted()){
+    m_log.logHeader();
+  }
+  m_allMotors.push_back(this);
 }
+
+// SmartMotor::SmartMotor(SmartMotor & motor)
+//  : vex::motor(motor)
+//  , m_name(motor.m_name)
+//  , m_controlMode(motor.m_controlMode)
+//  , m_pid(motor.m_pid)
+//  , m_leaderMotor(motor.m_leaderMotor)
+//  , m_followingMotors(motor.m_followingMotors)
+//  , m_sensor(motor.m_sensor)
+// {
+//   m_allMotors.push_back(this);
+// }
 
 SmartMotor::~SmartMotor()
 {
-    for(int i = 0; i < m_allMotors.size(); i++){
-        if(m_allMotors[i] == this){
-            m_allMotors.erase(m_allMotors.begin() + i);
-        }
-    }
+  for(int i = 0; i < m_allMotors.size(); i++){
+      if(m_allMotors[i] == this){
+          m_allMotors.erase(m_allMotors.begin() + i);
+      }
+  }
 }
 
 void SmartMotor::setConstants(double kp, double ki, double kd) { m_pid.setConstants(kp, ki, kd); }
@@ -46,8 +81,13 @@ void SmartMotor::addFollower(vex::motor mot) {
 }
 SmartMotor& SmartMotor::withFollower(vex::motor mot) { addFollower(mot); return *this; }
 
+void SmartMotor::setSensor(Sensor * sensor) { m_sensor = sensor; }
+SmartMotor & SmartMotor::withSensor(Sensor * sensor) { m_sensor = sensor; return *this; }
+
 double SmartMotor::get() { return m_cmd; }
 SmartMotor::operator double() { return get(); }
+
+double SmartMotor::getOutput() { return m_output; }
 
 void SmartMotor::set(double cmd) { m_cmd = cmd; }
 void SmartMotor::operator=(double cmd){ set(cmd); }
@@ -106,5 +146,10 @@ void SmartMotor::update()
           case Disabled:
             break;
         }
+  if(Brain.SDcard.isInserted()){
+    m_log.log();
+  }
 }
+
+bool SmartMotor::isCompleted() { return m_pid.isCompleted(); }
 

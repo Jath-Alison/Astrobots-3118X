@@ -87,54 +87,62 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
     
-    if( Controller.ButtonY.PRESSED ){ testPID.reset(); target = -90; }
-    if( Controller.ButtonX.PRESSED ){ testPID.reset(); target = 0; }
-    if( Controller.ButtonA.PRESSED ){ testPID.reset(); target = 90; }
-    if( Controller.ButtonB.PRESSED ){ testPID.reset(); target = 180; }
+    if( Controller.ButtonY.PRESSED ){ Motor.set(Degrees( -90)); }
+    if( Controller.ButtonX.PRESSED ){ Motor.set(Degrees( 0)); }
+    if( Controller.ButtonA.PRESSED ){ Motor.set(Degrees( 90)); }
+    if( Controller.ButtonB.PRESSED ){ Motor.set(Degrees( 180)); }
 
-    while ( !testPID.isCompleted() ){
-      double temp = testPID.calculate(target, Rotation.position(vex::degrees));
-      Motor.spin(vex::fwd, -temp * 12.f/100.f, vex::volt);
+    // while ( !Motor.isCompleted() ){
+    //   // double temp = testPID.calculate(target, Rotation.position(vex::degrees));
+    //   // Motor.spin(vex::fwd, -temp * 12.f/100.f, vex::volt);
+    //   Motor.update();
       
-      Brain.Screen.clearScreen();
-      int pos = 1;
-      Brain.Screen.setCursor(pos, 1);
-      Brain.Screen.print( "target:%f",target );pos++;
+    //   Brain.Screen.clearScreen();
+    //   int pos = 1;
+    //   Brain.Screen.setCursor(pos, 1);
+    //   Brain.Screen.print( "target:%f",Motor.get() );pos++;
 
-      Brain.Screen.setCursor(pos, 1);
-      Brain.Screen.print( "angle:%f",Rotation.position(vex::degrees) );pos++;
+    //   Brain.Screen.setCursor(pos, 1);
+    //   Brain.Screen.print( "angle:%f",Rotation.position(vex::degrees) );pos++;
 
-      Brain.Screen.setCursor(pos, 1);
-      Brain.Screen.print( "error:%f",target - Rotation.position(vex::degrees) );pos++;
+    //   Brain.Screen.setCursor(pos, 1);
+    //   Brain.Screen.print( "error:%f",target - Rotation.position(vex::degrees) );pos++;
 
-      Brain.Screen.setCursor(pos, 1);
-      Brain.Screen.print( "outputRPM:%f",temp );pos++;
+    //   Brain.Screen.setCursor(pos, 1);
+    //   Brain.Screen.print( "outputRPM:%f",Motor.getOutput() );pos++;
 
-      Brain.Screen.setCursor(pos, 1);
-      Brain.Screen.print( "time:%f",testPID.timePassed() );pos++;
+    //   Brain.Screen.setCursor(pos, 1);
+    //   Brain.Screen.print( "time:%f",testPID.timePassed() );pos++;
 
-      Brain.Screen.setCursor(pos, 1);
-      Brain.Screen.print( "timeSettled:%f",testPID.settledTimePassed() );pos++;
+    //   Brain.Screen.setCursor(pos, 1);
+    //   Brain.Screen.print( "timeSettled:%f",testPID.settledTimePassed() );pos++;
 
-      vex::wait(20, vex::msec); // Sleep the task for a short amount of time to
-    }
-    Motor.stop();
+    //   Brain.Screen.setCursor(8, 5);
+    //   Brain.Screen.print( "num Motors:%i",SmartMotor::m_allMotors.size() );
+
+    //   vex::wait(20, vex::msec); // Sleep the task for a short amount of time to
+    // }
+
+    Motor.update();
+
+
     Brain.Screen.clearScreen();
     int pos = 1;
     Brain.Screen.setCursor(pos, 10);
-    Brain.Screen.print( "target:%f",target );pos++;
+    Brain.Screen.print( "target:%f",double(Motor) );pos++;
     Brain.Screen.setCursor(pos, 10);
-    Brain.Screen.print( "angle:%f",Rotation.position(vex::degrees) );pos++;
+    Brain.Screen.print( "angle:%f",Rotation.getAngle() );pos++;
     Brain.Screen.setCursor(pos, 10);
-    Brain.Screen.print( "error:%f",target - Rotation.position(vex::degrees) );pos++;
+    Brain.Screen.print( "error:%f",double(Motor) - Rotation.getAngle() );pos++;
     Brain.Screen.setCursor(pos, 10);
-    Brain.Screen.print( "outputRPM:%f",Motor.voltage(vex::volt));pos++;
+    Brain.Screen.print( "outputRPM:%f",Motor.getOutput() * 100.f/12.f);pos++;
     Brain.Screen.setCursor(pos, 10);
     Brain.Screen.print( "time:%f",testPID.timePassed() );pos++;
     Brain.Screen.setCursor(pos, 10);
     Brain.Screen.print( "timeSettled:%f",testPID.settledTimePassed() );pos++;
 
-
+    Brain.Screen.setCursor(8, 5);
+    Brain.Screen.print( "num Motors:%f",SmartMotor::m_allMotors.size() );
 
     vex::wait(20, vex::msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

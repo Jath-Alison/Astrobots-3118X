@@ -5,6 +5,8 @@
 #include "PID.h"
 #include "Sensor.h"
 
+#include "Logger.h"
+
 #include <vector>
 #include <memory>
 #include <string>
@@ -24,6 +26,7 @@ public:
     };
 
     SmartMotor(std::string name, vex::motor mot);
+    // SmartMotor(SmartMotor& motor);
     ~SmartMotor();
 
     void setConstants(double kp, double ki, double kd);
@@ -43,24 +46,22 @@ public:
     void addFollower(vex::motor mot);
     SmartMotor& withFollower(vex::motor mot);
 
+    void setSensor(Sensor* sensor);
+    SmartMotor& withSensor(Sensor* sensor);
+
     double get();
     operator double();
+    double getOutput();
 
     void set(double cmd);
     void operator =(double cmd);
 
     void update();
+    bool isCompleted();
 
 private:
 
-    std::map<ControlMode, std::string> ModeToString{
-        {DutyCycle, "DutyCycle"},
-        {Position, "Position"},
-        {Angle, "Angle"},
-        {Velocity, "Velocity"},
-        {Follower, "Follower"},
-        {Disabled, "Disabled"},
-    };
+    static std::map<ControlMode, std::string> ModeToString;
 
     std::string m_name;
 
@@ -72,8 +73,10 @@ private:
 
     Sensor* m_sensor;
 
+    Jath::Logger m_log;
+
     double m_cmd{0};
     double m_output{0};
-
-    static std::vector< vex::motor* > m_allMotors;
+public:
+    static std::vector< SmartMotor* > m_allMotors;
 };

@@ -5,5 +5,5 @@
 
 extern vex::brain Brain;
 extern vex::controller Controller;
-extern vex::motor Motor;
-extern vex::rotation Rotation;
+extern SmartMotor Motor;
+extern RotationSensor Rotation;

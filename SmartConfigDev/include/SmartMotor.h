@@ -5,8 +5,6 @@
 #include "PID.h"
 #include "Sensor.h"
 
-#include "Logger.h"
-
 #include <vector>
 #include <memory>
 #include <string>
@@ -72,8 +70,6 @@ private:
     std::vector<std::shared_ptr <SmartMotor> > m_followingMotors;
 
     Sensor* m_sensor;
-
-    Jath::Logger m_log;
 
     double m_cmd{0};
     double m_output{0};

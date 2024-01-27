@@ -5,5 +5,11 @@
 
 extern vex::brain Brain;
 extern vex::controller Controller;
-extern SmartMotor Motor;
-extern RotationSensor Rotation;
+
+extern jwb::SmartMotor LeftMotors;
+extern jwb::SmartMotor RightMotors;
+
+extern jwb::SmartMotor Flywheel;
+extern jwb::SmartMotor Intake;
+
+// extern jwb::RotationSensor Rotation;

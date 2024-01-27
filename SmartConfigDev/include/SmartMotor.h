@@ -24,7 +24,7 @@ public:
     };
 
     SmartMotor(std::string name, vex::motor mot);
-    // SmartMotor(SmartMotor& motor);
+    SmartMotor(SmartMotor& motor);
     ~SmartMotor();
 
     void setConstants(double kp, double ki, double kd);
@@ -67,12 +67,13 @@ private:
     PID m_pid;
 
     SmartMotor* m_leaderMotor{nullptr};
-    std::vector<std::shared_ptr <SmartMotor> > m_followingMotors;
 
-    Sensor* m_sensor;
+    Sensor* m_sensor{nullptr};
 
     double m_cmd{0};
     double m_output{0};
 public:
+    std::vector<std::shared_ptr <SmartMotor> > m_followingMotors;
     static std::vector< SmartMotor* > m_allMotors;
+    static void updateAllMotors();
 };

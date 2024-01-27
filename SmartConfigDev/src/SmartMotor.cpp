@@ -1,4 +1,5 @@
 #include "SmartMotor.h"
+#include <iostream>
 
 std::map<SmartMotor::ControlMode, std::string> SmartMotor::ModeToString{
         {SmartMotor::ControlMode::DutyCycle, "DutyCycle"},
@@ -11,42 +12,39 @@ std::map<SmartMotor::ControlMode, std::string> SmartMotor::ModeToString{
 
 std::vector< SmartMotor* > SmartMotor::m_allMotors;
 
-SmartMotor::SmartMotor(std::string name, vex::motor mot) : vex::motor(mot), m_name(name), m_log(name)
+SmartMotor::SmartMotor(std::string name, vex::motor mot) : vex::motor(mot), m_name(name)
 {
-  m_log.addLogItemD("time", [this]{ return Jath::timePassed(); });
-  m_log.addLogItemS("cmdType", [this]{return ModeToString[getControlMode()]; });
-  m_log.addLogItemD("cmd", [this]{return get(); });
-  m_log.addLogItemD("kp", [this]{return m_pid.getkp(); });
-  m_log.addLogItemD("ki", [this]{return m_pid.getki(); });
-  m_log.addLogItemD("kd", [this]{return m_pid.getkd(); });
-  m_log.addLogItemD("velocity", [this]{ return velocity(vex::rpm); });
-  m_log.addLogItemD("torque", [this]{ return torque(); });
-  m_log.addLogItemD("temprature", [this]{return temperature(); });
-  m_log.addLogItemD("output%", [this]{return getOutput()*100/12.f; });
-  m_log.addLogItemD("pos", [this]{ return position(vex::degrees); }); 
-  if(Brain.SDcard.isInserted()){
-    m_log.logHeader();
-  }
+  // std::cout << "creating Motor:" << m_name << this << "\n";
   m_allMotors.push_back(this);
 }
 
-// SmartMotor::SmartMotor(SmartMotor & motor)
-//  : vex::motor(motor)
-//  , m_name(motor.m_name)
-//  , m_controlMode(motor.m_controlMode)
-//  , m_pid(motor.m_pid)
-//  , m_leaderMotor(motor.m_leaderMotor)
-//  , m_followingMotors(motor.m_followingMotors)
-//  , m_sensor(motor.m_sensor)
-// {
-//   m_allMotors.push_back(this);
-// }
+SmartMotor::SmartMotor(SmartMotor & motor)
+ : vex::motor(motor)
+ , m_name(motor.m_name)
+ , m_controlMode(motor.m_controlMode)
+ , m_pid(motor.m_pid)
+ , m_leaderMotor(motor.m_leaderMotor)
+ , m_followingMotors(motor.m_followingMotors)
+ , m_sensor(motor.m_sensor)
+{
+  // std::cout << "creating Motor:" << m_name << this << "\n";  
+  m_allMotors.push_back(this);
+  for(size_t i = 0; i < m_followingMotors.size(); i++){
+    if(m_followingMotors[i]){
+      m_followingMotors[i]->setLeader(this);
+    }else{
+      m_followingMotors.erase( m_followingMotors.begin() + i );
+    }
+  }
+  
+}
 
 SmartMotor::~SmartMotor()
 {
   for(int i = 0; i < m_allMotors.size(); i++){
       if(m_allMotors[i] == this){
           m_allMotors.erase(m_allMotors.begin() + i);
+          // std::cout << "erasing Motor:" << m_name << this << "\n";  
       }
   }
 }
@@ -70,9 +68,11 @@ void SmartMotor::addFollower(vex::motor mot) {
     int count = m_followingMotors.size() + 1;
     
     std::stringstream s;
-    s << m_name << "follower " << count;
+    // s << m_name << "follower " << count;
 
     std::shared_ptr <SmartMotor> temp = std::make_shared<SmartMotor> ( s.str(), mot );
+
+    // std::cout << "creating followMotor:" << s.str() << temp.get() << "\n";  
 
     temp->setLeader( this );
     temp->setControlMode( Follower );
@@ -138,7 +138,7 @@ void SmartMotor::update()
             break;
           case Follower:
             if(m_leaderMotor){
-              m_cmd = m_leaderMotor->voltage();
+              m_cmd = m_leaderMotor->voltage(vex::volt);
             }
             m_output = m_cmd;
             spin(vex::fwd, m_output, vex::volt);
@@ -146,10 +146,17 @@ void SmartMotor::update()
           case Disabled:
             break;
         }
-  if(Brain.SDcard.isInserted()){
-    m_log.log();
-  }
 }
 
 bool SmartMotor::isCompleted() { return m_pid.isCompleted(); }
 
+void SmartMotor::updateAllMotors()
+{
+  for(size_t i = 0; i < m_allMotors.size(); i++){
+    if(m_allMotors[i]){
+      m_allMotors[i]->update();
+    }else{
+      m_allMotors.erase( m_allMotors.begin() + i );
+    }
+  }
+}

@@ -9,6 +9,7 @@
 
 #include "vex.h"
 #include "RobotConfig.h"
+#include <iostream>
 
 // A global instance of competition
 vex::competition Competition;
@@ -123,7 +124,7 @@ void usercontrol(void) {
     //   vex::wait(20, vex::msec); // Sleep the task for a short amount of time to
     // }
 
-    Motor.update();
+    Motor.updateAllMotors();
 
 
     Brain.Screen.clearScreen();
@@ -142,7 +143,9 @@ void usercontrol(void) {
     Brain.Screen.print( "timeSettled:%f",testPID.settledTimePassed() );pos++;
 
     Brain.Screen.setCursor(8, 5);
-    Brain.Screen.print( "num Motors:%f",SmartMotor::m_allMotors.size() );
+    Brain.Screen.print( "num Motors:%d", SmartMotor::m_allMotors.size() );
+    Brain.Screen.setCursor(9, 5);
+    Brain.Screen.print( "num FollowMotors:%d", Motor.m_followingMotors.size() );
 
     vex::wait(20, vex::msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

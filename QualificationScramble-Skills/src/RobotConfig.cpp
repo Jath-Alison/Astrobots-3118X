@@ -8,9 +8,9 @@ jwb::SmartMotor LeftMotors = jwb::SmartMotor("LeftMotors", vex::motor(vex::PORT1
     .withFollower(vex::motor(vex::PORT3, true))
     .withControlMode(jwb::SmartMotor::ControlMode::DutyCycle)
 ;
-jwb::SmartMotor RightMotors = jwb::SmartMotor("RightMotors", vex::motor(vex::PORT6, true))
-    .withFollower(vex::motor(vex::PORT16, false))
-    .withFollower(vex::motor(vex::PORT9, true))
+jwb::SmartMotor RightMotors = jwb::SmartMotor("RightMotors", vex::motor(vex::PORT6, false))
+    .withFollower(vex::motor(vex::PORT16, true))
+    .withFollower(vex::motor(vex::PORT9, false))
     .withControlMode(jwb::SmartMotor::ControlMode::DutyCycle)
 ;
 

@@ -1,4 +1,5 @@
 #include "jwb\SmartMotor.h"
+#include <iostream>
 
 namespace jwb{
 
@@ -16,7 +17,7 @@ namespace jwb{
   SmartMotor::SmartMotor(std::string name, vex::motor mot) : vex::motor(mot), m_name(name)
   {
     // std::cout << "creating Motor:" << m_name << this << "\n";
-    m_allMotors.push_back(this);
+    m_allMotors.push_back(this);std::cout <<"motor added " << m_allMotors.size() << std::endl;
   }
 
   SmartMotor::SmartMotor(SmartMotor & motor)
@@ -29,7 +30,7 @@ namespace jwb{
   , m_sensor(motor.m_sensor)
   {
     // std::cout << "creating Motor:" << m_name << this << "\n";  
-    m_allMotors.push_back(this);
+    m_allMotors.push_back(this);std::cout <<"motor added " << m_allMotors.size() << std::endl;
     for(size_t i = 0; i < m_followingMotors.size(); i++){
       if(m_followingMotors[i]){
         m_followingMotors[i]->setLeader(this);
@@ -44,7 +45,7 @@ namespace jwb{
   {
     for(int i = 0; i < m_allMotors.size(); i++){
         if(m_allMotors[i] == this){
-            m_allMotors.erase(m_allMotors.begin() + i);
+            m_allMotors.erase(m_allMotors.begin() + i);std::cout <<"\tmotor removed " << m_allMotors.size() << std::endl;
             // std::cout << "erasing Motor:" << m_name << this << "\n";  
         }
     }
@@ -69,7 +70,7 @@ namespace jwb{
       int count = m_followingMotors.size() + 1;
       
       std::stringstream s;
-      // s << m_name << "follower " << count;
+      s << m_name << "-follower " << count;
 
       std::shared_ptr <SmartMotor> temp = std::make_shared<SmartMotor> ( s.str(), mot );
 
@@ -95,6 +96,7 @@ namespace jwb{
 
   void SmartMotor::update()
   {
+    std::cout <<"\tmotor count " << jwb::SmartMotor::m_allMotors.size() << std::endl;
       double turnError = 0;
       class Angle value;
 
@@ -147,6 +149,13 @@ namespace jwb{
             case Disabled:
               break;
           }
+    for(size_t i = 0; i < m_followingMotors.size(); i++){
+      if(m_followingMotors[i]){
+        m_followingMotors[i]->update();
+      }else{
+        m_followingMotors.erase( m_followingMotors.begin() + i );
+      }
+    }
   }
 
   bool SmartMotor::isCompleted() { return m_pid.isCompleted(); }
@@ -157,7 +166,7 @@ namespace jwb{
       if(m_allMotors[i]){
         m_allMotors[i]->update();
       }else{
-        m_allMotors.erase( m_allMotors.begin() + i );
+        m_allMotors.erase( m_allMotors.begin() + i );std::cout <<"\tmotor removed " << m_allMotors.size() << std::endl;
       }
     }
   }

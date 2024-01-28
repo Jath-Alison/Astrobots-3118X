@@ -8,11 +8,13 @@
 /*----------------------------------------------------------------------------*/
 
 #include "vex.h"
+#include "RobotConfig.h"
+#include <iostream>
 
-using namespace vex;
+// using namespace vex;
 
 // A global instance of competition
-competition Competition;
+vex::competition Competition;
 
 // define your global instances of motors and other devices here
 
@@ -60,17 +62,32 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
+  std::cout <<"\tmotor count " << jwb::SmartMotor::m_allMotors.size() << std::endl;
   while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
+
+    LeftMotors.set( Controller.Axis3.position() + Controller.Axis1.position());
+    RightMotors.set( Controller.Axis3.position() - Controller.Axis1.position());
 
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
     // ........................................................................
 
-    wait(20, msec); // Sleep the task for a short amount of time to
+    LeftMotors.update();
+    RightMotors.update();
+
+    Brain.Screen.clearScreen();
+    Brain.Screen.setCursor(1,1);
+    Brain.Screen.print("Count:%d", jwb::SmartMotor::m_allMotors.size() * 10);
+    Brain.Screen.setCursor(3,1);
+    Brain.Screen.print("followcount:%d", LeftMotors.m_followingMotors.size());
+    Brain.Screen.setCursor(4,1);
+    Brain.Screen.print("followcount:%d", RightMotors.m_followingMotors.size());
+
+    vex::wait(20, vex::msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
 }
@@ -78,7 +95,7 @@ void usercontrol(void) {
 //
 // Main will set up the competition functions and callbacks.
 //
-int main() {
+int main() {std::cout <<"\tmotor count " << jwb::SmartMotor::m_allMotors.size() << std::endl;
   // Set up callbacks for autonomous and driver control periods.
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
@@ -88,6 +105,6 @@ int main() {
 
   // Prevent main from exiting with an infinite loop.
   while (true) {
-    wait(100, msec);
+    vex::wait(100, vex::msec);
   }
 }

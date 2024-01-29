@@ -10,6 +10,7 @@
 #include "vex.h"
 #include "RobotConfig.h"
 #include "SubAutons.h"
+#include "Autons.h"
 #include <iostream>
 
 // using namespace vex;
@@ -49,6 +50,7 @@ void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
+  Skills();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -124,7 +126,10 @@ void usercontrol(void) {
 //
 // Main will set up the competition functions and callbacks.
 //
-int main() {std::cout <<"\tmotor count " << jwb::SmartMotor::m_allMotors.size() << std::endl;
+int main() {
+  
+  vex::task updateMotors(updateMotorsTask);
+
   // Set up callbacks for autonomous and driver control periods.
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);

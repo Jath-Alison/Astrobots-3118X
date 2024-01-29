@@ -1,6 +1,20 @@
 #include "SubAutons.h"
 #include <iostream>
 
+void arcade(double drive, double rot)
+{
+    LeftMotors = drive + rot;
+    RightMotors = drive - rot;
+
+    jwb::SmartMotor::updateAllMotors();
+}
+
+void arcadeFor(double drive, double rot, double time)
+{
+    arcade(drive, rot);
+    vex::wait(time, vex::seconds);
+    arcade(0, 0);    
+}
 
 void driveTo(jwb::Distance target)
 {
@@ -40,10 +54,7 @@ void driveTo(jwb::Distance target)
         std::cout << "settledTimePassed:" << pid.settledTimePassed() << "\n" << std::endl;
 
 
-        LeftMotors = temp;
-        RightMotors = temp;
-
-        jwb::SmartMotor::updateAllMotors();
+        arcade(temp, 0);
 
         vex::wait(20, vex::msec);
     }
@@ -78,10 +89,7 @@ void turnTo(jwb::Angle target)
         std::cout << "settledTimePassed:" << pid.settledTimePassed() << "\n" << std::endl;
 
 
-        LeftMotors = temp;
-        RightMotors = -temp;
-
-        jwb::SmartMotor::updateAllMotors();
+        arcade(0, temp);
 
         vex::wait(20, vex::msec);
     }

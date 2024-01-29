@@ -9,6 +9,7 @@
 
 #include "vex.h"
 #include "RobotConfig.h"
+#include "SubAutons.h"
 #include <iostream>
 
 // using namespace vex;
@@ -62,7 +63,7 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
-  std::cout <<"\tmotor count " << jwb::SmartMotor::m_allMotors.size() << std::endl;
+
   while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
@@ -71,20 +72,49 @@ void usercontrol(void) {
     LeftMotors.set( Controller.Axis3.position() + Controller.Axis1.position());
     RightMotors.set( Controller.Axis3.position() - Controller.Axis1.position());
 
+    if(Controller.ButtonRight.pressing()){
+      // Intake = 100;
+      driveTo(jwb::Inches(10));
+    }
+
+    if (Controller.ButtonR1.pressing()) {
+      Intake = 100;
+    }else if (Controller.ButtonR2.pressing()){
+      Intake = -100;
+    }else if(Controller.ButtonR1.RELEASED ){
+      Intake = 50;
+    } else if(Controller.ButtonR2.RELEASED ){
+      Intake = 0;
+    }
+
+    if (Controller.ButtonX.PRESSED) {
+      Flywheel =  Flywheel + 10;
+    }else if (Controller.ButtonB.PRESSED){
+      Flywheel =  Flywheel - 10;
+    }else if ( Controller.ButtonA.pressing()){
+      Flywheel = 0;
+    }
+
+    if(Controller.ButtonLeft.pressing()){
+      climb.open();
+    }else{
+      climb.close();
+    }
+
+    if(Controller.ButtonL2.pressing()){
+      wings.open();
+      climb.open();
+    }else{
+      wings.close();
+      climb.close();
+    }
+
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
     // ........................................................................
 
     jwb::SmartMotor::updateAllMotors();
-
-    Brain.Screen.clearScreen();
-    Brain.Screen.setCursor(1,1);
-    Brain.Screen.print("Count:%d", jwb::SmartMotor::m_allMotors.size() * 10);
-    Brain.Screen.setCursor(3,1);
-    Brain.Screen.print("followcount:%d", LeftMotors.m_followingMotors.size());
-    Brain.Screen.setCursor(4,1);
-    Brain.Screen.print("followcount:%d", RightMotors.m_followingMotors.size());
 
     vex::wait(20, vex::msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

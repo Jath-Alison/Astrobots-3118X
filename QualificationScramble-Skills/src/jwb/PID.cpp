@@ -6,6 +6,8 @@ namespace jwb{
         : m_startTime( std::chrono::high_resolution_clock::now() )
     {
         setConstants(1, 0, 0, 0);
+        m_startTime = std::chrono::high_resolution_clock::now();
+        m_startSettledTime = std::chrono::high_resolution_clock::now();
     }
 
     PID::PID(double kp, double ki, double kd)

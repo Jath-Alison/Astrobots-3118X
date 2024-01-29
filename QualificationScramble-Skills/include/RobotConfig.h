@@ -15,6 +15,7 @@ extern jwb::SmartMotor Intake;
 extern vex::pneumatics wings;
 extern vex::pneumatics climb;
 
-vex::gps GPS = vex::gps(vex::PORT14, -76.20, -127.00, vex::mm, 180);
+extern vex::inertial inert;
+extern vex::gps GPS;
 
 // extern jwb::RotationSensor Rotation;

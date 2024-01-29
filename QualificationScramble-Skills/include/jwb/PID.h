@@ -41,7 +41,7 @@ namespace jwb{
 
         double timePassed();
         double settledTimePassed();
-    private:
+    // private:
         double m_error{0};
         double m_prevError{0};
 

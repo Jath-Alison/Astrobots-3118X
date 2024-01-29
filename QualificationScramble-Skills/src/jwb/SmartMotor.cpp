@@ -12,10 +12,8 @@ namespace jwb{
           {SmartMotor::ControlMode::Disabled, "Disabled"},
       };
 
-  SmartMotor::SmartMotor(std::string name, vex::motor mot) : vex::motor(mot), m_name(name)
-  {
-    // std::cout << "creating Motor:" << m_name << this << "\n";
-    m_allMotors.push_back(this);std::cout <<"motor added " << m_allMotors.size() << std::endl;
+  SmartMotor::SmartMotor(std::string name, vex::motor mot) : vex::motor(mot), m_name(name){
+    m_allMotors.push_back(this);
   }
 
   SmartMotor::SmartMotor(SmartMotor & motor)
@@ -27,8 +25,8 @@ namespace jwb{
   , m_followingMotors(motor.m_followingMotors)
   , m_sensor(motor.m_sensor)
   {
-    // std::cout << "creating Motor:" << m_name << this << "\n";  
-    m_allMotors.push_back(this);std::cout <<"motor added " << m_allMotors.size() << std::endl;
+    
+    m_allMotors.push_back(this);
     for(size_t i = 0; i < m_followingMotors.size(); i++){
       if(m_followingMotors[i]){
         m_followingMotors[i]->setLeader(this);
@@ -43,8 +41,7 @@ namespace jwb{
   {
     for(int i = 0; i < m_allMotors.size(); i++){
         if(m_allMotors[i] == this){
-            m_allMotors.erase(m_allMotors.begin() + i);std::cout <<"\tmotor removed " << m_allMotors.size() << std::endl;
-            // std::cout << "erasing Motor:" << m_name << this << "\n";  
+            m_allMotors.erase(m_allMotors.begin() + i);
         }
     }
   }
@@ -72,8 +69,6 @@ namespace jwb{
 
       std::shared_ptr <SmartMotor> temp = std::make_shared<SmartMotor> ( s.str(), mot );
 
-      // std::cout << "creating followMotor:" << s.str() << temp.get() << "\n";  
-
       temp->setLeader( this );
       temp->setControlMode( Follower );
 
@@ -94,59 +89,59 @@ namespace jwb{
 
   void SmartMotor::update()
   {
-    std::cout <<"\tmotor count " << m_allMotors.size() << std::endl;
-      double turnError = 0;
-      class Angle value;
+  
+    double turnError = 0;
+    class Angle value;
 
-          switch(m_controlMode){
-            case DutyCycle:
-              m_output = m_cmd * 12/100.f;
-              spin(vex::fwd, m_output, vex::volt);
-              break;
-            case Position:
-              if(m_sensor){
-                value = m_sensor->getPosition();
-              }else {
-                value = Degrees(position(vex::degrees) );
-              }            
-              m_output = m_pid.calculate(m_cmd, value) * 12/100.f;
-              spin(vex::fwd, m_output, vex::volt);
-              break;
-            case Angle:
-              if(m_sensor){
-                value = m_sensor->getAngle();
-                turnError = m_cmd - value;
-                if(m_sensor->getType() != Sensor::Type::Pot && m_sensor->getType() != Sensor::Type::PotV2){
-                  turnError = shortestTurnPath(turnError);
-                }
-              }else {
-                value = Degrees( position(vex::degrees) );
-                turnError = shortestTurnPath(m_cmd - value);
-              }
-
-              m_output = m_pid.calculate(turnError) * 12/100.f;
-
-              spin(vex::fwd, m_output, vex::volt);
-              break;
-            case Velocity:
-              if(m_sensor){
-                value = m_sensor->getVelocity();
-              }else {
-                value = velocity(vex::rpm);
-              }
-                m_output += m_pid.calculate(m_cmd, value) * 12/100.f;
-              spin(vex::fwd, m_output, vex::volt);
-              break;
-            case Follower:
-              if(m_leaderMotor){
-                m_cmd = m_leaderMotor->voltage(vex::volt);
-              }
-              m_output = m_cmd;
-              spin(vex::fwd, m_output, vex::volt);
-              break;
-            case Disabled:
-              break;
+    switch(m_controlMode){
+      case DutyCycle:
+        m_output = m_cmd * 12/100.f;
+        spin(vex::fwd, m_output, vex::volt);
+        break;
+      case Position:
+        if(m_sensor){
+          value = m_sensor->getPosition();
+        }else {
+          value = Degrees(position(vex::degrees) );
+        }            
+        m_output = m_pid.calculate(m_cmd, value) * 12/100.f;
+        spin(vex::fwd, m_output, vex::volt);
+        break;
+      case Angle:
+        if(m_sensor){
+          value = m_sensor->getAngle();
+          turnError = m_cmd - value;
+          if(m_sensor->getType() != Sensor::Type::Pot && m_sensor->getType() != Sensor::Type::PotV2){
+            turnError = shortestTurnPath(turnError);
           }
+        }else {
+          value = Degrees( position(vex::degrees) );
+          turnError = shortestTurnPath(m_cmd - value);
+        }
+
+        m_output = m_pid.calculate(turnError) * 12/100.f;
+
+        spin(vex::fwd, m_output, vex::volt);
+        break;
+      case Velocity:
+        if(m_sensor){
+          value = m_sensor->getVelocity();
+        }else {
+          value = velocity(vex::rpm);
+        }
+          m_output += m_pid.calculate(m_cmd, value) * 12/100.f;
+        spin(vex::fwd, m_output, vex::volt);
+        break;
+      case Follower:
+        if(m_leaderMotor){
+          m_cmd = m_leaderMotor->voltage(vex::volt);
+        }
+        m_output = m_cmd;
+        spin(vex::fwd, m_output, vex::volt);
+        break;
+      case Disabled:
+        break;
+    }
     for(size_t i = 0; i < m_followingMotors.size(); i++){
       if(m_followingMotors[i]){
         m_followingMotors[i]->update();
@@ -164,7 +159,7 @@ namespace jwb{
       if(m_allMotors[i]){
         m_allMotors[i]->update();
       }else{
-        m_allMotors.erase( m_allMotors.begin() + i );std::cout <<"\tmotor removed " << m_allMotors.size() << std::endl;
+        m_allMotors.erase( m_allMotors.begin() + i );
       }
     }
   }

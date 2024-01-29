@@ -146,25 +146,25 @@ namespace jwb{
 
     Angle::operator double()
     {
-        constrain();
+        // constrain();
         return m_value;
     }
 
     double Angle::degrees()
     {
-        constrain();
+        // constrain();
         return m_value * 180 / 3.14159265f;
     }
 
     double Angle::radians()
     {
-        constrain();
+        // constrain();
         return m_value;
     }
 
     double Angle::revolutions()
     {
-        constrain();
+        // constrain();
         return m_value / (3.14159265f * 2.f);
     }
 

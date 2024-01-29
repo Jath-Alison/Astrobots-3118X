@@ -76,8 +76,7 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
 
-    LeftMotors.update();
-    RightMotors.update();
+    jwb::SmartMotor::updateAllMotors();
 
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(1,1);

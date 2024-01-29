@@ -1,5 +1,7 @@
 #include "RobotConfig.h"
 
+std::vector< jwb::SmartMotor* > jwb::SmartMotor::m_allMotors;
+
 vex::brain Brain;
 vex::controller Controller(vex::primary);
 
@@ -21,3 +23,7 @@ jwb::SmartMotor Intake = jwb::SmartMotor("Intake", vex::motor(vex::PORT5, true))
     .withControlMode(jwb::SmartMotor::ControlMode::DutyCycle)
 ;
 
+vex::pneumatics wings(Brain.ThreeWirePort.A);
+vex::pneumatics climb(Brain.ThreeWirePort.H);
+
+vex::gps GPS = vex::gps(vex::PORT14, -76.20, -127.00, vex::mm, 180);

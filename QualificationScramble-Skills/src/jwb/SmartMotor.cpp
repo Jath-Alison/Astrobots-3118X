@@ -12,8 +12,6 @@ namespace jwb{
           {SmartMotor::ControlMode::Disabled, "Disabled"},
       };
 
-  std::vector< SmartMotor* > SmartMotor::m_allMotors;
-
   SmartMotor::SmartMotor(std::string name, vex::motor mot) : vex::motor(mot), m_name(name)
   {
     // std::cout << "creating Motor:" << m_name << this << "\n";
@@ -96,7 +94,7 @@ namespace jwb{
 
   void SmartMotor::update()
   {
-    std::cout <<"\tmotor count " << jwb::SmartMotor::m_allMotors.size() << std::endl;
+    std::cout <<"\tmotor count " << m_allMotors.size() << std::endl;
       double turnError = 0;
       class Angle value;
 

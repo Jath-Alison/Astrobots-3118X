@@ -13,7 +13,7 @@
 #include "Autons.h"
 #include <iostream>
 
-// using namespace vex;
+using namespace vex;
 
 // A global instance of competition
 vex::competition Competition;
@@ -65,7 +65,7 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
-
+  waitUntil(!inert.isCalibrating());
   while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
@@ -76,7 +76,8 @@ void usercontrol(void) {
 
     if(Controller.ButtonRight.pressing()){
       // Intake = 100;
-      driveTo(jwb::Inches(10));
+      // driveTo(jwb::Inches(24));
+      // turnTo(jwb::Degrees(90));
     }
 
     if (Controller.ButtonR1.pressing()) {
@@ -90,9 +91,9 @@ void usercontrol(void) {
     }
 
     if (Controller.ButtonX.PRESSED) {
-      Flywheel =  Flywheel + 10;
+      Flywheel =  100;
     }else if (Controller.ButtonB.PRESSED){
-      Flywheel =  Flywheel - 10;
+      Flywheel =  -100;
     }else if ( Controller.ButtonA.pressing()){
       Flywheel = 0;
     }

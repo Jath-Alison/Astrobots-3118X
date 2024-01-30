@@ -22,13 +22,13 @@ void driveTo(jwb::Distance target)
     jwb::RelativeUnit rightTravel ( []() { return jwb::Degrees(RightMotors.position(vex::degrees)); }, jwb::Degrees(RightMotors.position(vex::degrees)) );
 
     jwb::PID pid = jwb::PID()
-    .withConstants(30, 0.01, 15)
+    .withConstants(30, 0.01, 20)
     .withIntegralZone(jwb::Degrees(45))
     .withTimeout( log( 2*target.inches() + 1 ) * 5 )
     .withSettleZone(jwb::Degrees( 10) )
     .withSettleTimeout(0.5);
 
-    jwb::Angle targetAngle = jwb::Degrees( target.inches() / (3.14159 * 3.25) * (72.f/48.f) * 360);
+    jwb::Angle targetAngle = jwb::Degrees( target.inches() / (3.14159 * 3.25) * (48.f/72.f) * 360);
 
     std::cout << "------target: " << targetAngle.degrees() << "\n";
     std::cout << "1: " << target.inches() << "\n";
@@ -65,7 +65,7 @@ void turnTo(jwb::Angle target)
     jwb::RelativeUnit rotTravel ( []() { return jwb::Degrees(inert.heading(vex::degrees)); }, 0); // jwb::Degrees(inert.heading(vex::degrees)) );
 
     jwb::PID pid = jwb::PID()
-    .withConstants(30, 0.01, 15)
+    .withConstants(50, 5, 50)
     .withIntegralZone(jwb::Degrees(15))
     .withTimeout( log( 5*target.revolutions() + 1 ) * 5 )
     .withSettleZone(jwb::Degrees( 3 ) )
@@ -76,7 +76,9 @@ void turnTo(jwb::Angle target)
     // std::cout << "settledTimePassed:" << pid.settledTimePassed() << "\n" << std::endl;
 
     while( !pid.isCompleted() ){
-        double temp = pid.calculate(target, rotTravel);
+
+        double error = jwb::shortestTurnPath(jwb::Angle(target - rotTravel));
+        double temp = pid.calculate(error);
         
         std::cout << "complete:" << pid.isCompleted() << "\n\t";
         std::cout << "rotTravel" << rotTravel << "\n\t";

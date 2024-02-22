@@ -18,6 +18,19 @@ SmartMotor::SmartMotor(std::string name, vex::motor mot) : vex::motor(mot), m_na
   m_allMotors.push_back(this);
 }
 
+SmartMotor::SmartMotor(std::string src)
+{
+    XMLDocument doc;
+    doc.parse(src.c_str());
+    tinyxml2::XMLElement* root = doc.FirstChildElement();
+
+    String name = root->Name();
+    if( name != "Motor" ) {return;}
+
+    
+
+}
+
 SmartMotor::SmartMotor(SmartMotor & motor)
  : vex::motor(motor)
  , m_name(motor.m_name)
@@ -48,6 +61,8 @@ SmartMotor::~SmartMotor()
       }
   }
 }
+
+std::string SmartMotor::getName(){ return m_name; }
 
 void SmartMotor::setConstants(double kp, double ki, double kd) { m_pid.setConstants(kp, ki, kd); }
 void SmartMotor::setConstants(double kp, double ki, double kd, double ff) { m_pid.setConstants(kp, ki, kd, ff); }
@@ -149,6 +164,15 @@ void SmartMotor::update()
 }
 
 bool SmartMotor::isCompleted() { return m_pid.isCompleted(); }
+
+SmartMotor * SmartMotor::getMotor(std::string name)
+{
+  for(SmartMotor* mot : m_allMotors)
+  {
+    if(mot->getName() == name){ return mot; }
+  }
+  return nullptr;
+}
 
 void SmartMotor::updateAllMotors()
 {

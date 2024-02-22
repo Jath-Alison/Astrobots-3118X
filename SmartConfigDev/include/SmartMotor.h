@@ -4,6 +4,7 @@
 #include "Units.h"
 #include "PID.h"
 #include "Sensor.h"
+#include "tinyxml2.h"
 
 #include <vector>
 #include <memory>
@@ -24,8 +25,11 @@ public:
     };
 
     SmartMotor(std::string name, vex::motor mot);
+    SmartMotor(std::string src);
     SmartMotor(SmartMotor& motor);
     ~SmartMotor();
+
+    std::string getName();
 
     void setConstants(double kp, double ki, double kd);
     void setConstants(double kp, double ki, double kd, double ff);
@@ -67,13 +71,14 @@ private:
     PID m_pid;
 
     SmartMotor* m_leaderMotor{nullptr};
+    std::vector<std::shared_ptr <SmartMotor> > m_followingMotors;
 
     Sensor* m_sensor{nullptr};
 
     double m_cmd{0};
     double m_output{0};
 public:
-    std::vector<std::shared_ptr <SmartMotor> > m_followingMotors;
     static std::vector< SmartMotor* > m_allMotors;
+    static SmartMotor* getMotor(std::string name);
     static void updateAllMotors();
 };

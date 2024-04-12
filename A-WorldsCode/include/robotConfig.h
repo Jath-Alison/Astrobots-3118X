@@ -30,7 +30,6 @@ extern vex::inertial inert;
 // extern x::TankDrive drive;
 // extern x::SmartDrive smartDrive;
 
-
 // extern x::xMotor intake;
 // extern x::xMotor flywheel;
 

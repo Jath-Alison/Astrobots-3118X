@@ -3,7 +3,8 @@
 #include <string>
 #include <cmath>
 
-namespace Jath{
+namespace Jath
+{
 
 	struct Vec2
 	{
@@ -18,12 +19,11 @@ namespace Jath{
 		const float distTo(Vec2 target);
 		const float angleTo(Vec2 target);
 
-		const Vec2 operator +(Vec2 const& obj);
-		const Vec2 operator -(Vec2 const& obj);
-		const Vec2 operator *(float const& scale);
+		const Vec2 operator+(Vec2 const &obj);
+		const Vec2 operator-(Vec2 const &obj);
+		const Vec2 operator*(float const &scale);
 
 		Vec2();
-
 	};
 
 	Vec2 XandY(float x, float y);

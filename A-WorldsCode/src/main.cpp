@@ -9,6 +9,7 @@
 
 #include "vex.h"
 #include "robotConfig.h"
+#include <iostream>
 
 using namespace vex;
 
@@ -98,6 +99,10 @@ void usercontrol(void)
 		{
 			smartDrive.LeftSplitArcade(controller1);
 		}
+
+		std::cout << intake.getName() << ": \n" <<
+		 "\t pos: " << intake.position(vex::degrees) << "\n" <<
+		 "\t trav: " <<  intake.travel().degrees() << "\n";//
 
 		wait(20, msec); // Sleep the task for a short amount of time to
 						// prevent wasted resources.

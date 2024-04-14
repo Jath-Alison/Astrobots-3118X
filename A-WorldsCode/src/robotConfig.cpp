@@ -25,7 +25,7 @@ vex::motor a = vex::motor(vex::PORT19, vex::gearSetting::ratio6_1, true);
 vex::motor b = vex::motor(vex::PORT18, vex::gearSetting::ratio6_1, false);
 
 Jath::jMotorGroup intake = Jath::jMotorGroup(
-        "intake", 
+        std::string("intake"), 
         vex::motor_group(
             a,b
         )

@@ -1,7 +1,8 @@
 #pragma once
 
 #include "vex.h"
-#include "Jath/jMotor.h"
+#include "Jath/Motors/jMotor.h"
+#include "Jath/Motors/jMotorGroup.h"
 // #include "x/Logger.h"
 
 #include <string>
@@ -13,7 +14,7 @@ namespace Jath
   class TankDrive
   {
   public:
-    TankDrive(vex::motor_group left, vex::motor_group right) : m_left("leftDrive", left), m_right("rightDrive", right) {}
+    TankDrive(vex::motor_group left, vex::motor_group right) : m_left(std::string("leftDrive"), left), m_right(std::string("rightDrive"), right) {}
 
     TankDrive &withScales(double x, double y, double rot)
     {

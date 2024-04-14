@@ -18,10 +18,18 @@ vex::motor_group rightMotors(rightMotorF, rightMotorM, rightMotorB);
 
 vex::inertial inert(vex::PORT11);
 
-// x::TankDrive drive = x::TankDrive(leftMotors, rightMotors).withScales(1, 1, 1);
-// x::SmartDrive smartDrive = x::SmartDrive(drive, inert);
+Jath::TankDrive drive = Jath::TankDrive(leftMotors, rightMotors).withScales(1, 1, 1);
+Jath::SmartDrive smartDrive = Jath::SmartDrive(drive, inert);
 
-// x::xMotor intake = x::xMotor( "intake", vex::motor(vex::PORT19, vex::gearSetting::ratio6_1, true)).withSpeedMode(false);
+vex::motor a = vex::motor(vex::PORT19, vex::gearSetting::ratio6_1, true);
+vex::motor b = vex::motor(vex::PORT18, vex::gearSetting::ratio6_1, false);
+
+Jath::jMotorGroup intake = Jath::jMotorGroup(
+        "intake", 
+        vex::motor_group(
+            a,b
+        )
+    ).withSpeedMode(false);
 // x::xMotor flywheel = x::xMotor( "flywheel", vex::motor(vex::PORT5, vex::gearSetting::ratio6_1, true)).withSpeedMode(false);
 
 vex::pneumatics wings(Brain.ThreeWirePort.A);
@@ -30,6 +38,6 @@ vex::pneumatics climb(Brain.ThreeWirePort.H);
 Jath::Vec2 initPos = Jath::XandY(0, 0);
 Jath::Angle initDir = Jath::Angle(0);
 
-vex::gps GPS = vex::gps(vex::PORT14, -76.20, -127.00, vex::mm, 180);
+// vex::gps GPS = vex::gps(vex::PORT14, -76.20, -127.00, vex::mm, 180);
 
 std::string AllianceColor = "no color";

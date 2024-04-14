@@ -27,11 +27,11 @@ extern vex::motor_group rightMotors;
 
 extern vex::inertial inert;
 
-// extern x::TankDrive drive;
-// extern x::SmartDrive smartDrive;
+extern Jath::TankDrive drive;
+extern Jath::SmartDrive smartDrive;
 
-// extern x::xMotor intake;
-// extern x::xMotor flywheel;
+extern Jath::jMotorGroup intake;
+// extern Jath::jMotor flywheel;
 
 extern vex::pneumatics wings;
 extern vex::pneumatics climb;

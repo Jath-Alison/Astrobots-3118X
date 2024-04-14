@@ -8,6 +8,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "vex.h"
+#include "robotConfig.h"
 
 using namespace vex;
 
@@ -62,17 +63,41 @@ void autonomous(void)
 
 void usercontrol(void)
 {
+
+	waitUntil(smartDrive.m_inert.isCalibrating() == false);
+
+	Jath::Vec2 origin = Jath::XandY(0, 0);
+
+	smartDrive.m_pos = Jath::XandY(Jath::Tiles(-1), Jath::Tiles(-1));
+
 	// User control code here, inside the loop
 	while (1)
 	{
-		// This is the main execution loop for the user control program.
-		// Each time through the loop your program should update motor + servo
-		// values based on feedback from the joysticks.
+		if (controller1.ButtonR1.pressing())
+		{
+			intake.set(100);
+		}
+		else if (controller1.ButtonR2.pressing())
+		{
+			intake.set(-100);
+		}
+		else if (controller1.ButtonR1.RELEASED)
+		{
+			intake.set(50);
+		}
+		else if (controller1.ButtonR2.RELEASED)
+		{
+			intake.set(0);
+		}
 
-		// ........................................................................
-		// Insert user code here. This is where you use the joystick values to
-		// update your motors, etc.
-		// ........................................................................
+		if (controller1.ButtonL1.pressing())
+		{
+			smartDrive.arcade(0, controller1.Axis3.position() / 2.f, controller1.Axis1.position() / 3.f);
+		}
+		else
+		{
+			smartDrive.LeftSplitArcade(controller1);
+		}
 
 		wait(20, msec); // Sleep the task for a short amount of time to
 						// prevent wasted resources.

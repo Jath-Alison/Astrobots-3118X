@@ -21,8 +21,8 @@ vex::inertial inert(vex::PORT11);
 Jath::TankDrive drive = Jath::TankDrive(leftMotors, rightMotors).withScales(1, 1, 1);
 Jath::SmartDrive smartDrive = Jath::SmartDrive(drive, inert);
 
-vex::motor a = vex::motor(vex::PORT19, vex::gearSetting::ratio6_1, true);
-vex::motor b = vex::motor(vex::PORT18, vex::gearSetting::ratio6_1, false);
+vex::motor a = vex::motor(vex::PORT19, vex::gearSetting::ratio18_1, true);
+vex::motor b = vex::motor(vex::PORT18, vex::gearSetting::ratio18_1, false);
 
 Jath::jMotorGroup intake = Jath::jMotorGroup(
         std::string("intake"), 

@@ -19,6 +19,9 @@ namespace Jath
 
         SmartDrive(TankDrive drive, vex::inertial inert);
 
+        SmartDrive& withWheelSize(Distance size);
+        SmartDrive& withGearRatio(double ratio);
+
         int track();
 
         void driveTo(Distance target);
@@ -29,6 +32,10 @@ namespace Jath
         Angle shortestTurnPath(Angle target);
 
         vex::inertial m_inert;
+
+    private:
+        Distance m_wheelSize {2.75};//stored as diameter
+        double m_gearRatio {1.0};//output/input
     };
 
 }

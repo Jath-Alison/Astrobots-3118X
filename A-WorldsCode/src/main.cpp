@@ -100,9 +100,14 @@ void usercontrol(void)
 			smartDrive.LeftSplitArcade(controller1);
 		}
 
+		static double sum = 0;
+		sum += intake.travel();
+
 		std::cout << intake.getName() << ": \n" <<
 		 "\t pos: " << intake.position(vex::degrees) << "\n" <<
-		 "\t trav: " <<  intake.travel().degrees() << "\n";//
+		 "\t trav: " <<  intake.getTravel()*1.5 << "\n" <<
+		 "\t cumm trav: " << sum << "\n";
+
 
 		wait(20, msec); // Sleep the task for a short amount of time to
 						// prevent wasted resources.

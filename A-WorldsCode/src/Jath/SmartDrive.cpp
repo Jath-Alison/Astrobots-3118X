@@ -1,5 +1,6 @@
 #include "Jath\SmartDrive.h"
 #include <iostream>
+#include "SmartDrive.h"
 
 namespace Jath{
 
@@ -8,32 +9,36 @@ namespace Jath{
         m_inert.calibrate();
     }
 
+    SmartDrive &SmartDrive::withWheelSize(Distance size)
+    {
+        m_wheelSize = size;
+        return *this;
+    }
+
+    SmartDrive &SmartDrive::withGearRatio(double ratio)
+    {
+        m_gearRatio = ratio;
+        return *this;
+    }
+
     int SmartDrive::track()
     {
         while(m_inert.isCalibrating()){vex::wait(5, vex::msec);}
-        int count = 600;
-        while(true){
-            count ++;
-            // if(count > 100 && GPS.quality() > .7){
-            //     m_pos = XandY( Inches(GPS.xPosition(vex::inches)), Inches(GPS.yPosition(vex::inches)) );
-            //     m_inert.setHeading(GPS.heading(vex::deg), vex::deg);
-            //     count = 0;
-            //     std::cout << "-----------------reset-------------------" << std::endl;
-            // };
-            static double prev = 0;
-            m_dir = Degrees(m_inert.heading(vex::degrees));
-            double change = ((m_left.position(vex::degrees) - m_right.position(vex::degrees))/2.f) - prev;
 
-            Distance travel = Inches(change*((3.25 * 3.1415)/360.f) / (72.f/48.f));
+        while(true){
+
+            m_dir = Degrees(m_inert.heading(vex::degrees));
+
+            Jath::Angle wheelTravel = (m_left.travel() + m_right.travel()) / 2.0;
+            Jath::Distance travel = wheelTravel * (m_wheelSize/2.0) * m_gearRatio;
+
+            // Distance travel = Inches(change*((3.25 * 3.1415)/360.f) / (72.f/48.f));
             Vec2 posChange = dirAndMag(m_dir,travel);
 
             m_pos = m_pos + posChange;
 
-            prev = (m_left.position(vex::degrees) - m_right.position(vex::degrees))/2.f;
-            // std::cout << m_pos.x << ", " << m_pos.y << ", " << m_dir.degrees() << std::endl;
-            // std::cout << "\ttravel: " << travel.inches() << std::endl;
 
-        vex::wait(20, vex::msec);
+            vex::wait(20, vex::msec);
         }
     }
 

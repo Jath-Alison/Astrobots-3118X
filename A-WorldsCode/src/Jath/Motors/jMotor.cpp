@@ -6,8 +6,6 @@ namespace Jath
     jMotor::jMotor(std::string name, vex::motor mot) : vex::motor(mot), m_name(name)
     {
         m_name = name;
-        Jath::Angle m_lastAngle = Jath::Angle(0);
-        Jath::Angle m_travel = Jath::Angle(0);
     }
 
     std::string jMotor::getName() { return m_name; }

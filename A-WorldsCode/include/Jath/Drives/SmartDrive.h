@@ -2,7 +2,7 @@
 
 #include "vex.h"
 
-#include "Jath/TankDrive.h"
+#include "Jath/Drives/TankDrive.h"
 #include "Jath/Vec2.h"
 #include "Jath/Units.h"
 #include "Jath/Utils.h"

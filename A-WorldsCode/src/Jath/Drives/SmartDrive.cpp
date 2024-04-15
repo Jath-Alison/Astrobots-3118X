@@ -1,6 +1,5 @@
-#include "Jath\SmartDrive.h"
+#include "Jath\Drives\SmartDrive.h"
 #include <iostream>
-#include "SmartDrive.h"
 
 namespace Jath{
 

@@ -6,23 +6,30 @@ vex::controller controller1(vex::primary);
 // x::Leds xleds(36);
 // addressable_led leds(Brain.ThreeWirePort.B, 36);
 
-vex::motor leftMotorF(vex::PORT1, vex::gearSetting::ratio6_1, true);
-vex::motor leftMotorM(vex::PORT2, vex::gearSetting::ratio6_1, false);
-vex::motor leftMotorB(vex::PORT3, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorF(vex::PORT14, vex::gearSetting::ratio6_1, false);
+vex::motor leftMotorM(vex::PORT15, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorB(vex::PORT13, vex::gearSetting::ratio6_1, true);
 vex::motor_group leftMotors(leftMotorF, leftMotorM, leftMotorB);
 
-vex::motor rightMotorF(vex::PORT6, vex::gearSetting::ratio6_1, true);
+vex::motor rightMotorF(vex::PORT17, vex::gearSetting::ratio6_1, true);
 vex::motor rightMotorM(vex::PORT16, vex::gearSetting::ratio6_1, false);
-vex::motor rightMotorB(vex::PORT9, vex::gearSetting::ratio6_1, true);
+vex::motor rightMotorB(vex::PORT18, vex::gearSetting::ratio6_1, false);
 vex::motor_group rightMotors(rightMotorF, rightMotorM, rightMotorB);
 
 vex::inertial inert(vex::PORT11);
 
 Jath::TankDrive drive = Jath::TankDrive(leftMotors, rightMotors).withScales(1, 1, 1);
-Jath::SmartDrive smartDrive = Jath::SmartDrive(drive, inert);
+Jath::SmartDrive smartDrive = Jath::SmartDrive(drive, inert)
+    .withWheelSize(Jath::Inches(2.75))
+    .withGearRatio(1)
+    .withHorizontalTracker(
+        vex::rotation(vex::PORT19),
+        Jath::Inches(2.75),
+        1
+    );
 
-vex::motor a = vex::motor(vex::PORT19, vex::gearSetting::ratio18_1, true);
-vex::motor b = vex::motor(vex::PORT18, vex::gearSetting::ratio18_1, false);
+vex::motor a = vex::motor(vex::PORT12, vex::gearSetting::ratio18_1, true);
+vex::motor b = vex::motor(vex::PORT20, vex::gearSetting::ratio18_1, false);
 
 Jath::jMotorGroup intake = Jath::jMotorGroup(
         std::string("intake"), 

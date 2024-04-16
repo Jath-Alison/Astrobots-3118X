@@ -25,7 +25,7 @@ Jath::SmartDrive smartDrive = Jath::SmartDrive(drive, inert)
     .withHorizontalTracker(
         vex::rotation(vex::PORT19),
         Jath::Inches(2.75),
-        1
+        1.0
     );
 
 vex::motor a = vex::motor(vex::PORT12, vex::gearSetting::ratio18_1, true);

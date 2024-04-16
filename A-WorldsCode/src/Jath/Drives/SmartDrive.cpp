@@ -17,7 +17,7 @@ namespace Jath
         m_travelAngle = Angle(currentAngle - m_lastAngle);
         m_lastAngle = currentAngle;
 
-        m_travelDistance = m_travelAngle * (m_wheelSize / 2.0) * m_gearRatio;
+        m_travelDistance = Distance(m_travelAngle * (m_wheelSize / 2.0) * m_gearRatio);
 
         return m_travelDistance;
     }
@@ -64,8 +64,7 @@ namespace Jath
             Vec2 posChange = dirAndMag(m_dir, travel);
 
             if( m_tracker.m_rotation != nullptr ){
-                Jath::Angle hWheelTravel = (m_left.travel() + m_right.travel()) / 2.0;
-                Jath::Distance hTravel = hWheelTravel * (m_tracker.m_wheelSize / 2.0) * m_tracker.m_gearRatio;
+                Jath::Distance hTravel = m_tracker.getTravel();
 
                 posChange = posChange + dirAndMag(m_dir, hTravel);
             }

@@ -100,13 +100,11 @@ void usercontrol(void)
 			smartDrive.LeftSplitArcade(controller1);
 		}
 
-		static double sum = 0;
-		sum += intake.travel();
-
-		// std::cout << intake.getName() << ": \n" <<
-		//  "\t pos: " << intake.position(vex::degrees) << "\n" <<
-		//  "\t trav: " <<  intake.getTravel()*1.5 << "\n" <<
-		//  "\t cumm trav: " << sum << "\n";
+		std::cout << "Base Pos:" << ": \n" <<
+		 "\t x(in) : " << Jath::Distance( smartDrive.m_pos.x ).inches() << "\n" <<
+		 "\t y(in) : " <<  Jath::Distance( smartDrive.m_pos.y ).inches() << "\n" <<
+		 "\t dir(deg) : " << smartDrive.m_dir.degrees() << "\n" <<
+		 "\t rotPos : " << (smartDrive.m_tracker.m_travelDistance.inches()) << "\n" ;
 
 
 		wait(20, msec); // Sleep the task for a short amount of time to
@@ -114,11 +112,17 @@ void usercontrol(void)
 	}
 }
 
+void track(){
+	smartDrive.track();
+}
+
 //
 // Main will set up the competition functions and callbacks.
 //
 int main()
 {
+	vex::thread tracking(track);
+
 	// Set up callbacks for autonomous and driver control periods.
 	Competition.autonomous(autonomous);
 	Competition.drivercontrol(usercontrol);

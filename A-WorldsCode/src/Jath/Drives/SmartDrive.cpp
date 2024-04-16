@@ -54,8 +54,10 @@ namespace Jath
 
         while (true)
         {
-
+            static Jath::Angle prevDir;
+            if ( m_dir != prevDir ){ m_inert.setHeading(m_dir.degrees(), vex::deg); } 
             m_dir = Degrees(m_inert.heading(vex::degrees));
+            prevDir = m_dir;
 
             Jath::Angle wheelTravel = (m_left.travel() + m_right.travel()) / 2.0;
             Jath::Distance travel = wheelTravel * (m_wheelSize / 2.0) * m_gearRatio;

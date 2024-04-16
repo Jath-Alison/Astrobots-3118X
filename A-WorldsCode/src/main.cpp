@@ -70,6 +70,7 @@ void usercontrol(void)
 	Jath::Vec2 origin = Jath::XandY(0, 0);
 
 	smartDrive.m_pos = Jath::XandY(Jath::Tiles(-1), Jath::Tiles(-1));
+	smartDrive.m_dir = Jath::Degrees(90);
 
 	// User control code here, inside the loop
 	while (1)

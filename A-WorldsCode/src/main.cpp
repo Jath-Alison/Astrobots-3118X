@@ -69,8 +69,8 @@ void usercontrol(void)
 
 	Jath::Vec2 origin = Jath::XandY(0, 0);
 
-	smartDrive.m_pos = Jath::XandY(Jath::Tiles(-1), Jath::Tiles(-1));
-	smartDrive.m_dir = Jath::Degrees(90);
+	smartDrive.m_pos = Jath::XandY(Jath::Tiles(0), Jath::Tiles(0));
+	smartDrive.m_dir = Jath::Degrees(0);
 
 	// User control code here, inside the loop
 	while (1)
@@ -94,26 +94,55 @@ void usercontrol(void)
 
 		if (controller1.ButtonL1.pressing())
 		{
-			smartDrive.arcade(0, controller1.Axis3.position() / 2.f, controller1.Axis1.position() / 3.f);
+			smartDrive.arcade(0, controller1.Axis3.position() / 2.f, controller1.Axis4.position() / 3.f);
+			if ( controller1.Axis1.position() * controller1.Axis2.position() ){
+				Jath::Vec2 stickAngle = Jath::XandY(controller1.Axis1.position() , controller1.Axis2.position());
+				smartDrive.turnTo( Jath::Degrees(90) ); //origin.angleTo( stickAngle )
+			}
 		}
 		else
 		{
 			smartDrive.LeftSplitArcade(controller1);
 		}
 
-		std::cout << "Base Pos:" << ": \n" <<
-		 "\t x(in) : " << Jath::Distance( smartDrive.m_pos.x ).inches() << "\n" <<
-		 "\t y(in) : " <<  Jath::Distance( smartDrive.m_pos.y ).inches() << "\n" <<
-		 "\t dir(deg) : " << smartDrive.m_dir.degrees() << "\n" <<
-		 "\t rotPos : " << (smartDrive.m_tracker.m_travelDistance.inches()) << "\n" ;
+		if (controller1.ButtonRight.pressing())
+		{
+			Jath::Distance temp = smartDrive.driveToPoint(Jath::XandY(Jath::Tiles(1), Jath::Tiles(2)));
+		}
+		else
+		{
 
+			// std::cout << "Base Pos:" << ": \n" <<
+			//  "\t x(in) : " << Jath::Distance( smartDrive.m_pos.x ).inches() << "\n" <<
+			//  "\t y(in) : " <<  Jath::Distance( smartDrive.m_pos.y ).inches() << "\n" <<
+			//  "\t dir(deg) : " << smartDrive.m_dir.degrees() << "\n" <<
+			//  "\t rotPos : " << (smartDrive.m_tracker.m_travelDistance.inches()) << "\n" ;
+
+			Brain.Screen.clearScreen();
+			Brain.Screen.setCursor(1, 1);
+			Brain.Screen.print("x(t): %f", Jath::Distance(smartDrive.m_pos.x).inches());
+			Brain.Screen.setCursor(2, 1);
+			Brain.Screen.print("y(t): %f", Jath::Distance(smartDrive.m_pos.y).inches());
+			Brain.Screen.setCursor(3, 1);
+			Brain.Screen.print("r(d): %f", Jath::Angle(smartDrive.m_dir).degrees());
+
+			Brain.Screen.setCursor(1, 15);
+			Brain.Screen.print("x: %f", smartDrive.m_pos.x);
+			Brain.Screen.setCursor(2, 15);
+			Brain.Screen.print("y: %f", smartDrive.m_pos.y);
+			Brain.Screen.setCursor(3, 15);
+			Brain.Screen.print("l: %f", leftMotors.position(vex::deg));
+			Brain.Screen.setCursor(4, 15);
+			Brain.Screen.print("r: %f", rightMotors.position(vex::deg));
+		}
 
 		wait(20, msec); // Sleep the task for a short amount of time to
 						// prevent wasted resources.
 	}
 }
 
-void track(){
+void track()
+{
 	smartDrive.track();
 }
 

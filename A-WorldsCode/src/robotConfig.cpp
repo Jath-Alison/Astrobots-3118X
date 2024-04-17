@@ -21,12 +21,13 @@ vex::inertial inert(vex::PORT11);
 Jath::TankDrive drive = Jath::TankDrive(leftMotors, rightMotors).withScales(1, 1, 1);
 Jath::SmartDrive smartDrive = Jath::SmartDrive(drive, inert)
     .withWheelSize(Jath::Inches(2.75))
-    .withGearRatio(1)
+    .withGearRatio(4.f/5.f)
     .withHorizontalTracker(
-        vex::rotation(vex::PORT19),
+        vex::rotation(vex::PORT19, true),
         Jath::Inches(2.75),
-        1.0
-    );
+        3.f/5.f
+    )
+    ;
 
 vex::motor a = vex::motor(vex::PORT12, vex::gearSetting::ratio18_1, true);
 vex::motor b = vex::motor(vex::PORT20, vex::gearSetting::ratio18_1, false);

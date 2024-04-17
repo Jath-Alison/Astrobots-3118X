@@ -1,5 +1,5 @@
 #include "Jath\Drives\SmartDrive.h"
-#include <iostream>
+#include "Jath\PID.h"
 
 namespace Jath
 {
@@ -10,9 +10,9 @@ namespace Jath
         m_rotation = std::make_shared<vex::rotation>(rotation);
     }
 
-    Jath::Distance SmartDrive::HorizontalTracker::getTravel()
+    Distance SmartDrive::HorizontalTracker::getTravel()
     {
-        Jath::Angle currentAngle = Degrees(m_rotation->position(vex::degrees));
+        Angle currentAngle = Degrees(m_rotation->position(vex::degrees));
 
         m_travelAngle = Angle(currentAngle - m_lastAngle);
         m_lastAngle = currentAngle;
@@ -54,21 +54,25 @@ namespace Jath
 
         while (true)
         {
-            static Jath::Angle prevDir;
-            if ( m_dir != prevDir ){ m_inert.setHeading(m_dir.degrees(), vex::deg); } 
+            static Angle prevDir;
+            if (m_dir != prevDir)
+            {
+                m_inert.setHeading(m_dir.degrees(), vex::deg);
+            }
             m_dir = Degrees(m_inert.heading(vex::degrees));
             prevDir = m_dir;
 
-            Jath::Angle wheelTravel = (m_left.travel() + m_right.travel()) / 2.0;
-            Jath::Distance travel = wheelTravel * (m_wheelSize / 2.0) * m_gearRatio;
+            Angle wheelTravel = Angle((m_left.travel() + m_right.travel()) / 2.0);
+            Distance travel = Distance(wheelTravel * (m_wheelSize / 2.0) * m_gearRatio);
 
             // Distance travel = Inches(change*((3.25 * 3.1415)/360.f) / (72.f/48.f));
             Vec2 posChange = dirAndMag(m_dir, travel);
 
-            if( m_tracker.m_rotation != nullptr ){
-                Jath::Distance hTravel = m_tracker.getTravel();
+            if (m_tracker.m_rotation != nullptr)
+            {
+                Distance hTravel = m_tracker.getTravel();
 
-                posChange = posChange + dirAndMag(m_dir, hTravel);
+                posChange = posChange + dirAndMag(m_dir + Degrees(90), hTravel);
             }
 
             m_pos = m_pos + posChange;
@@ -119,68 +123,70 @@ namespace Jath
     }
     void SmartDrive::turnTo(Angle target)
     {
-        bool running = true;
-        int count = 0;
-        Angle prev;
-        while (running)
+        Jath::PID pid = Jath::PID()
+                            .withConstants(0.75 / Jath::Degrees(1), 10, 10)
+                            .withIntegralZone(Jath::Degrees(15))
+                            .withTimeout(5)
+                            .withSettleZone(Jath::Degrees(1))
+                            .withSettleTimeout(1);
+
+        pid.reset();
+        while (!pid.isCompleted())
         {
-            Angle error = shortestTurnPath(Jath::Degrees(target.degrees() - m_inert.heading(vex::degrees)));
-            double speed = error.degrees() * 0.5;
-            if (std::abs(speed) > 50)
-            {
-                speed *= .25;
-            }
-            else
-            {
-                speed *= 0.5;
-            }
-            if (Angle(prev - error).degrees() < 5)
-            {
-                speed *= 2.5;
-            }
-            arcade(0, 0, speed + getSign(error.degrees()) * 20);
-            if (std::abs(error.degrees()) < 5)
-            {
-                count++;
-            }
-            else
-            {
-                count = 0;
-            }
-            // std::cout << error.degrees() << ", " << count << std::endl;
-            if (count > 20)
-            {
-                running = false;
-            }
-            prev = error;
+            Angle error = shortestTurnPath(Degrees(target.degrees() - m_inert.heading(vex::degrees)));
+
+            double t = pid.calculate(error);
+
+            arcade(0, 0, t);
+
             wait(20, vex::msec);
         }
         arcade(0, 0, 0);
     }
     Distance SmartDrive::driveToPoint(Vec2 target)
     {
-        Angle angle = Angle(m_pos.angleTo(target) - m_dir);
-        // angle = Angle(shortestTurnPath(angle));
-        Distance dist = m_pos.distTo(target);
 
-        // std::cout << "pos: " << Distance (m_pos.x).tiles() << "," << Distance (m_pos.y).tiles() << "\n";
-        // std::cout << "target: " << target.x << "," << target.y << "\n";
-        // std::cout << "target angle: " << Radians(m_pos.angleTo(target)).degrees() << "\n";
-        // std::cout << "distance: " << dist.inches() << "\n\n";
+        static Jath::PID pidr = Jath::PID()
+                                    .withConstants(0.75 / Jath::Degrees(1), 10, 10)
+                                    .withIntegralZone(Jath::Degrees(15))
+                                    .withTimeout(5)
+                                    .withSettleZone(Jath::Degrees(1))
+                                    .withSettleTimeout(1);
 
-        if (std::abs(angle.degrees()) > 15)
+        static Jath::PID pidd = Jath::PID()
+                                    .withConstants(0.5 / Jath::Inches(0), 10, 2)
+                                    .withIntegralZone(Jath::Inches(1))
+                                    .withTimeout(50)
+                                    .withSettleZone(Jath::Inches(1))
+                                    .withSettleTimeout(5);
+        pidr.reset();
+        pidd.reset();
+        while (!pidd.isCompleted())
         {
-            arcade(0, 0, angle.degrees());
+
+            Angle angle = Angle(m_pos.angleTo(target) - m_dir);
+            angle = Angle(shortestTurnPath(angle));
+            Distance dist = m_pos.distTo(target);
+
+            if (std::abs(angle.degrees()) > 15)
+            {
+                arcade(0, 0, pidr.calculate(angle));
+            }
+            else
+            {
+                arcade(0, pidd.calculate(dist), pidr.calculate(angle));
+            }
+
+            std::cout << "angle :" << angle.degrees() << "\n"
+                      << "\tdist: " << dist.inches() << "\n";
+
+            update();
         }
-        else
-        {
-            arcade(0, dist.inches() * 5, angle.degrees());
-        }
-        update();
-        return dist;
+        return 0;
     }
     Angle SmartDrive::shortestTurnPath(Angle target)
     {
+        target.constrain();
         Angle angle = target;
         if (std::abs(angle.revolutions()) < .5)
         {

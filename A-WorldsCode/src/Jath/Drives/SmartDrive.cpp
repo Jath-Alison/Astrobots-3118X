@@ -84,16 +84,17 @@ namespace Jath
 
     void SmartDrive::driveTo(Distance target)
     {
-        static Jath::PID pid = Jath::PID()
-                                   .withConstants(0.5 / Jath::Inches(0), 10, 2)
-                                   .withIntegralZone(Jath::Inches(1))
-                                   .withTimeout(50)
-                                   .withSettleZone(Jath::Inches(1))
-                                   .withSettleTimeout(5);
+        Jath::PID pid = Jath::PID()
+                            .withConstants(0.5 / Jath::Inches(0), 10, 2)
+                            .withIntegralZone(Jath::Inches(1))
+                            .withTimeout(50)
+                            .withSettleZone(Jath::Inches(1))
+                            .withSettleTimeout(5);
 
-        Angle offset = Degrees( (m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
+        Angle offset = Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
         Angle targetRot = Revolutions(target / getWheelTravel());
 
+        pid.reset();
         while (!pid.isCompleted())
         {
             Angle pos = Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
@@ -130,19 +131,19 @@ namespace Jath
     Distance SmartDrive::driveToPoint(Vec2 target)
     {
 
-        static Jath::PID pidr = Jath::PID()
-                                    .withConstants(0.75 / Jath::Degrees(1), 10, 10)
-                                    .withIntegralZone(Jath::Degrees(15))
-                                    .withTimeout(5)
-                                    .withSettleZone(Jath::Degrees(1))
-                                    .withSettleTimeout(1);
+        Jath::PID pidr = Jath::PID()
+                             .withConstants(0.75 / Jath::Degrees(1), 10, 10)
+                             .withIntegralZone(Jath::Degrees(15))
+                             .withTimeout(5)
+                             .withSettleZone(Jath::Degrees(1))
+                             .withSettleTimeout(1);
 
-        static Jath::PID pidd = Jath::PID()
-                                    .withConstants(0.5 / Jath::Inches(0), 10, 2)
-                                    .withIntegralZone(Jath::Inches(1))
-                                    .withTimeout(50)
-                                    .withSettleZone(Jath::Inches(1))
-                                    .withSettleTimeout(5);
+        Jath::PID pidd = Jath::PID()
+                             .withConstants(0.5 / Jath::Inches(0), 10, 2)
+                             .withIntegralZone(Jath::Inches(1))
+                             .withTimeout(50)
+                             .withSettleZone(Jath::Inches(1))
+                             .withSettleTimeout(5);
         pidr.reset();
         pidd.reset();
         while (!pidd.isCompleted())
@@ -152,19 +153,23 @@ namespace Jath
             angle = Angle(shortestTurnPath(angle));
             Distance dist = m_pos.distTo(target);
 
+            double rotOut = pidr.calculate(angle);
+            double driveOut = pidd.calculate(dist);
+
             if (std::abs(angle.degrees()) > 15)
             {
-                arcade(0, 0, pidr.calculate(angle));
+                arcade(0, 0, rotOut);
             }
             else
             {
-                arcade(0, pidd.calculate(dist), pidr.calculate(angle));
+                arcade(0, driveOut, rotOut);
             }
 
             std::cout << "angle :" << angle.degrees() << "\n"
                       << "\tdist: " << dist.inches() << "\n";
 
             update();
+            wait(20, vex::msec);
         }
         return 0;
     }

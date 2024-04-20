@@ -1,5 +1,6 @@
 #include "Jath\Drives\SmartDrive.h"
 #include "Jath\PID.h"
+#include <cmath>
 
 namespace Jath
 {
@@ -63,7 +64,7 @@ namespace Jath
             prevDir = m_dir;
 
             Angle wheelTravel = Angle((m_left.travel() + m_right.travel()) / 2.0);
-            Distance travel = Distance(wheelTravel * (m_wheelSize / 2.0) * m_gearRatio);
+            Distance travel = Distance(wheelTravel * getWheelTravel());
 
             // Distance travel = Inches(change*((3.25 * 3.1415)/360.f) / (72.f/48.f));
             Vec2 posChange = dirAndMag(m_dir, travel);
@@ -83,40 +84,23 @@ namespace Jath
 
     void SmartDrive::driveTo(Distance target)
     {
-        double offset = (m_left.position(vex::degrees) - m_right.position(vex::degrees)) / 2.f;
-        double deg = target.inches() / (3.25 * 3.1415) * 360 * (72.f / 48.f);
-        double error = deg - (((m_left.position(vex::degrees) - m_right.position(vex::degrees)) / 2.f) - offset);
-        int count = 0;
+        static Jath::PID pid = Jath::PID()
+                                   .withConstants(0.5 / Jath::Inches(0), 10, 2)
+                                   .withIntegralZone(Jath::Inches(1))
+                                   .withTimeout(50)
+                                   .withSettleZone(Jath::Inches(1))
+                                   .withSettleTimeout(5);
 
-        double i = 0;
-        double prevError;
+        Angle offset = Degrees( (m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
+        Angle targetRot = Revolutions(target / getWheelTravel());
 
-        while (count < 20)
+        while (!pid.isCompleted())
         {
-            error = deg - (((m_left.position(vex::degrees) - m_right.position(vex::degrees)) / 2.f) - offset);
-            double speed = error * 0.25;
-            // if(std::abs(speed) > 50){speed*=.25;} else {speed *= 0.25;}
-            if (std::abs(error) < 100)
-            {
-                i += error;
-            }
-            else
-            {
-                i = 0;
-            }
-            speed += i * .025;
-            arcade(0, speed + .5 * (error - prevError), 0);
-            if (std::abs(error) < 5)
-            {
-                count++;
-            }
-            else
-            {
-                count = 0;
-            }
-            prevError = error;
-            // std::cout << "error: " << error << "\n";
-            // std::cout << "speed: " << speed << "\n" << std::endl;
+            Angle pos = Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
+            double out = pid.calculate(target - pos);
+
+            arcade(0, out, 0);
+
             wait(20, vex::msec);
         }
         arcade(0, 0, 0);
@@ -135,9 +119,9 @@ namespace Jath
         {
             Angle error = shortestTurnPath(Degrees(target.degrees() - m_inert.heading(vex::degrees)));
 
-            double t = pid.calculate(error);
+            double out = pid.calculate(error);
 
-            arcade(0, 0, t);
+            arcade(0, 0, out);
 
             wait(20, vex::msec);
         }
@@ -204,5 +188,10 @@ namespace Jath
             }
         }
         return Angle();
+    }
+
+    Distance Jath::SmartDrive::getWheelTravel()
+    {
+        return Distance((m_wheelSize / 2.0) * m_gearRatio);
     }
 }

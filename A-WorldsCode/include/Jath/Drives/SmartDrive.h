@@ -54,6 +54,8 @@ namespace Jath
 
         HorizontalTracker m_tracker;
 
+        Distance getWheelTravel();
+
     private:
         Distance m_wheelSize{2.75}; // stored as diameter
         double m_gearRatio{1.0};    // output/input

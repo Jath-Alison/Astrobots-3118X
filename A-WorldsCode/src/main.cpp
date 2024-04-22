@@ -85,7 +85,7 @@ void usercontrol(void)
 		}
 		else if (controller1.ButtonR1.RELEASED)
 		{
-			intake.set(50);
+			intake.set(0);
 		}
 		else if (controller1.ButtonR2.RELEASED)
 		{
@@ -100,7 +100,7 @@ void usercontrol(void)
 				smartDrive.turnTo( Jath::Degrees(90) ); //origin.angleTo( stickAngle )
 			}
 		}
-		else
+		else 
 		{
 			smartDrive.LeftSplitArcade(controller1);
 		}

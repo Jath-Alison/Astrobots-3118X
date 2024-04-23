@@ -40,8 +40,19 @@ Jath::jMotorGroup intake = Jath::jMotorGroup(
     ).withSpeedMode(false);
 // x::xMotor flywheel = x::xMotor( "flywheel", vex::motor(vex::PORT5, vex::gearSetting::ratio6_1, true)).withSpeedMode(false);
 
-// vex::pneumatics wings(Brain.ThreeWirePort.A);
-// vex::pneumatics climb(Brain.ThreeWirePort.H);
+vex::pneumatics climbUp(Brain.ThreeWirePort.F);
+vex::pneumatics climbDown(Brain.ThreeWirePort.B);
+
+vex::pneumatics park(Brain.ThreeWirePort.C);
+vex::pneumatics odomRetract(Brain.ThreeWirePort.D);
+
+vex::pneumatics leftWing(Brain.ThreeWirePort.A);
+vex::pneumatics rightWing(Brain.ThreeWirePort.E);
+
+
+//wing left - a
+//climb down - b
+
 
 Jath::Vec2 initPos = Jath::XandY(0, 0);
 Jath::Angle initDir = Jath::Angle(0);

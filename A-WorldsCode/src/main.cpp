@@ -92,6 +92,37 @@ void usercontrol(void)
 			intake.set(0);
 		}
 
+		if (controller1.ButtonX.PRESSED)
+		{
+			climbUp.set(true);
+			climbDown.set(false);
+		}
+		else if (controller1.ButtonB.PRESSED)
+		{
+			climbUp.set(false);
+			climbDown.set(true);
+		}
+
+		if (controller1.ButtonL1.PRESSED)
+		{
+			leftWing.set(true);
+			rightWing.set(true);
+		}
+		else if (controller1.ButtonL1.RELEASED)
+		{
+			leftWing.set(false);
+			rightWing.set(false);
+		}
+
+		if (controller1.ButtonL2.PRESSED)
+		{
+			park.set(true);
+		}
+		else if (controller1.ButtonL2.RELEASED)
+		{
+			park.set(false);
+		}
+
 		if (controller1.ButtonL1.pressing())
 		{
 			smartDrive.arcade(0, controller1.Axis3.position() / 2.f, controller1.Axis4.position() / 3.f);

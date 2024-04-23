@@ -33,8 +33,15 @@ extern Jath::SmartDrive smartDrive;
 extern Jath::jMotorGroup intake;
 // extern Jath::jMotor flywheel;
 
-extern vex::pneumatics wings;
-extern vex::pneumatics climb;
+extern vex::pneumatics climbUp;
+extern vex::pneumatics climbDown;
+
+extern vex::pneumatics park;
+extern vex::pneumatics odomRetract;
+extern vex::pneumatics odomRetract;
+
+extern vex::pneumatics leftWing;
+extern vex::pneumatics rightWing;
 
 extern Jath::Vec2 initPos;
 extern Jath::Angle initDir;

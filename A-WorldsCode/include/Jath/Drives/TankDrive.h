@@ -45,8 +45,8 @@ namespace Jath
 
     void update()
     {
-      m_left.set((m_cmdY * m_yScale) + (m_cmdRot * m_rotScale));
-      m_right.set((m_cmdY * m_yScale) - (m_cmdRot * m_rotScale));
+      m_left.set((m_cmdY * m_yScale) - (m_cmdRot * m_rotScale));
+      m_right.set((m_cmdY * m_yScale) + (m_cmdRot * m_rotScale));
     }
 
   protected:

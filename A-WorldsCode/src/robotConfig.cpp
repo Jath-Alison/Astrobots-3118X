@@ -18,7 +18,7 @@ vex::motor_group rightMotors(rightMotorF, rightMotorM, rightMotorB);
 
 vex::inertial inert(vex::PORT7);
 
-Jath::TankDrive drive = Jath::TankDrive(leftMotors, rightMotors).withScales(1, 1, 1.5);
+Jath::TankDrive drive = Jath::TankDrive(leftMotors, rightMotors).withScales(1, 1, 1);
 Jath::SmartDrive smartDrive = Jath::SmartDrive(drive, inert)
     .withWheelSize(Jath::Inches(2.75))
     .withGearRatio(1.0)

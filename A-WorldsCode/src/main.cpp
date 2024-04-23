@@ -102,7 +102,7 @@ void usercontrol(void)
 		}
 		else 
 		{
-			smartDrive.LeftSplitArcade(controller1);
+			smartDrive.LeftSplitArcadeCurved(controller1);
 		}
 
 		if (controller1.ButtonRight.pressing())

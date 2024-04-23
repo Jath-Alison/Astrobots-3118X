@@ -43,6 +43,14 @@ namespace Jath
       update();
     };
 
+    void LeftSplitArcadeCurved(const vex::controller &cont)
+    {
+      arcade(0,
+       cont.Axis3.position()*cont.Axis3.position()*cont.Axis3.position()*0.01*0.01,
+       cont.Axis1.position()*cont.Axis1.position()*cont.Axis1.position()*0.01*0.01);
+      update();
+    };
+
     void update()
     {
       m_left.set((m_cmdY * m_yScale) + (m_cmdRot * m_rotScale));

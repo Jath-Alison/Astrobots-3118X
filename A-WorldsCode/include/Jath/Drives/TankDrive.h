@@ -49,9 +49,9 @@ namespace Jath
       m_right.set((m_cmdY * m_yScale) - (m_cmdRot * m_rotScale));
     }
 
-  protected:
     jMotorGroup m_left;
     jMotorGroup m_right;
+  protected:
 
     double m_cmdX{0};
     double m_cmdY{0};

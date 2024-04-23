@@ -91,16 +91,21 @@ void usercontrol(void)
 		{
 			intake.set(0);
 		}
-
+		static bool climbing = false;
 		if (controller1.ButtonX.PRESSED)
 		{
-			climbUp.set(true);
+			climbing = true;
+			climbUp.set(false);
 			climbDown.set(false);
 		}
 		else if (controller1.ButtonB.PRESSED)
 		{
-			climbUp.set(false);
+			climbing = true;
+			climbUp.set(true);
 			climbDown.set(true);
+		}else if(! climbing){
+			climbUp.set(true);
+			climbDown.set(false);
 		}
 
 		if (controller1.ButtonL1.PRESSED)
@@ -126,9 +131,14 @@ void usercontrol(void)
 		if (controller1.ButtonL1.pressing())
 		{
 			smartDrive.arcade(0, controller1.Axis3.position() / 2.f, controller1.Axis4.position() / 3.f);
-			if ( controller1.Axis1.position() * controller1.Axis2.position() ){
+			if ( controller1.Axis1.position() * controller1.Axis2.position() && controller1.ButtonX.PRESSED){
 				Jath::Vec2 stickAngle = Jath::XandY(controller1.Axis1.position() , controller1.Axis2.position());
-				smartDrive.turnTo( Jath::Degrees(90) ); //origin.angleTo( stickAngle )
+				smartDrive.turnTo( origin.angleTo( stickAngle ) );
+				// smartDrive.driveTo(Jath::Inches(10));
+			}
+			if ( controller1.Axis1.position() * controller1.Axis2.position() && controller1.ButtonA.PRESSED){
+				Jath::Vec2 stickAngle = Jath::XandY(controller1.Axis1.position() , controller1.Axis2.position());
+				smartDrive.driveToPoint(Jath::dirAndMag(origin.angleTo(stickAngle), 10));
 			}
 		}
 		else 

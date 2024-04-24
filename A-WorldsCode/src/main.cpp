@@ -72,6 +72,8 @@ void usercontrol(void)
 	smartDrive.m_pos = Jath::XandY(Jath::Tiles(0), Jath::Tiles(0));
 	smartDrive.m_dir = Jath::Degrees(0);
 
+	odomRetract.open();
+
 	// User control code here, inside the loop
 	while (1)
 	{
@@ -91,21 +93,21 @@ void usercontrol(void)
 		{
 			intake.set(0);
 		}
-		static bool climbing = false;
+
+		if (controller1.ButtonA.PRESSED)
+		{
+			climbUp.set(true);
+			climbDown.set(false);
+		}else
 		if (controller1.ButtonX.PRESSED)
 		{
-			climbing = true;
 			climbUp.set(false);
 			climbDown.set(false);
 		}
 		else if (controller1.ButtonB.PRESSED)
 		{
-			climbing = true;
 			climbUp.set(true);
 			climbDown.set(true);
-		}else if(! climbing){
-			climbUp.set(true);
-			climbDown.set(false);
 		}
 
 		if (controller1.ButtonL1.PRESSED)
@@ -119,32 +121,21 @@ void usercontrol(void)
 			rightWing.set(false);
 		}
 
+		static bool parking = false;
 		if (controller1.ButtonL2.PRESSED)
 		{
-			park.set(true);
+			parking = !parking;
 		}
-		else if (controller1.ButtonL2.RELEASED)
+		park.set(parking);
+		
+		if (controller1.ButtonLeft.PRESSED)//controller1.ButtonL1.pressing())
 		{
-			park.set(false);
+			odomRetract.close();
+			smartDrive.turnTo( 90 );
+			odomRetract.open();
 		}
-
-		if (controller1.ButtonL1.pressing())
-		{
-			smartDrive.arcade(0, controller1.Axis3.position() / 2.f, controller1.Axis4.position() / 3.f);
-			if ( controller1.Axis1.position() * controller1.Axis2.position() && controller1.ButtonX.PRESSED){
-				Jath::Vec2 stickAngle = Jath::XandY(controller1.Axis1.position() , controller1.Axis2.position());
-				smartDrive.turnTo( origin.angleTo( stickAngle ) );
-				// smartDrive.driveTo(Jath::Inches(10));
-			}
-			if ( controller1.Axis1.position() * controller1.Axis2.position() && controller1.ButtonA.PRESSED){
-				Jath::Vec2 stickAngle = Jath::XandY(controller1.Axis1.position() , controller1.Axis2.position());
-				smartDrive.driveToPoint(Jath::dirAndMag(origin.angleTo(stickAngle), 10));
-			}
-		}
-		else 
-		{
-			smartDrive.LeftSplitArcadeCurved(controller1);
-		}
+		
+		smartDrive.LeftSplitArcadeCurved(controller1);
 
 		if (controller1.ButtonRight.pressing())
 		{

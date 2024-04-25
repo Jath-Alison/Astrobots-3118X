@@ -73,6 +73,8 @@ void usercontrol(void)
 	smartDrive.m_dir = Jath::Degrees(0);
 
 	odomRetract.set(!true);
+	climbUp.set(true);
+	climbDown.set(false);
 
 	// User control code here, inside the loop
 	while (1)
@@ -94,20 +96,25 @@ void usercontrol(void)
 			intake.set(0);
 		}
 
+		static bool climbUpb = false;
+
 		if (controller1.ButtonA.PRESSED)
 		{
 			climbUp.set(true);
 			climbDown.set(false);
+			climbUpb = false;
 		}else
 		if (controller1.ButtonX.PRESSED)
 		{
 			climbUp.set(false);
 			climbDown.set(false);
+			climbUpb = true;
 		}
-		else if (controller1.ButtonB.PRESSED)
+		else if (controller1.ButtonB.PRESSED || (climblimit.pressing() && climbUpb))
 		{
 			climbUp.set(true);
 			climbDown.set(true);
+			climbUpb = false;
 		}
 
 		if (controller1.ButtonL1.PRESSED)
@@ -160,8 +167,10 @@ void usercontrol(void)
 			Brain.Screen.print("y: %f", smartDrive.m_pos.y);
 			Brain.Screen.setCursor(3, 15);
 			Brain.Screen.print("l: %f", leftMotors.position(vex::deg));
-			Brain.Screen.setCursor(4, 15);
-			Brain.Screen.print("r: %f", rightMotors.position(vex::deg));
+			if(climblimit.pressing()){
+				Brain.Screen.setCursor(4, 15);
+				Brain.Screen.print("r: hihihih");
+			}
 		
 
 		wait(20, msec); // Sleep the task for a short amount of time to

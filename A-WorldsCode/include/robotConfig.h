@@ -43,6 +43,8 @@ extern vex::pneumatics odomRetract;
 extern vex::pneumatics leftWing;
 extern vex::pneumatics rightWing;
 
+extern vex::limit climblimit;
+
 extern Jath::Vec2 initPos;
 extern Jath::Angle initDir;
 

@@ -49,6 +49,7 @@ vex::pneumatics odomRetract(Brain.ThreeWirePort.D);
 vex::pneumatics leftWing(Brain.ThreeWirePort.A);
 vex::pneumatics rightWing(Brain.ThreeWirePort.E);
 
+vex::limit climblimit = vex::limit(Brain.ThreeWirePort.G);
 
 //wing left - a
 //climb down - b

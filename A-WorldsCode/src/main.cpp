@@ -35,19 +35,8 @@ void pre_auton(void)
 	// Example: clearing encoders, setting servo positions, ...
 }
 
-/*---------------------------------------------------------------------------*/
-/*                                                                           */
-/*                              Autonomous Task                              */
-/*                                                                           */
-/*  This task is used to control your robot during the autonomous phase of   */
-/*  a VEX Competition.                                                       */
-/*                                                                           */
-/*  You must modify the code to add your own robot specific commands here.   */
-/*---------------------------------------------------------------------------*/
-
-void autonomous(void)
+void leftAwp()
 {
-
 	waitUntil(smartDrive.m_inert.isCalibrating() == false);
 
 	smartDrive.m_pos = Jath::XandY(Jath::Inches(-36.75), Jath::Inches(-47.5));
@@ -79,28 +68,43 @@ void autonomous(void)
 	// std::cout << "angle is: " <<smartDrive.m_pos.angleTo(Jath::XandY(Jath::Inches(-48), Jath::Inches(-60))) - Jath::Revolutions(0.5) << "\n";
 
 	smartDrive.turnTo(angleToPoint);
-	
+
 	smartDrive.arcade(0, -60, 0);
-	vex::wait(0.25, vex::sec);
+	vex::wait(0.20, vex::sec);
 
 	smartDrive.arcade(0, -35, -15);
-	vex::wait(0.35, vex::sec);
+	vex::wait(0.15, vex::sec);
 
 	smartDrive.arcade(0, 0, -75);
 	vex::wait(1, vex::sec);
 	leftWing.close();
 
 	smartDrive.turnTo(Jath::Degrees(120));
-	smartDrive.driveTo( Jath::Inches(15)  );
-
+	smartDrive.driveTo(Jath::Inches(15));
 
 	smartDrive.turnTo(Jath::Degrees(95));
-	smartDrive.driveTo( -Jath::Distance(smartDrive.m_pos.x + Jath::Inches(8))  );
+	smartDrive.driveTo(-Jath::Distance(smartDrive.m_pos.x + Jath::Inches(8)));
 	std::cout << "----done ---- \n";
+}
 
-	// ..........................................................................
-	// Insert autonomous user code here.
-	// ..........................................................................
+void rightAwp()
+{
+	waitUntil(smartDrive.m_inert.isCalibrating() == false);
+
+	smartDrive.m_pos = Jath::XandY(Jath::Inches(36.75), Jath::Inches(-47.5));
+	smartDrive.m_dir = Jath::Degrees(0);
+
+	odomRetract.set(!true);
+	climbUp.set(true);
+	climbDown.set(false);
+
+	// smartDrive.driveTo(Jath::Inches(PLS_PUT_INCHES))
+	
+}
+
+void autonomous(void)
+{
+	leftAwp();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -123,9 +127,11 @@ void usercontrol(void)
 	smartDrive.m_pos = Jath::XandY(Jath::Tiles(0), Jath::Tiles(0));
 	smartDrive.m_dir = Jath::Degrees(0);
 
-	odomRetract.set(!true);
+	odomRetract.set(true);
 	climbUp.set(true);
 	climbDown.set(false);
+
+	intake.set(0);
 
 	// User control code here, inside the loop
 	while (1)

@@ -72,7 +72,7 @@ void usercontrol(void)
 	smartDrive.m_pos = Jath::XandY(Jath::Tiles(0), Jath::Tiles(0));
 	smartDrive.m_dir = Jath::Degrees(0);
 
-	odomRetract.open();
+	odomRetract.set(!true);
 
 	// User control code here, inside the loop
 	while (1)
@@ -130,19 +130,15 @@ void usercontrol(void)
 		
 		if (controller1.ButtonLeft.PRESSED)//controller1.ButtonL1.pressing())
 		{
-			odomRetract.close();
-			smartDrive.turnTo( 90 );
-			odomRetract.open();
+			// odomRetract.close();
+			// smartDrive.turnTo( Jath::Degrees(90) );
+			smartDrive.driveTo( Jath::Tiles(1) );
+			// odomRetract.open();
 		}
 		
 		smartDrive.LeftSplitArcadeCurved(controller1);
 
-		if (controller1.ButtonRight.pressing())
-		{
-			Jath::Distance temp = smartDrive.driveToPoint(Jath::XandY(Jath::Tiles(1), Jath::Tiles(2)));
-		}
-		else
-		{
+		
 
 			// std::cout << "Base Pos:" << ": \n" <<
 			//  "\t x(in) : " << Jath::Distance( smartDrive.m_pos.x ).inches() << "\n" <<
@@ -166,7 +162,7 @@ void usercontrol(void)
 			Brain.Screen.print("l: %f", leftMotors.position(vex::deg));
 			Brain.Screen.setCursor(4, 15);
 			Brain.Screen.print("r: %f", rightMotors.position(vex::deg));
-		}
+		
 
 		wait(20, msec); // Sleep the task for a short amount of time to
 						// prevent wasted resources.

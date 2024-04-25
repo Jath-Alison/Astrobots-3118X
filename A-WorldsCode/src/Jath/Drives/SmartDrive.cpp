@@ -85,20 +85,24 @@ namespace Jath
     void SmartDrive::driveTo(Distance target)
     {
         Jath::PID pid = Jath::PID()
-                            .withConstants(0.5 / Jath::Inches(0), 10, 2)
-                            .withIntegralZone(Jath::Inches(1))
+                            .withConstants(25 / Jath::Inches(1), 0.0, 2)
+                            .withIntegralZone(Jath::Inches(3))
                             .withTimeout(50)
-                            .withSettleZone(Jath::Inches(1))
-                            .withSettleTimeout(5);
+                            .withSettleZone(Jath::Inches(0.5))
+                            .withSettleTimeout(0.5);
 
         Angle offset = Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
-        Angle targetRot = Revolutions(target / getWheelTravel());
+        Angle targetRot = Revolutions(target / getWheelTravel()) + offset;
 
         pid.reset();
         while (!pid.isCompleted())
         {
             Angle pos = Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
-            double out = pid.calculate(target - pos);
+            double out = pid.calculate(targetRot - pos);
+
+            std::cout << "targetRot :" << Jath::Distance( targetRot.revolutions()*getWheelTravel()).inches() << "\n"
+                      << "\tpos :" << Jath::Distance( pos.revolutions()*getWheelTravel()).inches() << "\n"
+                      << "\tout: " << out << "\n";
 
             arcade(0, out, 0);
 
@@ -109,11 +113,11 @@ namespace Jath
     void SmartDrive::turnTo(Angle target)
     {
         Jath::PID pid = Jath::PID()
-                            .withConstants(0.75 / Jath::Degrees(1), 10, 10)
-                            .withIntegralZone(Jath::Degrees(15))
+                            .withConstants(1 / Jath::Degrees(1), 3, 5)
+                            .withIntegralZone(Jath::Degrees(20))
                             .withTimeout(5)
-                            .withSettleZone(Jath::Degrees(1))
-                            .withSettleTimeout(1);
+                            .withSettleZone(Jath::Degrees(3))
+                            .withSettleTimeout(0.25);
 
         pid.reset();
         while (!pid.isCompleted())
@@ -165,8 +169,6 @@ namespace Jath
                 arcade(0, driveOut, rotOut);
             }
 
-            std::cout << "angle :" << angle.degrees() << "\n"
-                      << "\tdist: " << dist.inches() << "\n";
 
             update();
             wait(20, vex::msec);
@@ -197,6 +199,6 @@ namespace Jath
 
     Distance Jath::SmartDrive::getWheelTravel()
     {
-        return Distance((m_wheelSize / 2.0) * m_gearRatio);
+        return Distance(M_PI * m_wheelSize * m_gearRatio);
     }
 }

@@ -59,11 +59,12 @@ void autonomous(void)
 
 	smartDrive.turnTo(Jath::Degrees(-30));
 
-	intake.set(-100);
 	smartDrive.driveTo(Jath::Inches(18));
+	intake.set(-100);
 
-	smartDrive.arcade(0, 60, 50);
+	// smartDrive.arcade(0, 60, 50);
 	vex::wait(0.35, vex::sec);
+	smartDrive.turnTo(0);
 
 	smartDrive.arcade(0, -50, 0);
 	leftWing.open();
@@ -71,25 +72,31 @@ void autonomous(void)
 
 	std::cout << "-----First Part Done-----\n";
 
-	std::cout << "location is: " <<  Jath::Distance(smartDrive.m_pos.x).inches() <<"," << Jath::Distance(smartDrive.m_pos.y).inches() << "\n";
+	// std::cout << "location is: " <<  Jath::Distance(smartDrive.m_pos.x).inches() <<"," << Jath::Distance(smartDrive.m_pos.y).inches() << "\n";
 
 	Jath::Angle angleToPoint = smartDrive.m_pos.angleTo(Jath::XandY(Jath::Inches(-48), Jath::Inches(-60))) - Jath::Revolutions(0.5);
-	std::cout << "angle is: " << smartDrive.m_pos.angleTo(Jath::XandY(Jath::Inches(-48), Jath::Inches(-60))) << "\n";
-	std::cout << "angle is: " <<smartDrive.m_pos.angleTo(Jath::XandY(Jath::Inches(-48), Jath::Inches(-60))) - Jath::Revolutions(0.5) << "\n";
+	// std::cout << "angle is: " << smartDrive.m_pos.angleTo(Jath::XandY(Jath::Inches(-48), Jath::Inches(-60))) << "\n";
+	// std::cout << "angle is: " <<smartDrive.m_pos.angleTo(Jath::XandY(Jath::Inches(-48), Jath::Inches(-60))) - Jath::Revolutions(0.5) << "\n";
 
 	smartDrive.turnTo(angleToPoint);
 	
-	smartDrive.arcade(0, -80, 0);
+	smartDrive.arcade(0, -60, 0);
+	vex::wait(0.25, vex::sec);
+
+	smartDrive.arcade(0, -35, -15);
 	vex::wait(0.35, vex::sec);
 
-	smartDrive.arcade(0, -50, -20);
-	vex::wait(0.35, vex::sec);
+	smartDrive.arcade(0, 0, -75);
+	vex::wait(1, vex::sec);
+	leftWing.close();
 
-	smartDrive.arcade(0, 0, -60);
-	vex::wait(0.35, vex::sec);
+	smartDrive.turnTo(Jath::Degrees(120));
+	smartDrive.driveTo( Jath::Inches(15)  );
+
 
 	smartDrive.turnTo(Jath::Degrees(95));
-	smartDrive.driveTo( -smartDrive.m_pos.x);
+	smartDrive.driveTo( -Jath::Distance(smartDrive.m_pos.x + Jath::Inches(8))  );
+	std::cout << "----done ---- \n";
 
 	// ..........................................................................
 	// Insert autonomous user code here.

@@ -166,7 +166,7 @@ namespace Jath
             }
             else
             {
-                arcade(0, Jath::cap<double>(driveOut, 40), Jath::cap<double>(rotOut, 100)q);
+                arcade(0, Jath::cap<double>(driveOut, 40), Jath::cap<double>(rotOut, 100));
             }
 
             // std::cout << "angle :" << (std::abs(dist.inches()) < 5) << "\n"

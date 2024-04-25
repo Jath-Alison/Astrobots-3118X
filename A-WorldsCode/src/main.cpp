@@ -47,6 +47,50 @@ void pre_auton(void)
 
 void autonomous(void)
 {
+
+	waitUntil(smartDrive.m_inert.isCalibrating() == false);
+
+	smartDrive.m_pos = Jath::XandY(Jath::Inches(-36.75), Jath::Inches(-47.5));
+	smartDrive.m_dir = Jath::Degrees(0);
+
+	odomRetract.set(!true);
+	climbUp.set(true);
+	climbDown.set(false);
+
+	smartDrive.turnTo(Jath::Degrees(-30));
+
+	intake.set(-100);
+	smartDrive.driveTo(Jath::Inches(18));
+
+	smartDrive.arcade(0, 60, 50);
+	vex::wait(0.35, vex::sec);
+
+	smartDrive.arcade(0, -50, 0);
+	leftWing.open();
+	vex::wait(0.35, vex::sec);
+
+	std::cout << "-----First Part Done-----\n";
+
+	std::cout << "location is: " <<  Jath::Distance(smartDrive.m_pos.x).inches() <<"," << Jath::Distance(smartDrive.m_pos.y).inches() << "\n";
+
+	Jath::Angle angleToPoint = smartDrive.m_pos.angleTo(Jath::XandY(Jath::Inches(-48), Jath::Inches(-60))) - Jath::Revolutions(0.5);
+	std::cout << "angle is: " << smartDrive.m_pos.angleTo(Jath::XandY(Jath::Inches(-48), Jath::Inches(-60))) << "\n";
+	std::cout << "angle is: " <<smartDrive.m_pos.angleTo(Jath::XandY(Jath::Inches(-48), Jath::Inches(-60))) - Jath::Revolutions(0.5) << "\n";
+
+	smartDrive.turnTo(angleToPoint);
+	
+	smartDrive.arcade(0, -80, 0);
+	vex::wait(0.35, vex::sec);
+
+	smartDrive.arcade(0, -50, -20);
+	vex::wait(0.35, vex::sec);
+
+	smartDrive.arcade(0, 0, -60);
+	vex::wait(0.35, vex::sec);
+
+	smartDrive.turnTo(Jath::Degrees(95));
+	smartDrive.driveTo( -smartDrive.m_pos.x);
+
 	// ..........................................................................
 	// Insert autonomous user code here.
 	// ..........................................................................
@@ -103,8 +147,8 @@ void usercontrol(void)
 			climbUp.set(true);
 			climbDown.set(false);
 			climbUpb = false;
-		}else
-		if (controller1.ButtonX.PRESSED)
+		}
+		else if (controller1.ButtonX.pressing())
 		{
 			climbUp.set(false);
 			climbDown.set(false);
@@ -134,44 +178,42 @@ void usercontrol(void)
 			parking = !parking;
 		}
 		park.set(parking);
-		
-		if (controller1.ButtonLeft.PRESSED)//controller1.ButtonL1.pressing())
+
+		if (controller1.ButtonLeft.PRESSED) // controller1.ButtonL1.pressing())
 		{
 			// odomRetract.close();
 			// smartDrive.turnTo( Jath::Degrees(90) );
-			smartDrive.driveTo( Jath::Tiles(1) );
+			smartDrive.driveTo(Jath::Tiles(1));
 			// odomRetract.open();
 		}
-		
+
 		smartDrive.LeftSplitArcadeCurved(controller1);
 
-		
+		// std::cout << "Base Pos:" << ": \n" <<
+		//  "\t x(in) : " << Jath::Distance( smartDrive.m_pos.x ).inches() << "\n" <<
+		//  "\t y(in) : " <<  Jath::Distance( smartDrive.m_pos.y ).inches() << "\n" <<
+		//  "\t dir(deg) : " << smartDrive.m_dir.degrees() << "\n" <<
+		//  "\t rotPos : " << (smartDrive.m_tracker.m_travelDistance.inches()) << "\n" ;
 
-			// std::cout << "Base Pos:" << ": \n" <<
-			//  "\t x(in) : " << Jath::Distance( smartDrive.m_pos.x ).inches() << "\n" <<
-			//  "\t y(in) : " <<  Jath::Distance( smartDrive.m_pos.y ).inches() << "\n" <<
-			//  "\t dir(deg) : " << smartDrive.m_dir.degrees() << "\n" <<
-			//  "\t rotPos : " << (smartDrive.m_tracker.m_travelDistance.inches()) << "\n" ;
+		Brain.Screen.clearScreen();
+		Brain.Screen.setCursor(1, 1);
+		Brain.Screen.print("x(t): %f", Jath::Distance(smartDrive.m_pos.x).inches());
+		Brain.Screen.setCursor(2, 1);
+		Brain.Screen.print("y(t): %f", Jath::Distance(smartDrive.m_pos.y).inches());
+		Brain.Screen.setCursor(3, 1);
+		Brain.Screen.print("r(d): %f", Jath::Angle(smartDrive.m_dir).degrees());
 
-			Brain.Screen.clearScreen();
-			Brain.Screen.setCursor(1, 1);
-			Brain.Screen.print("x(t): %f", Jath::Distance(smartDrive.m_pos.x).inches());
-			Brain.Screen.setCursor(2, 1);
-			Brain.Screen.print("y(t): %f", Jath::Distance(smartDrive.m_pos.y).inches());
-			Brain.Screen.setCursor(3, 1);
-			Brain.Screen.print("r(d): %f", Jath::Angle(smartDrive.m_dir).degrees());
-
-			Brain.Screen.setCursor(1, 15);
-			Brain.Screen.print("x: %f", smartDrive.m_pos.x);
-			Brain.Screen.setCursor(2, 15);
-			Brain.Screen.print("y: %f", smartDrive.m_pos.y);
-			Brain.Screen.setCursor(3, 15);
-			Brain.Screen.print("l: %f", leftMotors.position(vex::deg));
-			if(climblimit.pressing()){
-				Brain.Screen.setCursor(4, 15);
-				Brain.Screen.print("r: hihihih");
-			}
-		
+		Brain.Screen.setCursor(1, 15);
+		Brain.Screen.print("x: %f", smartDrive.m_pos.x);
+		Brain.Screen.setCursor(2, 15);
+		Brain.Screen.print("y: %f", smartDrive.m_pos.y);
+		Brain.Screen.setCursor(3, 15);
+		Brain.Screen.print("l: %f", leftMotors.position(vex::deg));
+		if (climblimit.pressing())
+		{
+			Brain.Screen.setCursor(4, 15);
+			Brain.Screen.print("r: hihihih");
+		}
 
 		wait(20, msec); // Sleep the task for a short amount of time to
 						// prevent wasted resources.

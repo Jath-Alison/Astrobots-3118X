@@ -46,6 +46,10 @@ namespace Jath
         void driveTo(Distance target);
         void turnTo(Angle target);
 
+        void turnToFast(Angle target, Angle settleRange, double totalTimeout);
+
+        void turnToPoint(Vec2 target);
+
         Distance driveToPoint(Vec2 target);
         void driveToPointStoopid(Vec2 target);
 

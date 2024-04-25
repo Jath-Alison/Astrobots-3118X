@@ -132,6 +132,63 @@ namespace Jath
         }
         arcade(0, 0, 0);
     }
+
+    void SmartDrive::turnToFast(Angle target, Angle settleRange, double totalTimeout){
+        Jath::PID pid = Jath::PID()
+                            .withConstants(2 / Jath::Degrees(1), 3, 5)
+                            .withIntegralZone(Jath::Degrees(20))
+                            .withTimeout(totalTimeout)
+                            .withSettleZone(settleRange)
+                            .withSettleTimeout(0.25);
+
+        int errorSign = 0;
+
+        pid.reset();
+        while (!pid.isCompleted())
+        {
+            Angle error = shortestTurnPath(Degrees(target.degrees() - m_inert.heading(vex::degrees)));
+
+            if(errorSign != 0 && errorSign != getSign(error)){
+                turnTo(m_dir);
+
+            }
+
+            double out = pid.calculate(error);
+
+            arcade(0, 0, out);
+
+            errorSign = getSign(error);
+            wait(20, vex::msec);
+        }
+        arcade(0, 0, 0);
+    }
+
+    void SmartDrive::turnToPoint(Vec2 target)
+    {
+        Jath::PID pid = Jath::PID()
+                            .withConstants(1 / Jath::Degrees(1), 3, 5)
+                            .withIntegralZone(Jath::Degrees(20))
+                            .withTimeout(5)
+                            .withSettleZone(Jath::Degrees(3))
+                            .withSettleTimeout(0.25);
+
+        Angle targetA = m_pos.angleTo(target);
+
+        pid.reset();
+        while (!pid.isCompleted())
+        {
+            targetA = m_pos.angleTo(target);
+            Angle error = shortestTurnPath(Degrees(targetA.degrees() - m_inert.heading(vex::degrees)));
+
+            double out = pid.calculate(error);
+
+            arcade(0, 0, out);
+
+            wait(20, vex::msec);
+        }
+        arcade(0, 0, 0);
+    }
+
     Distance SmartDrive::driveToPoint(Vec2 target)
     {
 
@@ -191,6 +248,7 @@ namespace Jath
         turnTo(m_pos.angleTo(target));
         driveTo(m_pos.distTo(target));
     }
+
     Angle SmartDrive::shortestTurnPath(Angle target)
     {
         target.constrain();

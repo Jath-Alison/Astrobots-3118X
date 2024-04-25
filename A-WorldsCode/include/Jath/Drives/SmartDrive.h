@@ -47,6 +47,7 @@ namespace Jath
         void turnTo(Angle target);
 
         Distance driveToPoint(Vec2 target);
+        void driveToPointStoopid(Vec2 target);
 
         Angle shortestTurnPath(Angle target);
 

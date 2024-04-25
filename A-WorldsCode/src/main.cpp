@@ -98,13 +98,30 @@ void rightAwp()
 	climbUp.set(true);
 	climbDown.set(false);
 
-	// smartDrive.driveTo(Jath::Inches(PLS_PUT_INCHES))
+	smartDrive.driveTo(Jath::Inches(47.5));
+	leftWing.open();
+
+	smartDrive.turnTo(Jath::Degrees(90));
+	intake.set(-100);
+
+	smartDrive.arcade(0, 60, 0);
+	vex::wait(0.45, vex::sec);
+
+	smartDrive.arcade(0, -60, 0);
+	vex::wait(0.45, vex::sec);
+
+	Jath::Angle angleToPoint = smartDrive.m_pos.angleTo(Jath::XandY(Jath::Inches(0), Jath::Inches(-48)));
+	smartDrive.turnTo(angleToPoint);
+	smartDrive.driveTo(smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(0), Jath::Inches(-48))) - Jath::Inches((5)));
+
+	smartDrive.arcade(0,30,0);
 	
 }
 
 void autonomous(void)
 {
-	leftAwp();
+	// leftAwp();
+	rightAwp();
 }
 
 /*---------------------------------------------------------------------------*/

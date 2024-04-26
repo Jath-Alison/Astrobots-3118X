@@ -35,6 +35,23 @@ void pre_auton(void)
 	// Example: clearing encoders, setting servo positions, ...
 }
 
+
+int waitAndClose(){
+	wait(0.3, sec);
+	rightWing.close();
+	leftWing.close();
+	return 0;
+}
+int intakeTillBall(){
+	intake.set(75);
+	wait(0.25,sec);
+	waitUntil(intake.current() > 1);
+	wait(0.25,sec);
+	intake.set(0);
+	return 1;
+}
+
+
 void leftAwp()
 {
 	waitUntil(smartDrive.m_inert.isCalibrating() == false);
@@ -124,22 +141,24 @@ void rightAwp()
 
 	smartDrive.turnTo(angleToPoint2);
 
-	intake.set(100);
+	vex::thread intooking(intakeTillBall);
 	smartDrive.driveTo(smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(0), Jath::Inches(-24))) - Jath::Inches(3));
-	intake.set(0);
 
-	smartDrive.turnToFast(Jath::Degrees(70));
+	smartDrive.turnToFast(Jath::Degrees(45));
 
-	smartDrive.driveToFast(Jath::Inches(30));
+	smartDrive.driveToFast(Jath::Inches(15));// /`` shape
 	smartDrive.turnToFast(Jath::Degrees(90));
-	intake.set(-100);
+	smartDrive.driveToFast(Jath::Inches(10));
 
-	
+	intake.set(-100);//push into goal	
+	wait(0.125,sec);
 	smartDrive.arcade(0, 60, 0);
 	vex::wait(0.35, vex::sec);
 	smartDrive.arcade(0, -60, 0);
 	vex::wait(0.35, vex::sec);
 	smartDrive.arcade(0, 0, 0);
+
+	smartDrive.driveToPoint(Jath::XandY(Jath::Inches(12), Jath::Inches(-36)));
 
 	Jath::Angle angleToPoint = smartDrive.m_pos.angleTo( 
 		Jath::XandY(Jath::Inches(0), Jath::Inches(-48))
@@ -151,11 +170,6 @@ void rightAwp()
 	
 }
 
-void waitAndClose(){
-	wait(0.3, sec);
-	rightWing.close();
-	leftWing.close();
-}
 void rightRush()
 {
 	waitUntil(smartDrive.m_inert.isCalibrating() == false);
@@ -330,6 +344,7 @@ void usercontrol(void)
 			// smartDrive.turnToFast( Jath::Degrees(90) );
 			// smartDrive.driveToFast(Jath::Tiles(1));
 			// odomRetract.open();
+			// vex::thread intooking(intakeTillBall);
 		}
 
 		smartDrive.LeftSplitArcadeCurved(controller1);
@@ -353,8 +368,8 @@ void usercontrol(void)
 		Brain.Screen.setCursor(2, 15);
 		Brain.Screen.print("y: %f", smartDrive.m_pos.y);
 		Brain.Screen.setCursor(3, 15);
-		Brain.Screen.print("l: %f", leftMotors.position(vex::deg));
-		if (climblimit.pressing())
+		Brain.Screen.print("c: %f", intake.current());
+		if (intake.current()>5)
 		{
 			Brain.Screen.setCursor(4, 15);
 			Brain.Screen.print("r: hihihih");

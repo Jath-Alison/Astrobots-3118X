@@ -36,6 +36,7 @@ void pre_auton(void)
 }
 
 
+
 int waitAndClose(){
 	wait(0.3, sec);
 	rightWing.close();
@@ -237,21 +238,18 @@ void rightRush()
 
 	smartDrive.arcade(0,60,0);
 	vex::wait(0.25, vex::sec);
-
-
-
-
-
-
-	
 }
 
 void autonomous(void)
 {
-	// leftAwp();
-	rightAwp();
+	leftAwp();
+	// rightAwp();
 	// rightRush();
 }
+
+std::string currentAuton = "leftAwp";
+// std::string currentAuton = "rightAwp";
+// std::string currentAuton = "rightRush";
 
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
@@ -355,6 +353,13 @@ void usercontrol(void)
 		//  "\t dir(deg) : " << smartDrive.m_dir.degrees() << "\n" <<
 		//  "\t rotPos : " << (smartDrive.m_tracker.m_travelDistance.inches()) << "\n" ;
 
+		wait(20, msec); // Sleep the task for a short amount of time to
+						// prevent wasted resources.
+	}
+}
+
+void print(){
+	while(true){
 		Brain.Screen.clearScreen();
 		Brain.Screen.setCursor(1, 1);
 		Brain.Screen.print("x(t): %f", Jath::Distance(smartDrive.m_pos.x).inches());
@@ -375,8 +380,10 @@ void usercontrol(void)
 			Brain.Screen.print("r: hihihih");
 		}
 
-		wait(20, msec); // Sleep the task for a short amount of time to
-						// prevent wasted resources.
+		Brain.Screen.setCursor(6, 1);
+		Brain.Screen.print("Auton: %s", currentAuton.c_str());
+
+		wait(20, msec);
 	}
 }
 
@@ -391,6 +398,7 @@ void track()
 int main()
 {
 	vex::thread tracking(track);
+	vex::thread printing(print);
 
 	// Set up callbacks for autonomous and driver control periods.
 	Competition.autonomous(autonomous);

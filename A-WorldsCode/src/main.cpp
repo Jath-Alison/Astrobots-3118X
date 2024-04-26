@@ -75,7 +75,7 @@ void leftAwp()
 	smartDrive.arcade(0, -35, -15);
 	vex::wait(0.15, vex::sec);
 
-	smartDrive.arcade(0, 0, -75);
+	smartDrive.arcade(0, 0, -75);//scoooop
 	vex::wait(1, vex::sec);
 	leftWing.close();
 
@@ -94,34 +94,125 @@ void rightAwp()
 	smartDrive.m_pos = Jath::XandY(Jath::Inches(36.75), Jath::Inches(-47.5));
 	smartDrive.m_dir = Jath::Degrees(0);
 
+
+
 	odomRetract.set(!true);
 	climbUp.set(true);
 	climbDown.set(false);
 
-	smartDrive.driveTo(Jath::Inches(47.5));
+	smartDrive.driveToPoint(Jath::XandY(
+		Jath::Inches(6),Jath::Inches(0)
+	));
+
+	// smartDrive.turnToFast(Jath::Degrees(45));
 	leftWing.open();
+	smartDrive.turnToFast(Jath::Degrees(90));
 
-	smartDrive.turnTo(Jath::Degrees(90));
 	intake.set(-100);
-
+	smartDrive.driveToFast(Jath::Inches(24));
+	
 	smartDrive.arcade(0, 60, 0);
-	vex::wait(0.45, vex::sec);
-
+	vex::wait(0.35, vex::sec);
 	smartDrive.arcade(0, -60, 0);
-	vex::wait(0.45, vex::sec);
+	vex::wait(0.35, vex::sec);
+	smartDrive.arcade(0, 0, 0);
 
-	Jath::Angle angleToPoint = smartDrive.m_pos.angleTo(Jath::XandY(Jath::Inches(0), Jath::Inches(-48)));
+	Jath::Angle angleToPoint = smartDrive.m_pos.angleTo( 
+		Jath::XandY(Jath::Inches(0), Jath::Inches(-48))
+	 );
+
 	smartDrive.turnTo(angleToPoint);
-	smartDrive.driveTo(smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(0), Jath::Inches(-48))) - Jath::Inches((5)));
 
 	smartDrive.arcade(0,30,0);
+	
+}
+
+void waitAndClose(){
+	wait(0.3, sec);
+	rightWing.close();
+	leftWing.close();
+}
+void rightRush()
+{
+	waitUntil(smartDrive.m_inert.isCalibrating() == false);
+
+	smartDrive.m_pos = Jath::XandY(Jath::Inches(36.75), Jath::Inches(-47.5));
+	smartDrive.m_dir = Jath::Degrees(0);
+
+
+	odomRetract.set(!true);
+	climbUp.set(true);
+	climbDown.set(false);
+	
+	rightWing.open();vex::thread closeWings(waitAndClose);
+
+	intake.set(100);
+	smartDrive.driveToPoint(Jath::XandY(
+		Jath::Inches(6),Jath::Inches(0)
+	));
+	intake.set(0);
+	leftWing.open();
+
+	// smartDrive.turnToFast(Jath::Degrees(45));
+	smartDrive.turnToFast(Jath::Degrees(90));
+
+	intake.set(-100);
+	smartDrive.driveToFast(Jath::Inches(24));
+	
+	smartDrive.arcade(0, 60, 0);
+	vex::wait(0.35, vex::sec);
+	smartDrive.arcade(0, -60, 0);
+	vex::wait(0.35, vex::sec);
+	smartDrive.arcade(0, 0, 0);
+	leftWing.close();
+
+	Jath::Angle angleToPoint = smartDrive.m_pos.angleTo( 
+		Jath::XandY(Jath::Inches(0), Jath::Inches(-24))
+	 );
+
+	smartDrive.turnTo(angleToPoint);
+
+	intake.set(100);
+	smartDrive.driveTo(smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(0), Jath::Inches(-24))) - Jath::Inches(3));
+	intake.set(0);
+
+	Jath::Angle angleToPoint2 = smartDrive.m_pos.angleTo( 
+		Jath::XandY(Jath::Inches(60), Jath::Inches(-60))
+	 ) - Jath::Revolutions(0.5);
+	 smartDrive.turnTo(angleToPoint2);
+	 smartDrive.driveTo(-(smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(60), Jath::Inches(-60))) - Jath::Inches(3)));
+
+	leftWing.open();
+
+	smartDrive.arcade(0, 0, -75);//scoooop
+	vex::wait(0.7, vex::sec);
+	leftWing.close();
+
+	smartDrive.turnTo(Jath::Degrees(30));
+	intake.set(-100);
+
+	smartDrive.arcade(0,80,-25);
+	vex::wait(0.4, vex::sec);
+
+	smartDrive.arcade(0,-50,0);
+	vex::wait(0.15, vex::sec);
+
+	smartDrive.arcade(0,60,0);
+	vex::wait(0.25, vex::sec);
+
+
+
+
+
+
 	
 }
 
 void autonomous(void)
 {
 	// leftAwp();
-	rightAwp();
+	// rightAwp();
+	rightRush();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -212,8 +303,8 @@ void usercontrol(void)
 		if (controller1.ButtonLeft.PRESSED) // controller1.ButtonL1.pressing())
 		{
 			// odomRetract.close();
-			// smartDrive.turnTo( Jath::Degrees(90) );
-			smartDrive.driveTo(Jath::Tiles(1));
+			// smartDrive.turnToFast( Jath::Degrees(90) );
+			// smartDrive.driveToFast(Jath::Tiles(1));
 			// odomRetract.open();
 		}
 

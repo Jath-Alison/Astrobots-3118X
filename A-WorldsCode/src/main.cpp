@@ -87,10 +87,10 @@ void leftAwp()
 
 	smartDrive.turnTo(angleToPoint);
 
-	smartDrive.arcade(0, -60, 0);
+	smartDrive.arcade(0, -40, 0);
 	vex::wait(0.20, vex::sec);
 
-	smartDrive.arcade(0, -35, -15);
+	smartDrive.arcade(0, -25, -10);
 	vex::wait(0.15, vex::sec);
 
 	smartDrive.arcade(0, 0, -75);//scoooop
@@ -145,9 +145,9 @@ void rightAwp()
 	vex::thread intooking(intakeTillBall);
 	smartDrive.driveTo(smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(0), Jath::Inches(-24))) - Jath::Inches(3));
 
-	smartDrive.turnToFast(Jath::Degrees(45));
+	smartDrive.turnToFast(Jath::Degrees(30));
 
-	smartDrive.driveToFast(Jath::Inches(15));// /`` shape
+	smartDrive.driveToFast(Jath::Inches(24));// /`` shape
 	smartDrive.turnToFast(Jath::Degrees(90));
 	smartDrive.driveToFast(Jath::Inches(10));
 
@@ -185,7 +185,7 @@ void rightRush()
 	
 	rightWing.open();vex::thread closeWings(waitAndClose);
 
-	intake.set(100);
+	vex::thread intooking1(intakeTillBall);
 	smartDrive.driveToPoint(Jath::XandY(
 		Jath::Inches(6),Jath::Inches(0)
 	));
@@ -211,15 +211,18 @@ void rightRush()
 
 	smartDrive.turnTo(angleToPoint);
 
-	intake.set(100);
+	vex::thread intooking2(intakeTillBall);
 	smartDrive.driveTo(smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(0), Jath::Inches(-24))) - Jath::Inches(3));
-	intake.set(0);
 
 	Jath::Angle angleToPoint2 = smartDrive.m_pos.angleTo( 
 		Jath::XandY(Jath::Inches(60), Jath::Inches(-60))
 	 ) - Jath::Revolutions(0.5);
+
+	smartDrive.arcade(0,-10,0);
+	wait(0.25, sec);
+
 	 smartDrive.turnTo(angleToPoint2);
-	 smartDrive.driveTo(-(smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(60), Jath::Inches(-60))) - Jath::Inches(3)));
+	 smartDrive.driveTo(-(smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(60), Jath::Inches(-60))) - Jath::Inches(8)));
 
 	leftWing.open();
 
@@ -242,14 +245,14 @@ void rightRush()
 
 void autonomous(void)
 {
-	leftAwp();
+	// leftAwp();
 	// rightAwp();
-	// rightRush();
+	rightRush();
 }
 
-std::string currentAuton = "leftAwp";
+// std::string currentAuton = "leftAwp";
 // std::string currentAuton = "rightAwp";
-// std::string currentAuton = "rightRush";
+std::string currentAuton = "rightRush";
 
 /*---------------------------------------------------------------------------*/
 /*                                                                           */

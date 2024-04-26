@@ -44,7 +44,10 @@ namespace Jath
         int track();
 
         void driveTo(Distance target);
+        void driveToFast(Distance target);
+
         void turnTo(Angle target);
+        void turnToFast(Angle target);
 
         Distance driveToPoint(Vec2 target);
         void driveToPointStoopid(Vec2 target);

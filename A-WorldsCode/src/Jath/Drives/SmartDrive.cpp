@@ -110,6 +110,33 @@ namespace Jath
         }
         arcade(0, 0, 0);
     }
+    void SmartDrive::driveToFast(Distance target)//drivesTo a distance, but freaky!
+    {
+        Jath::PID pid = Jath::PID()
+                            .withConstants(25 / Jath::Inches(1), 0.01, 2)
+                            .withIntegralZone(Revolutions(Inches(6)/ getWheelTravel()))
+                            .withTimeout(6)
+                            .withSettleZone(Revolutions(Jath::Inches(3)/ getWheelTravel()))
+                            .withSettleTimeout(0.25);
+
+        Angle offset = Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
+        Angle targetRot = Revolutions(target / getWheelTravel()) + offset;
+
+        pid.reset();
+        while (!pid.isCompleted())
+        {
+            Angle pos = Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
+            double out = pid.calculate(targetRot - pos);
+
+            std::cout << "targetRot :" << Distance(Angle(targetRot - pos).revolutions()*getWheelTravel()).inches() << "\n"
+                      << "\tout: " << out << "\n";
+
+            arcade(0, out, 0);
+
+            wait(20, vex::msec);
+        }
+        arcade(0, 0, 0);
+    }
     void SmartDrive::turnTo(Angle target)
     {
         Jath::PID pid = Jath::PID()
@@ -118,6 +145,28 @@ namespace Jath
                             .withTimeout(5)
                             .withSettleZone(Jath::Degrees(3))
                             .withSettleTimeout(0.25);
+
+        pid.reset();
+        while (!pid.isCompleted())
+        {
+            Angle error = shortestTurnPath(Degrees(target.degrees() - m_inert.heading(vex::degrees)));
+
+            double out = pid.calculate(error);
+
+            arcade(0, 0, out);
+
+            wait(20, vex::msec);
+        }
+        arcade(0, 0, 0);
+    }
+    void SmartDrive::turnToFast(Angle target)
+    {
+        Jath::PID pid = Jath::PID()
+                            .withConstants(1 / Jath::Degrees(1), 3, 2)
+                            .withIntegralZone(Jath::Degrees(20))
+                            .withTimeout(5)
+                            .withSettleZone(Jath::Degrees(7.5))
+                            .withSettleTimeout(0.10);
 
         pid.reset();
         while (!pid.isCompleted())

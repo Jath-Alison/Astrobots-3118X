@@ -116,6 +116,30 @@ void rightAwp()
 	smartDrive.arcade(0, -60, 0);
 	vex::wait(0.35, vex::sec);
 	smartDrive.arcade(0, 0, 0);
+	leftWing.close();
+
+	Jath::Angle angleToPoint2 = smartDrive.m_pos.angleTo( 
+		Jath::XandY(Jath::Inches(0), Jath::Inches(-24))
+	 );
+
+	smartDrive.turnTo(angleToPoint2);
+
+	intake.set(100);
+	smartDrive.driveTo(smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(0), Jath::Inches(-24))) - Jath::Inches(3));
+	intake.set(0);
+
+	smartDrive.turnToFast(Jath::Degrees(70));
+
+	smartDrive.driveToFast(Jath::Inches(30));
+	smartDrive.turnToFast(Jath::Degrees(90));
+	intake.set(-100);
+
+	
+	smartDrive.arcade(0, 60, 0);
+	vex::wait(0.35, vex::sec);
+	smartDrive.arcade(0, -60, 0);
+	vex::wait(0.35, vex::sec);
+	smartDrive.arcade(0, 0, 0);
 
 	Jath::Angle angleToPoint = smartDrive.m_pos.angleTo( 
 		Jath::XandY(Jath::Inches(0), Jath::Inches(-48))
@@ -211,8 +235,8 @@ void rightRush()
 void autonomous(void)
 {
 	// leftAwp();
-	// rightAwp();
-	rightRush();
+	rightAwp();
+	// rightRush();
 }
 
 /*---------------------------------------------------------------------------*/

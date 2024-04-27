@@ -45,12 +45,10 @@ namespace Jath
 
         void driveTo(Distance target);
         void driveToFast(Distance target);
-
-        void turnTo(Angle target);
-        void turnToFast(Angle target);
         void driveToTuned(Angle target, Distance settleRange, double timeout = 0.25, double totalTimeout = 6);
 
         void turnTo(Angle target);
+        void turnToFast(Angle target);
         void turnToTuned(Angle target, Angle settleRange, double totalTimeout = 6);
 
         void turnToPoint(Vec2 target);

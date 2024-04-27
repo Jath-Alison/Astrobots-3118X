@@ -110,33 +110,7 @@ namespace Jath
         }
         arcade(0, 0, 0);
     }
-    void SmartDrive::driveToTuned(Angle target, Distance settleRange, double timeout, double totalTimeout){
-        Jath::PID pid = Jath::PID()
-                            .withConstants(25 / Jath::Inches(1), 0.0, 2)
-                            .withIntegralZone(Jath::Inches(3))
-                            .withTimeout(totalTimeout)
-                            .withSettleZone(settleRange)
-                            .withSettleTimeout(timeout);
-
-        Angle offset = Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
-        Angle targetRot = Revolutions(target / getWheelTravel()) + offset;
-
-        pid.reset();
-        while (!pid.isCompleted())
-        {
-            Angle pos = Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
-            double out = pid.calculate(targetRot - pos);
-
-            // std::cout << "targetRot :" << Jath::Distance(targetRot.revolutions() * getWheelTravel()).inches() << "\n"
-            //           << "\tpos :" << Jath::Distance(pos.revolutions() * getWheelTravel()).inches() << "\n"
-            //           << "\tout: " << out << "\n";
-
-            arcade(0, out, 0);
-
-            wait(20, vex::msec);
-        }
-        arcade(0, 0, 0);
-    }
+    
     void SmartDrive::driveToTuned(Angle target, Distance settleRange, double timeout, double totalTimeout){
         Jath::PID pid = Jath::PID()
                             .withConstants(25 / Jath::Inches(1), 0.0, 2)

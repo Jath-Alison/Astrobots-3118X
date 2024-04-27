@@ -243,16 +243,39 @@ void rightRush()
 	vex::wait(0.25, vex::sec);
 }
 
+void elimsRight()
+{
+	waitUntil(smartDrive.m_inert.isCalibrating() == false);
+
+	smartDrive.m_pos = Jath::XandY(Jath::Inches(36.75), Jath::Inches(-47.5));
+	smartDrive.m_dir = Jath::Degrees(0);//setting location and direction
+
+
+	odomRetract.set(!true);//odom retract out
+	climbUp.set(true);
+	climbDown.set(false);//climb nuetral
+	
+	rightWing.open();vex::thread closeWings(waitAndClose);//flip open wings and push triball
+
+	smartDrive.driveToPoint(Jath::XandY(
+		Jath::Inches(6),Jath::Inches(0)
+	));
+
+
+}
+
 void autonomous(void)
 {
 	// leftAwp();
 	// rightAwp();
-	rightRush();
+	// rightRush();
+	elimsRight();
 }
 
 // std::string currentAuton = "leftAwp";
 // std::string currentAuton = "rightAwp";
-std::string currentAuton = "rightRush";
+// std::string currentAuton = "rightRush";
+std::string currentAuton = "elimsRight";
 
 /*---------------------------------------------------------------------------*/
 /*                                                                           */

@@ -301,7 +301,7 @@ void elimsRight()
 	///return to corner
 	vex::thread intooking2(intakeTillBall);
 	smartDrive.driveToPointTuned(Jath::XandY(
-		Jath::Inches(48), Jath::Inches(-54)
+		Jath::Inches(50), Jath::Inches(-54)
 	),Jath::Inches(3));//grabb preball
 	std::cout << "cornered :\n"
 	<< "\tx: " << Jath::Distance(smartDrive.m_pos.x).inches() <<"\n"
@@ -352,7 +352,7 @@ void elimsRight()
 	smartDrive.turnToTuned(angleTo2ndBarrierBall,Jath::Degrees((10)));
 
 	vex::thread intooking3(intakeTillBall);
-	smartDrive.driveToTuned(smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(3), Jath::Inches(-24))) - Jath::Inches(14),Jath::Inches(2));
+	smartDrive.driveToTuned(smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(3), Jath::Inches(-29))) - Jath::Inches(14),Jath::Inches(2));
 
 	std::cout << "lastBallIntook :\n"
 	<< "\tx: " << Jath::Distance(smartDrive.m_pos.x).inches() <<"\n"
@@ -377,7 +377,7 @@ void elimsRight()
 	smartDrive.arcade(0, -60, 0);//once
 	vex::wait(0.45, vex::sec);
 	smartDrive.arcade(0, 70, 0);
-	vex::wait(0.55, vex::sec);
+	vex::wait(0.65, vex::sec);
 	smartDrive.arcade(0, -60, 0);//twice
 	vex::wait(0.45, vex::sec);
 	smartDrive.arcade(0, 0, 0);
@@ -498,7 +498,7 @@ void usercontrol(void)
 			// smartDrive.driveToFast(Jath::Tiles(1));
 			// odomRetract.open();
 			// vex::thread intooking(intakeTillBall);
-			elimsRightCancelThread();
+			// elimsRightCancelThread();
 		}
 
 		smartDrive.LeftSplitArcadeCurved(controller1);

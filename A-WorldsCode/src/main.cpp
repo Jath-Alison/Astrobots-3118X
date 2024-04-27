@@ -287,6 +287,10 @@ void elimsRight()
 	wait(0.20, sec);//back up
 
 	smartDrive.turnToTuned(Jath::Degrees(90),Jath::Degrees(15));
+
+	intake.set(70);//push into goal	
+	wait(0.125,sec);
+
 	intake.set(-100);//turn and spit (with authority)
 	std::cout << "spat :\n"
 	<< "\tx: " << Jath::Distance(smartDrive.m_pos.x).inches() <<"\n"
@@ -297,8 +301,8 @@ void elimsRight()
 	///return to corner
 	vex::thread intooking2(intakeTillBall);
 	smartDrive.driveToPointTuned(Jath::XandY(
-		Jath::Inches(54), Jath::Inches(-54)
-	),Jath::Inches(4));//grabb preball
+		Jath::Inches(48), Jath::Inches(-54)
+	),Jath::Inches(3));//grabb preball
 	std::cout << "cornered :\n"
 	<< "\tx: " << Jath::Distance(smartDrive.m_pos.x).inches() <<"\n"
 	<< "\ty: " << Jath::Distance(smartDrive.m_pos.y).inches() <<"\n";
@@ -348,13 +352,14 @@ void elimsRight()
 	smartDrive.turnToTuned(angleTo2ndBarrierBall,Jath::Degrees((10)));
 
 	vex::thread intooking3(intakeTillBall);
-	smartDrive.driveToTuned(smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(3), Jath::Inches(-24))) - Jath::Inches(6),Jath::Inches(2));
+	smartDrive.driveToTuned(smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(3), Jath::Inches(-24))) - Jath::Inches(14),Jath::Inches(2));
 
 	std::cout << "lastBallIntook :\n"
 	<< "\tx: " << Jath::Distance(smartDrive.m_pos.x).inches() <<"\n"
 	<< "\ty: " << Jath::Distance(smartDrive.m_pos.y).inches() <<"\n";
 
 	/// push all
+	intake.set(30);
 	smartDrive.turnToTuned(Jath::Degrees(45),Jath::Degrees((10)));
 
 	smartDrive.driveToFast(Jath::Inches(24));// /`` shape
@@ -363,13 +368,17 @@ void elimsRight()
 	leftWing.open();
 	rightWing.open();
 
-	smartDrive.driveToFast(Jath::Inches(10));
+	smartDrive.driveToFast(Jath::Inches(5));
 
 	intake.set(-100);//push into goal	
 	wait(0.125,sec);
-	smartDrive.arcade(0, 60, 0);
+	smartDrive.arcade(0, 70, 0);
+	vex::wait(0.55, vex::sec);
+	smartDrive.arcade(0, -60, 0);//once
 	vex::wait(0.45, vex::sec);
-	smartDrive.arcade(0, -60, 0);
+	smartDrive.arcade(0, 70, 0);
+	vex::wait(0.55, vex::sec);
+	smartDrive.arcade(0, -60, 0);//twice
 	vex::wait(0.45, vex::sec);
 	smartDrive.arcade(0, 0, 0);
 

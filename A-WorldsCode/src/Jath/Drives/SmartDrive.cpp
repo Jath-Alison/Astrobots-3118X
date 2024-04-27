@@ -74,7 +74,11 @@ namespace Jath
             {
                 Distance hTravel = m_tracker.getTravel();
 
-                posChange = posChange + dirAndMag(m_dir + Degrees(90), hTravel);
+                Vec2 trackerTravel = dirAndMag(m_dir + Degrees(90), hTravel);
+
+                
+
+                posChange = posChange + trackerTravel;
             }
 
             m_pos = m_pos + posChange;
@@ -157,8 +161,8 @@ namespace Jath
             Angle pos = Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
             double out = pid.calculate(targetRot - pos);
 
-            std::cout << "targetRot :" << Distance(Angle(targetRot - pos).revolutions()*getWheelTravel()).inches() << "\n"
-                      << "\tout: " << out << "\n";
+            // std::cout << "targetRot :" << Distance(Angle(targetRot - pos).revolutions()*getWheelTravel()).inches() << "\n"
+            //           << "\tout: " << out << "\n";
 
             arcade(0, out, 0);
 
@@ -213,11 +217,11 @@ namespace Jath
 
     void SmartDrive::turnToTuned(Angle target, Angle settleRange, double totalTimeout){
         Jath::PID pid = Jath::PID()
-                            .withConstants(2 / Jath::Degrees(1), 3, 5)
+                            .withConstants(2 / Jath::Degrees(1), /*3*/1, -450)
                             .withIntegralZone(Jath::Degrees(20))
                             .withTimeout(totalTimeout)
                             .withSettleZone(settleRange)
-                            .withSettleTimeout(0.25);
+                            .withSettleTimeout(0.125);
 
         int errorSign = 0;
 
@@ -226,14 +230,22 @@ namespace Jath
         {
             Angle error = shortestTurnPath(Degrees(target.degrees() - m_inert.heading(vex::degrees)));
 
-            if(errorSign != 0 && errorSign != getSign(error)){
-                turnTo(m_dir);
+            // if(errorSign != 0 && errorSign != getSign(error)){
+            //     turnTo(m_dir);
 
-            }
+            // }
 
             double out = pid.calculate(error);
 
             arcade(0, 0, out);
+
+            // std::cout << "angle :" << error.degrees() << "\n"
+            //           << "\tp: " << pid.m_error* 2 / Jath::Degrees(1) << "\n"
+            //           << "\td: " << pid.m_derivative * -450 << "\n"
+            //           << "\tt: " << (pid.m_error* 2 / Jath::Degrees(1)) + pid.m_derivative * -450 << "\n"
+            //           << "\ttime: " << pid.timePassed() << "\n"
+            //           << "\tStime: " << pid.settledTimePassed() << "\n"
+            //           << "\tout: " << out << "\n";
 
             errorSign = getSign(error);
             wait(20, vex::msec);
@@ -329,6 +341,82 @@ namespace Jath
     void SmartDrive::driveToPointTuned(Vec2 target, double settleRange, double totalTimeout ){
         
         Jath::PID pidr = Jath::PID()
+                             .withConstants(1 / Jath::Degrees(1), 3, -5)
+                             .withIntegralZone(Jath::Degrees(20))
+                             .withTimeout(5)
+                             .withSettleZone(Jath::Degrees(3))
+                             .withSettleTimeout(0.25);
+
+        Jath::PID pidd = Jath::PID()
+                             .withConstants(20 / Jath::Inches(5), 0.0, 2)
+                             .withIntegralZone(Jath::Inches(3))
+                             .withTimeout(50)
+                             .withSettleZone(Jath::Inches(2))
+                             .withSettleTimeout(0.05);
+        pidr.reset();
+        pidd.reset();
+        while (!pidd.isCompleted())
+        {
+
+            Angle angle = Angle(m_pos.angleTo(target) - m_dir);
+            angle = Angle(shortestTurnPath(angle));
+            Distance dist = m_pos.distTo(target);
+
+            double rotOut = pidr.calculate(angle);
+            double driveOut = pidd.calculate(dist);
+
+            if (std::abs(angle.degrees()) > 25)
+            {
+                arcade(0, 0, Jath::cap<double>(rotOut, 100));
+            }
+            else
+            {
+                arcade(0, Jath::cap<double>(driveOut, 60), Jath::cap<double>(rotOut, 100));
+            }
+
+            // std::cout << "angle :" << (std::abs(dist.inches()) < 5) << "\n"
+            //           << "\tdist: " << dist.inches() << "\n";
+            if (std::abs(dist.inches()) < settleRange)
+            {
+                arcade(0, 0, 0);
+                // driveTo(0);
+                return;
+            }
+
+            wait(20, vex::msec);
+        }
+    }
+
+    void SmartDrive::turnToPointR(Vec2 target)
+    {
+        Jath::PID pid = Jath::PID()
+                            .withConstants(1 / Jath::Degrees(1), 3, 5)
+                            .withIntegralZone(Jath::Degrees(20))
+                            .withTimeout(5)
+                            .withSettleZone(Jath::Degrees(3))
+                            .withSettleTimeout(0.25);
+
+        Angle targetA = Angle(m_pos.angleTo(target) - Revolutions(0.5));
+
+        pid.reset();
+        while (!pid.isCompleted())
+        {
+            targetA = Angle(m_pos.angleTo(target) - Revolutions(0.5));
+            Angle error = shortestTurnPath(Degrees(targetA.degrees() - m_inert.heading(vex::degrees)));
+
+            double out = pid.calculate(error);
+
+            arcade(0, 0, out);
+
+            wait(20, vex::msec);
+        }
+        arcade(0, 0, 0);
+    }
+
+    Distance SmartDrive::driveToPointR(Vec2 target)
+    {
+
+        Jath::PID pidr = Jath::PID()
                              .withConstants(1 / Jath::Degrees(1), 3, 5)
                              .withIntegralZone(Jath::Degrees(20))
                              .withTimeout(5)
@@ -346,12 +434,12 @@ namespace Jath
         while (!pidd.isCompleted())
         {
 
-            Angle angle = Angle(m_pos.angleTo(target) - m_dir);
+            Angle angle = Angle(m_pos.angleTo(target) - m_dir - Revolutions(0.5));
             angle = Angle(shortestTurnPath(angle));
             Distance dist = m_pos.distTo(target);
 
             double rotOut = pidr.calculate(angle);
-            double driveOut = pidd.calculate(dist);
+            double driveOut = -pidd.calculate(dist);
 
             if (std::abs(angle.degrees()) > 15)
             {
@@ -359,13 +447,73 @@ namespace Jath
             }
             else
             {
-                arcade(0, Jath::cap<double>(driveOut, 40), Jath::cap<double>(rotOut, 100));
+                arcade(0, Jath::cap<double>(driveOut,100), Jath::cap<double>(rotOut, 100));
+            }
+
+            // std::cout << "angle :" << (std::abs(dist.inches()) < 5) << "\n"
+            //           << "\tdist: " << dist.inches() << "\n";
+            if (std::abs(dist.inches()) < 5)
+            {
+                arcade(0, 0, 0);
+                driveTo(0);
+                return 0;
+            }
+
+            wait(20, vex::msec);
+        }
+        return 0;
+    }
+    void SmartDrive::driveToPointStoopidR(Vec2 target)
+    {
+        Angle angle = Angle(m_pos.angleTo(target) - m_dir - Revolutions(0.5));
+        angle = Angle(shortestTurnPath(angle));
+        Distance dist = m_pos.distTo(target);
+
+        turnTo(m_pos.angleTo(target));
+        driveTo(-m_pos.distTo(target));
+    }
+    void SmartDrive::driveToPointTunedR(Vec2 target, double settleRange, double totalTimeout ){
+        
+        Jath::PID pidr = Jath::PID()
+                             .withConstants(1 / Jath::Degrees(1), 3, 5)
+                             .withIntegralZone(Jath::Degrees(20))
+                             .withTimeout(5)
+                             .withSettleZone(Jath::Degrees(3))
+                             .withSettleTimeout(0.25);
+
+        Jath::PID pidd = Jath::PID()
+                             .withConstants(20 / Jath::Inches(5), 0.0, 2)
+                             .withIntegralZone(Jath::Inches(3))
+                             .withTimeout(50)
+                             .withSettleZone(Jath::Inches(2))
+                             .withSettleTimeout(0.5);
+        pidr.reset();
+        pidd.reset();
+        while (!pidd.isCompleted())
+        {
+
+            Angle angle = Angle(m_pos.angleTo(target) - (m_dir - Revolutions(0.5)));
+            angle = Angle(shortestTurnPath(angle));
+            Distance dist = m_pos.distTo(target);
+
+            double rotOut = pidr.calculate(angle);
+            double driveOut = -pidd.calculate(dist);
+
+            if (std::abs(angle.degrees()) > 15)
+            {
+                arcade(0, driveOut, rotOut);
+            // std::cout << "out: " << driveOut << "\n";
+            }
+            else
+            {
+                arcade(0, Jath::floor<double>(driveOut, -60), rotOut);
             }
 
             // std::cout << "angle :" << (std::abs(dist.inches()) < 5) << "\n"
             //           << "\tdist: " << dist.inches() << "\n";
             if (std::abs(dist.inches()) < settleRange)
             {
+                // std::cout << "-----finished -----\n";
                 arcade(0, 0, 0);
                 driveTo(0);
             }

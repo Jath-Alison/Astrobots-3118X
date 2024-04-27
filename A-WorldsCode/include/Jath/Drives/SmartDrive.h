@@ -58,6 +58,12 @@ namespace Jath
 
         void driveToPointTuned(Vec2 target, double settleRange = Inches(2), double totalTimeout = 6);
 
+        void turnToPointR(Vec2 target);
+
+        Distance driveToPointR(Vec2 target);
+        void driveToPointStoopidR(Vec2 target);
+        void driveToPointTunedR(Vec2 target, double settleRange = Inches(2), double totalTimeout = 6);
+
         Angle shortestTurnPath(Angle target);
 
         vex::inertial m_inert;

@@ -47,7 +47,7 @@ int intakeTillBall(){
 	intake.set(75);
 	wait(0.25,sec);
 	waitUntil(intake.current() > 1);
-	wait(0.25,sec);
+	wait(0.35,sec);
 	intake.set(0);
 	return 1;
 }
@@ -247,21 +247,144 @@ void elimsRight()
 {
 	waitUntil(smartDrive.m_inert.isCalibrating() == false);
 
-	smartDrive.m_pos = Jath::XandY(Jath::Inches(36.75), Jath::Inches(-47.5));
-	smartDrive.m_dir = Jath::Degrees(0);//setting location and direction
-
-
 	odomRetract.set(!true);//odom retract out
 	climbUp.set(true);
 	climbDown.set(false);//climb nuetral
 	
-	rightWing.open();vex::thread closeWings(waitAndClose);//flip open wings and push triball
+	//drive to border
+	//spin and hit triball (open wingR, turn to other triball)
+	//intake & spit barrier triball
+	//return to corner
+	//scoop
+	//score preload, then scooped
+	//grab last barrier ball
+	//wings out, push all
 
-	smartDrive.driveToPoint(Jath::XandY(
-		Jath::Inches(6),Jath::Inches(0)
-	));
+	std::cout << "start :\n"
+	<< "\tx: " << Jath::Distance(smartDrive.m_pos.x).inches() <<"\n"
+	<< "\ty: " << Jath::Distance(smartDrive.m_pos.y).inches() <<"\n";
 
+	///drive to border
+	Jath::Distance distanceToBorderBall = smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(24), 0)) - Jath::Inches(8);
+	smartDrive.driveToTuned(-distanceToBorderBall, Jath::Inches(2), 0.1);
+	
+	///spin and hit triball (open wingR, turn to other triball)
+	rightWing.open();
+	Jath::Angle angleToBarrierBall = Jath::Angle(smartDrive.m_pos.angleTo(Jath::XandY(Jath::Inches(3), 0)) + Jath::Degrees(-15));
+	smartDrive.turnToTuned(angleToBarrierBall,Jath::Degrees(15));
+	std::cout << "postSpin :\n"
+	<< "\tx: " << Jath::Distance(smartDrive.m_pos.x).inches() <<"\n"
+	<< "\ty: " << Jath::Distance(smartDrive.m_pos.y).inches() <<"\n";
 
+	///intake & spit barrier triball
+	rightWing.close();
+	vex::thread intooking(intakeTillBall);
+
+	Jath::Distance distanceToBarrierBall = smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(3), 0)) - Jath::Inches(5);
+	smartDrive.driveToTuned(+distanceToBarrierBall,Jath::Inches(1.5));
+
+	smartDrive.arcade(0, -70, 0);
+	wait(0.20, sec);//back up
+
+	smartDrive.turnToTuned(Jath::Degrees(90),Jath::Degrees(15));
+	intake.set(-100);//turn and spit (with authority)
+	std::cout << "spat :\n"
+	<< "\tx: " << Jath::Distance(smartDrive.m_pos.x).inches() <<"\n"
+	<< "\ty: " << Jath::Distance(smartDrive.m_pos.y).inches() <<"\n";
+
+	wait(0.5,sec);
+
+	///return to corner
+	vex::thread intooking2(intakeTillBall);
+	smartDrive.driveToPointTuned(Jath::XandY(
+		Jath::Inches(54), Jath::Inches(-54)
+	),Jath::Inches(4));//grabb preball
+	std::cout << "cornered :\n"
+	<< "\tx: " << Jath::Distance(smartDrive.m_pos.x).inches() <<"\n"
+	<< "\ty: " << Jath::Distance(smartDrive.m_pos.y).inches() <<"\n";
+	
+	wait(0.3,sec);//wait for intake
+	smartDrive.turnToTuned(Jath::Degrees(-90),Jath::Degrees((10)));
+	
+	///scoooop
+	smartDrive.arcade(0,60,0);
+	wait(0.3,sec);
+	leftWing.open();//open scooper
+	
+	smartDrive.arcade(0, -50, -10);
+	wait(0.35, sec);
+
+	std::cout << "scooping :\n"
+	<< "\tx: " << Jath::Distance(smartDrive.m_pos.x).inches() <<"\n"
+	<< "\ty: " << Jath::Distance(smartDrive.m_pos.y).inches() <<"\n";
+
+	smartDrive.arcade(0, 0, -60);
+	wait(0.3, sec);//the scooping
+	leftWing.close();//close scooper
+	smartDrive.arcade(0, 0, 0);
+
+	///score  preload and scooped
+	smartDrive.turnToTuned(Jath::Degrees(30),Jath::Degrees((10)));
+
+	intake.set(-100);
+	smartDrive.arcade(0,70,0);
+	vex::wait(0.4, vex::sec);
+	
+	smartDrive.arcade(0,0,0);
+	wait(0.1,sec);
+
+	smartDrive.arcade(0,-50,0);
+	vex::wait(0.35, vex::sec);//pushing in//increase when tested
+
+	std::cout << "pushed in :\n"
+	<< "\tx: " << Jath::Distance(smartDrive.m_pos.x).inches() <<"\n"
+	<< "\ty: " << Jath::Distance(smartDrive.m_pos.y).inches() <<"\n";
+
+	///grab last barrier ball
+	Jath::Angle angleTo2ndBarrierBall = smartDrive.m_pos.angleTo( 
+		Jath::XandY(Jath::Inches(3), Jath::Inches(-24))
+	 );
+
+	smartDrive.turnToTuned(angleTo2ndBarrierBall,Jath::Degrees((10)));
+
+	vex::thread intooking3(intakeTillBall);
+	smartDrive.driveToTuned(smartDrive.m_pos.distTo(Jath::XandY(Jath::Inches(3), Jath::Inches(-24))) - Jath::Inches(6),Jath::Inches(2));
+
+	std::cout << "lastBallIntook :\n"
+	<< "\tx: " << Jath::Distance(smartDrive.m_pos.x).inches() <<"\n"
+	<< "\ty: " << Jath::Distance(smartDrive.m_pos.y).inches() <<"\n";
+
+	/// push all
+	smartDrive.turnToTuned(Jath::Degrees(45),Jath::Degrees((10)));
+
+	smartDrive.driveToFast(Jath::Inches(24));// /`` shape
+	smartDrive.turnToTuned(Jath::Degrees(90),Jath::Degrees((10)));
+
+	leftWing.open();
+	rightWing.open();
+
+	smartDrive.driveToFast(Jath::Inches(10));
+
+	intake.set(-100);//push into goal	
+	wait(0.125,sec);
+	smartDrive.arcade(0, 60, 0);
+	vex::wait(0.45, vex::sec);
+	smartDrive.arcade(0, -60, 0);
+	vex::wait(0.45, vex::sec);
+	smartDrive.arcade(0, 0, 0);
+
+}
+
+int elimsRightCancelThread(){
+	vex::thread elimsRightThread(elimsRight);
+	while(true){
+		if(controller1.ButtonRight.PRESSED){
+			elimsRightThread.interrupt();
+			smartDrive.arcade(0,0,0);
+			break;
+		}
+	}
+	return 1;
 }
 
 void autonomous(void)
@@ -294,14 +417,11 @@ void usercontrol(void)
 
 	Jath::Vec2 origin = Jath::XandY(0, 0);
 
-	smartDrive.m_pos = Jath::XandY(Jath::Tiles(0), Jath::Tiles(0));
-	smartDrive.m_dir = Jath::Degrees(0);
-
-	odomRetract.set(true);
+	// odomRetract.set(true);
 	climbUp.set(true);
 	climbDown.set(false);
 
-	intake.set(0);
+	// intake.set(10);
 
 	// User control code here, inside the loop
 	while (1)
@@ -369,6 +489,7 @@ void usercontrol(void)
 			// smartDrive.driveToFast(Jath::Tiles(1));
 			// odomRetract.open();
 			// vex::thread intooking(intakeTillBall);
+			elimsRightCancelThread();
 		}
 
 		smartDrive.LeftSplitArcadeCurved(controller1);
@@ -423,6 +544,9 @@ void track()
 //
 int main()
 {
+	smartDrive.m_pos = Jath::XandY(Jath::Inches(36.75), Jath::Inches(-47.5));
+	smartDrive.m_dir = Jath::Degrees(180);
+
 	vex::thread tracking(track);
 	vex::thread printing(print);
 

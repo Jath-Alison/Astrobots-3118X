@@ -48,6 +48,7 @@ namespace Jath
 
     int SmartDrive::track()
     {
+        m_tracker.m_rotation->setPosition(0, vex::deg);
         while (m_inert.isCalibrating())
         {
             vex::wait(5, vex::msec);

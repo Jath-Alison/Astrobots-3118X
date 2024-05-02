@@ -553,8 +553,8 @@ void track()
 //
 int main()
 {
-	smartDrive.m_pos = Jath::XandY(Jath::Inches(36.75), Jath::Inches(-47.5));
-	smartDrive.m_dir = Jath::Degrees(180);
+	smartDrive.m_pos = Jath::XandY(0,0);//Jath::Inches(36.75), Jath::Inches(-47.5));
+	smartDrive.m_dir = Jath::Degrees(0);//(180);
 
 	vex::thread tracking(track);
 	vex::thread printing(print);

@@ -140,4 +140,9 @@ namespace Jath
         auto currentTime = std::chrono::high_resolution_clock::now();
         return std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - m_startSettledTime).count() / 1000.f;
     }
+
+    double PID::getProportional(){ return m_error * m_kp; }
+    double PID::getIntegral(){ return m_integral * m_ki; }
+    double PID::getDerivative(){ return m_derivative * m_kd; }
+
 } // namespace Jath

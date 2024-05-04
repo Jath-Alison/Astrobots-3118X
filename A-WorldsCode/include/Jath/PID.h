@@ -44,6 +44,10 @@ namespace Jath
         double timePassed();
         double settledTimePassed();
 
+        double getProportional();
+        double getIntegral();
+        double getDerivative();
+
     private:
         double m_error{0};
         double m_prevError{0};

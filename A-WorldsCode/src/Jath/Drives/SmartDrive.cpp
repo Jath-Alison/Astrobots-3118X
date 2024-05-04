@@ -1,6 +1,7 @@
 #include "Jath\Drives\SmartDrive.h"
 #include "Jath\PID.h"
 #include <cmath>
+#include "Console.h"
 
 namespace Jath
 {
@@ -172,6 +173,15 @@ namespace Jath
     }
     void SmartDrive::turnTo(Angle target)
     {
+        static int turnToCount = 0;
+        turnToCount ++;
+
+        std::stringstream intToString;
+        intToString << turnToCount;
+        
+        Console turnToConsole("turnToData" + intToString.str() + ".csv");
+        turnToConsole.get() << "time, timeSettled, p, i, d" << "\n";
+
         Jath::PID pid = Jath::PID()
                             .withConstants(1 / Jath::Degrees(1), 3, 5)
                             .withIntegralZone(Jath::Degrees(20))
@@ -188,9 +198,21 @@ namespace Jath
 
             arcade(0, 0, out);
 
+            turnToConsole.get()
+                << pid.timePassed() << ","
+                << pid.settledTimePassed() << ","
+                << pid.getProportional() << ","
+                << pid.getIntegral() << ","
+                << pid.getDerivative() << ","
+                << "\n";
+
             wait(20, vex::msec);
         }
         arcade(0, 0, 0);
+        int success = turnToConsole.writeToFile();
+        // std::cout << turnToConsole.get().str();
+        std::cout << success << "fin\n";
+        std::cout << success << "fin\n";
     }
     void SmartDrive::turnToFast(Angle target)
     {

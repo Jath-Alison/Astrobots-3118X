@@ -36,21 +36,29 @@ void pre_auton(void)
 
 void auto_isolation(void) {
 
-    smartDrive.m_pos = testPathU.m_points.front().m_pos;
-    smartDrive.m_dir = Jath::Degrees(90);
+    smartDrive.arcade(0,100,0);
+    vex::wait(2,vex::sec);
+    smartDrive.arcade(0,15,15);
+    vex::wait(2,vex::sec);
 
-    followPath(testPathU, Jath::Inches(10));
-    release.set(100);
-    smartDrive.turnTo(Jath::Degrees(90));
-    
-    smartDrive.arcade(0,75,0);
-    intake.set(-100);
+    shooter.set(100);
+    intake.set(100);
+    while(true){
 
-    vex::wait(3, vex::sec);
-    smartDrive.arcade(0,0,0);
-    // smartDrive.turnTo(Jath::Degrees(0));
-    // smartDrive.driveTo(Jath::Tiles(1));
-    // smartDrive.turnTo(Jath::Degrees(-90));
+        leftFlapper.spinTo(15,vex::deg,false);
+        rightFlapper.spinTo(15,vex::deg,false);
+
+        vex::wait(1,vex::sec);
+
+        leftFlapper.spinTo(-30,vex::deg,false);
+        rightFlapper.spinTo(-30,vex::deg,false);
+
+        vex::wait(1,vex::sec);
+    }
+
+    // smartDrive.m_pos = testPathU.m_points.front().m_pos;
+    // smartDrive.m_dir = Jath::Degrees(90);
+
 }
 
 void auto_interaction(void) {
@@ -110,6 +118,22 @@ void usercontrol(void)
             intake.set(0);
         }
 
+        if (controller1.ButtonL1.pressing())
+        {
+            leftFlapper.spinTo(15,vex::deg,false);
+            rightFlapper.spinTo(15,vex::deg,false);
+        }
+        else if (controller1.ButtonL2.pressing())
+        {
+            leftFlapper.spinTo(-30,vex::deg,false);
+            rightFlapper.spinTo(-30,vex::deg,false);
+        }
+        else
+        {
+            leftFlapper.spinTo(0,vex::deg,false);
+            rightFlapper.spinTo(0,vex::deg,false);
+        }
+
         if (controller1.ButtonUp.PRESSED)
         {
             smartDrive.turnTo(Jath::Degrees(0));
@@ -127,15 +151,18 @@ void usercontrol(void)
 
         if (controller1.ButtonX.PRESSED)
         {
-            smartDrive.driveToHoldAngle(Jath::Inches(24));
+            shooter.set(100);
+            // smartDrive.driveToHoldAngle(Jath::Inches(24));
         }
         else if (controller1.ButtonB.PRESSED)
         {
-            smartDrive.driveToHoldAngle(Jath::Inches(-24));
+            shooter.set(-100);
+            // smartDrive.driveToHoldAngle(Jath::Inches(-24));
         }else if (controller1.ButtonA.PRESSED)
         {
-            smartDrive.m_pos = testPathU.m_points.front().m_pos;
-            followPath(testPathU, Jath::Inches(10));
+            shooter.set(0);
+            // smartDrive.m_pos = testPathU.m_points.front().m_pos;
+            // followPath(testPathU, Jath::Inches(10));
         }
 
         vex::wait(20, vex::msec); // Sleep the task for a short amount of time to

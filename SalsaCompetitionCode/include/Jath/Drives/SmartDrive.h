@@ -8,6 +8,7 @@
 #include "Jath/Units.h"
 #include "Jath/Utils.h"
 #include "Jath\Graph.h"
+#include "Jath\Path.h"
 
 // extern vex::gps GPS;
 namespace Jath
@@ -63,6 +64,7 @@ namespace Jath
         void driveToPointTuned(Vec2 target, double settleRange = Inches(2), double totalTimeout = 6);
 
         Distance driveTowardPoint(Vec2 target, double speedCap, bool clear = false);Graph driveTowardPointGraph;
+        Distance driveTowardPoint(Point p, bool clear = false);
 
         void turnToPointR(Vec2 target);
 

@@ -19,37 +19,41 @@
 #include "Jath\Graph.h"
 
 #include "Command.h"
+#include "AutonPaths.h"
 
 // A global instance of competition
 vex::competition Competition;
 
-// define your global instances of motors and other devices here
-
-/*---------------------------------------------------------------------------*/
-/*                          Pre-Autonomous Functions                         */
-/*                                                                           */
-/*  You may want to perform some actions before the competition starts.      */
-/*  Do them in the following function.  You must return from this function   */
-/*  or the autonomous and usercontrol tasks will not be started.  This       */
-/*  function is only called once after the V5 has been powered on and        */
-/*  not every time that the robot is disabled.                               */
-/*---------------------------------------------------------------------------*/
+void waitForInert(){
+    while(smartDrive.m_inert.isCalibrating()){
+        vex::wait(5, vex::msec);
+    }
+}
 
 void pre_auton(void)
 {
-
-    // All activities that occur before the competition starts
-    // Example: clearing encoders, setting servo positions, ...
 }
 
-void auto_isolation(void) {}
+void auto_isolation(void) {
+    smartDrive.turnTo(Jath::Degrees(90));
+    smartDrive.driveTo(Jath::Tiles(1));
+    smartDrive.turnTo(Jath::Degrees(0));
+    smartDrive.driveTo(Jath::Tiles(1));
+    smartDrive.turnTo(Jath::Degrees(-90));
+}
 
-void auto_interaction(void) {}
+void auto_interaction(void) {
+    smartDrive.driveTo(Jath::Tiles(1));
+    smartDrive.turnTo(Jath::Degrees(180));
+    smartDrive.driveTo(Jath::Tiles(1));
+    smartDrive.turnTo(Jath::Degrees(0));
+}
 
 bool firstAutoFlag = true;
 
 void autonomous_main(void)
 {
+    waitForInert();
     if (firstAutoFlag)
     {
         firstAutoFlag = false;
@@ -63,9 +67,21 @@ void autonomous_main(void)
 
 void usercontrol(void)
 {
+    waitForInert();
     // User control code here, inside the loop
     while (1)
     {
+        Brain.Screen.clearScreen();
+        Brain.Screen.setCursor(1,1);
+        Brain.Screen.print("pose: %f, %f, %f", Jath::Distance(smartDrive.m_pos.x).inches(), Jath::Distance(smartDrive.m_pos.y).inches(), smartDrive.m_dir.degrees());
+    // Brain.Screen.setCursor(2,1);
+    //   Brain.Screen.print("isReceiving %d", link.isReceiving());
+    // Brain.Screen.setCursor(3,1);
+        smartDrive.driveToGraph.drawGraph(
+                    Jath::Vec2::XandY(0,100),
+                    Jath::Vec2::XandY(400,200)
+                );
+
 
         smartDrive.LeftSplitArcadeCurved(controller1);
 
@@ -82,12 +98,42 @@ void usercontrol(void)
             intake.set(0);
         }
 
+        if (controller1.ButtonUp.PRESSED)
+        {
+            smartDrive.turnTo(Jath::Degrees(0));
+        }
+        else if (controller1.ButtonRight.PRESSED)
+        {
+            smartDrive.turnTo(Jath::Degrees(90));
+        }else if (controller1.ButtonLeft.PRESSED)
+        {
+            smartDrive.turnTo(Jath::Degrees(-90));
+        }else if (controller1.ButtonDown.PRESSED)
+        {
+            smartDrive.turnTo(Jath::Degrees(180));
+        }
+
+        if (controller1.ButtonX.PRESSED)
+        {
+            smartDrive.driveToHoldAngle(Jath::Inches(24));
+        }
+        else if (controller1.ButtonB.PRESSED)
+        {
+            smartDrive.driveToHoldAngle(Jath::Inches(-24));
+        }else if (controller1.ButtonA.PRESSED)
+        {
+            smartDrive.m_pos = testPathU.m_points.front().m_pos;
+            followPath(testPathU, Jath::Inches(10));
+        }
+
         vex::wait(20, vex::msec); // Sleep the task for a short amount of time to
                                   // prevent wasted resources.
     }
 }
 
-void track() { smartDrive.track(); }
+void track() { 
+    waitForInert();
+    smartDrive.track(); }
 
 int main()
 {

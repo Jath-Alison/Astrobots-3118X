@@ -1,7 +1,5 @@
 #pragma once
 
-#define  FIFTEEN
-
 #include "vex.h"
 #include "Jath\Jath.h"
 
@@ -24,7 +22,5 @@ extern Jath::SmartDrive smartDrive;
 
 extern Jath::jMotorGroup intake;
 
-extern Jath::Vec2 initPos;
-extern Jath::Angle initDir;
 
 extern vex::message_link link;

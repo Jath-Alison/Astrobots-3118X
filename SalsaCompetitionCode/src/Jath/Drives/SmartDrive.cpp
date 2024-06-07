@@ -150,11 +150,11 @@ namespace Jath
     void SmartDrive::turnTo(Angle target)
     {
         Jath::PID pid = Jath::QPID()
-                            .withConstants(2.5/(Degrees(1)), 20, -650)
+                            .withConstants(1.75/(Degrees(1)), 15, -300)
                             .withIntegralZone(Jath::Degrees(10))
                             .withTimeout(2)
-                            .withSettleZone(Jath::Degrees(2))
-                            .withSettleTimeout(0.125);
+                            .withSettleZone(Jath::Degrees(3))
+                            .withSettleTimeout(0.25);
 
         double out = 0;
 
@@ -372,11 +372,11 @@ namespace Jath
         Distance dist = m_pos.distTo(target);
 
         static Jath::PID pidr = Jath::QPID()
-                            .withConstants(1/(Degrees(1)), 10, -400)
+                            .withConstants(1/(Degrees(1)), 5, -300)
                             .withIntegralZone(Jath::Degrees(10))
                             .withTimeout(2)
-                            .withSettleZone(Jath::Degrees(2))
-                            .withSettleTimeout(0.125);
+                            .withSettleZone(Jath::Degrees(3))
+                            .withSettleTimeout(0.25);
 
         Angle rotAngle = shortestTurnPath( m_pos.angleTo(target) - m_dir);
         double rotOut = pidr.calculate(rotAngle);
@@ -409,6 +409,10 @@ namespace Jath
         return dist;
     }
 
+    Distance SmartDrive::driveTowardPoint(Jath::Point p, bool clear)
+    {
+        return driveTowardPoint(p.m_pos,p.m_speed, clear);
+    }
     void SmartDrive::turnToPointR(Vec2 target)
     {
         Jath::PID pid = Jath::PID()

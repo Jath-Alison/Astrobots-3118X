@@ -17,7 +17,7 @@ vex::motor_group rightMotors(rightMotorA, rightMotorB, rightMotorC, rightMotorD)
 
 vex::inertial inert(vex::PORT15);
 
-Jath::TankDrive drive = Jath::TankDrive(leftMotors, rightMotors).withScales(1, 1, -1);
+Jath::TankDrive drive = Jath::TankDrive(leftMotors, rightMotors).withScales(1, 1, 1);
 Jath::SmartDrive smartDrive = Jath::SmartDrive(drive, inert)
     .withWheelSize(Jath::Inches(2.75))
     .withGearRatio(24.f/32.f)
@@ -42,13 +42,8 @@ Jath::jMotorGroup intake = Jath::jMotorGroup(
 Jath::Vec2 initPos = Jath::Vec2::XandY(0, 0);
 Jath::Angle initDir = Jath::Angle(0);
 
-#if defined(FIFTEEN)
 #pragma message("building for the manager")
 vex::message_link link( vex::PORT11, "linkA", vex::linkType::manager );
-#else
-#pragma message("building for the worker")
-vex::message_link link( vex::PORT1, "linkA", vex::linkType::worker );
-#endif
 
 
 //// vex::message_link link( vex::PORT11, "linkA", vex::linkType::manager );

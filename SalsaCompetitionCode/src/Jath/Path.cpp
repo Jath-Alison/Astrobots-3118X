@@ -74,6 +74,9 @@ namespace Jath{
             }
             
         }
+        if(lastIn){
+            return m_points.back();
+        }
         // return Point(Vec2::XandY(0,0),0);
         return getClosestPoint(pos);
     }

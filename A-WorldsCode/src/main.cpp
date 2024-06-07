@@ -401,7 +401,17 @@ void autonomous(void)
 	// leftAwp();
 	// rightAwp();
 	// rightRush();
-	elimsRight();
+	// elimsRight();
+
+	climbUp.set(false);
+	climbDown.set(false);
+	smartDrive.arcade(0,100,0);
+
+	waitUntil(climblimit.pressing());
+
+	climbUp.set(true);
+	climbDown.set(true);
+
 }
 
 // std::string currentAuton = "leftAwp";

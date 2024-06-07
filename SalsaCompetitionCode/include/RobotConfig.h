@@ -22,5 +22,7 @@ extern Jath::SmartDrive smartDrive;
 
 extern Jath::jMotorGroup intake;
 
+extern Jath::jMotor release;
+
 
 extern vex::message_link link;

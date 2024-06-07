@@ -35,18 +35,30 @@ void pre_auton(void)
 }
 
 void auto_isolation(void) {
+
+    smartDrive.m_pos = testPathU.m_points.front().m_pos;
+    smartDrive.m_dir = Jath::Degrees(90);
+
+    followPath(testPathU, Jath::Inches(10));
+    release.set(100);
     smartDrive.turnTo(Jath::Degrees(90));
-    smartDrive.driveTo(Jath::Tiles(1));
-    smartDrive.turnTo(Jath::Degrees(0));
-    smartDrive.driveTo(Jath::Tiles(1));
-    smartDrive.turnTo(Jath::Degrees(-90));
+    
+    smartDrive.arcade(0,75,0);
+    intake.set(-100);
+
+    vex::wait(3, vex::sec);
+    smartDrive.arcade(0,0,0);
+    // smartDrive.turnTo(Jath::Degrees(0));
+    // smartDrive.driveTo(Jath::Tiles(1));
+    // smartDrive.turnTo(Jath::Degrees(-90));
 }
 
 void auto_interaction(void) {
-    smartDrive.driveTo(Jath::Tiles(1));
-    smartDrive.turnTo(Jath::Degrees(180));
-    smartDrive.driveTo(Jath::Tiles(1));
-    smartDrive.turnTo(Jath::Degrees(0));
+    intake.set(-100);
+    // smartDrive.driveTo(Jath::Tiles(1));
+    // smartDrive.turnTo(Jath::Degrees(180));
+    // smartDrive.driveTo(Jath::Tiles(1));
+    // smartDrive.turnTo(Jath::Degrees(0));
 }
 
 bool firstAutoFlag = true;
@@ -137,6 +149,7 @@ void track() {
 
 int main()
 {
+
     // Set up callbacks for autonomous and driver control periods.
     Competition.autonomous(autonomous_main);
     Competition.drivercontrol(usercontrol);

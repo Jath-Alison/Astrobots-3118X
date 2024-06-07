@@ -39,8 +39,8 @@ Jath::jMotorGroup intake = Jath::jMotorGroup(
         )
     ).withSpeedMode(false);
 
-Jath::Vec2 initPos = Jath::Vec2::XandY(0, 0);
-Jath::Angle initDir = Jath::Angle(0);
+vex::motor releaseMotor = vex::motor(vex::PORT2, vex::gearSetting::ratio6_1, false);
+Jath::jMotor release("release", releaseMotor);
 
 #pragma message("building for the manager")
 vex::message_link link( vex::PORT11, "linkA", vex::linkType::manager );

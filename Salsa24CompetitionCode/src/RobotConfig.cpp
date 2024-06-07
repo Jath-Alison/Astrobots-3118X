@@ -50,7 +50,7 @@ vex::motor flapper_b = vex::motor(vex::PORT12, vex::gearSetting::ratio18_1, fals
 Jath::jMotor leftFlapper("leftFlapper", flapper_a);
 Jath::jMotor rightFlapper("rightFlapper", flapper_b);
 
-vex::motor shooter_a = vex::motor(vex::PORT7, vex::gearSetting::ratio6_1, false);
+vex::motor shooter_a = vex::motor(vex::PORT7, vex::gearSetting::ratio6_1, true);
 vex::motor shooter_b = vex::motor(vex::PORT9, vex::gearSetting::ratio6_1, true);
 Jath::jMotorGroup shooter = Jath::jMotorGroup(
         std::string("shooter"), 

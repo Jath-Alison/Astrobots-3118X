@@ -55,7 +55,14 @@ void auto_isolation(void) {
 
 void auto_interaction(void) {
     intake.set(-100);
-    // smartDrive.driveTo(Jath::Tiles(1));
+
+    smartDrive.driveTo(Jath::Tiles(-1));
+
+    smartDrive.arcade(0,0,0);
+    vex::wait(3, vex::sec);
+    smartDrive.arcade(0,0,0);
+
+
     // smartDrive.turnTo(Jath::Degrees(180));
     // smartDrive.driveTo(Jath::Tiles(1));
     // smartDrive.turnTo(Jath::Degrees(0));

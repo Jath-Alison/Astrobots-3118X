@@ -38,7 +38,7 @@ void auto_isolation(void) {
 
     smartDrive.arcade(0,100,0);
     vex::wait(2,vex::sec);
-    smartDrive.arcade(0,15,15);
+    smartDrive.arcade(0,-15,15);
     vex::wait(2,vex::sec);
 
     shooter.set(100);
@@ -62,11 +62,23 @@ void auto_isolation(void) {
 }
 
 void auto_interaction(void) {
-    intake.set(-100);
-    // smartDrive.driveTo(Jath::Tiles(1));
-    // smartDrive.turnTo(Jath::Degrees(180));
-    // smartDrive.driveTo(Jath::Tiles(1));
-    // smartDrive.turnTo(Jath::Degrees(0));
+    smartDrive.arcade(0,-15,15);
+    vex::wait(2,vex::sec);
+
+    shooter.set(100);
+    intake.set(100);
+    while(true){
+
+        leftFlapper.spinTo(15,vex::deg,false);
+        rightFlapper.spinTo(15,vex::deg,false);
+
+        vex::wait(1,vex::sec);
+
+        leftFlapper.spinTo(-30,vex::deg,false);
+        rightFlapper.spinTo(-30,vex::deg,false);
+
+        vex::wait(1,vex::sec);
+    }
 }
 
 bool firstAutoFlag = true;

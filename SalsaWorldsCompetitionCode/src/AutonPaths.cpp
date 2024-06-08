@@ -6,8 +6,8 @@ Jath::Path testPathU = Jath::Path::in(testPathUPoints);
 
 void followPath(Jath::Path p, Jath::Distance lookaheadDist)
 {
-    Jath::Point lookahead = p.getLookahead(smartDrive.m_pos, lookaheadDist);
-    Jath::Point closest = p.getClosestPoint(smartDrive.m_pos);
+    Jath::Point lookahead = p.getLookahead(smartDrive.m_centerPos, lookaheadDist);
+    Jath::Point closest = p.getClosestPoint(smartDrive.m_centerPos);
 
     // std::cout << closest.m_pos.x <<" "<< p.m_points.back().m_pos.x  << ", " << closest.m_pos.y <<" "<< p.m_points.back().m_pos.y << "\n";
     // std::cout << "\t" << (closest.m_pos.x != p.m_points.back().m_pos.x) << ", " << (closest.m_pos.y != p.m_points.back().m_pos.y) << "\n";
@@ -16,7 +16,7 @@ void followPath(Jath::Path p, Jath::Distance lookaheadDist)
     smartDrive.driveTowardPoint(lookahead, true);
     while( closest.m_pos.x != p.m_points.back().m_pos.x || closest.m_pos.y != p.m_points.back().m_pos.y ){
         // smartDrive.driveTowardPoint(lookahead);
-        smartDrive.driveTowardPoint(lookahead.m_pos, closest.m_speed);
+        smartDrive.driveTowardPoint(lookahead.m_pos, (100.f/closest.m_speed) * 50.f);
         // smartDrive.driveTowardPoint(lookahead.m_pos, controller1.Axis2.position());
         // smartDrive.LeftSplitArcade(controller1);
 

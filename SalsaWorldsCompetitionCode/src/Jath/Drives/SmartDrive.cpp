@@ -150,7 +150,7 @@ namespace Jath
     void SmartDrive::turnTo(Angle target)
     {
         Jath::PID pid = Jath::QPID()
-                            .withConstants(1.75/(Degrees(1)), 15, -300)
+                            .withConstants(2/(Degrees(1)), 10, -500)
                             .withIntegralZone(Jath::Degrees(10))
                             .withTimeout(2)
                             .withSettleZone(Jath::Degrees(3))
@@ -202,11 +202,11 @@ namespace Jath
         double driveOut = 0;
 
         Jath::PID pidr = Jath::QPID()
-                            .withConstants(2.5/(Degrees(1)), 20, -650)
+                            .withConstants(2/(Degrees(1)), 10, -500)
                             .withIntegralZone(Jath::Degrees(10))
                             .withTimeout(2)
-                            .withSettleZone(Jath::Degrees(2))
-                            .withSettleTimeout(0.125);
+                            .withSettleZone(Jath::Degrees(3))
+                            .withSettleTimeout(0.25);
         double rotOut = 0;
 
         pidd.reset();
@@ -236,11 +236,11 @@ namespace Jath
     void SmartDrive::turnToPoint(Vec2 target)
     {
         Jath::PID pid = Jath::QPID()
-                            .withConstants(2.5/(Degrees(1)), 20, -650)
+                            .withConstants(2/(Degrees(1)), 10, -500)
                             .withIntegralZone(Jath::Degrees(10))
                             .withTimeout(2)
-                            .withSettleZone(Jath::Degrees(2))
-                            .withSettleTimeout(0.125);
+                            .withSettleZone(Jath::Degrees(3))
+                            .withSettleTimeout(0.25);
 
         Angle targetA = m_pos.angleTo(target);
 
@@ -262,19 +262,19 @@ namespace Jath
     Distance SmartDrive::driveToPoint(Vec2 target)
     {
 
-        Jath::PID pidr = Jath::PID()
-                             .withConstants(1 / Jath::Degrees(1), 3, 5)
-                             .withIntegralZone(Jath::Degrees(20))
-                             .withTimeout(5)
-                             .withSettleZone(Jath::Degrees(3))
-                             .withSettleTimeout(0.25);
+        Jath::PID pidr = Jath::QPID()
+                            .withConstants(2/(Degrees(1)), 10, -500)
+                            .withIntegralZone(Jath::Degrees(10))
+                            .withTimeout(2)
+                            .withSettleZone(Jath::Degrees(3))
+                            .withSettleTimeout(0.25);
 
         Jath::PID pidd = Jath::PID()
                              .withConstants(20 / Jath::Inches(5), 0.0, 2)
                              .withIntegralZone(Jath::Inches(3))
                              .withTimeout(50)
-                             .withSettleZone(Jath::Inches(2))
-                             .withSettleTimeout(0.5);
+                             .withSettleZone(Jath::Inches(3))
+                             .withSettleTimeout(0.25);
         pidr.reset();
         pidd.reset();
         while (!pidd.isCompleted())
@@ -282,22 +282,14 @@ namespace Jath
 
             Angle angle = Angle(m_pos.angleTo(target) - m_dir);
             angle = Angle(shortestTurnPath(angle));
-            Distance dist = m_pos.distTo(target);
+            Distance dist = m_pos.distTo(target) * 0.5;
 
             double rotOut = pidr.calculate(angle);
             double driveOut = pidd.calculate(dist);
 
-            if (std::abs(angle.degrees()) > 15)
-            {
-                arcade(0, 0, Jath::cap<double>(rotOut, 100));
-            }
-            else
-            {
-                arcade(0, Jath::cap<double>(driveOut,100), Jath::cap<double>(rotOut, 100));
-            }
+            arcade(0, Jath::cap<double>(driveOut,50), rotOut);
 
-            // std::cout << "angle :" << (std::abs(dist.inches()) < 5) << "\n"
-            //           << "\tdist: " << dist.inches() << "\n";
+            
             if (std::abs(dist.inches()) < 5)
             {
                 arcade(0, 0, 0);
@@ -372,7 +364,7 @@ namespace Jath
         Distance dist = m_pos.distTo(target);
 
         static Jath::PID pidr = Jath::QPID()
-                            .withConstants(1/(Degrees(1)), 5, -300)
+                            .withConstants(2/(Degrees(1)), 10, -500)
                             .withIntegralZone(Jath::Degrees(10))
                             .withTimeout(2)
                             .withSettleZone(Jath::Degrees(3))

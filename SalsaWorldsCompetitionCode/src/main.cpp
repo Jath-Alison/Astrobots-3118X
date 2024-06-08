@@ -20,6 +20,7 @@
 
 #include "Command.h"
 #include "AutonPaths.h"
+#include "Vision.h"
 
 // A global instance of competition
 vex::competition Competition;
@@ -40,7 +41,6 @@ void auto_isolation(void) {
     smartDrive.m_dir = Jath::Degrees(90);
 
     followPath(testPathU, Jath::Inches(10));
-    release.set(100);
     smartDrive.turnTo(Jath::Degrees(90));
     
     smartDrive.arcade(0,75,0);
@@ -141,8 +141,19 @@ void usercontrol(void)
             smartDrive.driveToHoldAngle(Jath::Inches(-24));
         }else if (controller1.ButtonA.PRESSED)
         {
-            smartDrive.m_pos = testPathU.m_points.front().m_pos;
-            followPath(testPathU, Jath::Inches(10));
+            // smartDrive.m_pos = testPathU.m_points.front().m_pos;
+            // smartDrive.m_dir = Jath::Degrees(90);
+            // followPath(testPathU, Jath::Inches(20));
+            driveTowardBall(true);
+            while(driveTowardBall(false) == false && smartDrive.m_pos.y < Jath::Tiles(2)){
+                vex::wait(20,vex::msec);
+            }
+            smartDrive.driveToPoint(Jath::Vec2::XandY(0,0));
+            smartDrive.turnTo(Jath::Degrees(90));
+            intake.set(-50);
+            vex::wait(1,vex::sec);
+        }else if (controller1.ButtonA.pressing()){
+            // driveTowardBall(false);
         }
 
         vex::wait(20, vex::msec); // Sleep the task for a short amount of time to

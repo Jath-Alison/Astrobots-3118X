@@ -282,22 +282,14 @@ namespace Jath
 
             Angle angle = Angle(m_pos.angleTo(target) - m_dir);
             angle = Angle(shortestTurnPath(angle));
-            Distance dist = m_pos.distTo(target);
+            Distance dist = m_pos.distTo(target) * 0.5;
 
             double rotOut = pidr.calculate(angle);
             double driveOut = pidd.calculate(dist);
 
-            if (std::abs(angle.degrees()) > 15)
-            {
-                arcade(0, 0, Jath::cap<double>(rotOut, 100));
-            }
-            else
-            {
-                arcade(0, Jath::cap<double>(driveOut,100), Jath::cap<double>(rotOut, 100));
-            }
+            arcade(0, Jath::cap<double>(driveOut,50), rotOut);
 
-            // std::cout << "angle :" << (std::abs(dist.inches()) < 5) << "\n"
-            //           << "\tdist: " << dist.inches() << "\n";
+            
             if (std::abs(dist.inches()) < 5)
             {
                 arcade(0, 0, 0);

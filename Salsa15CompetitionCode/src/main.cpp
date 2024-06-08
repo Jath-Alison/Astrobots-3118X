@@ -49,32 +49,36 @@ void auto_isolation(void) {
 
     vex::wait(3, vex::sec);
 
-    while(true){
-        smartDrive.arcade(0, -75,0);
-        intake.set(0);
-        vex::wait(0.25, vex::sec);
+    // while(true){
+    //     smartDrive.arcade(0, -75,0);
+    //     intake.set(0);
+    //     vex::wait(0.25, vex::sec);
 
-        smartDrive.turnTo(Jath::Degrees(-125));
+    //     smartDrive.turnTo(Jath::Degrees(-125));
         
-        driveTowardBall(true);
-        while(driveTowardBall(false) == false && smartDrive.m_pos.y < Jath::Tiles(0)){
-            vex::wait(20,vex::msec);
-        }
+    //     driveTowardBall(true);
+    //     while(driveTowardBall(false) == false && smartDrive.m_pos.y < Jath::Tiles(0)){
+    //         vex::wait(20,vex::msec);
+    //     }
         
-        smartDrive.driveToPoint(Jath::Vec2::XandY(Jath::Tiles(1),Jath::Tiles(-1)));
+    //     smartDrive.driveToPoint(Jath::Vec2::XandY(Jath::Tiles(1),Jath::Tiles(-1)));
 
-        smartDrive.turnTo(Jath::Degrees(100));
-        smartDrive.arcade(0,75,0);
-        intake.set(-100);
+    //     smartDrive.turnTo(Jath::Degrees(100));
+    //     smartDrive.arcade(0,75,0);
+    //     intake.set(-100);
 
-        vex::wait(3, vex::sec);
-        smartDrive.arcade(0, -75,0);
+    //     vex::wait(3, vex::sec);
+    //     smartDrive.arcade(0, -75,0);
         intake.set(0);
-    }
+    // }
 }
 
 void auto_interaction(void) {
     bool flip = false;
+
+    smartDrive.arcade(0,-50,0);
+    vex::wait(0.5, vex::sec);
+
     while(true){
 
 

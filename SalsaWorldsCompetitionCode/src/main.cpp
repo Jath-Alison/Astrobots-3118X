@@ -36,31 +36,88 @@ void pre_auton(void)
 }
 
 void auto_isolation(void) {
+    smartDrive.m_pos = Jath::Vec2::XandY(
+        Jath::Tiles(-2),Jath::Tiles(-2)
+    );
+    smartDrive.m_dir = Jath::Degrees(135);
 
-    smartDrive.m_pos = testPathU.m_points.front().m_pos;
-    smartDrive.m_dir = Jath::Degrees(90);
-
-    followPath(testPathU, Jath::Inches(10));
-    smartDrive.turnTo(Jath::Degrees(90));
-    
-    smartDrive.arcade(0,75,0);
+    // leftWing.open();
     intake.set(-100);
 
-    vex::wait(3, vex::sec);
-    smartDrive.arcade(0,0,0);
-    // smartDrive.turnTo(Jath::Degrees(0));
-    // smartDrive.driveTo(Jath::Tiles(1));
-    // smartDrive.turnTo(Jath::Degrees(-90));
+    // for (size_t i = 0; i < 10; i++)
+    // {
+    //     double dist = smartDrive.m_pos.distTo(Jath::Vec2::XandY(
+    //             Jath::Inches(-46),Jath::Inches(-68)
+    //         ));
+    //     smartDrive.driveTo((dist * .85));
+    //     smartDrive.turnTo(Jath::Degrees(90));
+    //     smartDrive.turnTo(Jath::Degrees(135));
+    //     smartDrive.driveTo((-Jath::Inches(10)));
+    //     smartDrive.turnTo(smartDrive.m_pos.angleTo(
+    //         Jath::Vec2::XandY(
+    //             Jath::Inches(-46),Jath::Inches(-68)
+    //         )
+    //     ));
+    // }
+
+    // smartDrive.arcade(0,0,-35);
+    // vex::wait(10, vex::sec);
+    // smartDrive.driveToPoint(Jath::Vec2::XandY(
+    // Jath::Tiles(-2),Jath::Tiles(-2.15)));
+
+    // smartDrive.arcade(0,0,-35);
+    // vex::wait(10, vex::sec);
+
+    // leftWing.close();
+
+    // smartDrive.turnTo(135);
+
+    // smartDrive.driveToPoint(
+    //     Jath::Vec2::XandY(
+    //         Jath::Inches(-30),Jath::Inches(-60)
+    // ));    
+
+    // smartDrive.turnTo(Jath::Degrees(90));
+
+    // climbUp.set(false);
+	// climbDown.set(false);
+
+	// smartDrive.arcade(0,100,0);
+	// intake.set(-100);
+
+	// waitUntil(climblimit.pressing());
+
+	// climbUp.set(true);
+	// climbDown.set(true);
+    // smartDrive.arcade(0,0,0);
+	// intake.set(0);
+
 }
 
 void auto_interaction(void) {
-    intake.set(-100);
 
-    smartDrive.driveTo(Jath::Tiles(-1));
+    // climbDown.set(true);
 
+    // smartDrive.driveToPoint(
+    //     Jath::Vec2::XandY(
+    //         Jath::Inches(-46),Jath::Inches(-63)
+    // ));
+
+    // smartDrive.turnTo(Jath::Degrees(90));
+
+    climbUp.set(false);
+	climbDown.set(false);
+
+	smartDrive.arcade(0,100,0);
+	intake.set(-100);
+
+	waitUntil(climblimit.pressing());
+
+	climbUp.set(true);
+	climbDown.set(true);
     smartDrive.arcade(0,0,0);
-    vex::wait(3, vex::sec);
-    smartDrive.arcade(0,0,0);
+	intake.set(0);
+
 
 
     // smartDrive.turnTo(Jath::Degrees(180));
@@ -76,7 +133,7 @@ void autonomous_main(void)
     if (firstAutoFlag)
     {
         firstAutoFlag = false;
-        auto_isolation();
+        // auto_isolation();
     }
     else
     {
@@ -107,10 +164,12 @@ void usercontrol(void)
         if (controller1.ButtonR1.pressing())
         {
             intake.set(100);
+            rightWing.open();
         }
         else if (controller1.ButtonR2.pressing())
         {
             intake.set(-100);
+            leftWing.open();
         }
         else
         {
@@ -141,17 +200,18 @@ void usercontrol(void)
             smartDrive.driveToHoldAngle(Jath::Inches(-24));
         }else if (controller1.ButtonA.PRESSED)
         {
-            // smartDrive.m_pos = testPathU.m_points.front().m_pos;
-            // smartDrive.m_dir = Jath::Degrees(90);
-            // followPath(testPathU, Jath::Inches(20));
-            driveTowardBall(true);
-            while(driveTowardBall(false) == false && smartDrive.m_pos.y < Jath::Tiles(2)){
-                vex::wait(20,vex::msec);
-            }
-            smartDrive.driveToPoint(Jath::Vec2::XandY(0,0));
-            smartDrive.turnTo(Jath::Degrees(90));
-            intake.set(-50);
-            vex::wait(1,vex::sec);
+            // // smartDrive.m_pos = testPathU.m_points.front().m_pos;
+            // // smartDrive.m_dir = Jath::Degrees(90);
+            // // followPath(testPathU, Jath::Inches(20));
+            // driveTowardBall(true);
+            // while(driveTowardBall(false) == false && smartDrive.m_pos.y < Jath::Tiles(2)){
+            //     vex::wait(20,vex::msec);
+            // }
+            // smartDrive.driveToPoint(Jath::Vec2::XandY(0,0));
+            // smartDrive.turnTo(Jath::Degrees(90));
+            // intake.set(-50);
+            // vex::wait(1,vex::sec);
+            auto_isolation();
         }else if (controller1.ButtonA.pressing()){
             // driveTowardBall(false);
         }

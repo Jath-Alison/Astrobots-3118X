@@ -36,13 +36,8 @@ void pre_auton(void)
 }
 
 void auto_isolation(void) {
-    smartDrive.m_pos = Jath::Vec2::XandY(
-        Jath::Tiles(-2),Jath::Tiles(-2)
-    );
-    smartDrive.m_dir = Jath::Degrees(135);
-
-    // leftWing.open();
-    intake.set(-100);
+    leftWing.open();
+    // intake.set(-100);
 
     // for (size_t i = 0; i < 10; i++)
     // {
@@ -60,38 +55,59 @@ void auto_isolation(void) {
     //     ));
     // }
 
-    // smartDrive.arcade(0,0,-35);
-    // vex::wait(10, vex::sec);
+    smartDrive.arcade(0,0,-35);
+    vex::wait(10, vex::sec);
     // smartDrive.driveToPoint(Jath::Vec2::XandY(
     // Jath::Tiles(-2),Jath::Tiles(-2.15)));
+    smartDrive.turnTo(Jath::Degrees(-135));
+    smartDrive.driveTo(Jath::Inches(2));
 
-    // smartDrive.arcade(0,0,-35);
-    // vex::wait(10, vex::sec);
+    smartDrive.arcade(0,0,-35);
+    vex::wait(10, vex::sec);
 
-    // leftWing.close();
+    leftWing.close();
 
-    // smartDrive.turnTo(135);
+    smartDrive.turnTo(135);
+
+    smartDrive.arcade(0,30,0);
+    vex::wait(0.35, vex::sec);
+
+    smartDrive.arcade(0,20,-5);
+    vex::wait(.20, vex::sec);
 
     // smartDrive.driveToPoint(
     //     Jath::Vec2::XandY(
     //         Jath::Inches(-30),Jath::Inches(-60)
     // ));    
 
-    // smartDrive.turnTo(Jath::Degrees(90));
+    smartDrive.turnTo(Jath::Degrees(90));
 
-    // climbUp.set(false);
-	// climbDown.set(false);
+    
+	smartDrive.arcade(0,35,0);
+	intake.set(-100);
 
-	// smartDrive.arcade(0,100,0);
-	// intake.set(-100);
+    vex::wait(3,vex::sec);
 
-	// waitUntil(climblimit.pressing());
+    smartDrive.turnTo(Jath::Degrees(45));
+    smartDrive.arcade(0,50,30);
+    vex::wait(1.5,vex::sec);
+	intake.set(0);
+    smartDrive.arcade(0,-50,30);
+    vex::wait(0.5,vex::sec);
 
-	// climbUp.set(true);
-	// climbDown.set(true);
-    // smartDrive.arcade(0,0,0);
-	// intake.set(0);
+    smartDrive.turnTo(Jath::Degrees(45));
+    smartDrive.driveTo(-Jath::Inches(15));
 
+    smartDrive.turnTo(-89);
+
+    climbUp.set(false);
+	climbDown.set(false);
+    smartDrive.arcade(0,100,0);
+
+    waitUntil(climblimit.pressing());
+    climbUp.set(true);
+	climbDown.set(true);
+    smartDrive.arcade(0,0,0);
 }
 
 void auto_interaction(void) {
@@ -130,10 +146,12 @@ bool firstAutoFlag = true;
 void autonomous_main(void)
 {
     waitForInert();
+    auto_isolation();
+    auto_interaction();
     if (firstAutoFlag)
     {
         firstAutoFlag = false;
-        // auto_isolation();
+        auto_isolation();
     }
     else
     {
@@ -227,6 +245,13 @@ void track() {
 
 int main()
 {
+
+    climbDown.set(true);
+
+    smartDrive.m_pos = Jath::Vec2::XandY(
+        Jath::Tiles(-2),Jath::Tiles(-2)
+    );
+    smartDrive.m_dir = Jath::Degrees(135);
 
     // Set up callbacks for autonomous and driver control periods.
     Competition.autonomous(autonomous_main);

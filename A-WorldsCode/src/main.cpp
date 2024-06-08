@@ -396,6 +396,8 @@ int elimsRightCancelThread(){
 	return 1;
 }
 
+bool first = true;
+
 void autonomous(void)
 {
 	// leftAwp();
@@ -403,15 +405,75 @@ void autonomous(void)
 	// rightRush();
 	// elimsRight();
 
+	// climbUp.set(true);
+	climbDown.set(true);
+
+	if(first){
+		first = false;
+		int count = 0;
+		while (count < 10)
+		{
+			count++;
+
+			smartDrive.arcade(0,0,-50);
+			vex::wait(0.35, vex::sec);
+			// smartDrive.arcade(0,25, 0);
+			// vex::wait(0.3, vex::sec);
+			smartDrive.arcade(0,0,50);
+			vex::wait(0.35, vex::sec);
+		}
+		
+		smartDrive.turnTo(Jath::Degrees(-90));
+		smartDrive.arcade(0,50, 0);
+		vex::wait(0.75, vex::sec);
+		smartDrive.turnTo(Jath::Degrees(-135));
+		smartDrive.driveTo(Jath::Tiles(2));
+
+		smartDrive.turnTo(Jath::Degrees(-135));
+
+		smartDrive.driveTo(Jath::Tiles(-2));
+		smartDrive.turnTo(Jath::Degrees(-90));
+		smartDrive.driveTo(Jath::Tiles(-.6));
+		smartDrive.turnTo(Jath::Degrees(0));
+
+		smartDrive.arcade(0,50, 0);
+		vex::wait(0.75, vex::sec);
+
+		return;
+	}else{
+
+	int count = 0;
+	while (count < 10)
+	{
+		count++;
+
+		smartDrive.arcade(0,0,-50);
+		vex::wait(0.35, vex::sec);
+		// smartDrive.arcade(0,25, 0);
+		// vex::wait(0.3, vex::sec);
+		smartDrive.arcade(0,0,50);
+		vex::wait(0.35, vex::sec);
+	}
+
+	smartDrive.turnTo(Jath::Degrees(-90));
+		smartDrive.arcade(0,50, 0);
+		vex::wait(0.75, vex::sec);
+		smartDrive.turnTo(Jath::Degrees(-135));
+
 	climbUp.set(false);
 	climbDown.set(false);
+
 	smartDrive.arcade(0,100,0);
+	intake.set(-100);
 
 	waitUntil(climblimit.pressing());
 
 	climbUp.set(true);
 	climbDown.set(true);
+	smartDrive.arcade(0,0,0);
+	intake.set(0);
 
+	}
 }
 
 // std::string currentAuton = "leftAwp";

@@ -36,17 +36,26 @@ void pre_auton(void)
 
 void auto_isolation(void) {
 
+    leftFlapper.spinTo(-90,vex::deg,false);
+    rightFlapper.spinTo(-90,vex::deg,false);
+
+    vex::wait(1, vex::sec);
+
+    smartDrive.arcade(0,-50,0);
+    vex::wait(0.75,vex::sec);
+
     smartDrive.arcade(0,100,0);
-    vex::wait(2,vex::sec);
-    smartDrive.arcade(0,-15,15);
-    vex::wait(2,vex::sec);
+    vex::wait(3,vex::sec);
+
+    smartDrive.arcade(0,-25,25);
+    vex::wait(1,vex::sec);
 
     shooter.set(100);
     intake.set(100);
     while(true){
 
-        leftFlapper.spinTo(15,vex::deg,false);
-        rightFlapper.spinTo(15,vex::deg,false);
+        leftFlapper.spinTo(30,vex::deg,false);
+        rightFlapper.spinTo(30,vex::deg,false);
 
         vex::wait(1,vex::sec);
 
@@ -69,8 +78,8 @@ void auto_interaction(void) {
     intake.set(100);
     while(true){
 
-        leftFlapper.spinTo(15,vex::deg,false);
-        rightFlapper.spinTo(15,vex::deg,false);
+        leftFlapper.spinTo(30,vex::deg,false);
+        rightFlapper.spinTo(30,vex::deg,false);
 
         vex::wait(1,vex::sec);
 

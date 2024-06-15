@@ -211,7 +211,7 @@ void usercontrol(void)
             // smartDrive.turnTo(Jath::Degrees(90));
             // intake.set(-50);
             // vex::wait(1,vex::sec);
-            auto_isolation();
+            auto_interaction();
         }else if (controller1.ButtonA.pressing()){
             // driveTowardBall(false);
         }

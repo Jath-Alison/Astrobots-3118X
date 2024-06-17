@@ -2,6 +2,7 @@
 
 #include "vex.h"
 #include <memory>
+#include <chrono>
 
 #include "Jath/Drives/TankDrive.h"
 #include "Jath/Vec2.h"
@@ -39,6 +40,10 @@ namespace Jath
         Vec2 m_pos;
         Vec2 m_centerPos;
         Angle m_dir;
+
+        Distance m_ySpeed;
+        Distance m_xSpeed;
+        std::chrono::time_point<std::chrono::high_resolution_clock> m_lastTime;
 
         SmartDrive(TankDrive drive, vex::inertial inert);
 

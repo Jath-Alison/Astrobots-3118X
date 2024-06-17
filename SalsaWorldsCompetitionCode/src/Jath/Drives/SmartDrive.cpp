@@ -79,6 +79,7 @@ namespace Jath
 
             Angle wheelTravel = Angle((m_left.travel() + m_right.travel()) / 2.0);
             Distance travel = Distance(wheelTravel.revolutions() * getWheelTravel());
+            m_ySpeed = travel / (20.f/1000.f);
 
             // Distance travel = Inches(change*((3.25 * 3.1415)/360.f) / (72.f/48.f));
             Vec2 posChange = Vec2::dirAndMag(m_dir, travel);
@@ -86,6 +87,7 @@ namespace Jath
             if (m_tracker.m_rotation != nullptr)
             {
                 Distance hTravel = m_tracker.getTravel();
+                m_ySpeed = travel / (20.f/1000.f);
 
                 Vec2 trackerTravel = Vec2::dirAndMag(m_dir + Degrees(90), hTravel);
 

@@ -105,6 +105,8 @@ namespace art
 
             wait(20, vex::msec);
         }
+
+        arcade(0,0);
         
     }
     void SmartDrive::driveForPID(Length target){

@@ -43,6 +43,51 @@ void pre_auton(void)
 {
 }
 
+void blueSoloAWP(){
+
+	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25),art::Tiles(-1.0));
+	smartDrive.m_dir = art::Degrees(90);
+
+	art::Vec2 travel = art::Vec2(art::Vec2::XandY(art::Tiles(1),art::Tiles(-1)) - smartDrive.m_pos);
+	
+	smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+	smartDrive.driveFor(travel.magnitude() * -.85, -35);
+	clamp.set(true);
+	
+	intake.set(100);
+	vex::wait(2, vex::sec);
+
+	travel = art::Vec2(art::Vec2::XandY(art::Tiles(1),art::Tiles(-2)) - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction());
+	smartDrive.driveFor(travel.magnitude() * .75, 35);
+
+	vex::wait(2, vex::sec);
+
+
+	travel = art::Vec2(art::Vec2::XandY(art::Tiles(2),art::Tiles(0)) - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction());
+	clamp.set(false);
+	smartDrive.driveFor(travel.magnitude() * .85, 50);
+
+	travel = art::Vec2(art::Vec2::XandY(art::Tiles(1),art::Tiles(1)) - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+	smartDrive.driveFor(travel.magnitude() * -.80, -50);
+	clamp.set(true);
+
+	smartDrive.arcade(0,0);
+	
+	// intake.set(100);
+	// vex::wait(2, vex::sec);
+
+	// intake.set(0);
+	// smartDrive.arcade(0,0);
+
+}
+void redSoloAWP(){}
+
 /**
  * @brief Runs the Autonomous Task
  *
@@ -62,6 +107,8 @@ void autonomous(void)
 	{
 		vex::wait(10, vex::msec);
 	}
+
+	blueSoloAWP();
 }
 
 /**

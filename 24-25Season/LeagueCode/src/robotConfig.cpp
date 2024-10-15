@@ -43,7 +43,7 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
       1.0
     )
     .withDriveForPID(art::PID()
-        .withConstants(5 * (M_PI * art::Inches(2.75) * (36.f/48.f)) / art::Inches(1), 0.0, 0.5 * (M_PI * art::Inches(2.75) * (36.f/48.f)) / art::Inches(1) )
+        .withConstants(4 * (M_PI * art::Inches(2.75) * (36.f/48.f)) / art::Inches(1), 0.0, 0.5 * (M_PI * art::Inches(2.75) * (36.f/48.f)) / art::Inches(1) )
         .withIntegralZone(art::Inches(3) / (M_PI * art::Inches(2.75) * (36.f/48.f)))
         .withTimeout(7.5)
         .withSettleZone(art::Inches(1) / (M_PI * art::Inches(2.75) * (36.f/48.f)))

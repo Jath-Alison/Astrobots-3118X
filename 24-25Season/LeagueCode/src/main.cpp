@@ -17,6 +17,16 @@
 #include "robotConfig.h"
 #include "Art\ART.h"
 
+#include "Logger.h"
+
+Logger logFile = Logger("log.csv")
+	.withLogItem("Time", []{return timePassed();})
+	.withLogItem("xPos(in)", []{return art::Length(smartDrive.m_pos.x).inches();})
+	.withLogItem("yPos(in)", []{return art::Length(smartDrive.m_pos.x).inches();})
+	.withLogItem("heading(deg)", [] {return smartDrive.m_dir.degrees(); })
+	.withLogItem("leftOutput(%)", [] {return smartDrive.m_left.get(); })
+	.withLogItem("rightOutput(%)", [] {return smartDrive.m_right.get(); });
+
 
 /**
  * @brief A global instance of competition
@@ -237,14 +247,23 @@ int tracking(){
 
 int displayLoop(){
 	while(1){
-		Brain.Screen.setCursor(1,1);
+		Brain.Screen.setCursor(1,1);Brain.Screen.clearLine();
 		Brain.Screen.print("X: %f", art::Length(smartDrive.m_pos.x).inches());
-		Brain.Screen.setCursor(2,1);
+		Brain.Screen.setCursor(2,1);Brain.Screen.clearLine();
 		Brain.Screen.print("Y: %f", art::Length(smartDrive.m_pos.y).inches());
-		Brain.Screen.setCursor(3,1);
+		Brain.Screen.setCursor(3,1);Brain.Screen.clearLine();
 		Brain.Screen.print("Rot: %f", art::Angle(smartDrive.m_dir).degrees());
+		vex::wait(20, vex::sec);
 	}
 	return 1;
+}
+
+int loggingLoop(){
+	logFile.logHeader();
+	while(1){
+		logFile.log();
+		vex::wait(20, vex::sec);
+	}
 }
 
 /**

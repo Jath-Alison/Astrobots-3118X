@@ -45,18 +45,21 @@ void pre_auton(void)
 
 void blueSoloAWP(){
 
+	//Grab Goal1
 	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25),art::Tiles(-1.0));
 	smartDrive.m_dir = art::Degrees(90);
 
 	art::Vec2 travel = art::Vec2(art::Vec2::XandY(art::Tiles(1),art::Tiles(-1)) - smartDrive.m_pos);
 	
-	smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
 	smartDrive.driveFor(travel.magnitude() * -.85, -35);
 	clamp.set(true);
 	
+	//score preload
 	intake.set(100);
 	vex::wait(2, vex::sec);
 
+	//Grab and score ring2
 	travel = art::Vec2(art::Vec2::XandY(art::Tiles(1),art::Tiles(-2)) - smartDrive.m_pos);
 
 	smartDrive.turnToPID(travel.direction());
@@ -64,29 +67,89 @@ void blueSoloAWP(){
 
 	vex::wait(2, vex::sec);
 
-
+	//drop goal & drive to centerline
 	travel = art::Vec2(art::Vec2::XandY(art::Tiles(2),art::Tiles(0)) - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction());
+	clamp.set(false);
+	smartDrive.driveForPID(travel.magnitude());
+
+	// Grab Goal2
+	travel = art::Vec2(art::Vec2::XandY(art::Tiles(1),art::Tiles(1)) - smartDrive.m_pos);
+
+	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+	// smartDrive.driveFor(travel.magnitude() * -.80, -50);//disabled to hard code instead
+
+	// smartDrive.turnToPID(art::Degrees(-55) + art::Degrees(180));
+	// smartDrive.driveFor(art::Inches(30), -50);
+
+	// clamp.set(true);
+
+	// // Grab ring2 and score
+
+	// smartDrive.turnToPID(art::Degrees(0));
+	// intake.set(100);
+	// smartDrive.driveFor(art::Inches(24), 50);
+
+	// vex::wait(4,vex::sec);
+	
+	intake.set(0);
+	smartDrive.arcade(0,0);
+}
+void redSoloAWP(){
+	double xFlip = -1.0;
+
+	//Grab Goal1
+	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25) * xFlip,art::Tiles(-1.0));
+	smartDrive.m_dir = art::Degrees(90 * xFlip);
+
+	art::Vec2 travel = art::Vec2(art::Vec2::XandY(art::Tiles(1) * xFlip,art::Tiles(-1)) - smartDrive.m_pos);
+	
+	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+	smartDrive.driveFor(travel.magnitude() * -.85, -35);
+	clamp.set(true);
+	
+	//score preload
+	intake.set(100);
+	vex::wait(2, vex::sec);
+
+	//Grab and score ring2
+	travel = art::Vec2(art::Vec2::XandY(art::Tiles(1) * xFlip,art::Tiles(-2)) - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction());
+	smartDrive.driveFor(travel.magnitude() * .75, 35);
+
+	vex::wait(2, vex::sec);
+
+	//drop goal & drive to centerline
+	travel = art::Vec2(art::Vec2::XandY(art::Tiles(2) * xFlip,art::Tiles(0)) - smartDrive.m_pos);
 
 	smartDrive.turnToPID(travel.direction());
 	clamp.set(false);
 	smartDrive.driveFor(travel.magnitude() * .85, 50);
 
-	travel = art::Vec2(art::Vec2::XandY(art::Tiles(1),art::Tiles(1)) - smartDrive.m_pos);
+	// Grab Goal2
+	travel = art::Vec2(art::Vec2::XandY(art::Tiles(1) * xFlip,art::Tiles(1)) - smartDrive.m_pos);
 
-	smartDrive.turnToPID(travel.direction() + art::Degrees(180));
-	smartDrive.driveFor(travel.magnitude() * -.80, -50);
+	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+	// smartDrive.driveFor(travel.magnitude() * -.80, -50);
+
+	smartDrive.turnToPID(art::Degrees(-55 * xFlip) + art::Degrees(180));
+	smartDrive.driveFor(art::Inches(30), -50);
+
 	clamp.set(true);
 
-	smartDrive.arcade(0,0);
+	// Grab ring2 and score
+
+	smartDrive.turnToPID(art::Degrees(0));
+	intake.set(100);
+	smartDrive.driveFor(art::Inches(24), 50);
+
+	vex::wait(4,vex::sec);
 	
-	// intake.set(100);
-	// vex::wait(2, vex::sec);
-
-	// intake.set(0);
-	// smartDrive.arcade(0,0);
-
+	intake.set(0);
+	smartDrive.arcade(0,0);
 }
-void redSoloAWP(){}
 
 /**
  * @brief Runs the Autonomous Task
@@ -163,19 +226,24 @@ void usercontrol(void)
 			smartDrive.driveForPID(art::Inches(-5));
 		}
 
-		Brain.Screen.setCursor(1,1);
-		Brain.Screen.print("X: %f", art::Length(smartDrive.m_pos.x).inches());
-		Brain.Screen.setCursor(2,1);
-		Brain.Screen.print("Y: %f", art::Length(smartDrive.m_pos.y).inches());
-		Brain.Screen.setCursor(3,1);
-		Brain.Screen.print("Rot: %f", art::Angle(smartDrive.m_dir).degrees());
-
 		vex::wait(20, vex::msec);
 	}
 }
 
 int tracking(){
 	smartDrive.track();
+	return 1;
+}
+
+int displayLoop(){
+	while(1){
+		Brain.Screen.setCursor(1,1);
+		Brain.Screen.print("X: %f", art::Length(smartDrive.m_pos.x).inches());
+		Brain.Screen.setCursor(2,1);
+		Brain.Screen.print("Y: %f", art::Length(smartDrive.m_pos.y).inches());
+		Brain.Screen.setCursor(3,1);
+		Brain.Screen.print("Rot: %f", art::Angle(smartDrive.m_dir).degrees());
+	}
 	return 1;
 }
 
@@ -199,6 +267,7 @@ int main()
 	Competition.drivercontrol(usercontrol);
 
 	vex::task trackingThread(tracking);
+	vex::task displayThread(displayLoop);
 
 	// Run the pre-autonomous function.
 	pre_auton();

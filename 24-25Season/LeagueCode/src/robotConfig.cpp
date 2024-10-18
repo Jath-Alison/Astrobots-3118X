@@ -43,10 +43,10 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
       1.0
     )
     .withDriveForPID(art::PID()
-        .withConstants(4 * (M_PI * art::Inches(2.75) * (36.f/48.f)) / art::Inches(1), 0.0, 0.5 * (M_PI * art::Inches(2.75) * (36.f/48.f)) / art::Inches(1) )
-        .withIntegralZone(art::Inches(3) / (M_PI * art::Inches(2.75) * (36.f/48.f)))
+        .withConstants(5, 0.6, -5.0)//Somehow already in 1/(1inch)
+        .withIntegralZone(art::Revolutions(art::Inches(2) / (M_PI * art::Inches(2.75) * (36.f/48.f))))//still need conversion from inches to revolutions
         .withTimeout(7.5)
-        .withSettleZone(art::Inches(1) / (M_PI * art::Inches(2.75) * (36.f/48.f)))
+        .withSettleZone(art::Revolutions(art::Inches(1) / (M_PI * art::Inches(2.75) * (36.f/48.f))))
         .withSettleTimeout(0.5)
     )
     .withTurnForPID(art::PID()

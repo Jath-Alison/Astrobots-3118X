@@ -244,10 +244,10 @@ void usercontrol(void)
 
 		if(Controller1.ButtonRight.PRESSED){
 			// smartDrive.turnToPID(art::Degrees(90));
-			smartDrive.driveForPID(art::Inches(5));
+			smartDrive.driveForPID(art::Tiles(1));
 		}else if (Controller1.ButtonLeft.PRESSED){
 			// smartDrive.turnToPID(art::Degrees(-90));
-			smartDrive.driveForPID(art::Inches(-5));
+			smartDrive.driveForPID(art::Tiles(-2));
 		}
 
 		vex::wait(20, vex::msec);

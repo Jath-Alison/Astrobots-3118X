@@ -131,6 +131,13 @@ namespace art
             Brain.Screen.setCursor(7,1);
             Brain.Screen.print("d: %f", m_driveForPID.getDerivative() );
 
+            Brain.Screen.setCursor(5,15);
+            Brain.Screen.print("current: %f", pos.degrees() );
+            Brain.Screen.setCursor(6,15);
+            Brain.Screen.print("error: %f", Length(Angle(targetRot - pos).revolutions() * getWheelTravel()).inches() );
+            Brain.Screen.setCursor(7,15);
+            Brain.Screen.print("out: %f", out );
+
             wait(20, vex::msec);
         }
         arcade(0, 0, 0);

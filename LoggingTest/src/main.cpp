@@ -7,19 +7,27 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 #include "vex.h"
-#include "Logger.h"
+#include <WPILogger.h>
 
-Logger logger;
+WPILogger wpi;
 
 int main()
 {
+
+    wpi.logHeader();
+    wpi.startBooleanEntry("ButtonLeft", 1);
+    wpi.startBooleanEntry("ButtonRight", 2);
+    wpi.startInt64Entry("Xpos", 3);
+    wpi.startInt64Entry("Ypos", 4);
+    wpi.startDoubleEntry("SomeVal", 5);
+    wpi.startStringEntry("Alerts", 6);
 
     while (1)
     {
 
         Brain.Screen.setCursor(1, 1);
         Brain.Screen.clearLine();
-        Brain.Screen.print("Time = %f", timePassed());
+        Brain.Screen.print("Time = %f", timePassed()/1000000.f);
 
         Brain.Screen.setCursor(2, 1);
         Brain.Screen.clearLine();
@@ -36,17 +44,30 @@ int main()
         Brain.Screen.clearLine();
         Brain.Screen.print("ButtonRightPressing = %d", Controller1.ButtonRight.pressing());
 
-        logger.putData("Xpos", (int)Controller1.Axis4.position());
-        logger.putData("Ypos", (int)Controller1.Axis3.position());
+        // logger.putData("Xpos", (int)Controller1.Axis4.position());
+        // logger.putData("Ypos", (int)Controller1.Axis3.position());
+
+        wpi.logInt64Entry(3, timePassed(),Controller1.Axis4.position());
+        wpi.logInt64Entry(4, timePassed(),Controller1.Axis3.position());
+        wpi.logDoubleEntry(5, timePassed(), Controller1.Axis4.position()/Controller1.Axis3.position());
+        
 
         if (Controller1.ButtonLeft.PRESSED)
         {
-            logger.putData("ButtonEvent", std::string("ButtonLeftPressed"));
+            wpi.logStringEntry(6, timePassed(), "ButtonLeft Pressed");
         }
-        logger.putData("ButtonRightPressing", Controller1.ButtonRight.pressing());
+        if (Controller1.ButtonRight.PRESSED)
+        {
+            wpi.logStringEntry(6, timePassed(), "ButtonRight Pressed");
+        }
+
+        wpi.logBooleanEntry(1, timePassed(),Controller1.ButtonLeft.pressing());
+        wpi.logBooleanEntry(2, timePassed(),Controller1.ButtonRight.pressing());
+        // logger.putData("ButtonRightPressing", Controller1.ButtonRight.pressing());
 
         if(Controller1.ButtonA.PRESSED){
-            logger.writeToFile("X:Log.csv");
+            // logger.writeToFile("X:Log.csv");
+            wpi.writeToFile("log.wpilog");
         }
 
         // Allow other tasks to run

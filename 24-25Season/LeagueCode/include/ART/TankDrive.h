@@ -151,7 +151,7 @@ namespace art
 		 * Essentially, it does nothing notable and should be ignored.
 		 */
 		void update();
-	protected:
+	// protected:
 		/**
 		 * @brief a SimpleMotorGroup for the left side
 		 * 

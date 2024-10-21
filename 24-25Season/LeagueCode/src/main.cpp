@@ -17,16 +17,7 @@
 #include "robotConfig.h"
 #include "Art\ART.h"
 
-#include "Logger.h"
-
-Logger logFile = Logger("log.csv")
-	.withLogItem("Time", []{return timePassed();})
-	.withLogItem("xPos(in)", []{return art::Length(smartDrive.m_pos.x).inches();})
-	.withLogItem("yPos(in)", []{return art::Length(smartDrive.m_pos.x).inches();})
-	.withLogItem("heading(deg)", [] {return smartDrive.m_dir.degrees(); })
-	.withLogItem("leftOutput(%)", [] {return smartDrive.m_left.get(); })
-	.withLogItem("rightOutput(%)", [] {return smartDrive.m_right.get(); });
-
+#include "WPILogger.h"
 
 /**
  * @brief A global instance of competition
@@ -248,8 +239,10 @@ void usercontrol(void)
 
 		if(Controller1.ButtonL1.PRESSED){
 			clamp.set(true);
+			logger.writeToFile("TestLog.wpilog");
 		}else if (Controller1.ButtonL2.PRESSED){
 			clamp.set(false);
+			logger.writeToFile("TestLog.wpilog");
 		}
 
 		if(Controller1.ButtonRight.PRESSED){
@@ -259,6 +252,24 @@ void usercontrol(void)
 			// smartDrive.turnToPID(art::Degrees(-90));
 			smartDrive.driveForPID(art::Tiles(-2));
 		}
+
+		Brain.Screen.setCursor(1,1);Brain.Screen.clearLine();
+		Brain.Screen.print("X: %f", art::Length(smartDrive.m_pos.x).inches());
+		Brain.Screen.setCursor(2,1);Brain.Screen.clearLine();
+		Brain.Screen.print("Y: %f", art::Length(smartDrive.m_pos.y).inches());
+		Brain.Screen.setCursor(3,1);Brain.Screen.clearLine();
+		Brain.Screen.print("Rot: %f", art::Angle(smartDrive.m_dir).degrees());
+		Brain.Screen.setCursor(4,1);Brain.Screen.clearLine();
+		Brain.Screen.print("Items: %u", logger.getDataSize());
+
+		std::vector<double> pos = {
+			art::Length(smartDrive.m_pos.x).meters() * 2,
+			art::Length(smartDrive.m_pos.y).meters() * 2, 
+			-(art::Angle(smartDrive.m_dir) - art::Degrees(90))};
+
+		logger.logBooleanEntry(1,timePassed(), Controller1.ButtonA.pressing());
+		logger.logInt64Entry(2,timePassed(),Controller1.Axis2.position());
+		logger.logDoubleArrayEntry(3, timePassed(), pos);
 
 		vex::wait(20, vex::msec);
 	}
@@ -270,24 +281,27 @@ int tracking(){
 }
 
 int displayLoop(){
-	while(1){
-		Brain.Screen.setCursor(1,1);Brain.Screen.clearLine();
-		Brain.Screen.print("X: %f", art::Length(smartDrive.m_pos.x).inches());
-		Brain.Screen.setCursor(2,1);Brain.Screen.clearLine();
-		Brain.Screen.print("Y: %f", art::Length(smartDrive.m_pos.y).inches());
-		Brain.Screen.setCursor(3,1);Brain.Screen.clearLine();
-		Brain.Screen.print("Rot: %f", art::Angle(smartDrive.m_dir).degrees());
-		vex::wait(20, vex::sec);
-	}
+	// while(1){
+	// 	Brain.Screen.setCursor(1,1);Brain.Screen.clearLine();
+	// 	Brain.Screen.print("X: %f", art::Length(smartDrive.m_pos.x).inches());
+	// 	Brain.Screen.setCursor(2,1);Brain.Screen.clearLine();
+	// 	Brain.Screen.print("Y: %f", art::Length(smartDrive.m_pos.y).inches());
+	// 	Brain.Screen.setCursor(3,1);Brain.Screen.clearLine();
+	// 	Brain.Screen.print("Rot: %f", art::Angle(smartDrive.m_dir).degrees());
+	// 	Brain.Screen.setCursor(4,1);Brain.Screen.clearLine();
+	// 	Brain.Screen.print("Items: %u", logger.getDataSize());
+	// 	vex::wait(20, vex::sec);
+	// }
 	return 1;
 }
 
 int loggingLoop(){
-	logFile.logHeader();
-	while(1){
-		logFile.log();
-		vex::wait(20, vex::sec);
-	}
+	// for(;;){
+		
+
+	// 	vex::wait(10,vex::msec);
+	// }
+	return 1;
 }
 
 /**
@@ -305,6 +319,13 @@ int loggingLoop(){
  */
 int main()
 {
+
+	logger.logHeader();
+
+	logger.startBooleanEntry("Inputs/ButtonA", 1);
+	logger.startInt64Entry("Inputs/Axis2", 2);
+	logger.startDoubleArrayEntry("Pos", 3);
+
 	// Set up callbacks for autonomous and driver control periods.
 	Competition.autonomous(autonomous);
 	Competition.drivercontrol(usercontrol);

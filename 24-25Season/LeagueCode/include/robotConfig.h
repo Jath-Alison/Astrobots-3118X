@@ -18,6 +18,9 @@
 
 #include "vex.h"
 #include "Art\ART.h"
+#include "WPILogger.h"
+
+extern WPILogger logger;
 
 extern vex::motor leftMotorA;
 extern vex::motor leftMotorB;

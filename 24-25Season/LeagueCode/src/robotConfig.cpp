@@ -20,27 +20,28 @@
 vex::brain Brain;
 vex::controller Controller1;
 
+WPILogger logger;
 
-vex::motor leftMotorA (vex::PORT16, vex::gearSetting::ratio6_1, true);
-vex::motor leftMotorB (vex::PORT17, vex::gearSetting::ratio6_1, true);
-vex::motor leftMotorC (vex::PORT18, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorA(vex::PORT11, vex::gearSetting::ratio6_1, !false);
+vex::motor leftMotorB(vex::PORT12, vex::gearSetting::ratio6_1, !false);
+vex::motor leftMotorC(vex::PORT13, vex::gearSetting::ratio6_1, !false);
 vex::motor_group leftMotors (leftMotorA, leftMotorB, leftMotorC);
 
-vex::motor rightMotorA (vex::PORT8, vex::gearSetting::ratio6_1, false);
-vex::motor rightMotorB (vex::PORT9, vex::gearSetting::ratio6_1, false);
-vex::motor rightMotorC (vex::PORT10, vex::gearSetting::ratio6_1, false);
+vex::motor rightMotorA(vex::PORT18, vex::gearSetting::ratio6_1, !true);
+vex::motor rightMotorB(vex::PORT19, vex::gearSetting::ratio6_1, !true);
+vex::motor rightMotorC(vex::PORT20, vex::gearSetting::ratio6_1, !true);
 vex::motor_group rightMotors (rightMotorA, rightMotorB, rightMotorC);
 
-vex::inertial inert (vex::PORT1);
+vex::inertial inert (vex::PORT5);
 
 art::TankDrive drive = art::TankDrive(leftMotors, rightMotors);
 art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
-    .withGearRatio(36.f/48.f)
+    .withGearRatio(1.0)
     .withWheelSize(art::Inches(2.75))
     .withHorizontalTracker(
-      vex::rotation(vex::PORT2, false),
-      art::Inches(2),
-      1.0
+        vex::rotation(vex::PORT2, true),
+        art::Inches(2.75),
+        3.f/5.f
     )
     .withDriveForPID(art::PID()
         .withConstants(5, 0.6, -5.0)//Somehow already in 1/(1inch)

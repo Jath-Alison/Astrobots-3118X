@@ -55,27 +55,13 @@ public:
 	void clearFile(std::string filename);
 	void writeToFile(std::string filename);
 	size_t getDataSize();
+	size_t getCapacity();
 private:
 	void startEntry(uint32_t id, uint32_t payloadSize, uint64_t time);
 	void startDataEntry(std::string name, int id, std::string typeName);
 
 	void addString(std::string s);
-	int getmin(int64_t i)
-	{
-		if (i == (int8_t)(i & 0xFF))
-			return 1;
-		if (i == (int16_t)(i & 0xFFFF))
-			return 2;
-		if (i == (int32_t)(i & 0xFFFFFF))
-			return 3;
-		if (i == (int32_t)(i & 0xFFFFFFFF))
-			return 4;
-		if (i == (int32_t)(i & 0xFFFFFFFFFFFF))
-			return 6;
-		if (i == (int64_t)(i & 0xFFFFFFFFFFFFFFFF))
-			return 8;
-		return 8;
-	}
+	int getmin(int64_t i);
 
 
 	std::vector<unsigned char> m_data;

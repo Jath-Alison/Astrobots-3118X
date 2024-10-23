@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "vex.h"
 
 void WPILogger::logHeader()
 {
@@ -348,20 +349,34 @@ void WPILogger::logStringArrayEntry(uint32_t id, uint64_t time, std::vector<std:
 {
 }
 
-void WPILogger::writeToFile(std::string filename)
+void WPILogger::clearFile(std::string filename)
 {
 	std::ofstream out(filename.c_str());
-	for (size_t i = 0; i < m_data.size(); i++)
-	{
-		out << m_data[i];
-	}
 	out.close();
+}
 
+void WPILogger::writeToFile(std::string filename)
+{
+	if(Brain.SDcard.isInserted()){
+		std::ofstream out(filename.c_str(), std::ios_base::app);
+		for (size_t i = 0; i < m_data.size(); i++)
+		{
+			out << m_data[i];
+		}
+		out.close();
+	}
+
+	m_data.clear();
 }
 
 size_t WPILogger::getDataSize()
 {
     return m_data.size();
+}
+
+size_t WPILogger::getCapacity()
+{
+    return m_data.capacity();
 }
 
 void WPILogger::addString(std::string s)
@@ -371,6 +386,23 @@ void WPILogger::addString(std::string s)
 		m_data.push_back(s[i]);
 	}
 }
+
+int WPILogger::getmin(int64_t i)
+{
+		if (i == (int8_t)(i & 0xFF))
+			return 1;
+		if (i == (int16_t)(i & 0xFFFF))
+			return 2;
+		if (i == (int32_t)(i & 0xFFFFFF))
+			return 3;
+		if (i == (int32_t)(i & 0xFFFFFFFF))
+			return 4;
+		if (i == (int32_t)(i & 0xFFFFFFFFFFFF))
+			return 6;
+		if (i == (int64_t)(i & 0xFFFFFFFFFFFFFFFF))
+			return 8;
+		return 8;
+	}
 
 auto start_time = std::chrono::high_resolution_clock::now();
 auto current_time = std::chrono::high_resolution_clock::now();

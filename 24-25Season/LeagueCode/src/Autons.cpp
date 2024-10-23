@@ -18,11 +18,25 @@ void displayLoopFunction()
         Brain.Screen.setCursor(4, 1);
         Brain.Screen.clearLine();
         Brain.Screen.print("Items: %u", logger.getDataSize());
+        Brain.Screen.setCursor(5, 1);
+        Brain.Screen.clearLine();
+        Brain.Screen.print("Capacity: %u", logger.getCapacity());
         vex::this_thread::sleep_for(20);
     }
 }
 
+auto last_logged = std::chrono::high_resolution_clock::now();
+auto current_time_logLoop = std::chrono::high_resolution_clock::now();
+
+uint64_t logTimePassed()
+{
+	current_time_logLoop = std::chrono::high_resolution_clock::now();
+	return uint64_t(std::chrono::duration_cast<std::chrono::microseconds>(current_time_logLoop - last_logged).count());
+}
+
 void logLoopFunction(){
+
+    logger.clearFile("TestLog.wpilog");
 
     /**
      * Controller stuff:
@@ -59,6 +73,10 @@ void logLoopFunction(){
 
     logger.startDoubleArrayEntry("Autons/TargetPos", 10);
     logger.startDoubleArrayEntry("Autons/TargetPos(Blue)", 11);
+
+    logger.startInt64Entry("Logger/Size", 12);
+    logger.startInt64Entry("Logger/Capacity", 13);
+    logger.startFloatEntry("Logger/TimeSinceLastLog", 14);
 
     std::vector<vex::motor*> allMotors = {
          &leftMotorA, &leftMotorB, &leftMotorC,
@@ -138,7 +156,12 @@ void logLoopFunction(){
         logger.logDoubleArrayEntry(9, timePassed(), targetPose);
         logger.logDoubleArrayEntry(10, timePassed(), targetPoseBlue);
 
-        if(Controller1.ButtonL1.pressing() && Controller1.ButtonR1.pressing()){
+        logger.logInt64Entry(12, timePassed(), logger.getDataSize());
+        logger.logInt64Entry(13, timePassed(), logger.getCapacity());
+        logger.logFloatEntry(14, timePassed(), logTimePassed());
+
+        if(logger.getDataSize() > 10000){
+            last_logged = std::chrono::high_resolution_clock::now();
             logger.writeToFile("TestLog.wpilog");
         }
         

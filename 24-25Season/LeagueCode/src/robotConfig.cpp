@@ -67,5 +67,5 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
     ;
 
 art::SimpleMotor intake  = art::SimpleMotor(vex::motor(vex::PORT14, vex::gearSetting::ratio6_1, false))
-    .withSpeedMode(true);
+    .withSpeedMode(false);
 vex::digital_out clamp(Brain.ThreeWirePort.G);

@@ -30,13 +30,13 @@ void WPILogger::startEntry(uint32_t id, uint32_t payloadSize, uint64_t time)
 	headerBitmap = headerBitmap | ((minIdSize - 1) & 0xFF);
 
 	int minPayloadSize = getmin(payloadSize);
-	headerBitmap = headerBitmap | (((minPayloadSize-1) << 2) & 0xFF);
+	headerBitmap = headerBitmap | (((minPayloadSize - 1) << 2) & 0xFF);
 
 	int minTimeSize = getmin(time);
-	headerBitmap = headerBitmap | (((minTimeSize-1) << 4) & 0xFF);
+	headerBitmap = headerBitmap | (((minTimeSize - 1) << 4) & 0xFF);
 
 	m_data.push_back(headerBitmap);
-	m_data.push_back(id);//Entry id 0
+	m_data.push_back(id); // Entry id 0
 
 	for (size_t i = 0; i < minPayloadSize; i++)
 	{
@@ -55,42 +55,42 @@ void WPILogger::startDataEntry(std::string name, int id, std::string typeName)
 {
 	std::vector<char> tempVector;
 
-	tempVector.push_back(0x00);//record type start
+	tempVector.push_back(0x00); // record type start
 
-	for (size_t i = 0; i < 4; i++)//default 4 bytes to store new ID
+	for (size_t i = 0; i < 4; i++) // default 4 bytes to store new ID
 	{
 		unsigned char temp = id >> (8 * i);
 		tempVector.push_back(temp);
 	}
 
-	for (size_t i = 0; i < 4; i++)//default 4 bytes to store name length
+	for (size_t i = 0; i < 4; i++) // default 4 bytes to store name length
 	{
 		unsigned char temp = name.size() >> (8 * i);
 		tempVector.push_back(temp);
 	}
-	for (size_t i = 0; i < name.size(); i++)//Add name itself
+	for (size_t i = 0; i < name.size(); i++) // Add name itself
 	{
 		tempVector.push_back(name[i]);
 	}
 
 	std::string type = typeName;
-	for (size_t i = 0; i < 4; i++)//default 4 bytes to store type name length
+	for (size_t i = 0; i < 4; i++) // default 4 bytes to store type name length
 	{
 		unsigned char temp = type.size() >> (8 * i);
 		tempVector.push_back(temp);
 	}
-	for (size_t i = 0; i < type.size(); i++)//Add type name itself
+	for (size_t i = 0; i < type.size(); i++) // Add type name itself
 	{
 		tempVector.push_back(type[i]);
 	}
 
 	std::string meta = "";
-	for (size_t i = 0; i < 4; i++)//default 4 bytes to store meta length
+	for (size_t i = 0; i < 4; i++) // default 4 bytes to store meta length
 	{
 		unsigned char temp = meta.size() >> (8 * i);
 		tempVector.push_back(temp);
 	}
-	for (size_t i = 0; i < meta.size(); i++)//Add meta itself
+	for (size_t i = 0; i < meta.size(); i++) // Add meta itself
 	{
 		tempVector.push_back(meta[i]);
 	}
@@ -154,7 +154,7 @@ void WPILogger::logBooleanEntry(uint32_t id, uint64_t time, bool val)
 {
 	std::vector<char> tempVector;
 
-	int minValSize = sizeof(val);//int64 uses 8 bytes
+	int minValSize = sizeof(val); // int64 uses 8 bytes
 
 	for (size_t i = 0; i < minValSize; i++)
 	{
@@ -169,12 +169,11 @@ void WPILogger::logBooleanEntry(uint32_t id, uint64_t time, bool val)
 	}
 }
 
-
 void WPILogger::logInt64Entry(uint32_t id, uint64_t time, int64_t val)
 {
 	std::vector<char> tempVector;
 
-	int minValSize = sizeof(val);//int64 uses 8 bytes
+	int minValSize = sizeof(val); // int64 uses 8 bytes
 
 	for (size_t i = 0; i < minValSize; i++)
 	{
@@ -187,21 +186,21 @@ void WPILogger::logInt64Entry(uint32_t id, uint64_t time, int64_t val)
 	{
 		m_data.push_back(tempVector[i]);
 	}
-	
 }
 
 void WPILogger::logFloatEntry(uint32_t id, uint64_t time, float val)
 {
 	std::vector<char> tempVector;
 
-	int minValSize = sizeof(val);//int64 uses 8 bytes
+	int minValSize = sizeof(val); // int64 uses 8 bytes
 
 	char dest[100];
 
 	memcpy(dest, &val, minValSize);
 
-	for (size_t i = 0; i < minValSize; i++){
-	
+	for (size_t i = 0; i < minValSize; i++)
+	{
+
 		tempVector.push_back(dest[i]);
 	}
 
@@ -216,13 +215,14 @@ void WPILogger::logDoubleEntry(uint32_t id, uint64_t time, double val)
 {
 	std::vector<char> tempVector;
 
-	int minValSize = sizeof(val);//int64 uses 8 bytes
+	int minValSize = sizeof(val); // int64 uses 8 bytes
 
 	char dest[100];
 
 	memcpy(dest, &val, minValSize);
 
-	for (size_t i = 0; i < minValSize; i++) {
+	for (size_t i = 0; i < minValSize; i++)
+	{
 
 		tempVector.push_back(dest[i]);
 	}
@@ -238,7 +238,7 @@ void WPILogger::logStringEntry(uint32_t id, uint64_t time, std::string val)
 {
 	std::vector<char> tempVector;
 
-	int minValSize = sizeof(val);//int64 uses 8 bytes
+	int minValSize = sizeof(val); // int64 uses 8 bytes
 
 	for (size_t i = 0; i < val.size(); i++)
 	{
@@ -254,7 +254,7 @@ void WPILogger::logStringEntry(uint32_t id, uint64_t time, std::string val)
 
 void WPILogger::logBooleanArrayEntry(uint32_t id, uint64_t time, std::vector<bool> val)
 {
-	std::vector<char> tempVector;	
+	std::vector<char> tempVector;
 
 	for (size_t i = 0; i < val.size(); i++)
 	{
@@ -296,7 +296,7 @@ void WPILogger::logFloatArrayEntry(uint32_t id, uint64_t time, std::vector<float
 {
 	std::vector<char> tempVector;
 
-	int minValSize = sizeof(float);//int64 uses 8 bytes
+	int minValSize = sizeof(float); // int64 uses 8 bytes
 
 	for (size_t i = 0; i < val.size(); i++)
 	{
@@ -304,7 +304,8 @@ void WPILogger::logFloatArrayEntry(uint32_t id, uint64_t time, std::vector<float
 
 		memcpy(dest, &val[i], minValSize);
 
-		for (size_t j = 0; j < minValSize; j++) {
+		for (size_t j = 0; j < minValSize; j++)
+		{
 
 			tempVector.push_back(dest[j]);
 		}
@@ -323,7 +324,8 @@ void WPILogger::logDoubleArrayEntry(uint32_t id, uint64_t time, std::vector<doub
 
 	int bitCount = sizeof(double);
 
-	for (size_t i = 0; i < val.size(); i++){
+	for (size_t i = 0; i < val.size(); i++)
+	{
 
 		char dest[100];
 		bool extra = false;
@@ -333,7 +335,8 @@ void WPILogger::logDoubleArrayEntry(uint32_t id, uint64_t time, std::vector<doub
 		size_t j = 0;
 		double floored = floor(val[i]);
 
-		for (; j < bitCount; j++) {
+		for (; j < bitCount; j++)
+		{
 			tempVector.push_back(dest[j]);
 		}
 	}
@@ -351,13 +354,28 @@ void WPILogger::logStringArrayEntry(uint32_t id, uint64_t time, std::vector<std:
 
 void WPILogger::clearFile(std::string filename)
 {
-	std::ofstream out(filename.c_str());
-	out.close();
+	if (Brain.SDcard.isInserted())
+	{
+		std::ofstream out(filename.c_str());
+		out.close();
+	}
+}
+
+void WPILogger::createFile(std::string filename)
+{
+	if(Brain.SDcard.isInserted()){
+		while (Brain.SDcard.exists(""))
+		{
+			/* code */
+		}
+		
+	}
 }
 
 void WPILogger::writeToFile(std::string filename)
 {
-	if(Brain.SDcard.isInserted()){
+	if (Brain.SDcard.isInserted())
+	{
 		std::ofstream out(filename.c_str(), std::ios_base::app);
 		for (size_t i = 0; i < m_data.size(); i++)
 		{
@@ -371,12 +389,12 @@ void WPILogger::writeToFile(std::string filename)
 
 size_t WPILogger::getDataSize()
 {
-    return m_data.size();
+	return m_data.size();
 }
 
 size_t WPILogger::getCapacity()
 {
-    return m_data.capacity();
+	return m_data.capacity();
 }
 
 void WPILogger::addString(std::string s)
@@ -389,20 +407,20 @@ void WPILogger::addString(std::string s)
 
 int WPILogger::getmin(int64_t i)
 {
-		if (i == (int8_t)(i & 0xFF))
-			return 1;
-		if (i == (int16_t)(i & 0xFFFF))
-			return 2;
-		if (i == (int32_t)(i & 0xFFFFFF))
-			return 3;
-		if (i == (int32_t)(i & 0xFFFFFFFF))
-			return 4;
-		if (i == (int32_t)(i & 0xFFFFFFFFFFFF))
-			return 6;
-		if (i == (int64_t)(i & 0xFFFFFFFFFFFFFFFF))
-			return 8;
+	if (i == (int8_t)(i & 0xFF))
+		return 1;
+	if (i == (int16_t)(i & 0xFFFF))
+		return 2;
+	if (i == (int32_t)(i & 0xFFFFFF))
+		return 3;
+	if (i == (int32_t)(i & 0xFFFFFFFF))
+		return 4;
+	if (i == (int32_t)(i & 0xFFFFFFFFFFFF))
+		return 6;
+	if (i == (int64_t)(i & 0xFFFFFFFFFFFFFFFF))
 		return 8;
-	}
+	return 8;
+}
 
 auto start_time = std::chrono::high_resolution_clock::now();
 auto current_time = std::chrono::high_resolution_clock::now();

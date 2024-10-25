@@ -42,10 +42,12 @@ vex::competition Competition;
  */
 void pre_auton(void)
 {
+	logger.logStringEntry(100, timePassed(), "Pre Auton Started");
 }
 
 void blueSoloAWP()
 {
+	logger.logStringEntry(100, timePassed(), "BlueSoloAWP Started");
 
 	// Grab Goal1
 	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25), art::Tiles(-1.0));
@@ -56,6 +58,7 @@ void blueSoloAWP()
 	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
 	smartDrive.driveFor(travel.magnitude() * -.825, -35);
 	clamp.set(true);
+	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
 	smartDrive.arcade(0, 0);
 
 	// score preload
@@ -77,6 +80,7 @@ void blueSoloAWP()
 	smartDrive.turnToPID(travel.direction());
 	smartDrive.driveForPID(travel.magnitude() * 0.85);
 	clamp.set(false);
+	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
 	smartDrive.arcade(0, 0);
 
 	// Grab Goal2
@@ -108,6 +112,7 @@ void blueSoloAWP()
 }
 void redSoloAWP()
 {
+	logger.logStringEntry(100, timePassed(), "RedSoloAWP Started");
 	double xFlip = -1.0;
 
 	// Grab Goal1
@@ -119,6 +124,7 @@ void redSoloAWP()
 	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
 	smartDrive.driveFor(travel.magnitude() * -.825, -35);
 	clamp.set(true);
+	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
 	smartDrive.arcade(0, 0);
 
 	// score preload
@@ -153,6 +159,7 @@ void redSoloAWP()
 	smartDrive.arcade(0, 0);
 
 	clamp.set(true);
+	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
 
 	// // Grab ring2 and score
 
@@ -185,18 +192,24 @@ void redSoloAWP()
  */
 void autonomous(void)
 {
+
+	logger.logStringEntry(100, timePassed(), "Auton Routine Started");
+
 	while (smartDrive.m_inert.isCalibrating())
 	{
 		vex::wait(10, vex::msec);
 	}
+	logger.logStringEntry(100, timePassed(), "Auton - Inertial Finished Calibrating");
 
-	Brain.Screen.setCursor(10, 1);
-	Brain.Screen.print("BlueAuto");
-	blueSoloAWP();
+	// Brain.Screen.setCursor(10, 1);
+	// Brain.Screen.print("BlueAuto");
+	// blueSoloAWP();
 
-	// Brain.Screen.setCursor(10,1);
-	// Brain.Screen.print("RedAuto");
-	// redSoloAWP();
+	Brain.Screen.setCursor(10,1);
+	Brain.Screen.print("RedAuto");
+	redSoloAWP();
+
+	logger.logStringEntry(100, timePassed(), "Auton Routine Finished");
 }
 
 /**
@@ -223,6 +236,7 @@ void usercontrol(void)
 	{
 		vex::wait(10, vex::msec);
 	}
+	logger.logStringEntry(100, timePassed(), "Driver Control - Inertial Finished Calibrating");
 
 	while (1)
 	{
@@ -294,6 +308,8 @@ int main()
 
 	logger.logHeader();
 
+	logger.startStringEntry("Console", 100);
+
 	// Set up callbacks for autonomous and driver control periods.
 	Competition.autonomous(autonomous);
 	Competition.drivercontrol(usercontrol);
@@ -306,6 +322,8 @@ int main()
 	trackingThread = vex::thread(tracking);
 	displayThread = vex::thread(displayLoopFunction);
 	loggingThread = vex::thread(logLoopFunction);
+
+	logger.logStringEntry(100, timePassed(), "Robot Fully Configured");
 
 	// Prevent main from exiting with an infinite loop.
 	while (true)

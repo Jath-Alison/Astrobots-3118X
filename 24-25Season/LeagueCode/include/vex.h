@@ -23,6 +23,7 @@
 
 extern vex::brain Brain;			/**< a brain object representing the V5 Brain */
 extern vex::controller Controller1; /**< a controller object representing the Primary Controller */
+extern vex::competition Competition;
 
 #define waitUntil(condition) \
 	do                       \

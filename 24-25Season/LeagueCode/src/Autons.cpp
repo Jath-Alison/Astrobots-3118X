@@ -1,9 +1,10 @@
 #include "Autons.h"
 
-// art::Vec2 travel;
+art::Vec2 travel;
 
 void displayLoopFunction()
 {
+    logger.logStringEntry(100, timePassed(), "Display Loop Task Started");
     while (1)
     {
         Brain.Screen.setCursor(1, 1);
@@ -20,7 +21,7 @@ void displayLoopFunction()
         Brain.Screen.print("Items: %u", logger.getDataSize());
         Brain.Screen.setCursor(5, 1);
         Brain.Screen.clearLine();
-        Brain.Screen.print("Capacity: %u", logger.getCapacity());
+        Brain.Screen.print("Intake Temp: %u \370 ", int(intake.temperature(vex::celsius)));
         vex::this_thread::sleep_for(20);
     }
 }
@@ -35,6 +36,8 @@ uint64_t logTimePassed()
 }
 
 void logLoopFunction(){
+
+    logger.logStringEntry(100, timePassed(), "Log Loop Task Started");
 
     logger.clearFile("TestLog.wpilog");
 
@@ -71,12 +74,17 @@ void logLoopFunction(){
     logger.startDoubleArrayEntry("Robot/Pose", 7);
     logger.startDoubleArrayEntry("Robot/Pose(Blue)", 8);
 
-    logger.startDoubleArrayEntry("Autons/TargetPos", 10);
+    logger.startDoubleArrayEntry("Autons/TargetPos", 9);
     logger.startDoubleArrayEntry("Autons/TargetPos(Blue)", 11);
 
-    logger.startInt64Entry("Logger/Size", 12);
-    logger.startInt64Entry("Logger/Capacity", 13);
-    logger.startFloatEntry("Logger/TimeSinceLastLog", 14);
+    logger.startInt64Entry("Logger/Size", 11);
+    logger.startInt64Entry("Logger/Capacity", 12);
+    logger.startFloatEntry("Logger/TimeSinceLastLog", 13);
+
+    logger.startFloatEntry("Base/cmd_Drive", 14);
+    logger.startFloatEntry("Base/cmd_Rot", 15);
+
+    logger.startFloatEntry("Intake/cmd", 16);
 
     std::vector<vex::motor*> allMotors = {
          &leftMotorA, &leftMotorB, &leftMotorC,
@@ -139,7 +147,7 @@ void logLoopFunction(){
 
         std::vector<double> targetPoseBlue = {
             1.8 + art::Length(travel.x).meters(),
-            1.8 + art::Length(travel.y).meters(),
+            1.8 + art::Length(travel.y).meters()
         };
 
         logger.logFloatArrayEntry(1, timePassed(), axesStates);
@@ -156,9 +164,24 @@ void logLoopFunction(){
         logger.logDoubleArrayEntry(9, timePassed(), targetPose);
         logger.logDoubleArrayEntry(10, timePassed(), targetPoseBlue);
 
-        logger.logInt64Entry(12, timePassed(), logger.getDataSize());
-        logger.logInt64Entry(13, timePassed(), logger.getCapacity());
-        logger.logFloatEntry(14, timePassed(), logTimePassed());
+        logger.logInt64Entry(11, timePassed(), logger.getDataSize());
+        logger.logInt64Entry(12, timePassed(), logger.getCapacity());
+        logger.logFloatEntry(13, timePassed(), logTimePassed());
+
+        logger.logFloatEntry(14, timePassed(), smartDrive.m_cmdY);
+        logger.logFloatEntry(15, timePassed(), smartDrive.m_cmdRot);
+
+        logger.logFloatEntry(16, timePassed(), intake.get());
+
+        if(Competition.AUTONOMOUS){
+            logger.logStringEntry(100, timePassed(), "Auton Started");
+        }
+        if(Competition.DRIVER_CONTROL){
+            logger.logStringEntry(100, timePassed(), "Driver Control Started");
+        }
+        if(Competition.DISABLED){
+            logger.logStringEntry(100, timePassed(), "Robot Disabled");
+        }
 
         if(logger.getDataSize() > 10000){
             last_logged = std::chrono::high_resolution_clock::now();

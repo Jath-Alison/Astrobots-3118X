@@ -53,6 +53,7 @@ public:
 	void logStringArrayEntry(uint32_t id, uint64_t time, std::vector<std::string> val);
 
 	void clearFile(std::string filename);
+	void createFile(std::string filename);
 	void writeToFile(std::string filename);
 	size_t getDataSize();
 	size_t getCapacity();

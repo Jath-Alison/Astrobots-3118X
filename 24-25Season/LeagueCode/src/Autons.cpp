@@ -1,7 +1,5 @@
 #include "Autons.h"
 
-art::Vec2 travel;
-
 void displayLoopFunction()
 {
     logger.logStringEntry(100, timePassed(), "Display Loop Task Started");
@@ -75,7 +73,7 @@ void logLoopFunction(){
     logger.startDoubleArrayEntry("Robot/Pose(Blue)", 8);
 
     logger.startDoubleArrayEntry("Autons/TargetPos", 9);
-    logger.startDoubleArrayEntry("Autons/TargetPos(Blue)", 11);
+    logger.startDoubleArrayEntry("Autons/TargetPos(Blue)", 10);
 
     logger.startInt64Entry("Logger/Size", 11);
     logger.startInt64Entry("Logger/Capacity", 12);
@@ -141,13 +139,13 @@ void logLoopFunction(){
         };
 
         std::vector<double> targetPose = {
-            art::Length(travel.x).meters(),
-            art::Length(travel.y).meters()
+            art::Length(target.x).meters(),
+            art::Length(target.y).meters()
         };
 
         std::vector<double> targetPoseBlue = {
-            1.8 + art::Length(travel.x).meters(),
-            1.8 + art::Length(travel.y).meters()
+            1.8 + art::Length(target.x).meters(),
+            1.8 + art::Length(target.y).meters()
         };
 
         logger.logFloatArrayEntry(1, timePassed(), axesStates);

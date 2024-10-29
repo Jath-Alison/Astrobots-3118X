@@ -3,6 +3,9 @@
 void displayLoopFunction()
 {
     logger.logStringEntry(100, timePassed(), "Display Loop Task Started");
+
+    Brain.Screen.setPenWidth(3);
+
     while (1)
     {
         Brain.Screen.setCursor(1, 1);
@@ -20,6 +23,37 @@ void displayLoopFunction()
         Brain.Screen.setCursor(5, 1);
         Brain.Screen.clearLine();
         Brain.Screen.print("Intake Temp: %u \370 ", int(intake.temperature(vex::celsius)));
+
+        Brain.Screen.setFillColor(vex::color::blue);
+        Brain.Screen.drawRectangle(480 - 5 - 80, 5, 80, 120 - 10);
+        Brain.Screen.setFillColor(vex::color::red);
+        Brain.Screen.drawRectangle(480 - 5 - 80, 125, 80, 120 - 10);
+        Brain.Screen.setFillColor(vex::color::black);
+
+        Brain.Screen.setCursor(8, 1);
+        Brain.Screen.clearLine();
+        if (isBlue)
+        {
+            Brain.Screen.print("Blue Auton Selected");
+        }
+        else
+        {
+            Brain.Screen.print("Red Auton Selected");
+        }
+
+        if (Brain.Screen.PRESSED)
+        {
+            if (Brain.Screen.xPosition() > 480 - 5 - 80 && Brain.Screen.xPosition() < 480 - 5 - 80 + 120 - 10 && Brain.Screen.yPosition() > 5 && Brain.Screen.yPosition() < 5 + 120 - 10)
+            {
+                isBlue = true;
+            }
+            if (Brain.Screen.xPosition() > 480 - 5 - 80 && Brain.Screen.xPosition() < 480 - 5 - 80 + 120 - 10 && Brain.Screen.yPosition() > 120 + 5 && Brain.Screen.yPosition() < 5 + 120 - 10 + 120)
+            {
+                isBlue = false;
+            }
+            // isBlue = !isBlue;
+        }
+
         vex::this_thread::sleep_for(20);
     }
 }
@@ -29,11 +63,12 @@ auto current_time_logLoop = std::chrono::high_resolution_clock::now();
 
 uint64_t logTimePassed()
 {
-	current_time_logLoop = std::chrono::high_resolution_clock::now();
-	return uint64_t(std::chrono::duration_cast<std::chrono::microseconds>(current_time_logLoop - last_logged).count());
+    current_time_logLoop = std::chrono::high_resolution_clock::now();
+    return uint64_t(std::chrono::duration_cast<std::chrono::microseconds>(current_time_logLoop - last_logged).count());
 }
 
-void logLoopFunction(){
+void logLoopFunction()
+{
 
     logger.logStringEntry(100, timePassed(), "Log Loop Task Started");
 
@@ -43,22 +78,22 @@ void logLoopFunction(){
      * Controller stuff:
      * - 4 Axis - int 64
      * - 12 Buttons - bool
-     * 
+     *
      * Motor stats:
      * - Motor Command
      * - Motor Speed
      * - Motor Current
      * - Motor Temperature
-     * 
+     *
      * Robot stats:
      * - Pose
      *  - X,Y, Rot
-     * 
+     *
      * Later:
      * - PID Stats
      * - Sensor inputs
      * - Other robot states
-     * 
+     *
      */
 
     logger.startFloatArrayEntry("Controller/Axes", 1);
@@ -84,11 +119,10 @@ void logLoopFunction(){
 
     logger.startFloatEntry("Intake/cmd", 16);
 
-    std::vector<vex::motor*> allMotors = {
-         &leftMotorA, &leftMotorB, &leftMotorC,
-         &rightMotorA, &rightMotorB, &rightMotorC,
-         &intake
-        };
+    std::vector<vex::motor *> allMotors = {
+        &leftMotorA, &leftMotorB, &leftMotorC,
+        &rightMotorA, &rightMotorB, &rightMotorC,
+        &intake};
 
     while (1)
     {
@@ -96,8 +130,7 @@ void logLoopFunction(){
             float(Controller1.Axis1.position()),
             float(Controller1.Axis2.position()),
             float(Controller1.Axis3.position()),
-            float(Controller1.Axis4.position())
-            };
+            float(Controller1.Axis4.position())};
         std::vector<bool> buttonStates = {
             Controller1.ButtonUp.pressing(),
             Controller1.ButtonRight.pressing(),
@@ -129,24 +162,22 @@ void logLoopFunction(){
         std::vector<double> robotPose = {
             art::Length(smartDrive.m_pos.x).meters(),
             art::Length(smartDrive.m_pos.y).meters(),
-            art::Angle(smartDrive.m_dir).degrees()//converted to FRC scheme
+            art::Angle(smartDrive.m_dir).degrees() // converted to FRC scheme
         };
 
         std::vector<double> robotPoseBlue = {
             1.8 + art::Length(smartDrive.m_pos.x).meters(),
             1.8 + art::Length(smartDrive.m_pos.y).meters(),
-            -(smartDrive.m_dir - art::Degrees(90))//converted to FRC scheme
+            -(smartDrive.m_dir - art::Degrees(90)) // converted to FRC scheme
         };
 
         std::vector<double> targetPose = {
             art::Length(target.x).meters(),
-            art::Length(target.y).meters()
-        };
+            art::Length(target.y).meters()};
 
         std::vector<double> targetPoseBlue = {
             1.8 + art::Length(target.x).meters(),
-            1.8 + art::Length(target.y).meters()
-        };
+            1.8 + art::Length(target.y).meters()};
 
         logger.logFloatArrayEntry(1, timePassed(), axesStates);
         logger.logBooleanArrayEntry(2, timePassed(), buttonStates);
@@ -171,21 +202,25 @@ void logLoopFunction(){
 
         logger.logFloatEntry(16, timePassed(), intake.get());
 
-        if(Competition.AUTONOMOUS){
+        if (Competition.AUTONOMOUS)
+        {
             logger.logStringEntry(100, timePassed(), "Auton Started");
         }
-        if(Competition.DRIVER_CONTROL){
+        if (Competition.DRIVER_CONTROL)
+        {
             logger.logStringEntry(100, timePassed(), "Driver Control Started");
         }
-        if(Competition.DISABLED){
+        if (Competition.DISABLED)
+        {
             logger.logStringEntry(100, timePassed(), "Robot Disabled");
         }
 
-        if(logger.getDataSize() > 10000){
+        if (logger.getDataSize() > 10000)
+        {
             last_logged = std::chrono::high_resolution_clock::now();
             logger.writeToFile("TestLog.wpilog");
         }
-        
+
         vex::this_thread::sleep_for(20);
     }
 }

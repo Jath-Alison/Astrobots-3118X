@@ -57,7 +57,7 @@ void blueSoloAWP()
 	smartDrive.m_dir = art::Degrees(90);
 
 	target = art::Vec2::XandY(art::Tiles(1), art::Tiles(-1));
-	travel = art::Vec2( target - smartDrive.m_pos);
+	travel = art::Vec2(target - smartDrive.m_pos);
 
 	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
 	smartDrive.driveFor(travel.magnitude() * -.825, -35);
@@ -213,13 +213,18 @@ void autonomous(void)
 	}
 	logger.logStringEntry(100, timePassed(), "Auton - Inertial Finished Calibrating");
 
-	// Brain.Screen.setCursor(10, 1);
-	// Brain.Screen.print("BlueAuto");
-	// blueSoloAWP();
-
-	Brain.Screen.setCursor(10,1);
-	Brain.Screen.print("RedAuto");
-	redSoloAWP();
+	if (isBlue)
+	{
+		Brain.Screen.setCursor(10, 1);
+		Brain.Screen.print("BlueAuto");
+		blueSoloAWP();
+	}
+	else
+	{
+		Brain.Screen.setCursor(10, 1);
+		Brain.Screen.print("RedAuto");
+		redSoloAWP();
+	}
 
 	logger.logStringEntry(100, timePassed(), "Auton Routine Finished");
 }

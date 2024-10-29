@@ -11,6 +11,9 @@ uint64_t timePassed();
 class WPILogger
 {
 public:
+	WPILogger();
+	WPILogger(std::string fileBaseName);
+
 	void logHeader();
 
 	/**
@@ -52,11 +55,14 @@ public:
 	void logDoubleArrayEntry(uint32_t id, uint64_t time, std::vector<double> val);
 	void logStringArrayEntry(uint32_t id, uint64_t time, std::vector<std::string> val);
 
+	void clearFile();
 	void clearFile(std::string filename);
-	void createFile(std::string filename);
+	void writeToFile();
 	void writeToFile(std::string filename);
+
 	size_t getDataSize();
 	size_t getCapacity();
+	std::string m_fileName;
 private:
 	void startEntry(uint32_t id, uint32_t payloadSize, uint64_t time);
 	void startDataEntry(std::string name, int id, std::string typeName);

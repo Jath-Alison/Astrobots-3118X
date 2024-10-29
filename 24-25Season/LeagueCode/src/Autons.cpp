@@ -16,7 +16,7 @@ void displayLoopFunction()
         Brain.Screen.print("Rot: %f", art::Angle(smartDrive.m_dir).degrees());
         Brain.Screen.setCursor(4, 1);
         Brain.Screen.clearLine();
-        Brain.Screen.print("Items: %u", logger.getDataSize());
+        Brain.Screen.print(logger.m_fileName.c_str());
         Brain.Screen.setCursor(5, 1);
         Brain.Screen.clearLine();
         Brain.Screen.print("Intake Temp: %u \370 ", int(intake.temperature(vex::celsius)));
@@ -37,7 +37,7 @@ void logLoopFunction(){
 
     logger.logStringEntry(100, timePassed(), "Log Loop Task Started");
 
-    logger.clearFile("TestLog.wpilog");
+    logger.clearFile(logger.m_fileName);
 
     /**
      * Controller stuff:
@@ -183,7 +183,7 @@ void logLoopFunction(){
 
         if(logger.getDataSize() > 10000){
             last_logged = std::chrono::high_resolution_clock::now();
-            logger.writeToFile("TestLog.wpilog");
+            logger.writeToFile(logger.m_fileName);
         }
         
         vex::this_thread::sleep_for(20);

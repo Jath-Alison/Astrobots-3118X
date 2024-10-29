@@ -3,7 +3,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sstream>
 #include "vex.h"
+
+WPILogger::WPILogger()
+{}
+
+WPILogger::WPILogger(std::string fileBaseName)
+{
+	std::stringstream name;
+	int id = 0;
+
+	if (Brain.SDcard.isInserted())
+	{
+
+		name << fileBaseName << id;
+		
+		while (Brain.SDcard.exists(name.str().c_str()))
+		{
+			name.clear();
+			id++;
+			name << fileBaseName << id;
+		}
+
+		name << ".wpilog";
+
+		m_fileName = name.str();
+	}else{
+		m_fileName = fileBaseName + ".wpilog";
+	}
+}
 
 void WPILogger::logHeader()
 {
@@ -352,6 +381,15 @@ void WPILogger::logStringArrayEntry(uint32_t id, uint64_t time, std::vector<std:
 {
 }
 
+void WPILogger::clearFile()
+{
+	if (Brain.SDcard.isInserted())
+	{
+		std::ofstream out(m_fileName.c_str());
+		out.close();
+	}
+}
+
 void WPILogger::clearFile(std::string filename)
 {
 	if (Brain.SDcard.isInserted())
@@ -361,15 +399,19 @@ void WPILogger::clearFile(std::string filename)
 	}
 }
 
-void WPILogger::createFile(std::string filename)
+void WPILogger::writeToFile()
 {
-	if(Brain.SDcard.isInserted()){
-		while (Brain.SDcard.exists(""))
+	if (Brain.SDcard.isInserted())
+	{
+		std::ofstream out(m_fileName.c_str(), std::ios_base::app);
+		for (size_t i = 0; i < m_data.size(); i++)
 		{
-			/* code */
+			out << m_data[i];
 		}
-		
+		out.close();
 	}
+
+	m_data.clear();
 }
 
 void WPILogger::writeToFile(std::string filename)

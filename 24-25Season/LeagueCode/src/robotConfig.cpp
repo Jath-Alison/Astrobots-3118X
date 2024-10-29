@@ -20,7 +20,7 @@
 vex::brain Brain;
 vex::controller Controller1;
 
-WPILogger logger;
+WPILogger logger("testNumLog");
 
 vex::motor leftMotorA (vex::PORT16, vex::gearSetting::ratio6_1, true);
 vex::motor leftMotorB (vex::PORT17, vex::gearSetting::ratio6_1, true);

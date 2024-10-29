@@ -39,3 +39,5 @@ extern art::SmartDrive smartDrive;
 
 extern art::SimpleMotor intake;
 extern vex::digital_out clamp;
+
+extern bool isBlue;

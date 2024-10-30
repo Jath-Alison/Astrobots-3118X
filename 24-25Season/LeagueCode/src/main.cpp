@@ -60,7 +60,7 @@ void blueSoloAWP()
 	travel = art::Vec2(target - smartDrive.m_pos);
 
 	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
-	smartDrive.driveFor(travel.magnitude() * -.825, -35);
+	smartDrive.driveFor(travel.magnitude() * -.78, -50);
 	clamp.set(true);
 	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
 	smartDrive.arcade(0, 0);
@@ -77,7 +77,15 @@ void blueSoloAWP()
 	smartDrive.driveFor(travel.magnitude() * .75, 35);
 	smartDrive.arcade(0, 0);
 
-	vex::wait(1, vex::sec);
+	vex::wait(0.25, vex::sec);
+	clamp.set(false);
+	intake.set(-30);
+	smartDrive.arcade(-20,0);
+	vex::wait(0.5, vex::sec);
+	clamp.set(true);
+	intake.set(100);
+	smartDrive.arcade(0,0);
+	vex::wait(0.25, vex::sec);
 
 	// drop goal & drive to centerline
 	target = art::Vec2::XandY(art::Tiles(2), art::Tiles(0));
@@ -96,8 +104,8 @@ void blueSoloAWP()
 	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
 	// smartDrive.driveFor(travel.magnitude() * -.80, -50);//disabled to hard code instead
 
-	smartDrive.turnToPID(art::Degrees(-45) + art::Degrees(180));
-	smartDrive.driveFor(art::Inches(-30), -50);
+	smartDrive.turnToPID(art::Degrees(-40) + art::Degrees(180));
+	smartDrive.driveFor(art::Inches(-35), -50);
 	smartDrive.arcade(0, 0);
 
 	clamp.set(true);
@@ -106,10 +114,11 @@ void blueSoloAWP()
 
 	smartDrive.turnToPID(art::Degrees(0));
 	intake.set(100);
-	smartDrive.driveFor(art::Inches(15), 50);
+	smartDrive.driveFor(art::Inches(12), 75);
+	smartDrive.turnToPID(art::Degrees(-15));
 	smartDrive.arcade(0, 0);
 	vex::wait(0.35, vex::sec);
-	smartDrive.driveFor(art::Inches(-24), -40);
+	smartDrive.driveFor(art::Inches(-30), -100);
 	smartDrive.arcade(0, 0);
 
 	vex::wait(4, vex::sec);
@@ -130,7 +139,7 @@ void redSoloAWP()
 	travel = art::Vec2(target - smartDrive.m_pos);
 
 	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
-	smartDrive.driveFor(travel.magnitude() * -.825, -35);
+	smartDrive.driveFor(travel.magnitude() * -.78, -50);
 	clamp.set(true);
 	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
 	smartDrive.arcade(0, 0);
@@ -147,7 +156,15 @@ void redSoloAWP()
 	smartDrive.driveFor(travel.magnitude() * .5, 35);
 	smartDrive.arcade(0, 0);
 
-	vex::wait(1, vex::sec);
+	vex::wait(0.25, vex::sec);
+	clamp.set(false);
+	intake.set(-30);
+	smartDrive.arcade(-20,0);
+	vex::wait(0.5, vex::sec);
+	clamp.set(true);
+	intake.set(100);
+	smartDrive.arcade(0,0);
+	vex::wait(0.25, vex::sec);
 
 	// drop goal & drive to centerline
 	target = art::Vec2::XandY(art::Tiles(2) * -1, art::Tiles(0));
@@ -165,9 +182,9 @@ void redSoloAWP()
 	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
 	// smartDrive.driveFor(travel.magnitude() * -.80, -50);//disabled to hard code instead
 
-	smartDrive.turnToPID(art::Degrees(-45 * -1) + art::Degrees(180));
+	smartDrive.turnToPID(art::Degrees(-40 * -1) + art::Degrees(180));
 	intake.set(-100);
-	smartDrive.driveFor(art::Inches(-30), -50);
+	smartDrive.driveFor(art::Inches(-35), -50);
 	smartDrive.arcade(0, 0);
 
 	clamp.set(true);
@@ -177,10 +194,11 @@ void redSoloAWP()
 
 	smartDrive.turnToPID(art::Degrees(0));
 	intake.set(100);
-	smartDrive.driveFor(art::Inches(15), 50);
+	smartDrive.driveFor(art::Inches(12), 75);
+	smartDrive.turnToPID(art::Degrees(-15));
 	smartDrive.arcade(0, 0);
 	vex::wait(0.45, vex::sec);
-	smartDrive.driveFor(art::Inches(-24), -40);
+	smartDrive.driveFor(art::Inches(-30), -100);
 	smartDrive.arcade(0, 0);
 
 	vex::wait(4, vex::sec);

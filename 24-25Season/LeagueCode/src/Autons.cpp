@@ -173,11 +173,15 @@ void logLoopFunction()
 
         std::vector<double> targetPose = {
             art::Length(target.x).meters(),
-            art::Length(target.y).meters()};
+            art::Length(target.y).meters(),
+            art::Angle(smartDrive.m_dir).degrees() // converted to FRC scheme
+            };
 
         std::vector<double> targetPoseBlue = {
             1.8 + art::Length(target.x).meters(),
-            1.8 + art::Length(target.y).meters()};
+            1.8 + art::Length(target.y).meters(),
+            -(smartDrive.m_dir - art::Degrees(90)) // converted to FRC scheme
+            };
 
         logger.logFloatArrayEntry(1, timePassed(), axesStates);
         logger.logBooleanArrayEntry(2, timePassed(), buttonStates);

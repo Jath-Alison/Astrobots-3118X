@@ -80,11 +80,11 @@ void blueSoloAWP()
 	vex::wait(0.25, vex::sec);
 	clamp.set(false);
 	intake.set(-30);
-	smartDrive.arcade(-20,0);
+	smartDrive.arcade(-20, 0);
 	vex::wait(0.5, vex::sec);
 	clamp.set(true);
 	intake.set(100);
-	smartDrive.arcade(0,0);
+	smartDrive.arcade(0, 0);
 	vex::wait(0.25, vex::sec);
 
 	// drop goal & drive to centerline
@@ -159,11 +159,11 @@ void redSoloAWP()
 	vex::wait(0.25, vex::sec);
 	clamp.set(false);
 	intake.set(-30);
-	smartDrive.arcade(-20,0);
+	smartDrive.arcade(-20, 0);
 	vex::wait(0.5, vex::sec);
 	clamp.set(true);
 	intake.set(100);
-	smartDrive.arcade(0,0);
+	smartDrive.arcade(0, 0);
 	vex::wait(0.25, vex::sec);
 
 	// drop goal & drive to centerline
@@ -300,16 +300,33 @@ void usercontrol(void)
 			clamp.set(false);
 		}
 
-		if (Controller1.ButtonRight.PRESSED)
-		{
-			// smartDrive.turnToPID(art::Degrees(90));
-			smartDrive.driveForPID(art::Tiles(1));
-		}
-		else if (Controller1.ButtonLeft.PRESSED)
-		{
-			// smartDrive.turnToPID(art::Degrees(-90));
-			smartDrive.driveForPID(art::Tiles(-2));
-		}
+		// if (Controller1.ButtonDown.pressing())
+		// {
+		// 	smartDrive.arcade(-100, 0);
+		// }
+		// else if (Controller1.ButtonUp.pressing())
+		// {
+		// 	smartDrive.arcade(100, 0);
+		// }
+		// else
+		// {
+		// 	smartDrive.LeftSplitArcadeCurved(Controller1);
+		// }
+
+		// if (Controller1.ButtonA.PRESSED)
+		// {
+		// 	pto.set(true);
+		// 	pto_active.set(true);
+		// }
+		// else if (Controller1.ButtonB.PRESSED)
+		// {
+		// 	pto.set(false);
+		// 	pto_active.set(true);
+		// }
+		// else if (Controller1.ButtonX.PRESSED)
+		// {
+		// 	pto_active.set(false);
+		// }
 
 		vex::wait(20, vex::msec);
 	}

@@ -22,14 +22,14 @@ vex::controller Controller1;
 
 WPILogger logger;
 
-vex::motor leftMotorA (vex::PORT16, vex::gearSetting::ratio6_1, true);
-vex::motor leftMotorB (vex::PORT17, vex::gearSetting::ratio6_1, true);
-vex::motor leftMotorC (vex::PORT18, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorA (vex::PORT8, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorB (vex::PORT9, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorC (vex::PORT10, vex::gearSetting::ratio6_1, true);
 vex::motor_group leftMotors (leftMotorA, leftMotorB, leftMotorC);
 
-vex::motor rightMotorA (vex::PORT8, vex::gearSetting::ratio6_1, false);
-vex::motor rightMotorB (vex::PORT9, vex::gearSetting::ratio6_1, false);
-vex::motor rightMotorC (vex::PORT10, vex::gearSetting::ratio6_1, false);
+vex::motor rightMotorA (vex::PORT11, vex::gearSetting::ratio6_1, false);
+vex::motor rightMotorB (vex::PORT12, vex::gearSetting::ratio6_1, false);
+vex::motor rightMotorC (vex::PORT13, vex::gearSetting::ratio6_1, false);
 vex::motor_group rightMotors (rightMotorA, rightMotorB, rightMotorC);
 
 vex::inertial inert (vex::PORT1);
@@ -66,8 +66,14 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
     )
     ;
 
-art::SimpleMotor intake  = art::SimpleMotor(vex::motor(vex::PORT14, vex::gearSetting::ratio6_1, false))
+art::SimpleMotor intake  = art::SimpleMotor(vex::motor(vex::PORT7, vex::gearSetting::ratio6_1, false))
     .withSpeedMode(false);
 vex::digital_out clamp(Brain.ThreeWirePort.G);
+
+art::SimpleMotor winch = art::SimpleMotor(vex::motor(vex::PORT6, vex::gearSetting::ratio6_1, false))
+    .withSpeedMode(false);
+// vex::digital_out pto(Brain.ThreeWirePort.A);
+// vex::digital_out pto_active(Brain.ThreeWirePort.B);
+
 
 bool isBlue = true;

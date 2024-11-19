@@ -214,7 +214,7 @@ void blueElims()
 	int xFlip = 1.0;
 
 	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25 * xFlip), art::Tiles(-1.0));
-	smartDrive.m_dir = art::Degrees(-90);
+	smartDrive.m_dir = art::Degrees(90 * xFlip);
 
 	target = art::Vec2::XandY(art::Tiles(1 * xFlip), art::Tiles(-1));
 	travel = art::Vec2(target - smartDrive.m_pos);
@@ -282,7 +282,7 @@ void redElims()
 	int xFlip = -1.0;
 
 	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25 * xFlip), art::Tiles(-1.0));
-	smartDrive.m_dir = art::Degrees(-90);
+	smartDrive.m_dir = art::Degrees(90 * xFlip);
 
 	target = art::Vec2::XandY(art::Tiles(1 * xFlip), art::Tiles(-1));
 	travel = art::Vec2(target - smartDrive.m_pos);

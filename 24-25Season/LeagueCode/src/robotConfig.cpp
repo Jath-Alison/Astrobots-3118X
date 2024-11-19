@@ -32,7 +32,7 @@ vex::motor rightMotorB (vex::PORT12, vex::gearSetting::ratio6_1, false);
 vex::motor rightMotorC (vex::PORT13, vex::gearSetting::ratio6_1, false);
 vex::motor_group rightMotors (rightMotorA, rightMotorB, rightMotorC);
 
-vex::inertial inert (vex::PORT1);
+vex::inertial inert (vex::PORT1, vex::turnType::right);
 
 art::TankDrive drive = art::TankDrive(leftMotors, rightMotors);
 art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
@@ -58,11 +58,11 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
         .withSettleTimeout(0.25)
     )
     .withTurnToPID(art::PID()
-        .withConstants(2/(art::Degrees(1)), 10, -500)
+        .withConstants(2/(art::Degrees(1)), 0, -300)// / by 2, 10, -500
         .withIntegralZone(art::Degrees(10))
-        .withTimeout(2)
+        .withTimeout(3)
         .withSettleZone(art::Degrees(3))
-        .withSettleTimeout(0.25)
+        .withSettleTimeout(0.75)
     )
     ;
 

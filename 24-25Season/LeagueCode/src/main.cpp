@@ -207,6 +207,140 @@ void redSoloAWP()
 	smartDrive.arcade(0, 0);
 }
 
+void blueElims(){
+	logger.logStringEntry(100, timePassed(), "BlueElims Started");
+
+	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25), art::Tiles(-1.0));
+	smartDrive.m_dir = art::Degrees(90);
+
+	target = art::Vec2::XandY(art::Tiles(1), art::Tiles(-1));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.driveFor(travel.magnitude() * -.78, -50);
+	clamp.set(true);
+	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+	smartDrive.arcade(0, 0);
+
+	intake.set(100);
+	vex::wait(0.75, vex::sec);
+
+	// Grab and score ring2
+	target = art::Vec2::XandY(art::Tiles(1.75), art::Tiles(-2.5));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction());
+	smartDrive.driveFor(travel.magnitude() * .75, 35);
+	smartDrive.arcade(0, 0);
+
+	vex::wait(0.25, vex::sec);
+
+	smartDrive.turnToPID(art::Degrees(-45));
+	clamp.set(false);
+	logger.logStringEntry(100, timePassed(), "Goal Dropped");
+
+	vex::wait(0.25, vex::sec);
+
+	target = art::Vec2::XandY(art::Tiles(0.5), art::Tiles(-2.5));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+	smartDrive.driveFor(travel.magnitude() * -.75, -50);
+	smartDrive.arcade(0, 0);
+
+	vex::wait(0.15, vex::sec);
+
+	target = art::Vec2::XandY(art::Tiles(0), art::Tiles(-2));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+	smartDrive.driveFor(travel.magnitude() * -.75, -35);
+	clamp.set(true);
+	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+	smartDrive.arcade(0, 0);
+
+	vex::wait(0.25, vex::sec);
+
+	target = art::Vec2::XandY(art::Tiles(1), art::Tiles(-2));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction());
+
+	intake.set(100);
+	smartDrive.driveFor(travel.magnitude() * .75, 45);
+	smartDrive.arcade(0, 0);
+
+	vex::wait(5,vex::sec);
+	intake.set(0);
+
+}
+void redElims(){
+	logger.logStringEntry(100, timePassed(), "RedElims Started");
+
+	int xFlip = -1.0;
+
+	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25 * xFlip), art::Tiles(-1.0));
+	smartDrive.m_dir = art::Degrees(90);
+
+	target = art::Vec2::XandY(art::Tiles(1 * xFlip), art::Tiles(-1));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.driveFor(travel.magnitude() * -.78, -50);
+	clamp.set(true);
+	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+	smartDrive.arcade(0, 0);
+
+	intake.set(100);
+	vex::wait(0.75, vex::sec);
+
+	// Grab and score ring2
+	target = art::Vec2::XandY(art::Tiles(1.75 * xFlip), art::Tiles(-2.5));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction());
+	smartDrive.driveFor(travel.magnitude() * .75, 35);
+	smartDrive.arcade(0, 0);
+
+	vex::wait(0.25, vex::sec);
+
+	smartDrive.turnToPID(art::Degrees(-45));
+	clamp.set(false);
+	logger.logStringEntry(100, timePassed(), "Goal Dropped");
+
+	vex::wait(0.25, vex::sec);
+
+	target = art::Vec2::XandY(art::Tiles(0.5 * xFlip), art::Tiles(-2.5));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+	smartDrive.driveFor(travel.magnitude() * -.75, -50);
+	smartDrive.arcade(0, 0);
+
+	vex::wait(0.15, vex::sec);
+
+	target = art::Vec2::XandY(art::Tiles(0 * xFlip), art::Tiles(-2));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+	smartDrive.driveFor(travel.magnitude() * -.75, -35);
+	clamp.set(true);
+	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+	smartDrive.arcade(0, 0);
+
+	vex::wait(0.25, vex::sec);
+
+	target = art::Vec2::XandY(art::Tiles(1 * xFlip), art::Tiles(-2));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction());
+
+	intake.set(100);
+	smartDrive.driveFor(travel.magnitude() * .75, 45);
+	smartDrive.arcade(0, 0);
+
+	vex::wait(5,vex::sec);
+	intake.set(0);
+}
+
 /**
  * @brief Runs the Autonomous Task
  *
@@ -235,13 +369,13 @@ void autonomous(void)
 	{
 		Brain.Screen.setCursor(10, 1);
 		Brain.Screen.print("BlueAuto");
-		blueSoloAWP();
+		blueElims();
 	}
 	else
 	{
 		Brain.Screen.setCursor(10, 1);
 		Brain.Screen.print("RedAuto");
-		redSoloAWP();
+		redElims();
 	}
 
 	logger.logStringEntry(100, timePassed(), "Auton Routine Finished");

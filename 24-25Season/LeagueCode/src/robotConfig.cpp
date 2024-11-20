@@ -22,17 +22,17 @@ vex::controller Controller1;
 
 WPILogger logger;
 
-vex::motor leftMotorA (vex::PORT16, vex::gearSetting::ratio6_1, true);
-vex::motor leftMotorB (vex::PORT17, vex::gearSetting::ratio6_1, true);
-vex::motor leftMotorC (vex::PORT18, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorA (vex::PORT8, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorB (vex::PORT9, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorC (vex::PORT10, vex::gearSetting::ratio6_1, true);
 vex::motor_group leftMotors (leftMotorA, leftMotorB, leftMotorC);
 
-vex::motor rightMotorA (vex::PORT8, vex::gearSetting::ratio6_1, false);
-vex::motor rightMotorB (vex::PORT9, vex::gearSetting::ratio6_1, false);
-vex::motor rightMotorC (vex::PORT10, vex::gearSetting::ratio6_1, false);
+vex::motor rightMotorA (vex::PORT11, vex::gearSetting::ratio6_1, false);
+vex::motor rightMotorB (vex::PORT12, vex::gearSetting::ratio6_1, false);
+vex::motor rightMotorC (vex::PORT13, vex::gearSetting::ratio6_1, false);
 vex::motor_group rightMotors (rightMotorA, rightMotorB, rightMotorC);
 
-vex::inertial inert (vex::PORT1);
+vex::inertial inert (vex::PORT1, vex::turnType::right);
 
 art::TankDrive drive = art::TankDrive(leftMotors, rightMotors);
 art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
@@ -58,16 +58,22 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
         .withSettleTimeout(0.25)
     )
     .withTurnToPID(art::PID()
-        .withConstants(2/(art::Degrees(1)), 10, -500)
+        .withConstants(2/(art::Degrees(1)), 0, -300)// / by 2, 10, -500
         .withIntegralZone(art::Degrees(10))
-        .withTimeout(2)
+        .withTimeout(3)
         .withSettleZone(art::Degrees(3))
-        .withSettleTimeout(0.25)
+        .withSettleTimeout(0.75)
     )
     ;
 
-art::SimpleMotor intake  = art::SimpleMotor(vex::motor(vex::PORT14, vex::gearSetting::ratio6_1, false))
+art::SimpleMotor intake  = art::SimpleMotor(vex::motor(vex::PORT7, vex::gearSetting::ratio6_1, false))
     .withSpeedMode(false);
 vex::digital_out clamp(Brain.ThreeWirePort.G);
+
+art::SimpleMotor winch = art::SimpleMotor(vex::motor(vex::PORT6, vex::gearSetting::ratio6_1, false))
+    .withSpeedMode(false);
+// vex::digital_out pto(Brain.ThreeWirePort.A);
+// vex::digital_out pto_active(Brain.ThreeWirePort.B);
+
 
 bool isBlue = true;

@@ -58,9 +58,9 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
         .withSettleTimeout(0.25)
     )
     .withTurnToPID(art::PID()
-        .withConstants(2/(art::Degrees(1)), 0, -300)// / by 2, 10, -500
-        .withIntegralZone(art::Degrees(10))
-        .withTimeout(3)
+        .withConstants(2/(art::Degrees(1)), 10, -500)// / by 2, 10, -500
+        .withIntegralZone(art::Degrees(15))
+        .withTimeout(10)
         .withSettleZone(art::Degrees(3))
         .withSettleTimeout(0.75)
     )

@@ -252,18 +252,19 @@ void blueElims()
 	travel = art::Vec2(target - smartDrive.m_pos);
 
 	smartDrive.turnToPID(travel.direction());
-	smartDrive.arcade(0,0); vex::wait(0.25,vex::sec);
+	smartDrive.arcade(0, 0);
+	vex::wait(0.25, vex::sec);
 
 	intake.set(100);
 	smartDrive.driveFor(travel.magnitude() * .7, 45);
 	smartDrive.arcade(0, 0);
 
 	intake.set(100);
-	smartDrive.arcade(0,50);
+	smartDrive.arcade(0, 50);
 
 	vex::wait(0.5, vex::sec);
 
-	smartDrive.arcade(0,0);
+	smartDrive.arcade(0, 0);
 	intake.set(100);
 
 	vex::wait(1, vex::sec);
@@ -273,7 +274,7 @@ void blueElims()
 	clamp.set(false);
 	smartDrive.turnToPID(art::Degrees(90) * xFlip);
 
-	smartDrive.driveFor(art::Inches(-2),-30);
+	smartDrive.driveFor(art::Inches(-2), -30);
 }
 void redElims()
 {
@@ -320,18 +321,19 @@ void redElims()
 	travel = art::Vec2(target - smartDrive.m_pos);
 
 	smartDrive.turnToPID(travel.direction());
-	smartDrive.arcade(0,0); vex::wait(0.25,vex::sec);
+	smartDrive.arcade(0, 0);
+	vex::wait(0.25, vex::sec);
 
 	intake.set(100);
 	smartDrive.driveFor(travel.magnitude() * .7, 45);
 	smartDrive.arcade(0, 0);
 
 	intake.set(100);
-	smartDrive.arcade(0,50);
+	smartDrive.arcade(0, 50);
 
 	vex::wait(0.5, vex::sec);
 
-	smartDrive.arcade(0,0);
+	smartDrive.arcade(0, 0);
 	intake.set(100);
 
 	vex::wait(1, vex::sec);
@@ -341,7 +343,7 @@ void redElims()
 	clamp.set(false);
 	smartDrive.turnToPID(art::Degrees(90) * xFlip);
 
-	smartDrive.driveFor(art::Inches(-2),-30);
+	smartDrive.driveFor(art::Inches(-2), -30);
 }
 
 /**
@@ -458,10 +460,13 @@ void usercontrol(void)
 		{
 			smartDrive.turnToPID(art::Degrees(180));
 		}
-		else if (Controller1.ButtonRight.PRESSED){
-		smartDrive.turnToPID(art::Degrees(90));
-		}else if (Controller1.ButtonLeft.PRESSED){
-		smartDrive.turnToPID(art::Degrees(-90));
+		else if (Controller1.ButtonRight.PRESSED)
+		{
+			smartDrive.turnToPID(art::Degrees(90));
+		}
+		else if (Controller1.ButtonLeft.PRESSED)
+		{
+			smartDrive.turnToPID(art::Degrees(-90));
 		}
 
 		vex::wait(20, vex::msec);
@@ -474,6 +479,7 @@ vex::thread loggingThread;
 
 int tracking()
 {
+	logger.logStringEntry(100, timePassed(), "Tracking Thread Started");
 	smartDrive.track();
 	return 1;
 }
@@ -505,11 +511,13 @@ int main()
 	// Run the pre-autonomous function.
 	pre_auton();
 
-	vex::wait(0.5, vex::sec);
+	vex::wait(0.25, vex::sec);
 
 	trackingThread = vex::thread(tracking);
 	displayThread = vex::thread(displayLoopFunction);
 	loggingThread = vex::thread(logLoopFunction);
+
+	vex::wait(0.25, vex::sec);
 
 	logger.logStringEntry(100, timePassed(), "Robot Fully Configured");
 

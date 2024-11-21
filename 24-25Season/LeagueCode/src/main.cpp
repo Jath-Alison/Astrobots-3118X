@@ -454,20 +454,37 @@ void usercontrol(void)
 
 		if (Controller1.ButtonUp.PRESSED)
 		{
-			smartDrive.turnToPID(art::Degrees(0));
+			// smartDrive.turnToPID(art::Degrees(0));
+
+			// smartDrive.driveForPID(art::Inches(30));
+			// smartDrive.turnToPID(art::Degrees(180));
+			// smartDrive.driveForPID(art::Inches(30));
+			// smartDrive.turnToPID(art::Degrees(0));
+
+			
 		}
-		else if (Controller1.ButtonDown.PRESSED)
-		{
-			smartDrive.turnToPID(art::Degrees(180));
-		}
-		else if (Controller1.ButtonRight.PRESSED)
-		{
-			smartDrive.turnToPID(art::Degrees(90));
-		}
-		else if (Controller1.ButtonLeft.PRESSED)
-		{
-			smartDrive.turnToPID(art::Degrees(-90));
-		}
+		// else if (Controller1.ButtonDown.PRESSED)
+		// {
+			// smartDrive.turnToPID(art::Degrees(180));
+			// smartDrive.driveForPID(art::Inches(-30));
+		// }
+		// else if (Controller1.ButtonRight.PRESSED)
+		// {
+		// 	smartDrive.turnToPID(art::Degrees(90));
+		// }
+		// else if (Controller1.ButtonLeft.PRESSED)
+		// {
+		// 	smartDrive.turnToPID(art::Degrees(-90));
+		// }
+
+		// if (Controller1.ButtonUp.PRESSED)
+		// {
+		// 	smartDrive.turnTowardPID(0, true);
+		// } else
+		// if(Controller1.ButtonUp.pressing()){
+		// 	art::Vec2 ang =  art::Vec2::XandY(Controller1.Axis1.position(), Controller1.Axis2.position());
+		// 	smartDrive.turnTowardPID(ang.direction(), false);
+		// }
 
 		vex::wait(20, vex::msec);
 	}

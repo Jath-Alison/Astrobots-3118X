@@ -340,10 +340,10 @@ namespace art
             return false;
         }
 
-        std::stringstream ss;
-        ss << "SmartDrive::turnToward(" << target << ")";
+        // std::stringstream ss;
+        // ss << "SmartDrive::turnToward(" << target << ")";
 
-        logger.logStringEntry(100, timePassed(), ss.str());
+        // logger.logStringEntry(100, timePassed(), ss.str());
 
         static bool turnTowardPIDinit = false;
         if (!turnTowardPIDinit)

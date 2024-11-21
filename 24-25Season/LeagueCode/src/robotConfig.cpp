@@ -48,7 +48,7 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
         .withIntegralZone(art::Revolutions(art::Inches(2) / (M_PI * art::Inches(2.75) * (36.f/48.f))))//still need conversion from inches to revolutions
         .withTimeout(7.5)
         .withSettleZone(art::Revolutions(art::Inches(1) / (M_PI * art::Inches(2.75) * (36.f/48.f))))
-        .withSettleTimeout(0.5)
+        .withSettleTimeout(0.25)
     )
     .withTurnForPID(art::PID()
         .withConstants(2/(art::Degrees(1)), 10, -500)

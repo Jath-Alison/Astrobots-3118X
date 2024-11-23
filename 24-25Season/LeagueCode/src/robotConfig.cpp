@@ -20,8 +20,6 @@
 vex::brain Brain;
 vex::controller Controller1;
 
-WPILogger logger;
-
 vex::motor leftMotorA (vex::PORT8, vex::gearSetting::ratio6_1, true);
 vex::motor leftMotorB (vex::PORT9, vex::gearSetting::ratio6_1, true);
 vex::motor leftMotorC (vex::PORT10, vex::gearSetting::ratio6_1, true);

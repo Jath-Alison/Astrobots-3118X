@@ -18,6 +18,7 @@
 #include "WPILogger.h"
 #include "robotConfig.h"
 #include "Autons.h"
+#include "Logging.h"
 
 /**
  * @brief A global instance of competition
@@ -42,7 +43,8 @@ vex::competition Competition;
  */
 void pre_auton(void)
 {
-	logger.logStringEntry(100, timePassed(), "Pre Auton Started");
+	// logger.logStringEntry(100, timePassed(), "Pre Auton Started");
+	logger.logStringEntry(console, "Pre Auton Started");
 }
 
 art::Vec2 target;
@@ -50,7 +52,7 @@ art::Vec2 travel;
 
 void blueSoloAWP()
 {
-	logger.logStringEntry(100, timePassed(), "BlueSoloAWP Started");
+	// logger.logStringEntry(100, timePassed(), "BlueSoloAWP Started");
 
 	// Grab Goal1
 	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25), art::Tiles(-1.0));
@@ -62,7 +64,7 @@ void blueSoloAWP()
 	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
 	smartDrive.driveFor(travel.magnitude() * -.78, -50);
 	clamp.set(true);
-	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+	// logger.logStringEntry(100, timePassed(), "Goal Grabbed");
 	smartDrive.arcade(0, 0);
 
 	// score preload
@@ -94,7 +96,7 @@ void blueSoloAWP()
 	smartDrive.turnToPID(travel.direction());
 	smartDrive.driveForPID(travel.magnitude() * 0.85);
 	clamp.set(false);
-	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+	// logger.logStringEntry(100, timePassed(), "Goal Grabbed");
 	smartDrive.arcade(0, 0);
 
 	// Grab Goal2
@@ -128,7 +130,7 @@ void blueSoloAWP()
 }
 void redSoloAWP()
 {
-	logger.logStringEntry(100, timePassed(), "RedSoloAWP Started");
+	// logger.logStringEntry(100, timePassed(), "RedSoloAWP Started");
 	double xFlip = -1.0;
 
 	// Grab Goal1
@@ -141,7 +143,7 @@ void redSoloAWP()
 	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
 	smartDrive.driveFor(travel.magnitude() * -.78, -50);
 	clamp.set(true);
-	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+	// logger.logStringEntry(100, timePassed(), "Goal Grabbed");
 	smartDrive.arcade(0, 0);
 
 	// score preload
@@ -188,7 +190,7 @@ void redSoloAWP()
 	smartDrive.arcade(0, 0);
 
 	clamp.set(true);
-	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+	// logger.logStringEntry(100, timePassed(), "Goal Grabbed");
 
 	// // Grab ring2 and score
 
@@ -209,7 +211,7 @@ void redSoloAWP()
 
 void blueElims()
 {
-	logger.logStringEntry(100, timePassed(), "BlueElims Started");
+	// logger.logStringEntry(100, timePassed(), "BlueElims Started");
 
 	int xFlip = 1.0;
 
@@ -221,7 +223,7 @@ void blueElims()
 
 	smartDrive.driveFor(travel.magnitude() * -.78, -50);
 	clamp.set(true);
-	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+	// logger.logStringEntry(100, timePassed(), "Goal Grabbed");
 
 	intake.set(100);
 	smartDrive.arcade(0, 0);
@@ -278,7 +280,7 @@ void blueElims()
 }
 void redElims()
 {
-	logger.logStringEntry(100, timePassed(), "RedElims Started");
+	// logger.logStringEntry(100, timePassed(), "RedElims Started");
 
 	int xFlip = -1.0;
 
@@ -290,7 +292,7 @@ void redElims()
 
 	smartDrive.driveFor(travel.magnitude() * -.78, -50);
 	clamp.set(true);
-	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+	// logger.logStringEntry(100, timePassed(), "Goal Grabbed");
 
 	intake.set(100);
 	smartDrive.arcade(0, 0);
@@ -362,13 +364,13 @@ void redElims()
 void autonomous(void)
 {
 
-	logger.logStringEntry(100, timePassed(), "Auton Routine Started");
+	// logger.logStringEntry(100, timePassed(), "Auton Routine Started");
 
 	while (smartDrive.m_inert.isCalibrating())
 	{
 		vex::wait(10, vex::msec);
 	}
-	logger.logStringEntry(100, timePassed(), "Auton - Inertial Finished Calibrating");
+	// logger.logStringEntry(100, timePassed(), "Auton - Inertial Finished Calibrating");
 
 	if (isBlue)
 	{
@@ -383,7 +385,7 @@ void autonomous(void)
 		redElims();
 	}
 
-	logger.logStringEntry(100, timePassed(), "Auton Routine Finished");
+	// logger.logStringEntry(100, timePassed(), "Auton Routine Finished");
 }
 
 /**
@@ -410,7 +412,7 @@ void usercontrol(void)
 	{
 		vex::wait(10, vex::msec);
 	}
-	logger.logStringEntry(100, timePassed(), "Driver Control - Inertial Finished Calibrating");
+	// logger.logStringEntry(100, timePassed(), "Driver Control - Inertial Finished Calibrating");
 
 	while (1)
 	{
@@ -479,7 +481,7 @@ vex::thread loggingThread;
 
 int tracking()
 {
-	logger.logStringEntry(100, timePassed(), "Tracking Thread Started");
+	// logger.logStringEntry(100, timePassed(), "Tracking Thread Started");
 	smartDrive.track();
 	return 1;
 }
@@ -502,7 +504,9 @@ int main()
 
 	logger.logHeader();
 
-	logger.startStringEntry("Console", 100);
+	logger.logStringEntry(console, "Code Started");
+
+	// logger.startStringEntry("Console", 100);
 
 	// Set up callbacks for autonomous and driver control periods.
 	Competition.autonomous(autonomous);
@@ -519,7 +523,8 @@ int main()
 
 	vex::wait(0.25, vex::sec);
 
-	logger.logStringEntry(100, timePassed(), "Robot Fully Configured");
+	// logger.logStringEntry(100, timePassed(), "Robot Fully Configured");
+	logger.logStringEntry(console, "Robot Fully Configured");
 
 	// Prevent main from exiting with an infinite loop.
 	while (true)

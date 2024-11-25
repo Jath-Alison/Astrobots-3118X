@@ -182,7 +182,7 @@ void logLoopFunction()
     std::vector<vex::motor *> allMotors = {
         &leftMotorA, &leftMotorB, &leftMotorC,
         &rightMotorA, &rightMotorB, &rightMotorC,
-        &intake};
+        &intake, &arm};
 
     while (1)
     {
@@ -946,7 +946,7 @@ void redAWPStakeFirstPos()
     travel = art::Vec2(target - smartDrive.m_pos);
 
     smartDrive.turnToPID(travel.direction());
-    intake.set(60);
+    intake.set(80);
     smartDrive.driveForPID(travel.magnitude());
     smartDrive.arcade(0, 0);
     smartDrive.driveForPID(art::Inches(-5));
@@ -1001,7 +1001,7 @@ void blueAWPStakeFirstPos() {
     travel = art::Vec2(target - smartDrive.m_pos);
 
     smartDrive.turnToPID(travel.direction());
-    intake.set(60);
+    intake.set(80);
     smartDrive.driveForPID(travel.magnitude());
     smartDrive.arcade(0, 0);
     smartDrive.driveForPID(art::Inches(-5));

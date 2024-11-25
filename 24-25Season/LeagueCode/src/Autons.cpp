@@ -3,6 +3,28 @@
 std::vector<Jath::Point> testPathPoints = {Jath::Point(-0.934, -1.781, 66), Jath::Point(-0.921, 0.219, 64.572), Jath::Point(-0.898, 2.218, 63.143), Jath::Point(-0.857, 4.218, 61.715), Jath::Point(-0.793, 6.217, 60.286), Jath::Point(-0.715, 8.215, 58.858), Jath::Point(-0.615, 10.213, 57.43), Jath::Point(-0.489, 12.209, 56.001), Jath::Point(-0.342, 14.203, 54.573), Jath::Point(-0.174, 16.196, 53.144), Jath::Point(0.026, 18.186, 51.716), Jath::Point(0.256, 20.173, 50.288), Jath::Point(0.515, 22.156, 48.859), Jath::Point(0.806, 24.135, 47.431), Jath::Point(1.132, 26.108, 46.002), Jath::Point(1.497, 28.074, 44.574), Jath::Point(1.904, 30.032, 43.146), Jath::Point(2.357, 31.98, 41.717), Jath::Point(2.86, 33.916, 40.289), Jath::Point(3.418, 35.837, 38.86), Jath::Point(4.036, 37.739, 37.432), Jath::Point(4.717, 39.619, 36.004), Jath::Point(5.467, 41.473, 34.575), Jath::Point(6.289, 43.296, 33.147), Jath::Point(7.192, 45.08, 31.718), Jath::Point(8.189, 46.813, 30.29), Jath::Point(9.272, 48.494, 28.862), Jath::Point(10.459, 50.103, 27.433), Jath::Point(11.739, 51.639, 26.005), Jath::Point(13.13, 53.076, 24.576), Jath::Point(14.615, 54.415, 23.148), Jath::Point(16.192, 55.644, 21.72), Jath::Point(17.856, 56.753, 24.269), Jath::Point(19.595, 57.739, 26.818), Jath::Point(21.396, 58.609, 29.367), Jath::Point(23.246, 59.366, 31.917), Jath::Point(25.136, 60.021, 34.466), Jath::Point(27.054, 60.585, 37.015), Jath::Point(28.994, 61.073, 39.564), Jath::Point(30.948, 61.499, 42.114), Jath::Point(32.911, 61.879, 44.663), Jath::Point(34.88, 62.229, 47.212), Jath::Point(36.852, 62.567, 43.813), Jath::Point(38.822, 62.91, 40.414), Jath::Point(40.788, 63.277, 37.015), Jath::Point(42.745, 63.69, 33.616), Jath::Point(44.686, 64.171, 30.217), Jath::Point(46.602, 64.744, 26.818), Jath::Point(48.478, 65.435, 23.419), Jath::Point(50.296, 66.266, 20.02), Jath::Point(52.032, 67.259, 16.621), Jath::Point(53.654, 68.427, 13.222), Jath::Point(55.135, 69.769, 15.701), Jath::Point(56.458, 71.267, 18.179), Jath::Point(57.613, 72.898, 20.657), Jath::Point(58.605, 74.634, 23.136), Jath::Point(59.437, 76.452, 25.614), Jath::Point(60.129, 78.328, 28.093), Jath::Point(60.704, 80.243, 30.571), Jath::Point(61.162, 82.189, 33.05), Jath::Point(61.53, 84.155, 35.528), Jath::Point(61.821, 86.134, 38.006), Jath::Point(62.034, 88.122, 40.485), Jath::Point(62.185, 90.116, 42.963), Jath::Point(62.282, 92.114, 42.963), Jath::Point(62.33, 94.113, 42.963), Jath::Point(62.335, 96.113, 42.963), Jath::Point(62.301, 98.113, 42.963), Jath::Point(62.233, 100.111, 42.963), Jath::Point(62.134, 102.109, 42.963), Jath::Point(62.003, 104.105, 42.963), Jath::Point(61.844, 106.098, 42.963), Jath::Point(61.522, 109.553, 42.963), Jath::Point(61.522, 109.553, 0)};
 Jath::Path testPath = Jath::Path::cm(testPathPoints);
 
+art::Angle shortestTurnPath(const art::Angle target)
+{
+    art::Angle angle = target;
+    angle.constrain();
+    if (std::abs(angle.revolutions()) < .5)
+    {
+        return angle;
+    }
+    else
+    {
+        if (angle.revolutions() > 0)
+        {
+            return art::Revolutions(1 - angle.revolutions());
+        }
+        else
+        {
+            return art::Revolutions(1 + angle.revolutions());
+        }
+    }
+    return art::Angle();
+}
+
 void displayLoopFunction()
 {
     logger.logStringEntry(100, timePassed(), "Display Loop Task Started");
@@ -22,10 +44,10 @@ void displayLoopFunction()
         Brain.Screen.print("Rot: %f", art::Angle(smartDrive.m_dir).degrees());
         Brain.Screen.setCursor(4, 1);
         Brain.Screen.clearLine();
-        Brain.Screen.print("Items: %u", logger.getDataSize());
+        Brain.Screen.print("Arm_Angle: %f", arm.position(vex::degrees)/3.0);
         Brain.Screen.setCursor(5, 1);
         Brain.Screen.clearLine();
-        Brain.Screen.print("Intake Temp: %u \370 ", int(intake.temperature(vex::celsius)));
+        Brain.Screen.print("Arm Target: %f ", armTarget.degrees());
 
         Brain.Screen.setFillColor(vex::color::blue);
         Brain.Screen.drawRectangle(480 - 5 - 80, 5, 80, 120 - 10);
@@ -122,6 +144,23 @@ void logLoopFunction()
 
     logger.startFloatEntry("Intake/cmd", 16);
 
+    // logger.startDoubleEntry("Arm/targetPos", 17);
+    // logger.startDoubleEntry("Arm/rotAngle", 18);
+    // logger.startDoubleEntry("Arm/Output", 19);
+
+    // logger.startDoubleEntry("Arm/PID/P", 20);
+    // logger.startDoubleEntry("Arm/PID/I", 21);
+    // logger.startDoubleEntry("Arm/PID/D", 22);
+
+    logger.startDoubleEntry("ARM/PID/Target{deg}", 17);
+    logger.startDoubleEntry("ARM/PID/Current{deg}", 18);
+    logger.startDoubleEntry("ARM/PID/CurrentMotor{deg}", 24);
+    logger.startDoubleEntry("ARM/PID/Error", 19);
+    logger.startDoubleEntry("ARM/PID/P", 20);
+    logger.startDoubleEntry("ARM/PID/I", 21);
+    logger.startDoubleEntry("ARM/PID/D", 22);
+    logger.startDoubleEntry("ARM/PID/Out", 23);
+
     std::vector<vex::motor *> allMotors = {
         &leftMotorA, &leftMotorB, &leftMotorC,
         &rightMotorA, &rightMotorB, &rightMotorC,
@@ -208,6 +247,15 @@ void logLoopFunction()
 
         logger.logFloatEntry(16, timePassed(), intake.get());
 
+        logger.logDoubleEntry(17, timePassed(), armTarget.degrees());//"ARM/PID/Target"
+        logger.logDoubleEntry(18, timePassed(), armRot.angle());//"ARM/PID/Current"
+        logger.logDoubleEntry(24, timePassed(), arm.position(vex::degrees));//"ARM/PID/CurrentMotor"
+        logger.logDoubleEntry(19, timePassed(), shortestTurnPath(armTarget - art::Degrees(armRot.angle())));//"ARM/PID/Error"
+        logger.logDoubleEntry(20, timePassed(), armPID.getProportional());//"ARM/PID/P"
+        logger.logDoubleEntry(21, timePassed(), armPID.getIntegral());//"ARM/PID/I"
+        logger.logDoubleEntry(22, timePassed(), armPID.getDerivative());//"ARM/PID/D"
+        logger.logDoubleEntry(23, timePassed(), armOut);//"ARM/PID/Out"
+
         if (Competition.AUTONOMOUS)
         {
             logger.logStringEntry(100, timePassed(), "Auton Started");
@@ -236,7 +284,8 @@ void followPath(Jath::Path p, art::Length lookaheadDist)
 
     static bool followPathInit = false;
 
-    if(!followPathInit){
+    if (!followPathInit)
+    {
         followPathInit = true;
 
         logger.startFloatArrayEntry("Paths/currentPath", 69);
@@ -296,3 +345,305 @@ void followPath(Jath::Path p, art::Length lookaheadDist)
         vex::wait(20, vex::msec);
     }
 }
+
+art::Vec2 target;
+art::Vec2 travel;
+
+void blueSoloAWP()
+{
+	logger.logStringEntry(100, timePassed(), "BlueSoloAWP Started");
+
+	// Grab Goal1
+	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25), art::Tiles(-1.0));
+	smartDrive.m_dir = art::Degrees(90);
+
+	target = art::Vec2::XandY(art::Tiles(1), art::Tiles(-1));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+	smartDrive.driveFor(travel.magnitude() * -.78, -50);
+	clamp.set(true);
+	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+	smartDrive.arcade(0, 0);
+
+	// score preload
+	intake.set(100);
+	vex::wait(0.75, vex::sec);
+
+	// Grab and score ring2
+	target = art::Vec2::XandY(art::Tiles(1), art::Tiles(-2));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction());
+	smartDrive.driveFor(travel.magnitude() * .75, 35);
+	smartDrive.arcade(0, 0);
+
+	vex::wait(0.25, vex::sec);
+	clamp.set(false);
+	intake.set(-30);
+	smartDrive.arcade(-20, 0);
+	vex::wait(0.5, vex::sec);
+	clamp.set(true);
+	intake.set(100);
+	smartDrive.arcade(0, 0);
+	vex::wait(0.25, vex::sec);
+
+	// drop goal & drive to centerline
+	target = art::Vec2::XandY(art::Tiles(2), art::Tiles(0));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction());
+	smartDrive.driveForPID(travel.magnitude() * 0.85);
+	clamp.set(false);
+	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+	smartDrive.arcade(0, 0);
+
+	// Grab Goal2
+	target = art::Vec2::XandY(art::Tiles(1), art::Tiles(1));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+	// smartDrive.driveFor(travel.magnitude() * -.80, -50);//disabled to hard code instead
+
+	smartDrive.turnToPID(art::Degrees(-40) + art::Degrees(180));
+	smartDrive.driveFor(art::Inches(-35), -50);
+	smartDrive.arcade(0, 0);
+
+	clamp.set(true);
+
+	// // Grab ring2 and score
+
+	smartDrive.turnToPID(art::Degrees(0));
+	intake.set(100);
+	smartDrive.driveFor(art::Inches(12), 75);
+	smartDrive.turnToPID(art::Degrees(-15));
+	smartDrive.arcade(0, 0);
+	vex::wait(0.35, vex::sec);
+	smartDrive.driveFor(art::Inches(-30), -100);
+	smartDrive.arcade(0, 0);
+
+	vex::wait(4, vex::sec);
+
+	intake.set(0);
+	smartDrive.arcade(0, 0);
+}
+void redSoloAWP()
+{
+	logger.logStringEntry(100, timePassed(), "RedSoloAWP Started");
+	double xFlip = -1.0;
+
+	// Grab Goal1
+	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25) * -1, art::Tiles(-1.0));
+	smartDrive.m_dir = art::Degrees(90 * -1);
+
+	target = art::Vec2::XandY(art::Tiles(1) * -1, art::Tiles(-1));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+	smartDrive.driveFor(travel.magnitude() * -.78, -50);
+	clamp.set(true);
+	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+	smartDrive.arcade(0, 0);
+
+	// score preload
+	intake.set(100);
+	vex::wait(0.75, vex::sec);
+
+	// Grab and score ring2
+	target = art::Vec2::XandY(art::Tiles(1) * -1, art::Tiles(-2));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction());
+	smartDrive.driveFor(travel.magnitude() * .5, 35);
+	smartDrive.arcade(0, 0);
+
+	vex::wait(0.25, vex::sec);
+	clamp.set(false);
+	intake.set(-30);
+	smartDrive.arcade(-20, 0);
+	vex::wait(0.5, vex::sec);
+	clamp.set(true);
+	intake.set(100);
+	smartDrive.arcade(0, 0);
+	vex::wait(0.25, vex::sec);
+
+	// drop goal & drive to centerline
+	target = art::Vec2::XandY(art::Tiles(2) * -1, art::Tiles(0));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction());
+	smartDrive.driveForPID(travel.magnitude() * 0.85);
+	clamp.set(false);
+	smartDrive.arcade(0, 0);
+
+	// Grab Goal2
+	target = art::Vec2::XandY(art::Tiles(1) * -1, art::Tiles(1));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+	// smartDrive.driveFor(travel.magnitude() * -.80, -50);//disabled to hard code instead
+
+	smartDrive.turnToPID(art::Degrees(-40 * -1) + art::Degrees(180));
+	intake.set(-100);
+	smartDrive.driveFor(art::Inches(-35), -50);
+	smartDrive.arcade(0, 0);
+
+	clamp.set(true);
+	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+
+	// // Grab ring2 and score
+
+	smartDrive.turnToPID(art::Degrees(0));
+	intake.set(100);
+	smartDrive.driveFor(art::Inches(12), 75);
+	smartDrive.turnToPID(art::Degrees(-15));
+	smartDrive.arcade(0, 0);
+	vex::wait(0.45, vex::sec);
+	smartDrive.driveFor(art::Inches(-30), -100);
+	smartDrive.arcade(0, 0);
+
+	vex::wait(4, vex::sec);
+
+	intake.set(0);
+	smartDrive.arcade(0, 0);
+}
+
+void blueElims()
+{
+	logger.logStringEntry(100, timePassed(), "BlueElims Started");
+
+	int xFlip = 1.0;
+
+	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25 * xFlip), art::Tiles(-1.0));
+	smartDrive.m_dir = art::Degrees(90 * xFlip);
+
+	target = art::Vec2::XandY(art::Tiles(1 * xFlip), art::Tiles(-1));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.driveFor(travel.magnitude() * -.78, -50);
+	clamp.set(true);
+	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+
+	intake.set(100);
+	smartDrive.arcade(0, 0);
+	vex::wait(0.5, vex::sec);
+	smartDrive.arcade(30, 0);
+	vex::wait(0.45, vex::sec);
+
+	// smartDrive.turnToPID(art::Degrees(125));
+	// smartDrive.arcade(0,0); vex::wait(0.25,vex::sec);
+	// clamp.set(false);
+	// logger.logStringEntry(100, timePassed(), "Goal Dropped");
+
+	// vex::wait(0.25, vex::sec);
+
+	// target = art::Vec2::XandY(art::Tiles(0 * xFlip), art::Tiles(-2));
+	// travel = art::Vec2(target - smartDrive.m_pos);
+
+	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+	// smartDrive.arcade(0,0); vex::wait(0.25,vex::sec);
+	// smartDrive.driveFor(travel.magnitude() * -.75 , -35);
+	// clamp.set(true);
+	// logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+	// smartDrive.arcade(0, 0);
+
+	// vex::wait(0.25, vex::sec);
+
+	target = art::Vec2::XandY(art::Tiles(1 * xFlip), art::Tiles(-2));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction());
+	smartDrive.arcade(0, 0);
+	vex::wait(0.25, vex::sec);
+
+	intake.set(100);
+	smartDrive.driveFor(travel.magnitude() * .7, 45);
+	smartDrive.arcade(0, 0);
+
+	intake.set(100);
+	smartDrive.arcade(0, 50);
+
+	vex::wait(0.5, vex::sec);
+
+	smartDrive.arcade(0, 0);
+	intake.set(100);
+
+	vex::wait(1, vex::sec);
+	intake.set(0);
+
+	smartDrive.turnToPID(art::Degrees(-90) * xFlip);
+	clamp.set(false);
+	smartDrive.turnToPID(art::Degrees(90) * xFlip);
+
+	smartDrive.driveFor(art::Inches(-2), -30);
+}
+void redElims()
+{
+	logger.logStringEntry(100, timePassed(), "RedElims Started");
+
+	int xFlip = -1.0;
+
+	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25 * xFlip), art::Tiles(-1.0));
+	smartDrive.m_dir = art::Degrees(90 * xFlip);
+
+	target = art::Vec2::XandY(art::Tiles(1 * xFlip), art::Tiles(-1));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.driveFor(travel.magnitude() * -.78, -50);
+	clamp.set(true);
+	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+
+	intake.set(100);
+	smartDrive.arcade(0, 0);
+	vex::wait(0.5, vex::sec);
+	smartDrive.arcade(30, 0);
+	vex::wait(0.45, vex::sec);
+
+	// smartDrive.turnToPID(art::Degrees(125));
+	// smartDrive.arcade(0,0); vex::wait(0.25,vex::sec);
+	// clamp.set(false);
+	// logger.logStringEntry(100, timePassed(), "Goal Dropped");
+
+	// vex::wait(0.25, vex::sec);
+
+	// target = art::Vec2::XandY(art::Tiles(0 * xFlip), art::Tiles(-2));
+	// travel = art::Vec2(target - smartDrive.m_pos);
+
+	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+	// smartDrive.arcade(0,0); vex::wait(0.25,vex::sec);
+	// smartDrive.driveFor(travel.magnitude() * -.75 , -35);
+	// clamp.set(true);
+	// logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+	// smartDrive.arcade(0, 0);
+
+	// vex::wait(0.25, vex::sec);
+
+	target = art::Vec2::XandY(art::Tiles(1 * xFlip), art::Tiles(-2));
+	travel = art::Vec2(target - smartDrive.m_pos);
+
+	smartDrive.turnToPID(travel.direction());
+	smartDrive.arcade(0, 0);
+	vex::wait(0.25, vex::sec);
+
+	intake.set(100);
+	smartDrive.driveFor(travel.magnitude() * .7, 45);
+	smartDrive.arcade(0, 0);
+
+	intake.set(100);
+	smartDrive.arcade(0, 50);
+
+	vex::wait(0.5, vex::sec);
+
+	smartDrive.arcade(0, 0);
+	intake.set(100);
+
+	vex::wait(1, vex::sec);
+	intake.set(0);
+
+	smartDrive.turnToPID(art::Degrees(-90) * xFlip);
+	clamp.set(false);
+	smartDrive.turnToPID(art::Degrees(90) * xFlip);
+
+	smartDrive.driveFor(art::Inches(-2), -30);
+}
+

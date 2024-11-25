@@ -40,9 +40,16 @@ extern art::SmartDrive smartDrive;
 extern art::SimpleMotor intake;
 extern vex::digital_out clamp;
 
-extern art::SimpleMotor winch;
-// extern vex::digital_out pto;
-// extern vex::digital_out pto_active;
+extern art::SimpleMotor arm;
+
+extern vex::rotation armRot;
+
+extern art::PID armPID;
+extern art::Angle armTarget;
+extern double armOut;
+
+extern vex::digital_out doinkerDeploy;
+extern vex::digital_out doinkerClamp;
 
 
 extern bool isBlue;

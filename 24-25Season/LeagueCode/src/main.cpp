@@ -43,307 +43,8 @@ vex::competition Competition;
 void pre_auton(void)
 {
 	logger.logStringEntry(100, timePassed(), "Pre Auton Started");
-}
 
-art::Vec2 target;
-art::Vec2 travel;
-
-void blueSoloAWP()
-{
-	logger.logStringEntry(100, timePassed(), "BlueSoloAWP Started");
-
-	// Grab Goal1
-	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25), art::Tiles(-1.0));
-	smartDrive.m_dir = art::Degrees(90);
-
-	target = art::Vec2::XandY(art::Tiles(1), art::Tiles(-1));
-	travel = art::Vec2(target - smartDrive.m_pos);
-
-	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
-	smartDrive.driveFor(travel.magnitude() * -.78, -50);
-	clamp.set(true);
-	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
-	smartDrive.arcade(0, 0);
-
-	// score preload
-	intake.set(100);
-	vex::wait(0.75, vex::sec);
-
-	// Grab and score ring2
-	target = art::Vec2::XandY(art::Tiles(1), art::Tiles(-2));
-	travel = art::Vec2(target - smartDrive.m_pos);
-
-	smartDrive.turnToPID(travel.direction());
-	smartDrive.driveFor(travel.magnitude() * .75, 35);
-	smartDrive.arcade(0, 0);
-
-	vex::wait(0.25, vex::sec);
-	clamp.set(false);
-	intake.set(-30);
-	smartDrive.arcade(-20, 0);
-	vex::wait(0.5, vex::sec);
-	clamp.set(true);
-	intake.set(100);
-	smartDrive.arcade(0, 0);
-	vex::wait(0.25, vex::sec);
-
-	// drop goal & drive to centerline
-	target = art::Vec2::XandY(art::Tiles(2), art::Tiles(0));
-	travel = art::Vec2(target - smartDrive.m_pos);
-
-	smartDrive.turnToPID(travel.direction());
-	smartDrive.driveForPID(travel.magnitude() * 0.85);
-	clamp.set(false);
-	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
-	smartDrive.arcade(0, 0);
-
-	// Grab Goal2
-	target = art::Vec2::XandY(art::Tiles(1), art::Tiles(1));
-	travel = art::Vec2(target - smartDrive.m_pos);
-
-	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
-	// smartDrive.driveFor(travel.magnitude() * -.80, -50);//disabled to hard code instead
-
-	smartDrive.turnToPID(art::Degrees(-40) + art::Degrees(180));
-	smartDrive.driveFor(art::Inches(-35), -50);
-	smartDrive.arcade(0, 0);
-
-	clamp.set(true);
-
-	// // Grab ring2 and score
-
-	smartDrive.turnToPID(art::Degrees(0));
-	intake.set(100);
-	smartDrive.driveFor(art::Inches(12), 75);
-	smartDrive.turnToPID(art::Degrees(-15));
-	smartDrive.arcade(0, 0);
-	vex::wait(0.35, vex::sec);
-	smartDrive.driveFor(art::Inches(-30), -100);
-	smartDrive.arcade(0, 0);
-
-	vex::wait(4, vex::sec);
-
-	intake.set(0);
-	smartDrive.arcade(0, 0);
-}
-void redSoloAWP()
-{
-	logger.logStringEntry(100, timePassed(), "RedSoloAWP Started");
-	double xFlip = -1.0;
-
-	// Grab Goal1
-	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25) * -1, art::Tiles(-1.0));
-	smartDrive.m_dir = art::Degrees(90 * -1);
-
-	target = art::Vec2::XandY(art::Tiles(1) * -1, art::Tiles(-1));
-	travel = art::Vec2(target - smartDrive.m_pos);
-
-	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
-	smartDrive.driveFor(travel.magnitude() * -.78, -50);
-	clamp.set(true);
-	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
-	smartDrive.arcade(0, 0);
-
-	// score preload
-	intake.set(100);
-	vex::wait(0.75, vex::sec);
-
-	// Grab and score ring2
-	target = art::Vec2::XandY(art::Tiles(1) * -1, art::Tiles(-2));
-	travel = art::Vec2(target - smartDrive.m_pos);
-
-	smartDrive.turnToPID(travel.direction());
-	smartDrive.driveFor(travel.magnitude() * .5, 35);
-	smartDrive.arcade(0, 0);
-
-	vex::wait(0.25, vex::sec);
-	clamp.set(false);
-	intake.set(-30);
-	smartDrive.arcade(-20, 0);
-	vex::wait(0.5, vex::sec);
-	clamp.set(true);
-	intake.set(100);
-	smartDrive.arcade(0, 0);
-	vex::wait(0.25, vex::sec);
-
-	// drop goal & drive to centerline
-	target = art::Vec2::XandY(art::Tiles(2) * -1, art::Tiles(0));
-	travel = art::Vec2(target - smartDrive.m_pos);
-
-	smartDrive.turnToPID(travel.direction());
-	smartDrive.driveForPID(travel.magnitude() * 0.85);
-	clamp.set(false);
-	smartDrive.arcade(0, 0);
-
-	// Grab Goal2
-	target = art::Vec2::XandY(art::Tiles(1) * -1, art::Tiles(1));
-	travel = art::Vec2(target - smartDrive.m_pos);
-
-	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
-	// smartDrive.driveFor(travel.magnitude() * -.80, -50);//disabled to hard code instead
-
-	smartDrive.turnToPID(art::Degrees(-40 * -1) + art::Degrees(180));
-	intake.set(-100);
-	smartDrive.driveFor(art::Inches(-35), -50);
-	smartDrive.arcade(0, 0);
-
-	clamp.set(true);
-	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
-
-	// // Grab ring2 and score
-
-	smartDrive.turnToPID(art::Degrees(0));
-	intake.set(100);
-	smartDrive.driveFor(art::Inches(12), 75);
-	smartDrive.turnToPID(art::Degrees(-15));
-	smartDrive.arcade(0, 0);
-	vex::wait(0.45, vex::sec);
-	smartDrive.driveFor(art::Inches(-30), -100);
-	smartDrive.arcade(0, 0);
-
-	vex::wait(4, vex::sec);
-
-	intake.set(0);
-	smartDrive.arcade(0, 0);
-}
-
-void blueElims()
-{
-	logger.logStringEntry(100, timePassed(), "BlueElims Started");
-
-	int xFlip = 1.0;
-
-	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25 * xFlip), art::Tiles(-1.0));
-	smartDrive.m_dir = art::Degrees(90 * xFlip);
-
-	target = art::Vec2::XandY(art::Tiles(1 * xFlip), art::Tiles(-1));
-	travel = art::Vec2(target - smartDrive.m_pos);
-
-	smartDrive.driveFor(travel.magnitude() * -.78, -50);
-	clamp.set(true);
-	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
-
-	intake.set(100);
-	smartDrive.arcade(0, 0);
-	vex::wait(0.5, vex::sec);
-	smartDrive.arcade(30, 0);
-	vex::wait(0.45, vex::sec);
-
-	// smartDrive.turnToPID(art::Degrees(125));
-	// smartDrive.arcade(0,0); vex::wait(0.25,vex::sec);
-	// clamp.set(false);
-	// logger.logStringEntry(100, timePassed(), "Goal Dropped");
-
-	// vex::wait(0.25, vex::sec);
-
-	// target = art::Vec2::XandY(art::Tiles(0 * xFlip), art::Tiles(-2));
-	// travel = art::Vec2(target - smartDrive.m_pos);
-
-	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
-	// smartDrive.arcade(0,0); vex::wait(0.25,vex::sec);
-	// smartDrive.driveFor(travel.magnitude() * -.75 , -35);
-	// clamp.set(true);
-	// logger.logStringEntry(100, timePassed(), "Goal Grabbed");
-	// smartDrive.arcade(0, 0);
-
-	// vex::wait(0.25, vex::sec);
-
-	target = art::Vec2::XandY(art::Tiles(1 * xFlip), art::Tiles(-2));
-	travel = art::Vec2(target - smartDrive.m_pos);
-
-	smartDrive.turnToPID(travel.direction());
-	smartDrive.arcade(0, 0);
-	vex::wait(0.25, vex::sec);
-
-	intake.set(100);
-	smartDrive.driveFor(travel.magnitude() * .7, 45);
-	smartDrive.arcade(0, 0);
-
-	intake.set(100);
-	smartDrive.arcade(0, 50);
-
-	vex::wait(0.5, vex::sec);
-
-	smartDrive.arcade(0, 0);
-	intake.set(100);
-
-	vex::wait(1, vex::sec);
-	intake.set(0);
-
-	smartDrive.turnToPID(art::Degrees(-90) * xFlip);
-	clamp.set(false);
-	smartDrive.turnToPID(art::Degrees(90) * xFlip);
-
-	smartDrive.driveFor(art::Inches(-2), -30);
-}
-void redElims()
-{
-	logger.logStringEntry(100, timePassed(), "RedElims Started");
-
-	int xFlip = -1.0;
-
-	smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25 * xFlip), art::Tiles(-1.0));
-	smartDrive.m_dir = art::Degrees(90 * xFlip);
-
-	target = art::Vec2::XandY(art::Tiles(1 * xFlip), art::Tiles(-1));
-	travel = art::Vec2(target - smartDrive.m_pos);
-
-	smartDrive.driveFor(travel.magnitude() * -.78, -50);
-	clamp.set(true);
-	logger.logStringEntry(100, timePassed(), "Goal Grabbed");
-
-	intake.set(100);
-	smartDrive.arcade(0, 0);
-	vex::wait(0.5, vex::sec);
-	smartDrive.arcade(30, 0);
-	vex::wait(0.45, vex::sec);
-
-	// smartDrive.turnToPID(art::Degrees(125));
-	// smartDrive.arcade(0,0); vex::wait(0.25,vex::sec);
-	// clamp.set(false);
-	// logger.logStringEntry(100, timePassed(), "Goal Dropped");
-
-	// vex::wait(0.25, vex::sec);
-
-	// target = art::Vec2::XandY(art::Tiles(0 * xFlip), art::Tiles(-2));
-	// travel = art::Vec2(target - smartDrive.m_pos);
-
-	// smartDrive.turnToPID(travel.direction() + art::Degrees(180));
-	// smartDrive.arcade(0,0); vex::wait(0.25,vex::sec);
-	// smartDrive.driveFor(travel.magnitude() * -.75 , -35);
-	// clamp.set(true);
-	// logger.logStringEntry(100, timePassed(), "Goal Grabbed");
-	// smartDrive.arcade(0, 0);
-
-	// vex::wait(0.25, vex::sec);
-
-	target = art::Vec2::XandY(art::Tiles(1 * xFlip), art::Tiles(-2));
-	travel = art::Vec2(target - smartDrive.m_pos);
-
-	smartDrive.turnToPID(travel.direction());
-	smartDrive.arcade(0, 0);
-	vex::wait(0.25, vex::sec);
-
-	intake.set(100);
-	smartDrive.driveFor(travel.magnitude() * .7, 45);
-	smartDrive.arcade(0, 0);
-
-	intake.set(100);
-	smartDrive.arcade(0, 50);
-
-	vex::wait(0.5, vex::sec);
-
-	smartDrive.arcade(0, 0);
-	intake.set(100);
-
-	vex::wait(1, vex::sec);
-	intake.set(0);
-
-	smartDrive.turnToPID(art::Degrees(-90) * xFlip);
-	clamp.set(false);
-	smartDrive.turnToPID(art::Degrees(90) * xFlip);
-
-	smartDrive.driveFor(art::Inches(-2), -30);
+	arm.setPosition(armRot.angle(),vex::degrees);
 }
 
 /**
@@ -439,6 +140,28 @@ void usercontrol(void)
 			clamp.set(false);
 		}
 
+		if (Controller1.ButtonUp.pressing())
+		{
+			armTarget = art::Degrees(140);
+		}
+		if (Controller1.ButtonRight.pressing())
+		{
+			armTarget = art::Degrees(30);
+		}
+		if (Controller1.ButtonDown.pressing())
+		{
+			armTarget = art::Degrees(40);
+		}
+
+		armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(arm.position(vex::degrees)/3.0)));
+
+		if( !(armTarget > art::Degrees(330) && armTarget < art::Degrees(340)) && abs(shortestTurnPath(armTarget - art::Degrees(armRot.angle())).degrees()) >= 2){
+			arm.set(armOut);
+		}else{
+			arm.set(0);
+			arm.stop(vex::hold);
+		}
+
 		// if (Controller1.ButtonDown.pressing())
 		// {
 		// 	smartDrive.arcade(-100, 0);
@@ -452,38 +175,16 @@ void usercontrol(void)
 		// 	smartDrive.LeftSplitArcadeCurved(Controller1);
 		// }
 
-		if (Controller1.ButtonUp.PRESSED)
-		{
-			// smartDrive.turnToPID(art::Degrees(0));
-
-			// smartDrive.driveForPID(art::Inches(30));
-			// smartDrive.turnToPID(art::Degrees(180));
-			// smartDrive.driveForPID(art::Inches(30));
-			// smartDrive.turnToPID(art::Degrees(0));
-
-			followPath(testPath, art::Inches(5));
-		}
-		// else if (Controller1.ButtonDown.PRESSED)
-		// {
-			// smartDrive.turnToPID(art::Degrees(180));
-			// smartDrive.driveForPID(art::Inches(-30));
-		// }
-		// else if (Controller1.ButtonRight.PRESSED)
-		// {
-		// 	smartDrive.turnToPID(art::Degrees(90));
-		// }
-		// else if (Controller1.ButtonLeft.PRESSED)
-		// {
-		// 	smartDrive.turnToPID(art::Degrees(-90));
-		// }
-
 		// if (Controller1.ButtonUp.PRESSED)
 		// {
-		// 	smartDrive.turnTowardPID(0, true);
-		// } else
-		// if(Controller1.ButtonUp.pressing()){
-		// 	art::Vec2 ang =  art::Vec2::XandY(Controller1.Axis1.position(), Controller1.Axis2.position());
-		// 	smartDrive.turnTowardPID(ang.direction(), false);
+		// 	// smartDrive.turnToPID(art::Degrees(0));
+
+		// 	// smartDrive.driveForPID(art::Inches(30));
+		// 	// smartDrive.turnToPID(art::Degrees(180));
+		// 	// smartDrive.driveForPID(art::Inches(30));
+		// 	// smartDrive.turnToPID(art::Degrees(0));
+
+		// 	// followPath(testPath, art::Inches(5));
 		// }
 
 		vex::wait(20, vex::msec);

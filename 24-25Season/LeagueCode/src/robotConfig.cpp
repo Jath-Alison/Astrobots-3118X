@@ -22,9 +22,9 @@ vex::controller Controller1;
 
 WPILogger logger;
 
-vex::motor leftMotorA (vex::PORT8, vex::gearSetting::ratio6_1, true);
-vex::motor leftMotorB (vex::PORT9, vex::gearSetting::ratio6_1, true);
-vex::motor leftMotorC (vex::PORT10, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorA (vex::PORT18, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorB (vex::PORT19, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorC (vex::PORT20, vex::gearSetting::ratio6_1, true);
 vex::motor_group leftMotors (leftMotorA, leftMotorB, leftMotorC);
 
 vex::motor rightMotorA (vex::PORT11, vex::gearSetting::ratio6_1, false);
@@ -32,14 +32,14 @@ vex::motor rightMotorB (vex::PORT12, vex::gearSetting::ratio6_1, false);
 vex::motor rightMotorC (vex::PORT13, vex::gearSetting::ratio6_1, false);
 vex::motor_group rightMotors (rightMotorA, rightMotorB, rightMotorC);
 
-vex::inertial inert (vex::PORT1, vex::turnType::right);
+vex::inertial inert (vex::PORT10, vex::turnType::right);
 
 art::TankDrive drive = art::TankDrive(leftMotors, rightMotors);
 art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
     .withGearRatio(36.f/48.f)
     .withWheelSize(art::Inches(2.75))
     .withHorizontalTracker(
-      vex::rotation(vex::PORT2, false),
+      vex::rotation(vex::PORT1, false),
       art::Inches(2),
       1.0
     )
@@ -66,14 +66,27 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
     )
     ;
 
-art::SimpleMotor intake  = art::SimpleMotor(vex::motor(vex::PORT7, vex::gearSetting::ratio6_1, false))
+art::SimpleMotor intake  = art::SimpleMotor(vex::motor(vex::PORT15, vex::gearSetting::ratio6_1, false))
     .withSpeedMode(false);
 vex::digital_out clamp(Brain.ThreeWirePort.G);
 
-art::SimpleMotor winch = art::SimpleMotor(vex::motor(vex::PORT6, vex::gearSetting::ratio6_1, false))
-    .withSpeedMode(false);
-// vex::digital_out pto(Brain.ThreeWirePort.A);
-// vex::digital_out pto_active(Brain.ThreeWirePort.B);
+art::SimpleMotor arm = art::SimpleMotor(vex::motor(vex::PORT14, vex::gearSetting::ratio36_1, false))
+    .withSpeedMode(true);
+vex::rotation armRot = vex::rotation(vex::PORT2, true);
+
+art::PID armPID = art::PID()
+        .withConstants(3/(art::Degrees(1)), 0, -200)
+        // .withIntegralZone(art::Degrees(15))
+        // .withTimeout(10)
+        // .withSettleZone(art::Degrees(3))
+        // .withSettleTimeout(0.75)
+        ;
+
+art::Angle armTarget = 0;
+double armOut = 0;
+
+vex::digital_out doinkerDeploy(Brain.ThreeWirePort.A);
+vex::digital_out doinkerClamp(Brain.ThreeWirePort.B);
 
 
 bool isBlue = true;

@@ -21,8 +21,11 @@ void redElims();
 void redRushAWP();
 void blueRushAWP();
 
-void redAWPGoalFirst();
-void blueAWPGoalFirst();
+void redAWPGoalFirstNeg();
+void blueAWPGoalFirstNeg();
 
-void redAWPStakeFirst();
-void blueAWPStakeFirst();
+// void redAWPGoalFirstPos();
+// void blueAWPGoalFirstPos();
+
+void redAWPStakeFirstPos();
+void blueAWPStakeFirstPos();

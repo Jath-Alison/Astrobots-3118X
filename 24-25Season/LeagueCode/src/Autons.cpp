@@ -47,7 +47,7 @@ void displayLoopFunction()
         Brain.Screen.print("Arm_Angle: %f", arm.position(vex::degrees) / 3.0);
         Brain.Screen.setCursor(5, 1);
         Brain.Screen.clearLine();
-        Brain.Screen.print("Arm Target: %f ", armTarget.degrees());
+        Brain.Screen.print("Intake Temp: %u \370 ", int(intake.temperature(vex::celsius)));
 
         Brain.Screen.setFillColor(vex::color::blue);
         Brain.Screen.drawRectangle(480 - 5 - 80, 5, 80, 120 - 10);
@@ -71,10 +71,18 @@ void displayLoopFunction()
             if (Brain.Screen.xPosition() > 480 - 5 - 80 && Brain.Screen.xPosition() < 480 - 5 - 80 + 120 - 10 && Brain.Screen.yPosition() > 5 && Brain.Screen.yPosition() < 5 + 120 - 10)
             {
                 isBlue = true;
+
+                //Only for Stake First autos
+                smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2), art::Tiles(-1));
+                smartDrive.m_dir = art::Degrees(90);
             }
             if (Brain.Screen.xPosition() > 480 - 5 - 80 && Brain.Screen.xPosition() < 480 - 5 - 80 + 120 - 10 && Brain.Screen.yPosition() > 120 + 5 && Brain.Screen.yPosition() < 5 + 120 - 10 + 120)
             {
                 isBlue = false;
+
+                //Only for Stake First autos
+                smartDrive.m_pos = art::Vec2::XandY(art::Tiles(-2), art::Tiles(-1));
+                smartDrive.m_dir = art::Degrees(-90);
             }
             // isBlue = !isBlue;
         }
@@ -168,6 +176,8 @@ void logLoopFunction()
     logger.startDoubleArrayEntry("Robot/GPS/GpsPose", 26);
     logger.startDoubleArrayEntry("Robot/GPS/GpsPose(Blue)", 27);
     logger.startInt64Entry("Robot/GPS/GpsQuality", 28);
+
+    // logger.startBooleanEntry("Pneumatics")
 
     std::vector<vex::motor *> allMotors = {
         &leftMotorA, &leftMotorB, &leftMotorC,
@@ -451,7 +461,6 @@ void followPathRev(Jath::Path p, art::Length lookaheadDist)
         vex::wait(20, vex::msec);
     }
 }
-
 
 art::Vec2 target;
 art::Vec2 travel;
@@ -773,10 +782,10 @@ void redRushAWP()
     doinkerClamp.set(false);
 }
 
-std::vector<Jath::Point> blueRushPath1Points = {Jath::Point(148.96,-151.675,103), Jath::Point(146.961,-151.725,101.465), Jath::Point(144.961,-151.771,101.311), Jath::Point(142.962,-151.814,101.149), Jath::Point(140.962,-151.853,100.981), Jath::Point(138.962,-151.887,100.804), Jath::Point(136.962,-151.918,100.62), Jath::Point(134.963,-151.943,100.428), Jath::Point(132.963,-151.962,100.227), Jath::Point(130.963,-151.976,100.019), Jath::Point(128.963,-151.983,99.577), Jath::Point(126.963,-151.983,99.343), Jath::Point(124.963,-151.975,99.101), Jath::Point(122.963,-151.959,98.85), Jath::Point(120.963,-151.934,98.591), Jath::Point(118.963,-151.898,98.047), Jath::Point(116.964,-151.852,97.763), Jath::Point(114.965,-151.796,97.472), Jath::Point(112.966,-151.727,96.866), Jath::Point(110.968,-151.645,96.552), Jath::Point(108.97,-151.549,96.232), Jath::Point(106.973,-151.439,95.575), Jath::Point(104.977,-151.312,95.239), Jath::Point(102.982,-151.169,94.899), Jath::Point(100.989,-151.008,94.209), Jath::Point(98.997,-150.828,93.861), Jath::Point(97.007,-150.628,93.165), Jath::Point(95.019,-150.407,92.819), Jath::Point(93.034,-150.164,92.135), Jath::Point(91.052,-149.897,91.8), Jath::Point(89.073,-149.607,91.151), Jath::Point(87.098,-149.29,90.839), Jath::Point(85.128,-148.949,90.248), Jath::Point(83.162,-148.579,89.972), Jath::Point(81.202,-148.181,89.463), Jath::Point(79.248,-147.754,89.233), Jath::Point(77.301,-147.297,88.83), Jath::Point(75.361,-146.812,88.657), Jath::Point(73.429,-146.293,88.377), Jath::Point(71.506,-145.746,88.187), Jath::Point(69.592,-145.165,88.126), Jath::Point(67.688,-144.554,88.078), Jath::Point(65.794,-143.911,88.089), Jath::Point(63.911,-143.237,88.183), Jath::Point(62.039,-142.533,88.264), Jath::Point(60.179,-141.797,88.494), Jath::Point(58.331,-141.032,88.807), Jath::Point(56.496,-140.237,88.992), Jath::Point(54.673,-139.415,89.415), Jath::Point(52.863,-138.564,89.651), Jath::Point(51.066,-137.686,90.163), Jath::Point(49.282,-136.783,90.437), Jath::Point(47.51,-135.855,91.015), Jath::Point(45.752,-134.902,91.316), Jath::Point(44.005,-133.928,91.936), Jath::Point(42.272,-132.929,92.253), Jath::Point(40.55,-131.912,92.572), Jath::Point(38.841,-130.874,93.215), Jath::Point(37.143,-129.817,93.537), Jath::Point(35.456,-128.743,93.857), Jath::Point(33.781,-127.65,94.491), Jath::Point(32.116,-126.542,94.802), Jath::Point(30.461,-125.419,95.11), Jath::Point(28.816,-124.281,95.71), Jath::Point(27.181,-123.129,96.002), Jath::Point(25.555,-121.965,96.288), Jath::Point(23.937,-120.789,96.567), Jath::Point(22.329,-119.6,97.105), Jath::Point(20.728,-118.401,97.364), Jath::Point(19.136,-117.191,97.615), Jath::Point(17.55,-115.972,97.858), Jath::Point(15.971,-114.744,98.095), Jath::Point(14.4,-113.507,98.323), Jath::Point(11.424,-111.13,98.758), Jath::Point(11.424,-111.13,0)};
+std::vector<Jath::Point> blueRushPath1Points = {Jath::Point(148.96, -151.675, 103), Jath::Point(146.961, -151.725, 101.465), Jath::Point(144.961, -151.771, 101.311), Jath::Point(142.962, -151.814, 101.149), Jath::Point(140.962, -151.853, 100.981), Jath::Point(138.962, -151.887, 100.804), Jath::Point(136.962, -151.918, 100.62), Jath::Point(134.963, -151.943, 100.428), Jath::Point(132.963, -151.962, 100.227), Jath::Point(130.963, -151.976, 100.019), Jath::Point(128.963, -151.983, 99.577), Jath::Point(126.963, -151.983, 99.343), Jath::Point(124.963, -151.975, 99.101), Jath::Point(122.963, -151.959, 98.85), Jath::Point(120.963, -151.934, 98.591), Jath::Point(118.963, -151.898, 98.047), Jath::Point(116.964, -151.852, 97.763), Jath::Point(114.965, -151.796, 97.472), Jath::Point(112.966, -151.727, 96.866), Jath::Point(110.968, -151.645, 96.552), Jath::Point(108.97, -151.549, 96.232), Jath::Point(106.973, -151.439, 95.575), Jath::Point(104.977, -151.312, 95.239), Jath::Point(102.982, -151.169, 94.899), Jath::Point(100.989, -151.008, 94.209), Jath::Point(98.997, -150.828, 93.861), Jath::Point(97.007, -150.628, 93.165), Jath::Point(95.019, -150.407, 92.819), Jath::Point(93.034, -150.164, 92.135), Jath::Point(91.052, -149.897, 91.8), Jath::Point(89.073, -149.607, 91.151), Jath::Point(87.098, -149.29, 90.839), Jath::Point(85.128, -148.949, 90.248), Jath::Point(83.162, -148.579, 89.972), Jath::Point(81.202, -148.181, 89.463), Jath::Point(79.248, -147.754, 89.233), Jath::Point(77.301, -147.297, 88.83), Jath::Point(75.361, -146.812, 88.657), Jath::Point(73.429, -146.293, 88.377), Jath::Point(71.506, -145.746, 88.187), Jath::Point(69.592, -145.165, 88.126), Jath::Point(67.688, -144.554, 88.078), Jath::Point(65.794, -143.911, 88.089), Jath::Point(63.911, -143.237, 88.183), Jath::Point(62.039, -142.533, 88.264), Jath::Point(60.179, -141.797, 88.494), Jath::Point(58.331, -141.032, 88.807), Jath::Point(56.496, -140.237, 88.992), Jath::Point(54.673, -139.415, 89.415), Jath::Point(52.863, -138.564, 89.651), Jath::Point(51.066, -137.686, 90.163), Jath::Point(49.282, -136.783, 90.437), Jath::Point(47.51, -135.855, 91.015), Jath::Point(45.752, -134.902, 91.316), Jath::Point(44.005, -133.928, 91.936), Jath::Point(42.272, -132.929, 92.253), Jath::Point(40.55, -131.912, 92.572), Jath::Point(38.841, -130.874, 93.215), Jath::Point(37.143, -129.817, 93.537), Jath::Point(35.456, -128.743, 93.857), Jath::Point(33.781, -127.65, 94.491), Jath::Point(32.116, -126.542, 94.802), Jath::Point(30.461, -125.419, 95.11), Jath::Point(28.816, -124.281, 95.71), Jath::Point(27.181, -123.129, 96.002), Jath::Point(25.555, -121.965, 96.288), Jath::Point(23.937, -120.789, 96.567), Jath::Point(22.329, -119.6, 97.105), Jath::Point(20.728, -118.401, 97.364), Jath::Point(19.136, -117.191, 97.615), Jath::Point(17.55, -115.972, 97.858), Jath::Point(15.971, -114.744, 98.095), Jath::Point(14.4, -113.507, 98.323), Jath::Point(11.424, -111.13, 98.758), Jath::Point(11.424, -111.13, 0)};
 Jath::Path blueRushPath1 = Jath::Path::cm(blueRushPath1Points);
 
-std::vector<Jath::Point> blueRushPath2Points = {Jath::Point(10.881,-111.13,120), Jath::Point(12.114,-112.704,120), Jath::Point(13.374,-114.257,120), Jath::Point(14.663,-115.786,120), Jath::Point(15.981,-117.29,120), Jath::Point(17.325,-118.771,120), Jath::Point(18.697,-120.227,120), Jath::Point(20.095,-121.657,120), Jath::Point(21.518,-123.062,120), Jath::Point(22.966,-124.442,120), Jath::Point(24.439,-125.795,120), Jath::Point(25.935,-127.122,120), Jath::Point(27.454,-128.423,120), Jath::Point(28.997,-129.696,120), Jath::Point(30.561,-130.941,120), Jath::Point(32.147,-132.16,120), Jath::Point(33.754,-133.35,120), Jath::Point(35.383,-134.511,120), Jath::Point(37.031,-135.644,120), Jath::Point(38.698,-136.749,120), Jath::Point(40.385,-137.823,120), Jath::Point(42.091,-138.867,120), Jath::Point(43.815,-139.88,120), Jath::Point(45.557,-140.863,120), Jath::Point(47.316,-141.815,120), Jath::Point(49.092,-142.734,120), Jath::Point(50.885,-143.62,120), Jath::Point(52.695,-144.472,120), Jath::Point(54.52,-145.289,120), Jath::Point(56.361,-146.072,120), Jath::Point(58.216,-146.818,120), Jath::Point(60.086,-147.527,120), Jath::Point(61.97,-148.197,120), Jath::Point(63.868,-148.828,120), Jath::Point(65.78,-149.417,120), Jath::Point(67.703,-149.963,120), Jath::Point(69.639,-150.465,120), Jath::Point(71.587,-150.92,120), Jath::Point(73.545,-151.326,120), Jath::Point(75.514,-151.679,120), Jath::Point(77.491,-151.977,120), Jath::Point(79.477,-152.219,120), Jath::Point(81.468,-152.398,120), Jath::Point(83.465,-152.51,120), Jath::Point(85.465,-152.553,120), Jath::Point(87.464,-152.516,120), Jath::Point(89.46,-152.399,120), Jath::Point(91.449,-152.189,120), Jath::Point(93.425,-151.879,120), Jath::Point(95.38,-151.462,120), Jath::Point(97.776,-150.775,120), Jath::Point(97.776,-150.775,0)};
+std::vector<Jath::Point> blueRushPath2Points = {Jath::Point(10.881, -111.13, 120), Jath::Point(12.114, -112.704, 120), Jath::Point(13.374, -114.257, 120), Jath::Point(14.663, -115.786, 120), Jath::Point(15.981, -117.29, 120), Jath::Point(17.325, -118.771, 120), Jath::Point(18.697, -120.227, 120), Jath::Point(20.095, -121.657, 120), Jath::Point(21.518, -123.062, 120), Jath::Point(22.966, -124.442, 120), Jath::Point(24.439, -125.795, 120), Jath::Point(25.935, -127.122, 120), Jath::Point(27.454, -128.423, 120), Jath::Point(28.997, -129.696, 120), Jath::Point(30.561, -130.941, 120), Jath::Point(32.147, -132.16, 120), Jath::Point(33.754, -133.35, 120), Jath::Point(35.383, -134.511, 120), Jath::Point(37.031, -135.644, 120), Jath::Point(38.698, -136.749, 120), Jath::Point(40.385, -137.823, 120), Jath::Point(42.091, -138.867, 120), Jath::Point(43.815, -139.88, 120), Jath::Point(45.557, -140.863, 120), Jath::Point(47.316, -141.815, 120), Jath::Point(49.092, -142.734, 120), Jath::Point(50.885, -143.62, 120), Jath::Point(52.695, -144.472, 120), Jath::Point(54.52, -145.289, 120), Jath::Point(56.361, -146.072, 120), Jath::Point(58.216, -146.818, 120), Jath::Point(60.086, -147.527, 120), Jath::Point(61.97, -148.197, 120), Jath::Point(63.868, -148.828, 120), Jath::Point(65.78, -149.417, 120), Jath::Point(67.703, -149.963, 120), Jath::Point(69.639, -150.465, 120), Jath::Point(71.587, -150.92, 120), Jath::Point(73.545, -151.326, 120), Jath::Point(75.514, -151.679, 120), Jath::Point(77.491, -151.977, 120), Jath::Point(79.477, -152.219, 120), Jath::Point(81.468, -152.398, 120), Jath::Point(83.465, -152.51, 120), Jath::Point(85.465, -152.553, 120), Jath::Point(87.464, -152.516, 120), Jath::Point(89.46, -152.399, 120), Jath::Point(91.449, -152.189, 120), Jath::Point(93.425, -151.879, 120), Jath::Point(95.38, -151.462, 120), Jath::Point(97.776, -150.775, 120), Jath::Point(97.776, -150.775, 0)};
 Jath::Path blueRushPath2 = Jath::Path::cm(blueRushPath2Points);
 
 void blueRushAWP()
@@ -804,9 +813,17 @@ void blueRushAWP()
     smartDrive.turnToPID(art::Degrees(90));
 }
 
-void redAWPGoalFirst(){
-    logger.logStringEntry(100, timePassed(), "RedAWP Started");
+void redAWPGoalFirstNeg()
+{
+    logger.logStringEntry(100, timePassed(), "RedAWP Started - 1");
     int redFlip = -1;
+
+    arm.set(100);
+    logger.logStringEntry(100, timePassed(), "RedAWP Started - 2");
+    vex::wait(.5, vex::sec);
+
+    arm.set(0);
+    arm.stop(vex::hold);
 
     // Grab Goal1
     smartDrive.m_pos = art::Vec2::XandY(art::Tiles(redFlip * 2.25), art::Tiles(-1.0));
@@ -833,7 +850,7 @@ void redAWPGoalFirst(){
     smartDrive.driveFor(travel.magnitude() * .75, 35);
     smartDrive.arcade(0, 0);
 
-    vex::wait(5,vex::seconds);
+    vex::wait(5, vex::seconds);
 
     intake.set(0);
     arm.set(50);
@@ -842,12 +859,20 @@ void redAWPGoalFirst(){
     arm.set(0);
     arm.stop(vex::hold);
 
-    smartDrive.arcade(-25,0);
-    vex::wait(3,vex::sec);
-    smartDrive.arcade(0,0);
+    smartDrive.arcade(-25, 0);
+    vex::wait(3, vex::sec);
+    smartDrive.arcade(0, 0);
 }
-void blueAWPGoalFirst(){
-    logger.logStringEntry(100, timePassed(), "BlueAWP Started");
+void blueAWPGoalFirstNeg()
+{
+    logger.logStringEntry(100, timePassed(), "BlueAWP Started - 1");
+
+    arm.set(100);
+    vex::wait(.5, vex::sec);
+    logger.logStringEntry(100, timePassed(), "BlueAWP Started - 2");
+
+    arm.set(0);
+    arm.stop(vex::hold);
 
     // Grab Goal1
     smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25), art::Tiles(-1.0));
@@ -874,7 +899,7 @@ void blueAWPGoalFirst(){
     smartDrive.driveFor(travel.magnitude() * .75, 35);
     smartDrive.arcade(0, 0);
 
-    vex::wait(5,vex::seconds);
+    vex::wait(5, vex::seconds);
 
     intake.set(0);
     arm.set(50);
@@ -883,10 +908,119 @@ void blueAWPGoalFirst(){
     arm.set(0);
     arm.stop(vex::hold);
 
-    smartDrive.arcade(-25,0);
-    vex::wait(3,vex::sec);
-    smartDrive.arcade(0,0);
+    smartDrive.arcade(-25, 0);
+    vex::wait(3, vex::sec);
+    smartDrive.arcade(0, 0);
 }
 
-void redAWPStakeFirst(){}
-void blueAWPStakeFirst(){}
+void redAWPStakeFirstPos()
+{
+    smartDrive.driveForPID(art::Inches(2));
+
+    arm.set(100);
+    vex::wait(1.25, vex::seconds);
+    arm.set(0);
+    arm.stop(vex::hold);
+
+    smartDrive.driveForPID(art::Inches(-16));
+
+    arm.set(-100);
+    vex::wait(1.25/4.f, vex::seconds);
+    arm.set(0);
+    arm.stop(vex::hold);
+
+    target = art::Vec2::XandY(art::Tiles(-1), art::Tiles(-1));
+    travel = art::Vec2(target - smartDrive.m_pos);
+
+    smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+    // smartDrive.driveFor(travel.magnitude() * -.9, -50);]
+
+    smartDrive.driveForPID(-travel.magnitude());
+    clamp.set(true);
+    logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+    smartDrive.arcade(0, 0);
+
+    vex::wait(0.25, vex::sec);
+
+    target = art::Vec2::XandY(art::Tiles(-1), art::Tiles(-2));
+    travel = art::Vec2(target - smartDrive.m_pos);
+
+    smartDrive.turnToPID(travel.direction());
+    intake.set(60);
+    smartDrive.driveForPID(travel.magnitude());
+    smartDrive.arcade(0, 0);
+    smartDrive.driveForPID(art::Inches(-5));
+
+    vex::wait(1.0, vex::seconds);
+
+    intake.set(0);
+    // arm.set(-50);
+    // vex::wait(0.5, vex::sec);
+
+    // arm.set(0);
+    // arm.stop(vex::hold);
+
+    target = art::Vec2::XandY(art::Tiles(-1), art::Tiles(0));
+    travel = art::Vec2(target - smartDrive.m_pos);
+
+    smartDrive.turnToPID(travel.direction());
+
+    smartDrive.arcade(35, 0);
+    vex::wait(3, vex::sec);
+    smartDrive.arcade(0, 0);
+}
+void blueAWPStakeFirstPos() {
+    smartDrive.driveForPID(art::Inches(2));
+
+    arm.set(100);
+    vex::wait(1.25, vex::seconds);
+    arm.set(0);
+    arm.stop(vex::hold);
+
+    smartDrive.driveForPID(art::Inches(-16));
+
+    arm.set(-100);
+    vex::wait(1.25/4.f, vex::seconds);
+    arm.set(0);
+    arm.stop(vex::hold);
+
+    target = art::Vec2::XandY(art::Tiles(1), art::Tiles(-1));
+    travel = art::Vec2(target - smartDrive.m_pos);
+
+    smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+    // smartDrive.driveFor(travel.magnitude() * -.9, -50);]
+
+    smartDrive.driveForPID(-travel.magnitude());
+    clamp.set(true);
+    logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+    smartDrive.arcade(0, 0);
+
+    vex::wait(0.25, vex::sec);
+
+    target = art::Vec2::XandY(art::Tiles(1), art::Tiles(-2));
+    travel = art::Vec2(target - smartDrive.m_pos);
+
+    smartDrive.turnToPID(travel.direction());
+    intake.set(60);
+    smartDrive.driveForPID(travel.magnitude());
+    smartDrive.arcade(0, 0);
+    smartDrive.driveForPID(art::Inches(-5));
+
+    vex::wait(1.0, vex::seconds);
+
+    intake.set(0);
+    // arm.set(-50);
+    // vex::wait(0.5, vex::sec);
+
+    // arm.set(0);
+    // arm.stop(vex::hold);
+
+    target = art::Vec2::XandY(art::Tiles(1), art::Tiles(0));
+    travel = art::Vec2(target - smartDrive.m_pos);
+
+    smartDrive.turnToPID(travel.direction());
+
+    smartDrive.arcade(35, 0);
+    vex::wait(3, vex::sec);
+    smartDrive.arcade(0, 0);
+}

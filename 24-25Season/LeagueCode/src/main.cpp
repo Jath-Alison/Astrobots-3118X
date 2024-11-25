@@ -77,8 +77,13 @@ void autonomous(void)
 		// blueSoloAWP();
 		// blueElims();
 		// blueRushAWP();
-		Brain.Screen.print("BlueAuto- Goal First AWP");
-		blueAWPGoalFirst();
+
+		// blueAWPGoalFirstNeg();
+		// Brain.Screen.print("BlueAuto- Goal First AWPNeg");
+
+		Brain.Screen.print("BlueAuto- Stake First AWPPos");
+		blueAWPStakeFirstPos();
+
 	}
 	else
 	{
@@ -86,8 +91,13 @@ void autonomous(void)
 		// redSoloAWP();
 		// redElims();
 		// redRushAWP();
-		Brain.Screen.print("RedAuto- Goal First AWP");
-		redAWPGoalFirst();
+
+		// Brain.Screen.print("RedAuto- Goal First AWPNeg");
+		// redAWPGoalFirstNeg();
+
+		Brain.Screen.print("RedAuto- Stake First AWPPos");
+		redAWPStakeFirstPos();
+
 	}
 
 	logger.logStringEntry(100, timePassed(), "Auton Routine Finished");
@@ -131,6 +141,8 @@ void usercontrol(void)
 		if (Controller1.ButtonR1.pressing())
 		{
 			intake.set(90);
+		}else if(Controller1.ButtonA.pressing()){
+			intake.set(-90);
 		}
 		else
 		{

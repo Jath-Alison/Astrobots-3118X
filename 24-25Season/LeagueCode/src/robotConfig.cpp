@@ -70,7 +70,7 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
 
 art::SimpleMotor intake  = art::SimpleMotor(vex::motor(vex::PORT15, vex::gearSetting::ratio6_1, false))
     .withSpeedMode(false);
-vex::digital_out clamp(Brain.ThreeWirePort.G);
+vex::digital_out clamp(Brain.ThreeWirePort.G); bool clampState = false;;
 
 art::SimpleMotor arm = art::SimpleMotor(vex::motor(vex::PORT14, vex::gearSetting::ratio36_1, false))
     .withSpeedMode(true);
@@ -87,8 +87,8 @@ art::PID armPID = art::PID()
 art::Angle armTarget = 0;
 double armOut = 0;
 
-vex::digital_out doinkerDeploy(Brain.ThreeWirePort.A);
-vex::digital_out doinkerClamp(Brain.ThreeWirePort.B);
+vex::digital_out doinkerDeploy(Brain.ThreeWirePort.A); bool doinkerDeployState = false;;
+vex::digital_out doinkerClamp(Brain.ThreeWirePort.B); bool doinkerClampState = false;;
 
 
 bool isBlue = true;

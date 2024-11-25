@@ -121,8 +121,10 @@ void logLoopFunction()
      *
      */
 
-    logger.startFloatArrayEntry("Controller/Axes", 1);
-    logger.startBooleanArrayEntry("Controller/Buttons", 2);
+    logger.startFloatArrayEntry("DS/joystick0/axes", 1);
+    logger.startBooleanArrayEntry("DS/joystick0/buttons", 2);
+    logger.startFloatArrayEntry("DS/joystick0/povs", 29);
+
 
     logger.startFloatArrayEntry("Motors/Command", 3);
     logger.startFloatArrayEntry("Motors/Speed", 4);
@@ -152,14 +154,14 @@ void logLoopFunction()
     // logger.startDoubleEntry("Arm/PID/I", 21);
     // logger.startDoubleEntry("Arm/PID/D", 22);
 
-    logger.startDoubleEntry("ARM/PID/Target{deg}", 17);
-    logger.startDoubleEntry("ARM/PID/Current{deg}", 18);
-    logger.startDoubleEntry("ARM/PID/CurrentMotor{deg}", 24);
-    logger.startDoubleEntry("ARM/PID/Error", 19);
-    logger.startDoubleEntry("ARM/PID/P", 20);
-    logger.startDoubleEntry("ARM/PID/I", 21);
-    logger.startDoubleEntry("ARM/PID/D", 22);
-    logger.startDoubleEntry("ARM/PID/Out", 23);
+    logger.startDoubleEntry("Arm/PID/Target{deg}", 17);
+    logger.startDoubleEntry("Arm/PID/Current{deg}", 18);
+    logger.startDoubleEntry("Arm/PID/CurrentMotor{deg}", 24);
+    logger.startDoubleEntry("Arm/PID/Error", 19);
+    logger.startDoubleEntry("Arm/PID/P", 20);
+    logger.startDoubleEntry("Arm/PID/I", 21);
+    logger.startDoubleEntry("Arm/PID/D", 22);
+    logger.startDoubleEntry("Arm/PID/Out", 23);
 
     logger.startDoubleArrayEntry("Robot/CenterPose", 24);
     logger.startDoubleArrayEntry("Robot/CenterPose(Blue)", 25);
@@ -255,8 +257,14 @@ void logLoopFunction()
             -(gpsSensor.heading(vex::degrees) - 90) // converted to FRC scheme
         };
 
+        std::vector<float> povs = {
+            -1
+        };
+
         logger.logFloatArrayEntry(1, timePassed(), axesStates);
         logger.logBooleanArrayEntry(2, timePassed(), buttonStates);
+        logger.logFloatArrayEntry(29, timePassed(), povs);
+
 
         logger.logFloatArrayEntry(3, timePassed(), motorCommands);
         logger.logFloatArrayEntry(4, timePassed(), motorSpeeds);

@@ -40,7 +40,7 @@ extern art::TankDrive drive;
 extern art::SmartDrive smartDrive;
 
 extern art::SimpleMotor intake;
-extern vex::digital_out clamp;
+extern vex::digital_out clamp; extern bool clampState;
 
 extern art::SimpleMotor arm;
 
@@ -50,8 +50,8 @@ extern art::PID armPID;
 extern art::Angle armTarget;
 extern double armOut;
 
-extern vex::digital_out doinkerDeploy;
-extern vex::digital_out doinkerClamp;
+extern vex::digital_out doinkerDeploy; extern bool doinkerDeployState;
+extern vex::digital_out doinkerClamp; extern bool doinkerClampState;
 
 
 extern bool isBlue;

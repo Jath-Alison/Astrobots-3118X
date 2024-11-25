@@ -44,7 +44,7 @@ void pre_auton(void)
 {
 	logger.logStringEntry(100, timePassed(), "Pre Auton Started");
 
-	arm.setPosition(armRot.angle(),vex::degrees);
+	arm.setPosition(armRot.angle(), vex::degrees);
 }
 
 /**
@@ -76,7 +76,6 @@ void autonomous(void)
 		Brain.Screen.setCursor(10, 1);
 		Brain.Screen.print("BlueAuto");
 		// blueElims();
-
 	}
 	else
 	{
@@ -115,6 +114,10 @@ void usercontrol(void)
 	}
 	logger.logStringEntry(100, timePassed(), "Driver Control - Inertial Finished Calibrating");
 
+	clampState;
+	doinkerDeployState;
+	doinkerClampState;
+
 	while (1)
 	{
 
@@ -122,11 +125,7 @@ void usercontrol(void)
 
 		if (Controller1.ButtonR1.pressing())
 		{
-			intake.set(100);
-		}
-		else if (Controller1.ButtonR2.pressing())
-		{
-			intake.set(-100);
+			intake.set(90);
 		}
 		else
 		{
@@ -135,34 +134,51 @@ void usercontrol(void)
 
 		if (Controller1.ButtonL1.PRESSED)
 		{
-			clamp.set(true);
-		}
-		else if (Controller1.ButtonL2.PRESSED)
-		{
-			clamp.set(false);
+			clampState = !clampState;
+			clamp.set(clampState);
 		}
 
-		if (Controller1.ButtonUp.pressing())
+		if (Controller1.ButtonX.PRESSED)
 		{
-			armTarget = art::Degrees(140);
+			doinkerDeployState = !doinkerDeployState;
+			doinkerDeploy.set(doinkerDeployState);
 		}
-		if (Controller1.ButtonRight.pressing())
+		if (Controller1.ButtonB.PRESSED)
 		{
-			armTarget = art::Degrees(30);
+			doinkerClampState = !doinkerClampState;
+			doinkerClamp.set(doinkerClampState);
 		}
+
+		if (Controller1.ButtonR2.pressing())
+		{
+			arm.set(100);
+		}else
+		if (Controller1.ButtonL2.pressing())
+		{
+			arm.set(-100);
+		}else if (Controller1.ButtonUp.pressing())
+		{
+			arm.set(30);
+		}else
 		if (Controller1.ButtonDown.pressing())
 		{
-			armTarget = art::Degrees(40);
-		}
-
-		armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(arm.position(vex::degrees)/3.0)));
-
-		if( !(armTarget > art::Degrees(330) && armTarget < art::Degrees(340)) && abs(shortestTurnPath(armTarget - art::Degrees(armRot.angle())).degrees()) >= 2){
-			arm.set(armOut);
+			arm.set(-30);
 		}else{
 			arm.set(0);
 			arm.stop(vex::hold);
 		}
+
+		// armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(arm.position(vex::degrees) / 3.0)));
+
+		// if (!(armTarget > art::Degrees(330) && armTarget < art::Degrees(340)) && abs(shortestTurnPath(armTarget - art::Degrees(armRot.angle())).degrees()) >= 2)
+		// {
+		// 	arm.set(armOut);
+		// }
+		// else
+		// {
+		// 	arm.set(0);
+		// 	arm.stop(vex::hold);
+		// }
 
 		// if (Controller1.ButtonDown.pressing())
 		// {

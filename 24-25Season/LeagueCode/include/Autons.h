@@ -19,4 +19,10 @@ void blueElims();
 void redElims();
 
 void redRushAWP();
-extern Jath::Path redRushPath1;
+void blueRushAWP();
+
+void redAWPGoalFirst();
+void blueAWPGoalFirst();
+
+void redAWPStakeFirst();
+void blueAWPStakeFirst();

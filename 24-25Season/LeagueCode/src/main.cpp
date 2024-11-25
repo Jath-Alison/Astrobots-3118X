@@ -74,15 +74,20 @@ void autonomous(void)
 	if (isBlue)
 	{
 		Brain.Screen.setCursor(10, 1);
-		Brain.Screen.print("BlueAuto");
+		// blueSoloAWP();
 		// blueElims();
+		// blueRushAWP();
+		Brain.Screen.print("BlueAuto- Goal First AWP");
+		blueAWPGoalFirst();
 	}
 	else
 	{
 		Brain.Screen.setCursor(10, 1);
-		Brain.Screen.print("RedAuto");
+		// redSoloAWP();
 		// redElims();
-		redRushAWP();
+		// redRushAWP();
+		Brain.Screen.print("RedAuto- Goal First AWP");
+		redAWPGoalFirst();
 	}
 
 	logger.logStringEntry(100, timePassed(), "Auton Routine Finished");

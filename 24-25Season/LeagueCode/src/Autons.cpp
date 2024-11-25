@@ -161,6 +161,15 @@ void logLoopFunction()
     logger.startDoubleEntry("ARM/PID/D", 22);
     logger.startDoubleEntry("ARM/PID/Out", 23);
 
+    logger.startDoubleArrayEntry("Robot/CenterPose", 24);
+    logger.startDoubleArrayEntry("Robot/CenterPose(Blue)", 25);
+    
+    logger.startDoubleArrayEntry("Robot/GPS/GpsPose", 26);
+    logger.startDoubleArrayEntry("Robot/GPS/GpsPose(Blue)", 27);
+    logger.startInt64Entry("Robot/GPS/GpsQuality", 28);
+
+
+
     std::vector<vex::motor *> allMotors = {
         &leftMotorA, &leftMotorB, &leftMotorC,
         &rightMotorA, &rightMotorB, &rightMotorC,
@@ -224,6 +233,28 @@ void logLoopFunction()
             -(smartDrive.m_dir - art::Degrees(90)) // converted to FRC scheme
         };
 
+        std::vector<double> robotCenterPose = {
+            art::Length(smartDrive.m_centerPos.x).meters(),
+            art::Length(smartDrive.m_centerPos.y).meters(),
+            art::Angle(smartDrive.m_dir).degrees()};
+
+        std::vector<double> robotCenterPoseBlue = {
+            1.8 + art::Length(smartDrive.m_centerPos.x).meters(),
+            1.8 + art::Length(smartDrive.m_centerPos.y).meters(),
+            -(smartDrive.m_dir - art::Degrees(90)) // converted to FRC scheme
+        };
+
+        std::vector<double> robotGpsPose = {
+            art::Inches(gpsSensor.xPosition(vex::inches)).meters(),
+            art::Inches(gpsSensor.yPosition(vex::inches)).meters(),
+            art::Degrees(gpsSensor.heading(vex::degrees)).degrees()};
+
+        std::vector<double> robotGpsPoseBlue = {
+            1.8 + art::Inches(gpsSensor.xPosition(vex::inches)).meters(),
+            1.8 + art::Inches(gpsSensor.yPosition(vex::inches)).meters(),
+            -(gpsSensor.heading(vex::degrees) - 90) // converted to FRC scheme
+        };
+
         logger.logFloatArrayEntry(1, timePassed(), axesStates);
         logger.logBooleanArrayEntry(2, timePassed(), buttonStates);
 
@@ -255,6 +286,13 @@ void logLoopFunction()
         logger.logDoubleEntry(21, timePassed(), armPID.getIntegral());//"ARM/PID/I"
         logger.logDoubleEntry(22, timePassed(), armPID.getDerivative());//"ARM/PID/D"
         logger.logDoubleEntry(23, timePassed(), armOut);//"ARM/PID/Out"
+
+        logger.logDoubleArrayEntry(24, timePassed(), robotCenterPose);
+        logger.logDoubleArrayEntry(25, timePassed(), robotCenterPoseBlue);
+        logger.logDoubleArrayEntry(26, timePassed(), robotGpsPose);
+        logger.logDoubleArrayEntry(27, timePassed(), robotGpsPoseBlue);
+
+        logger.logInt64Entry(28, timePassed(), gpsSensor.quality());
 
         if (Competition.AUTONOMOUS)
         {

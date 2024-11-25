@@ -22,6 +22,8 @@ vex::controller Controller1;
 
 WPILogger logger;
 
+vex::gps gpsSensor(vex::PORT17, 5.0, 0, vex::inches, 90);
+
 vex::motor leftMotorA (vex::PORT18, vex::gearSetting::ratio6_1, true);
 vex::motor leftMotorB (vex::PORT19, vex::gearSetting::ratio6_1, true);
 vex::motor leftMotorC (vex::PORT20, vex::gearSetting::ratio6_1, true);

@@ -22,6 +22,8 @@
 
 extern WPILogger logger;
 
+extern vex::gps gpsSensor;
+
 extern vex::motor leftMotorA;
 extern vex::motor leftMotorB;
 extern vex::motor leftMotorC;

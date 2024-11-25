@@ -75,13 +75,15 @@ void autonomous(void)
 	{
 		Brain.Screen.setCursor(10, 1);
 		Brain.Screen.print("BlueAuto");
-		blueElims();
+		// blueElims();
+
 	}
 	else
 	{
 		Brain.Screen.setCursor(10, 1);
 		Brain.Screen.print("RedAuto");
-		redElims();
+		// redElims();
+		redRushAWP();
 	}
 
 	logger.logStringEntry(100, timePassed(), "Auton Routine Finished");

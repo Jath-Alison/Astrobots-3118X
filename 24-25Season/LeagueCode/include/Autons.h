@@ -17,3 +17,6 @@ void blueSoloAWP();
 void redSoloAWP();
 void blueElims();
 void redElims();
+
+void redRushAWP();
+extern Jath::Path redRushPath1;

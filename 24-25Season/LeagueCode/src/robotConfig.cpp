@@ -86,6 +86,7 @@ art::PID armPID = art::PID()
 
 art::Angle armTarget = 0;
 double armOut = 0;
+bool macroRunning=false;
 
 vex::digital_out doinkerDeploy(Brain.ThreeWirePort.A); bool doinkerDeployState = false;;
 vex::digital_out doinkerClamp(Brain.ThreeWirePort.B); bool doinkerClampState = false;;

@@ -80,32 +80,49 @@ void autonomous(void)
 		// Brain.Screen.print("BlueAuto- Rush");
 		// blueRushAWP();
 
-		blueAWPGoalFirstNeg();
-		Brain.Screen.print("BlueAuto- Goal First AWPNeg");
+		// blueAWPGoalFirstNeg();
+		// Brain.Screen.print("BlueAuto- Goal First AWPNeg");
 
-		// Brain.Screen.print("BlueAuto- Stake First AWPPos");
-		// blueAWPStakeFirstPos();
-
+		Brain.Screen.print("BlueAuto- Stake First AWPPos");
+		blueAWPStakeFirstPos();
 	}
 	else
 	{
 		Brain.Screen.setCursor(10, 1);
 		// redSoloAWP();
 		// redElims();
-		
+
 		// Brain.Screen.print("RedAuto- Rush");
 		// redRushAWP();
 
-		Brain.Screen.print("RedAuto- Goal First AWPNeg");
-		redAWPGoalFirstNeg();
+		// Brain.Screen.print("RedAuto- Goal First AWPNeg");
+		// redAWPGoalFirstNeg();
 
-		// Brain.Screen.print("RedAuto- Stake First AWPPos");
-		// redAWPStakeFirstPos();
-
+		Brain.Screen.print("RedAuto- Stake First AWPPos");
+		redAWPStakeFirstPos();
 	}
 
 	logger.logStringEntry(100, timePassed(), "Auton Routine Finished");
 }
+
+int armMacro()
+{
+
+	// arm.set(-100);
+
+	// vex::wait(.25, vex::sec);
+
+	arm.set(75);
+	vex::wait(.25, vex::sec);
+	arm.set(0);
+	arm.stop(vex::hold);
+
+	macroRunning = false;
+
+	return 1;
+}
+
+vex::thread macroThread;
 
 /**
  * @brief Runs the User Control Task
@@ -145,7 +162,9 @@ void usercontrol(void)
 		if (Controller1.ButtonR1.pressing())
 		{
 			intake.set(90);
-		}else if(Controller1.ButtonA.pressing()){
+		}
+		else if (Controller1.ButtonA.pressing())
+		{
 			intake.set(-90);
 		}
 		else
@@ -173,20 +192,38 @@ void usercontrol(void)
 		if (Controller1.ButtonR2.pressing())
 		{
 			arm.set(100);
-		}else
-		if (Controller1.ButtonL2.pressing())
+			macroRunning = false;
+		}
+		else if (Controller1.ButtonL2.pressing())
 		{
 			arm.set(-100);
-		}else if (Controller1.ButtonUp.pressing())
+			macroRunning = false;
+		}
+		else if (Controller1.ButtonUp.pressing())
 		{
 			arm.set(30);
+			macroRunning = false;
 		}else
 		if (Controller1.ButtonDown.pressing())
 		{
 			arm.set(-30);
-		}else{
+			macroRunning = false;
+		}
+		else if (!macroRunning)
+		{
 			arm.set(0);
 			arm.stop(vex::hold);
+		}
+
+		if (Controller1.ButtonL2.RELEASED)
+		{
+			macroRunning = true;
+			macroThread = vex::thread(armMacro);
+		}
+		else if (Controller1.ButtonDown.PRESSED)
+		{
+			macroRunning = false;
+			macroThread.interrupt();
 		}
 
 		// armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(arm.position(vex::degrees) / 3.0)));

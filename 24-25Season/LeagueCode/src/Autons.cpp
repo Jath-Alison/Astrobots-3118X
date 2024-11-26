@@ -44,8 +44,11 @@ void displayLoopFunction()
         Brain.Screen.print("Rot: %f", art::Angle(smartDrive.m_dir).degrees());
         Brain.Screen.setCursor(4, 1);
         Brain.Screen.clearLine();
-        Brain.Screen.print("Arm_Angle: %f", arm.position(vex::degrees) / 3.0);
+        Brain.Screen.print("Arm_Angle: %f", armRot.position(vex::degrees));
         Brain.Screen.setCursor(5, 1);
+        Brain.Screen.clearLine();
+        Brain.Screen.print("Arm_Angle: %f", arm.position(vex::degrees) / 3.0);
+        Brain.Screen.setCursor(6, 1);
         Brain.Screen.clearLine();
         Brain.Screen.print("Intake Temp: %u \370 ", int(intake.temperature(vex::celsius)));
 
@@ -72,7 +75,7 @@ void displayLoopFunction()
             {
                 isBlue = true;
 
-                //Only for Stake First autos
+                // Only for Stake First autos
                 smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2), art::Tiles(-1));
                 smartDrive.m_dir = art::Degrees(90);
             }
@@ -80,7 +83,7 @@ void displayLoopFunction()
             {
                 isBlue = false;
 
-                //Only for Stake First autos
+                // Only for Stake First autos
                 smartDrive.m_pos = art::Vec2::XandY(art::Tiles(-2), art::Tiles(-1));
                 smartDrive.m_dir = art::Degrees(-90);
             }
@@ -138,7 +141,6 @@ void logLoopFunction()
     logger.startFloatArrayEntry("Motors/Current", 5);
     logger.startFloatArrayEntry("Motors/Temperature", 6);
     // logger.startFloatArrayEntry("Motors/Position", 603);
-
 
     logger.startDoubleArrayEntry("Robot/Pose", 7);
     logger.startDoubleArrayEntry("Robot/Pose(Blue)", 8);
@@ -791,7 +793,7 @@ void redRushAWP()
 std::vector<Jath::Point> blueRushPath1Points = {Jath::Point(148.96, -151.675, 103), Jath::Point(146.961, -151.725, 101.465), Jath::Point(144.961, -151.771, 101.311), Jath::Point(142.962, -151.814, 101.149), Jath::Point(140.962, -151.853, 100.981), Jath::Point(138.962, -151.887, 100.804), Jath::Point(136.962, -151.918, 100.62), Jath::Point(134.963, -151.943, 100.428), Jath::Point(132.963, -151.962, 100.227), Jath::Point(130.963, -151.976, 100.019), Jath::Point(128.963, -151.983, 99.577), Jath::Point(126.963, -151.983, 99.343), Jath::Point(124.963, -151.975, 99.101), Jath::Point(122.963, -151.959, 98.85), Jath::Point(120.963, -151.934, 98.591), Jath::Point(118.963, -151.898, 98.047), Jath::Point(116.964, -151.852, 97.763), Jath::Point(114.965, -151.796, 97.472), Jath::Point(112.966, -151.727, 96.866), Jath::Point(110.968, -151.645, 96.552), Jath::Point(108.97, -151.549, 96.232), Jath::Point(106.973, -151.439, 95.575), Jath::Point(104.977, -151.312, 95.239), Jath::Point(102.982, -151.169, 94.899), Jath::Point(100.989, -151.008, 94.209), Jath::Point(98.997, -150.828, 93.861), Jath::Point(97.007, -150.628, 93.165), Jath::Point(95.019, -150.407, 92.819), Jath::Point(93.034, -150.164, 92.135), Jath::Point(91.052, -149.897, 91.8), Jath::Point(89.073, -149.607, 91.151), Jath::Point(87.098, -149.29, 90.839), Jath::Point(85.128, -148.949, 90.248), Jath::Point(83.162, -148.579, 89.972), Jath::Point(81.202, -148.181, 89.463), Jath::Point(79.248, -147.754, 89.233), Jath::Point(77.301, -147.297, 88.83), Jath::Point(75.361, -146.812, 88.657), Jath::Point(73.429, -146.293, 88.377), Jath::Point(71.506, -145.746, 88.187), Jath::Point(69.592, -145.165, 88.126), Jath::Point(67.688, -144.554, 88.078), Jath::Point(65.794, -143.911, 88.089), Jath::Point(63.911, -143.237, 88.183), Jath::Point(62.039, -142.533, 88.264), Jath::Point(60.179, -141.797, 88.494), Jath::Point(58.331, -141.032, 88.807), Jath::Point(56.496, -140.237, 88.992), Jath::Point(54.673, -139.415, 89.415), Jath::Point(52.863, -138.564, 89.651), Jath::Point(51.066, -137.686, 90.163), Jath::Point(49.282, -136.783, 90.437), Jath::Point(47.51, -135.855, 91.015), Jath::Point(45.752, -134.902, 91.316), Jath::Point(44.005, -133.928, 91.936), Jath::Point(42.272, -132.929, 92.253), Jath::Point(40.55, -131.912, 92.572), Jath::Point(38.841, -130.874, 93.215), Jath::Point(37.143, -129.817, 93.537), Jath::Point(35.456, -128.743, 93.857), Jath::Point(33.781, -127.65, 94.491), Jath::Point(32.116, -126.542, 94.802), Jath::Point(30.461, -125.419, 95.11), Jath::Point(28.816, -124.281, 95.71), Jath::Point(27.181, -123.129, 96.002), Jath::Point(25.555, -121.965, 96.288), Jath::Point(23.937, -120.789, 96.567), Jath::Point(22.329, -119.6, 97.105), Jath::Point(20.728, -118.401, 97.364), Jath::Point(19.136, -117.191, 97.615), Jath::Point(17.55, -115.972, 97.858), Jath::Point(15.971, -114.744, 98.095), Jath::Point(14.4, -113.507, 98.323), Jath::Point(11.424, -111.13, 98.758), Jath::Point(11.424, -111.13, 0)};
 Jath::Path blueRushPath1 = Jath::Path::cm(blueRushPath1Points);
 
-std::vector<Jath::Point> blueRushPath2Points = {Jath::Point(10.881,-111.13,97), Jath::Point(10.931,-113.129,78.947), Jath::Point(11.059,-115.124,77.851), Jath::Point(11.278,-117.112,75.607), Jath::Point(11.598,-119.086,74.48), Jath::Point(12.021,-121.04,72.284), Jath::Point(12.556,-122.967,71.245), Jath::Point(13.213,-124.855,69.37), Jath::Point(13.989,-126.698,67.872), Jath::Point(14.889,-128.484,67.3), Jath::Point(15.92,-130.197,66.565), Jath::Point(17.073,-131.83,66.407), Jath::Point(18.342,-133.375,66.817), Jath::Point(19.721,-134.823,67.735), Jath::Point(21.199,-136.17,69.062), Jath::Point(22.766,-137.411,70.684), Jath::Point(24.414,-138.545,71.569), Jath::Point(26.128,-139.574,73.418), Jath::Point(27.899,-140.503,75.298), Jath::Point(29.716,-141.337,77.139), Jath::Point(31.572,-142.082,78.89), Jath::Point(33.461,-142.738,79.722), Jath::Point(35.377,-143.313,81.287), Jath::Point(37.312,-143.816,82.714), Jath::Point(39.264,-144.25,83.375), Jath::Point(41.231,-144.615,84.595), Jath::Point(43.207,-144.923,85.685), Jath::Point(45.191,-145.175,86.184), Jath::Point(47.181,-145.372,87.097), Jath::Point(49.175,-145.524,87.906), Jath::Point(51.172,-145.627,88.274), Jath::Point(53.171,-145.688,88.947), Jath::Point(55.171,-145.71,89.252), Jath::Point(57.171,-145.693,89.81), Jath::Point(59.17,-145.642,90.063), Jath::Point(61.168,-145.555,90.524), Jath::Point(63.165,-145.439,90.929), Jath::Point(65.159,-145.29,91.112), Jath::Point(67.152,-145.114,91.445), Jath::Point(69.141,-144.909,91.595), Jath::Point(71.128,-144.679,91.865), Jath::Point(73.112,-144.424,91.986), Jath::Point(75.092,-144.144,92.202), Jath::Point(77.069,-143.842,92.385), Jath::Point(79.042,-143.516,92.465), Jath::Point(81.012,-143.169,92.601), Jath::Point(82.978,-142.801,92.658), Jath::Point(84.939,-142.412,92.748), Jath::Point(86.897,-142.002,92.808), Jath::Point(88.851,-141.574,92.835), Jath::Point(90.8,-141.125,92.836), Jath::Point(92.744,-140.657,92.807), Jath::Point(94.683,-140.168,92.733), Jath::Point(96.618,-139.66,92.605), Jath::Point(98.547,-139.132,92.406), Jath::Point(100.469,-138.582,91.925), Jath::Point(102.386,-138.008,91.422), Jath::Point(104.294,-137.41,90.202), Jath::Point(105.512,-137.012,89.6), Jath::Point(105.512,-137.012,0)};
+std::vector<Jath::Point> blueRushPath2Points = {Jath::Point(10.881, -111.13, 97), Jath::Point(10.931, -113.129, 78.947), Jath::Point(11.059, -115.124, 77.851), Jath::Point(11.278, -117.112, 75.607), Jath::Point(11.598, -119.086, 74.48), Jath::Point(12.021, -121.04, 72.284), Jath::Point(12.556, -122.967, 71.245), Jath::Point(13.213, -124.855, 69.37), Jath::Point(13.989, -126.698, 67.872), Jath::Point(14.889, -128.484, 67.3), Jath::Point(15.92, -130.197, 66.565), Jath::Point(17.073, -131.83, 66.407), Jath::Point(18.342, -133.375, 66.817), Jath::Point(19.721, -134.823, 67.735), Jath::Point(21.199, -136.17, 69.062), Jath::Point(22.766, -137.411, 70.684), Jath::Point(24.414, -138.545, 71.569), Jath::Point(26.128, -139.574, 73.418), Jath::Point(27.899, -140.503, 75.298), Jath::Point(29.716, -141.337, 77.139), Jath::Point(31.572, -142.082, 78.89), Jath::Point(33.461, -142.738, 79.722), Jath::Point(35.377, -143.313, 81.287), Jath::Point(37.312, -143.816, 82.714), Jath::Point(39.264, -144.25, 83.375), Jath::Point(41.231, -144.615, 84.595), Jath::Point(43.207, -144.923, 85.685), Jath::Point(45.191, -145.175, 86.184), Jath::Point(47.181, -145.372, 87.097), Jath::Point(49.175, -145.524, 87.906), Jath::Point(51.172, -145.627, 88.274), Jath::Point(53.171, -145.688, 88.947), Jath::Point(55.171, -145.71, 89.252), Jath::Point(57.171, -145.693, 89.81), Jath::Point(59.17, -145.642, 90.063), Jath::Point(61.168, -145.555, 90.524), Jath::Point(63.165, -145.439, 90.929), Jath::Point(65.159, -145.29, 91.112), Jath::Point(67.152, -145.114, 91.445), Jath::Point(69.141, -144.909, 91.595), Jath::Point(71.128, -144.679, 91.865), Jath::Point(73.112, -144.424, 91.986), Jath::Point(75.092, -144.144, 92.202), Jath::Point(77.069, -143.842, 92.385), Jath::Point(79.042, -143.516, 92.465), Jath::Point(81.012, -143.169, 92.601), Jath::Point(82.978, -142.801, 92.658), Jath::Point(84.939, -142.412, 92.748), Jath::Point(86.897, -142.002, 92.808), Jath::Point(88.851, -141.574, 92.835), Jath::Point(90.8, -141.125, 92.836), Jath::Point(92.744, -140.657, 92.807), Jath::Point(94.683, -140.168, 92.733), Jath::Point(96.618, -139.66, 92.605), Jath::Point(98.547, -139.132, 92.406), Jath::Point(100.469, -138.582, 91.925), Jath::Point(102.386, -138.008, 91.422), Jath::Point(104.294, -137.41, 90.202), Jath::Point(105.512, -137.012, 89.6), Jath::Point(105.512, -137.012, 0)};
 Jath::Path blueRushPath2 = Jath::Path::cm(blueRushPath2Points);
 
 void blueRushAWP()
@@ -819,7 +821,6 @@ void blueRushAWP()
 
     smartDrive.turnToPID(art::Degrees(0));
     smartDrive.driveForPID(art::Inches(15));
-
 }
 
 void redAWPGoalFirstNeg()
@@ -924,6 +925,8 @@ void blueAWPGoalFirstNeg()
 
 void redAWPStakeFirstPos()
 {
+    vex::wait(4, vex::sec);
+
     smartDrive.driveForPID(art::Inches(2));
 
     arm.set(100);
@@ -934,7 +937,7 @@ void redAWPStakeFirstPos()
     smartDrive.driveForPID(art::Inches(-16));
 
     arm.set(-100);
-    vex::wait(1.25/4.f, vex::seconds);
+    vex::wait(1.25 / 4.f, vex::seconds);
     arm.set(0);
     arm.stop(vex::hold);
 
@@ -955,14 +958,14 @@ void redAWPStakeFirstPos()
     travel = art::Vec2(target - smartDrive.m_pos);
 
     smartDrive.turnToPID(travel.direction());
-    intake.set(80);
+    intake.set(100);
     smartDrive.driveForPID(travel.magnitude());
     smartDrive.arcade(0, 0);
     smartDrive.driveForPID(art::Inches(-5));
 
     vex::wait(1.0, vex::seconds);
 
-    intake.set(0);
+    // intake.set(0);
     // arm.set(-50);
     // vex::wait(0.5, vex::sec);
 
@@ -978,7 +981,10 @@ void redAWPStakeFirstPos()
     vex::wait(3, vex::sec);
     smartDrive.arcade(0, 0);
 }
-void blueAWPStakeFirstPos() {
+void blueAWPStakeFirstPos()
+{
+    vex::wait(4, vex::sec);
+
     smartDrive.driveForPID(art::Inches(2));
 
     arm.set(100);
@@ -989,7 +995,7 @@ void blueAWPStakeFirstPos() {
     smartDrive.driveForPID(art::Inches(-16));
 
     arm.set(-100);
-    vex::wait(1.25/4.f, vex::seconds);
+    vex::wait(1.25 / 4.f, vex::seconds);
     arm.set(0);
     arm.stop(vex::hold);
 
@@ -1010,14 +1016,14 @@ void blueAWPStakeFirstPos() {
     travel = art::Vec2(target - smartDrive.m_pos);
 
     smartDrive.turnToPID(travel.direction());
-    intake.set(80);
+    intake.set(100);
     smartDrive.driveForPID(travel.magnitude());
     smartDrive.arcade(0, 0);
     smartDrive.driveForPID(art::Inches(-5));
 
     vex::wait(1.0, vex::seconds);
 
-    intake.set(0);
+    // intake.set(0);
     // arm.set(-50);
     // vex::wait(0.5, vex::sec);
 

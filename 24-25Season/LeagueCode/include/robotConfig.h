@@ -49,6 +49,7 @@ extern vex::rotation armRot;
 extern art::PID armPID;
 extern art::Angle armTarget;
 extern double armOut;
+extern bool macroRunning;
 
 extern vex::digital_out doinkerDeploy; extern bool doinkerDeployState;
 extern vex::digital_out doinkerClamp; extern bool doinkerClampState;

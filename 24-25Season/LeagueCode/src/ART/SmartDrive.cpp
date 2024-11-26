@@ -151,19 +151,19 @@ namespace art
 
             arcade(out, 0);
 
-            Brain.Screen.setCursor(5, 1);
-            Brain.Screen.print("p: %f", m_driveForPID.getProportional());
-            Brain.Screen.setCursor(6, 1);
-            Brain.Screen.print("i: %f", m_driveForPID.getIntegral());
-            Brain.Screen.setCursor(7, 1);
-            Brain.Screen.print("d: %f", m_driveForPID.getDerivative());
+            // Brain.Screen.setCursor(5, 1);
+            // Brain.Screen.print("p: %f", m_driveForPID.getProportional());
+            // Brain.Screen.setCursor(6, 1);
+            // Brain.Screen.print("i: %f", m_driveForPID.getIntegral());
+            // Brain.Screen.setCursor(7, 1);
+            // Brain.Screen.print("d: %f", m_driveForPID.getDerivative());
 
-            Brain.Screen.setCursor(5, 15);
-            Brain.Screen.print("current: %f", pos.degrees());
-            Brain.Screen.setCursor(6, 15);
-            Brain.Screen.print("error: %f", Length(Angle(targetRot - pos).revolutions() * getWheelTravel()).inches());
-            Brain.Screen.setCursor(7, 15);
-            Brain.Screen.print("out: %f", out);
+            // Brain.Screen.setCursor(5, 15);
+            // Brain.Screen.print("current: %f", pos.degrees());
+            // Brain.Screen.setCursor(6, 15);
+            // Brain.Screen.print("error: %f", Length(Angle(targetRot - pos).revolutions() * getWheelTravel()).inches());
+            // Brain.Screen.setCursor(7, 15);
+            // Brain.Screen.print("out: %f", out);
 
             logger.logDoubleEntry(101, timePassed(), targetRot);
             logger.logDoubleEntry(102, timePassed(), pos);

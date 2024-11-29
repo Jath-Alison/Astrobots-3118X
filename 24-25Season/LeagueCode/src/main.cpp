@@ -77,14 +77,14 @@ void autonomous(void)
 		// blueSoloAWP();
 		// blueElims();
 
-		// Brain.Screen.print("BlueAuto- Rush");
-		// blueRushAWP();
+		Brain.Screen.print("BlueAuto- Rush");
+		blueRushAWP();
 
 		// blueAWPGoalFirstNeg();
 		// Brain.Screen.print("BlueAuto- Goal First AWPNeg");
 
-		Brain.Screen.print("BlueAuto- Stake First AWPPos");
-		blueAWPStakeFirstPos();
+		// Brain.Screen.print("BlueAuto- Stake First AWPPos");
+		// blueAWPStakeFirstPos();
 	}
 	else
 	{
@@ -92,14 +92,14 @@ void autonomous(void)
 		// redSoloAWP();
 		// redElims();
 
-		// Brain.Screen.print("RedAuto- Rush");
-		// redRushAWP();
+		Brain.Screen.print("RedAuto- Rush");
+		redRushAWP();
 
 		// Brain.Screen.print("RedAuto- Goal First AWPNeg");
 		// redAWPGoalFirstNeg();
 
-		Brain.Screen.print("RedAuto- Stake First AWPPos");
-		redAWPStakeFirstPos();
+		// Brain.Screen.print("RedAuto- Stake First AWPPos");
+		// redAWPStakeFirstPos();
 	}
 
 	logger.logStringEntry(100, timePassed(), "Auton Routine Finished");

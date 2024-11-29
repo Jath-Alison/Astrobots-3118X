@@ -776,18 +776,18 @@ Jath::Path redRushPath1 = Jath::Path::cm(redRushPath1Points);
 
 void redRushAWP()
 {
-    logger.logStringEntry(100, timePassed(), "RedRushAWP Started");
+    // logger.logStringEntry(100, timePassed(), "RedRushAWP Started");
 
-    smartDrive.m_pos = art::Vec2::XandY(art::Tiles(-2.25), art::Tiles(-2.5));
-    smartDrive.m_dir = art::Degrees(90);
+    // smartDrive.m_pos = art::Vec2::XandY(art::Tiles(-2.25), art::Tiles(-2.5));
+    // smartDrive.m_dir = art::Degrees(90);
 
-    doinkerDeploy.set(true);
+    // doinkerDeploy.set(true);
 
-    followPath(redRushPath1, art::Inches(15));
+    // followPath(redRushPath1, art::Inches(15));
 
-    doinkerClamp.set(true);
-    smartDrive.driveForPID(art::Inches(-24));
-    doinkerClamp.set(false);
+    // doinkerClamp.set(true);
+    // smartDrive.driveForPID(art::Inches(-24));
+    // doinkerClamp.set(false);
 }
 
 std::vector<Jath::Point> blueRushPath1Points = {Jath::Point(148.96, -151.675, 103), Jath::Point(146.961, -151.725, 101.465), Jath::Point(144.961, -151.771, 101.311), Jath::Point(142.962, -151.814, 101.149), Jath::Point(140.962, -151.853, 100.981), Jath::Point(138.962, -151.887, 100.804), Jath::Point(136.962, -151.918, 100.62), Jath::Point(134.963, -151.943, 100.428), Jath::Point(132.963, -151.962, 100.227), Jath::Point(130.963, -151.976, 100.019), Jath::Point(128.963, -151.983, 99.577), Jath::Point(126.963, -151.983, 99.343), Jath::Point(124.963, -151.975, 99.101), Jath::Point(122.963, -151.959, 98.85), Jath::Point(120.963, -151.934, 98.591), Jath::Point(118.963, -151.898, 98.047), Jath::Point(116.964, -151.852, 97.763), Jath::Point(114.965, -151.796, 97.472), Jath::Point(112.966, -151.727, 96.866), Jath::Point(110.968, -151.645, 96.552), Jath::Point(108.97, -151.549, 96.232), Jath::Point(106.973, -151.439, 95.575), Jath::Point(104.977, -151.312, 95.239), Jath::Point(102.982, -151.169, 94.899), Jath::Point(100.989, -151.008, 94.209), Jath::Point(98.997, -150.828, 93.861), Jath::Point(97.007, -150.628, 93.165), Jath::Point(95.019, -150.407, 92.819), Jath::Point(93.034, -150.164, 92.135), Jath::Point(91.052, -149.897, 91.8), Jath::Point(89.073, -149.607, 91.151), Jath::Point(87.098, -149.29, 90.839), Jath::Point(85.128, -148.949, 90.248), Jath::Point(83.162, -148.579, 89.972), Jath::Point(81.202, -148.181, 89.463), Jath::Point(79.248, -147.754, 89.233), Jath::Point(77.301, -147.297, 88.83), Jath::Point(75.361, -146.812, 88.657), Jath::Point(73.429, -146.293, 88.377), Jath::Point(71.506, -145.746, 88.187), Jath::Point(69.592, -145.165, 88.126), Jath::Point(67.688, -144.554, 88.078), Jath::Point(65.794, -143.911, 88.089), Jath::Point(63.911, -143.237, 88.183), Jath::Point(62.039, -142.533, 88.264), Jath::Point(60.179, -141.797, 88.494), Jath::Point(58.331, -141.032, 88.807), Jath::Point(56.496, -140.237, 88.992), Jath::Point(54.673, -139.415, 89.415), Jath::Point(52.863, -138.564, 89.651), Jath::Point(51.066, -137.686, 90.163), Jath::Point(49.282, -136.783, 90.437), Jath::Point(47.51, -135.855, 91.015), Jath::Point(45.752, -134.902, 91.316), Jath::Point(44.005, -133.928, 91.936), Jath::Point(42.272, -132.929, 92.253), Jath::Point(40.55, -131.912, 92.572), Jath::Point(38.841, -130.874, 93.215), Jath::Point(37.143, -129.817, 93.537), Jath::Point(35.456, -128.743, 93.857), Jath::Point(33.781, -127.65, 94.491), Jath::Point(32.116, -126.542, 94.802), Jath::Point(30.461, -125.419, 95.11), Jath::Point(28.816, -124.281, 95.71), Jath::Point(27.181, -123.129, 96.002), Jath::Point(25.555, -121.965, 96.288), Jath::Point(23.937, -120.789, 96.567), Jath::Point(22.329, -119.6, 97.105), Jath::Point(20.728, -118.401, 97.364), Jath::Point(19.136, -117.191, 97.615), Jath::Point(17.55, -115.972, 97.858), Jath::Point(15.971, -114.744, 98.095), Jath::Point(14.4, -113.507, 98.323), Jath::Point(11.424, -111.13, 98.758), Jath::Point(11.424, -111.13, 0)};
@@ -798,29 +798,76 @@ Jath::Path blueRushPath2 = Jath::Path::cm(blueRushPath2Points);
 
 void blueRushAWP()
 {
-    logger.logStringEntry(100, timePassed(), "BlueRushAWP Started");
+    // logger.logStringEntry(100, timePassed(), "BlueRushAWP Started");
 
-    smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25), art::Tiles(-2.5));
+    // smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2.25), art::Tiles(-2.5));
     smartDrive.m_dir = art::Degrees(-90);
 
+    // doinkerDeploy.set(true);
+
+    // followPath(blueRushPath1, art::Inches(15));
+
+    // doinkerClamp.set(true);
+    // // smartDrive.driveForPID(art::Inches(-24));
+    // followPathRev(blueRushPath2, art::Inches(15));
+    // smartDrive.driveForPID(art::Inches(-15)); //<
+
+    // smartDrive.turnToPID(art::Degrees(-90));
+
+    // doinkerClamp.set(false);
+    // doinkerDeploy.set(false);
+
+    // smartDrive.driveForPID(art::Inches(-5));
+
+    // smartDrive.turnToPID(art::Degrees(0));
+    // smartDrive.driveForPID(art::Inches(15));
+
+    doinkerDeploy.set(false);
     doinkerDeploy.set(true);
 
-    followPath(blueRushPath1, art::Inches(15));
-
+    smartDrive.driveFor(art::Inches(33), 100);
     doinkerClamp.set(true);
-    // smartDrive.driveForPID(art::Inches(-24));
-    followPathRev(blueRushPath2, art::Inches(15));
-    smartDrive.driveForPID(art::Inches(-15)); //<
 
-    smartDrive.turnToPID(art::Degrees(-90));
+    smartDrive.driveForPID(art::Inches(-48));
+    smartDrive.turnToPID(art::Degrees(180));
 
     doinkerClamp.set(false);
+    smartDrive.driveForPID(art::Inches(-5));
     doinkerDeploy.set(false);
 
-    smartDrive.driveForPID(art::Inches(-5));
+    smartDrive.m_pos = art::Vec2::XandY(art::Inches(gpsSensor.xPosition(vex::inches)), art::Inches(gpsSensor.yPosition(vex::inches)));
+    smartDrive.m_dir = art::Degrees(gpsSensor.heading(vex::degrees));
 
-    smartDrive.turnToPID(art::Degrees(0));
+    target = art::Vec2::XandY(art::Tiles(1), art::Tiles(-1));
+    travel = art::Vec2(target - smartDrive.m_pos);
+
+    smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+    
+    smartDrive.driveForPID(art::Inches(-24));
+
+    clamp.set(true);
+    logger.logStringEntry(100, timePassed(), "Goal Grabbed");
+
+    arm.set(100);
+    vex::wait(0.25, vex::sec);
+
     smartDrive.driveForPID(art::Inches(15));
+
+    arm.set(0);
+    arm.stop(vex::hold);
+
+    intake.set(100);
+
+    smartDrive.m_pos = art::Vec2::XandY(art::Inches(gpsSensor.xPosition(vex::inches)), art::Inches(gpsSensor.yPosition(vex::inches)));
+    smartDrive.m_dir = art::Degrees(gpsSensor.heading(vex::degrees));
+
+    target = art::Vec2::XandY(art::Tiles(1), art::Tiles(-2));
+    travel = art::Vec2(target - smartDrive.m_pos);
+
+    smartDrive.turnToPID(travel.direction() - art::Degrees(5));
+    
+    smartDrive.driveForPID(travel.magnitude());
+
 }
 
 void redAWPGoalFirstNeg()

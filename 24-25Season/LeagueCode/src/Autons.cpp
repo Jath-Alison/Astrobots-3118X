@@ -72,67 +72,22 @@ uint64_t logTimePassed()
 void logLoopFunction()
 {
 
-    // logger.logStringEntry(100, timePassed(), "Log Loop Task Started");
+    logger.logStringEntry(console, "Log Loop Started");
 
     logger.clearFile("TestLog.wpilog");
+    logger.logStringEntry(console, "LogFile Cleared");
 
-    /**
-     * Controller stuff:
-     * - 4 Axis - int 64
-     * - 12 Buttons - bool
-     *
-     * Motor stats:
-     * - Motor Command
-     * - Motor Speed
-     * - Motor Current
-     * - Motor Temperature
-     *
-     * Robot stats:
-     * - Pose
-     *  - X,Y, Rot
-     *
-     * Later:
-     * - PID Stats
-     * - Sensor inputs
-     * - Other robot states
-     *
-     */
-
-    // logger.startFloatArrayEntry("Controller/Axes", 1);
-    // logger.startBooleanArrayEntry("Controller/Buttons", 2);
-
-    // logger.startFloatArrayEntry("Motors/Command", 3);
-    // logger.startFloatArrayEntry("Motors/Speed", 4);
-    // logger.startFloatArrayEntry("Motors/Current", 5);
-    // logger.startFloatArrayEntry("Motors/Temperature", 6);
-
-    // logger.startDoubleArrayEntry("Robot/Pose", 7);
-    // logger.startDoubleArrayEntry("Robot/Pose(Blue)", 8);
-
-    // logger.startDoubleArrayEntry("Autons/TargetPos", 9);
-    // logger.startDoubleArrayEntry("Autons/TargetPos(Blue)", 10);
-
-    // logger.startInt64Entry("Logger/Size", 11);
-    // logger.startInt64Entry("Logger/Capacity", 12);
-    // logger.startFloatEntry("Logger/TimeSinceLastLog", 13);
-
-    // logger.startFloatEntry("Base/cmd_Drive", 14);
-    // logger.startFloatEntry("Base/cmd_Rot", 15);
-
-    // logger.startFloatEntry("Intake/cmd", 16);
-
-    std::vector<vex::motor *> allMotors = {
+    std::vector<vex::motor *> baseMotors = {
         &leftMotorA, &leftMotorB, &leftMotorC,
-        &rightMotorA, &rightMotorB, &rightMotorC,
-        &intake};
+        &rightMotorA, &rightMotorB, &rightMotorC};
 
     while (1)
     {
-        std::vector<float> axesStates = {
-            float(Controller1.Axis1.position()/100.0),
-            float(Controller1.Axis2.position()/100.0),
-            float(Controller1.Axis3.position()/100.0),
-            float(Controller1.Axis4.position()/100.0)};
+        std::vector<int64_t> axesStates = {
+            Controller1.Axis1.position(),
+            Controller1.Axis2.position(),
+            Controller1.Axis3.position(),
+            Controller1.Axis4.position()};
         std::vector<bool> buttonStates = {
             Controller1.ButtonUp.pressing(),
             Controller1.ButtonRight.pressing(),
@@ -147,81 +102,140 @@ void logLoopFunction()
             Controller1.ButtonR1.pressing(),
             Controller1.ButtonR2.pressing(),
         };
+        std::vector<int64_t> povStates = {
+            int64_t(art::Vec2::XandY(Controller1.Axis1.position(), Controller1.Axis2.position()).direction()),
+            int64_t(art::Vec2::XandY(Controller1.Axis4.position(), Controller1.Axis3.position()).direction()),
+        };
 
-        std::vector<float> motorCommands = {};
-        std::vector<float> motorSpeeds = {};
-        std::vector<float> motorCurrents = {};
-        std::vector<float> motorTemperatures = {};
+        logger.logInt64ArrayEntry(Controller1_Axes, axesStates);
+        logger.logBooleanArrayEntry(Controller1_Buttons, buttonStates);
+        logger.logInt64ArrayEntry(Controller1_Povs, povStates);
 
-        for (size_t i = 0; i < allMotors.size(); i++)
+        std::vector<double> baseXYRCmd = {
+            smartDrive.m_cmdX, smartDrive.m_cmdY, smartDrive.m_cmdRot};
+        logger.logDoubleArrayEntry(Base_XYR_Cmd, baseXYRCmd);
+
+        std::vector<double> baseXYRVel = {
+            smartDrive.m_vel.x, smartDrive.m_vel.y, smartDrive.m_rotVel};
+        logger.logDoubleArrayEntry(Base_XYR_Vel, baseXYRVel);
+
+        std::vector<double> baseLRCmd = {
+            smartDrive.m_left.get(), smartDrive.m_right.get()};
+        logger.logDoubleArrayEntry(Base_LeftRight_Cmd, baseLRCmd);
+
+        std::vector<double> baseLRVel = {
+            smartDrive.m_leftTravel.meters(), smartDrive.m_rightTravel.meters()};
+        logger.logDoubleArrayEntry(Base_LeftRight_Vel, baseLRVel);
+
+        std::vector<double> baseLSweveState = {
+            smartDrive.m_leftTravel.meters(), 0};
+        logger.logDoubleArrayEntry(Base_L_SwerveState, baseLSweveState);
+
+        std::vector<double> baseRSweveState = {
+            smartDrive.m_rightTravel.meters(), 0};
+        logger.logDoubleArrayEntry(Base_R_SwerveState, baseRSweveState);
+
+        std::vector<double> baseMotorsVoltage{};
+        std::vector<double> baseMotorsCurrent{};
+        std::vector<int64_t> baseMotorsTemperature{};
+        std::vector<double> baseMotorsVelocity{};
+        std::vector<double> baseMotorsPosition{};
+        for (auto motor : baseMotors)
         {
-            motorCommands.push_back(allMotors[i]->voltage(vex::volt));
-            motorSpeeds.push_back(allMotors[i]->velocity(vex::percent));
-            motorCurrents.push_back(allMotors[i]->current(vex::amp));
-            motorTemperatures.push_back(allMotors[i]->temperature(vex::celsius));
+            baseMotorsVoltage.push_back(motor->voltage());
+            baseMotorsCurrent.push_back(motor->current());
+            baseMotorsTemperature.push_back(motor->temperature(vex::celsius));
+            baseMotorsVelocity.push_back(motor->velocity(vex::velocityUnits::pct));
+            baseMotorsPosition.push_back(motor->position(vex::rotationUnits::deg));
         }
+
+        logger.logDoubleEntry(Intake_Cmd, intake.get());
+        logger.logDoubleEntry(Intake_Voltage, intake.voltage());
+        logger.logDoubleEntry(Intake_Current, intake.current());
+        logger.logDoubleEntry(Intake_Velocity, intake.velocity(vex::velocityUnits::pct));
+        logger.logDoubleEntry(Intake_Temperature, intake.temperature(vex::celsius));
+        logger.logDoubleEntry(Intake_Position, intake.position(vex::rotationUnits::deg));
+
+        // logger.logDoubleEntry(Arm_Cmd, arm.get());
+        // logger.logDoubleEntry(Arm_Voltage, arm.voltage());
+        // logger.logDoubleEntry(Arm_Current, arm.current());
+        // logger.logDoubleEntry(Arm_Velocity, arm.velocity(vex::velocityUnits::pct));
+        // logger.logDoubleEntry(Arm_Temperature, arm.temperature(vex::celsius));
+        // logger.logDoubleEntry(Arm_Position, arm.position(vex::rotationUnits::deg));
+
+        logger.logDoubleArrayEntry(Base_Motors_Voltage, baseMotorsVoltage);
+        logger.logDoubleArrayEntry(Base_Motors_Current, baseMotorsCurrent);
+        logger.logInt64ArrayEntry(Base_Motors_Temperature, baseMotorsTemperature);
+        logger.logDoubleArrayEntry(Base_Motors_Velocity, baseMotorsVelocity);
+        logger.logDoubleArrayEntry(Base_Motors_Position, baseMotorsPosition);
 
         std::vector<double> robotPose = {
             art::Length(smartDrive.m_pos.x).meters(),
             art::Length(smartDrive.m_pos.y).meters(),
-            art::Angle(smartDrive.m_dir).degrees() // converted to FRC scheme
-        };
+            art::Angle(smartDrive.m_dir).degrees()};
+        logger.logDoubleArrayEntry(Pose_TrackingPose, robotPose);
+        logger.logDoubleArrayEntry(Base_XYR_Pos, robotPose);
 
         std::vector<double> robotPoseBlue = {
             1.8 + art::Length(smartDrive.m_pos.x).meters(),
             1.8 + art::Length(smartDrive.m_pos.y).meters(),
             -(smartDrive.m_dir - art::Degrees(90)) // converted to FRC scheme
         };
+        logger.logDoubleArrayEntry(Pose_TrackingPose_Blue, robotPoseBlue);
+        logger.logDoubleArrayEntry(Base_XYR_Pos_Blue, robotPoseBlue);
+
+        std::vector<double> robotCentersPose = {
+            art::Length(smartDrive.m_centerPos.x).meters(),
+            art::Length(smartDrive.m_centerPos.y).meters(),
+            art::Angle(smartDrive.m_dir).degrees()};
+        logger.logDoubleArrayEntry(Pose_CenterPose, robotCentersPose);
+
+        std::vector<double> robotCentersPoseBlue = {
+            1.8 + art::Length(smartDrive.m_centerPos.x).meters(),
+            1.8 + art::Length(smartDrive.m_centerPos.y).meters(),
+            -(smartDrive.m_dir - art::Degrees(90)) // converted to FRC scheme
+        };
+        logger.logDoubleArrayEntry(Pose_CenterPose_Blue, robotCentersPoseBlue);
+
+        std::vector<double> robotGPSPose = {
+            art::Length(smartDrive.m_centerPos.x).meters(),
+            art::Length(smartDrive.m_centerPos.y).meters(),
+            art::Angle(smartDrive.m_dir).degrees()};
+        logger.logDoubleArrayEntry(Pose_GPSPose, robotGPSPose);
+
+        std::vector<double> robotGPSPoseBlue = {
+            1.8 + art::Length(smartDrive.m_centerPos.x).meters(),
+            1.8 + art::Length(smartDrive.m_centerPos.y).meters(),
+            -(smartDrive.m_dir - art::Degrees(90)) // converted to FRC scheme
+        };
+        logger.logDoubleArrayEntry(Pose_GPSPose_Blue, robotGPSPoseBlue);
+        // logger.logInt64Entry(Pose_GPSAccuracy, )
 
         std::vector<double> targetPose = {
             art::Length(target.x).meters(),
             art::Length(target.y).meters(),
             art::Angle(smartDrive.m_dir).degrees() // converted to FRC scheme
-            };
+        };
+        logger.logDoubleArrayEntry(Auton_TargetPoint, targetPose);
 
         std::vector<double> targetPoseBlue = {
             1.8 + art::Length(target.x).meters(),
             1.8 + art::Length(target.y).meters(),
             -(smartDrive.m_dir - art::Degrees(90)) // converted to FRC scheme
-            };
-
-        // logger.logFloatArrayEntry(1, timePassed(), axesStates);
-        // logger.logBooleanArrayEntry(2, timePassed(), buttonStates);
-
-        logger.logFloatArrayEntry(Controller_Axes, axesStates);
-        logger.logBooleanArrayEntry(Controller_Buttons, buttonStates);
-
-        // logger.logFloatArrayEntry(3, timePassed(), motorCommands);
-        // logger.logFloatArrayEntry(4, timePassed(), motorSpeeds);
-        // logger.logFloatArrayEntry(5, timePassed(), motorCurrents);
-        // logger.logFloatArrayEntry(6, timePassed(), motorTemperatures);
-
-        // logger.logDoubleArrayEntry(7, timePassed(), robotPose);
-        // logger.logDoubleArrayEntry(8, timePassed(), robotPoseBlue);
-
-        // logger.logDoubleArrayEntry(9, timePassed(), targetPose);
-        // logger.logDoubleArrayEntry(10, timePassed(), targetPoseBlue);
-
-        // logger.logInt64Entry(11, timePassed(), logger.getDataSize());
-        // logger.logInt64Entry(12, timePassed(), logger.getCapacity());
-        // logger.logFloatEntry(13, timePassed(), logTimePassed());
-
-        // logger.logFloatEntry(14, timePassed(), smartDrive.m_cmdY);
-        // logger.logFloatEntry(15, timePassed(), smartDrive.m_cmdRot);
-
-        // logger.logFloatEntry(16, timePassed(), intake.get());
+        };
+        logger.logDoubleArrayEntry(Auton_TargetPoint_Blue, targetPose);
 
         if (Competition.AUTONOMOUS)
         {
-            // logger.logStringEntry(100, timePassed(), "Auton Started");
+            logger.logStringEntry(competitionState, "Auton Started");
         }
         if (Competition.DRIVER_CONTROL)
         {
-            // logger.logStringEntry(100, timePassed(), "Driver Control Started");
+            logger.logStringEntry(competitionState, "Driver Control Started");
         }
         if (Competition.DISABLED)
         {
-            // logger.logStringEntry(100, timePassed(), "Robot Disabled");
+            logger.logStringEntry(competitionState, "Robot Disabled");
         }
 
         if (logger.getDataSize() > 10000)
@@ -229,6 +243,9 @@ void logLoopFunction()
             last_logged = std::chrono::high_resolution_clock::now();
             logger.writeToFile("TestLog.wpilog");
         }
+        logger.logInt64Entry(Logger_Capacity, logger.getCapacity());
+        logger.logInt64Entry(Logger_Size, logger.getDataSize());
+        logger.logDoubleEntry(Logger_TimeSinceLastLogged, logTimePassed());
 
         vex::this_thread::sleep_for(20);
     }

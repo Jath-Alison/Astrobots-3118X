@@ -70,7 +70,13 @@ namespace art
             m_dir = Degrees(m_inert.heading(vex::degrees));
             prevDir = m_dir;
 
-            Angle wheelTravel = Angle((getLeftTravel() + getRightTravel()) / 2.0);
+            Angle leftTravel = getLeftTravel();
+            Angle rightTravel = getRightTravel();
+
+            m_leftTravel = Length(leftTravel.revolutions() * getWheelTravel());
+            m_leftTravel = Length(rightTravel.revolutions() * getWheelTravel());
+
+            Angle wheelTravel = Angle((leftTravel + rightTravel) / 2.0);
             Length travel = Length(wheelTravel.revolutions() * getWheelTravel());
 
             // Distance travel = Inches(change*((3.25 * 3.1415)/360.f) / (72.f/48.f));
@@ -84,6 +90,9 @@ namespace art
 
                 posChange = posChange + trackerTravel;
             }
+
+            m_vel = posChange * (50.0);
+            m_rotVel = Angle((m_dir - prevDir) * 50.0);
 
             m_pos = m_pos + posChange;
             m_centerPos = m_pos + Vec2::dirAndMag(m_dir, m_tracker.m_offset);

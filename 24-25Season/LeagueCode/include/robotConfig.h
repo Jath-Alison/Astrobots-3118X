@@ -19,6 +19,8 @@
 #include "vex.h"
 #include "Art\ART.h"
 
+extern vex::gps gpsSensor;
+
 extern vex::motor leftMotorA;
 extern vex::motor leftMotorB;
 extern vex::motor leftMotorC;
@@ -35,11 +37,19 @@ extern art::TankDrive drive;
 extern art::SmartDrive smartDrive;
 
 extern art::SimpleMotor intake;
-extern vex::digital_out clamp;
+extern vex::digital_out clamp; extern bool clampState;
 
-extern art::SimpleMotor winch;
-// extern vex::digital_out pto;
-// extern vex::digital_out pto_active;
+extern art::SimpleMotor arm;
+
+extern vex::rotation armRot;
+
+extern art::PID armPID;
+extern art::Angle armTarget;
+extern double armOut;
+extern bool macroRunning;
+
+extern vex::digital_out doinkerDeploy; extern bool doinkerDeployState;
+extern vex::digital_out doinkerClamp; extern bool doinkerClampState;
 
 
 extern bool isBlue;

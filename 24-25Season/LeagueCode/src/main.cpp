@@ -44,6 +44,9 @@ vex::competition Competition;
 void pre_auton(void)
 {
 	// logger.logStringEntry(100, timePassed(), "Pre Auton Started");
+
+	arm.setPosition(armRot.angle(), vex::degrees);
+	// logger.logStringEntry(100, timePassed(), "Pre Auton Started");
 	logger.logStringEntry(console, "Pre Auton Started");
 }
 
@@ -375,18 +378,55 @@ void autonomous(void)
 	if (isBlue)
 	{
 		Brain.Screen.setCursor(10, 1);
-		Brain.Screen.print("BlueAuto");
-		blueElims();
+		// blueSoloAWP();
+		// blueElims();
+
+		Brain.Screen.print("BlueAuto- Rush");
+		blueRushAWP();
+
+		// blueAWPGoalFirstNeg();
+		// Brain.Screen.print("BlueAuto- Goal First AWPNeg");
+
+		// Brain.Screen.print("BlueAuto- Stake First AWPPos");
+		// blueAWPStakeFirstPos();
 	}
 	else
 	{
 		Brain.Screen.setCursor(10, 1);
-		Brain.Screen.print("RedAuto");
-		redElims();
+		// redSoloAWP();
+		// redElims();
+
+		Brain.Screen.print("RedAuto- Rush");
+		redRushAWP();
+
+		// Brain.Screen.print("RedAuto- Goal First AWPNeg");
+		// redAWPGoalFirstNeg();
+
+		// Brain.Screen.print("RedAuto- Stake First AWPPos");
+		// redAWPStakeFirstPos();
 	}
 
 	// logger.logStringEntry(100, timePassed(), "Auton Routine Finished");
 }
+
+int armMacro()
+{
+
+	// arm.set(-100);
+
+	// vex::wait(.25, vex::sec);
+
+	arm.set(75);
+	vex::wait(.25, vex::sec);
+	arm.set(0);
+	arm.stop(vex::hold);
+
+	macroRunning = false;
+
+	return 1;
+}
+
+vex::thread macroThread;
 
 /**
  * @brief Runs the User Control Task
@@ -414,6 +454,10 @@ void usercontrol(void)
 	}
 	// logger.logStringEntry(100, timePassed(), "Driver Control - Inertial Finished Calibrating");
 
+	clampState;
+	doinkerDeployState;
+	doinkerClampState;
+
 	while (1)
 	{
 
@@ -421,11 +465,11 @@ void usercontrol(void)
 
 		if (Controller1.ButtonR1.pressing())
 		{
-			intake.set(100);
+			intake.set(90);
 		}
-		else if (Controller1.ButtonR2.pressing())
+		else if (Controller1.ButtonA.pressing())
 		{
-			intake.set(-100);
+			intake.set(-90);
 		}
 		else
 		{
@@ -434,12 +478,69 @@ void usercontrol(void)
 
 		if (Controller1.ButtonL1.PRESSED)
 		{
-			clamp.set(true);
+			clampState = !clampState;
+			clamp.set(clampState);
 		}
-		else if (Controller1.ButtonL2.PRESSED)
+
+		if (Controller1.ButtonX.PRESSED)
 		{
-			clamp.set(false);
+			doinkerDeployState = !doinkerDeployState;
+			doinkerDeploy.set(doinkerDeployState);
 		}
+		if (Controller1.ButtonB.PRESSED)
+		{
+			doinkerClampState = !doinkerClampState;
+			doinkerClamp.set(doinkerClampState);
+		}
+
+		if (Controller1.ButtonR2.pressing())
+		{
+			arm.set(100);
+			macroRunning = false;
+		}
+		else if (Controller1.ButtonL2.pressing())
+		{
+			arm.set(-100);
+			macroRunning = false;
+		}
+		else if (Controller1.ButtonUp.pressing())
+		{
+			arm.set(30);
+			macroRunning = false;
+		}else
+		if (Controller1.ButtonDown.pressing())
+		{
+			arm.set(-30);
+			macroRunning = false;
+		}
+		else if (!macroRunning)
+		{
+			arm.set(0);
+			arm.stop(vex::hold);
+		}
+
+		if (Controller1.ButtonL2.RELEASED)
+		{
+			macroRunning = true;
+			macroThread = vex::thread(armMacro);
+		}
+		else if (Controller1.ButtonDown.PRESSED)
+		{
+			macroRunning = false;
+			macroThread.interrupt();
+		}
+
+		// armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(arm.position(vex::degrees) / 3.0)));
+
+		// if (!(armTarget > art::Degrees(330) && armTarget < art::Degrees(340)) && abs(shortestTurnPath(armTarget - art::Degrees(armRot.angle())).degrees()) >= 2)
+		// {
+		// 	arm.set(armOut);
+		// }
+		// else
+		// {
+		// 	arm.set(0);
+		// 	arm.stop(vex::hold);
+		// }
 
 		// if (Controller1.ButtonDown.pressing())
 		// {
@@ -454,22 +555,17 @@ void usercontrol(void)
 		// 	smartDrive.LeftSplitArcadeCurved(Controller1);
 		// }
 
-		if (Controller1.ButtonUp.PRESSED)
-		{
-			smartDrive.turnToPID(art::Degrees(0));
-		}
-		else if (Controller1.ButtonDown.PRESSED)
-		{
-			smartDrive.turnToPID(art::Degrees(180));
-		}
-		else if (Controller1.ButtonRight.PRESSED)
-		{
-			smartDrive.turnToPID(art::Degrees(90));
-		}
-		else if (Controller1.ButtonLeft.PRESSED)
-		{
-			smartDrive.turnToPID(art::Degrees(-90));
-		}
+		// if (Controller1.ButtonUp.PRESSED)
+		// {
+		// 	// smartDrive.turnToPID(art::Degrees(0));
+
+		// 	// smartDrive.driveForPID(art::Inches(30));
+		// 	// smartDrive.turnToPID(art::Degrees(180));
+		// 	// smartDrive.driveForPID(art::Inches(30));
+		// 	// smartDrive.turnToPID(art::Degrees(0));
+
+		// 	// followPath(testPath, art::Inches(5));
+		// }
 
 		vex::wait(20, vex::msec);
 	}

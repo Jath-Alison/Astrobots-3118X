@@ -397,6 +397,8 @@ namespace art
          */
         void turnToPID(Angle target);
 
+        bool turnTowardPID(Angle target, bool reset);
+
         /**
          * @brief The PID object for the @ref turnToPID Method
          *

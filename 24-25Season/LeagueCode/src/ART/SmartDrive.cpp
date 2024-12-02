@@ -131,7 +131,7 @@ namespace art
     {
         std::stringstream ss;
         ss << "SmartDrive::driveForPID(" << target.inches() << "{in})";
-        
+
         logger.logStringEntry(100, timePassed(), ss.str());
 
         static bool driveForPIDinit = false;
@@ -160,19 +160,19 @@ namespace art
 
             arcade(out, 0);
 
-            Brain.Screen.setCursor(5, 1);
-            Brain.Screen.print("p: %f", m_driveForPID.getProportional());
-            Brain.Screen.setCursor(6, 1);
-            Brain.Screen.print("i: %f", m_driveForPID.getIntegral());
-            Brain.Screen.setCursor(7, 1);
-            Brain.Screen.print("d: %f", m_driveForPID.getDerivative());
+            // Brain.Screen.setCursor(5, 1);
+            // Brain.Screen.print("p: %f", m_driveForPID.getProportional());
+            // Brain.Screen.setCursor(6, 1);
+            // Brain.Screen.print("i: %f", m_driveForPID.getIntegral());
+            // Brain.Screen.setCursor(7, 1);
+            // Brain.Screen.print("d: %f", m_driveForPID.getDerivative());
 
-            Brain.Screen.setCursor(5, 15);
-            Brain.Screen.print("current: %f", pos.degrees());
-            Brain.Screen.setCursor(6, 15);
-            Brain.Screen.print("error: %f", Length(Angle(targetRot - pos).revolutions() * getWheelTravel()).inches());
-            Brain.Screen.setCursor(7, 15);
-            Brain.Screen.print("out: %f", out);
+            // Brain.Screen.setCursor(5, 15);
+            // Brain.Screen.print("current: %f", pos.degrees());
+            // Brain.Screen.setCursor(6, 15);
+            // Brain.Screen.print("error: %f", Length(Angle(targetRot - pos).revolutions() * getWheelTravel()).inches());
+            // Brain.Screen.setCursor(7, 15);
+            // Brain.Screen.print("out: %f", out);
 
             logger.logDoubleEntry(101, timePassed(), targetRot);
             logger.logDoubleEntry(102, timePassed(), pos);
@@ -231,7 +231,6 @@ namespace art
             logger.startDoubleEntry("TurnFor/I", 115);
             logger.startDoubleEntry("TurnFor/D", 116);
             logger.startDoubleEntry("TurnFor/Out", 117);
-
         }
 
         double out = 0;
@@ -255,7 +254,6 @@ namespace art
             logger.logDoubleEntry(116, timePassed(), m_turnToPID.getDerivative());
             logger.logDoubleEntry(117, timePassed(), out);
 
-
             wait(20, vex::msec);
         }
         arcade(0, 0, 0);
@@ -271,7 +269,7 @@ namespace art
 
         std::stringstream ss;
         ss << "SmartDrive::turnTo(" << target << ", " << speed << ")";
-        
+
         logger.logStringEntry(100, timePassed(), ss.str());
 
         Angle error = shortestTurnPath(Degrees(target.degrees() - m_inert.heading(vex::degrees)));
@@ -296,9 +294,8 @@ namespace art
     }
     void SmartDrive::turnToPID(Angle target)
     {
-
         std::stringstream ss;
-        ss << "SmartDrive::turnFor(" << target << ")";
+        ss << "SmartDrive::turnTo(" << target << ")";
 
         logger.logStringEntry(100, timePassed(), ss.str());
 
@@ -313,7 +310,6 @@ namespace art
             logger.startDoubleEntry("TurnTo/I", 125);
             logger.startDoubleEntry("TurnTo/D", 126);
             logger.startDoubleEntry("TurnTo/Out", 127);
-
         }
 
         double out = 0;
@@ -323,7 +319,7 @@ namespace art
         m_turnToPID.reset();
         while (!m_turnToPID.isCompleted())
         {
-            Angle error = shortestTurnPath( art::Angle(target - m_dir));//once removed shortest path, added back
+            Angle error = shortestTurnPath(art::Angle(target - m_dir)); // once removed shortest path, added back
 
             out = m_turnToPID.calculate(error);
 
@@ -344,6 +340,57 @@ namespace art
         }
         arcade(0, 0, 0);
     }
+    bool SmartDrive::turnTowardPID(Angle target, bool reset)
+    {
+        if (reset)
+        {
+            m_turnToPID.reset();
+
+            return false;
+        }
+
+        // std::stringstream ss;
+        // ss << "SmartDrive::turnToward(" << target << ")";
+
+        // logger.logStringEntry(100, timePassed(), ss.str());
+
+        static bool turnTowardPIDinit = false;
+        if (!turnTowardPIDinit)
+        {
+            turnTowardPIDinit = true;
+            logger.startDoubleEntry("TurnToward/Target", 121);
+            logger.startDoubleEntry("TurnToward/Current", 122);
+            logger.startDoubleEntry("TurnToward/Error", 123);
+            logger.startDoubleEntry("TurnToward/P", 124);
+            logger.startDoubleEntry("TurnToward/I", 125);
+            logger.startDoubleEntry("TurnToward/D", 126);
+            logger.startDoubleEntry("TurnToward/Out", 127);
+        }
+
+        double out = 0;
+
+        Angle dirCopy = m_dir;
+
+        Angle error = shortestTurnPath(art::Angle(target - m_dir)); // once removed shortest path, added back
+
+        out = m_turnToPID.calculate(error);
+
+        dirCopy = m_dir;
+        dirCopy.constrain();
+
+        arcade(0, out);
+
+        logger.logDoubleEntry(121, timePassed(), target);
+        logger.logDoubleEntry(122, timePassed(), dirCopy);
+        logger.logDoubleEntry(123, timePassed(), error);
+        logger.logDoubleEntry(124, timePassed(), m_turnToPID.getProportional());
+        logger.logDoubleEntry(125, timePassed(), m_turnToPID.getIntegral());
+        logger.logDoubleEntry(126, timePassed(), m_turnToPID.getDerivative());
+        logger.logDoubleEntry(127, timePassed(), out);
+
+        return m_turnToPID.settledTimePassed() > 1.f;
+    }
+
     SmartDrive &SmartDrive::withTurnToPID(PID pid)
     {
         m_turnToPID = pid;

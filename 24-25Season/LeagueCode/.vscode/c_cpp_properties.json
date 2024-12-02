@@ -1,28 +1,31 @@
 {
 	"env": {
 		"vex_compilerPath": "${config:vexrobotics.vexcode.Cpp.Toolchain.Path}\\clang\\bin\\clang",
-		"vex_sdkPath": "${config:vexrobotics.vexcode.Cpp.Sdk.Home}\\V5\\V5_20240223_11_00_00\\vexv5",
+		"vex_sdkPath": "${config:vexrobotics.vexcode.Cpp.Sdk.Home}\\V5\\V5_20240802_15_00_00\\vexv5",
 		"vex_gcc": "${vex_sdkPath}/gcc/include/c++/4.9.3",
 		"vex_sdkIncludes": [
 			"${vex_sdkPath}/clang/8.0.0/include/**",
 			"${vex_gcc}/**",
-			"${vex_gcc}/arm-none-eabi/armv7-arm/thumb",
+			"${vex_gcc}/arm-none-eabi/thumb",
 			"${vex_sdkPath}/gcc/include",
 			"${vex_sdkPath}/include/**",
 			"${workspaceFolder}/include/**",
-			"${workspaceFolder}/src/**"
+			"${workspaceFolder}/src/**",
+			"${vex_gcc}/arm-none-eabi/armv7-arm/thumb"
 		]
 	},
 	"configurations": [
 		{
 			"name": "Win32",
 			"includePath": [
-				"${vex_sdkIncludes}"
+				"${vex_sdkIncludes}",
+				"C:/USERS/JATHA/APPDATA/ROAMING/CODE/USER/GLOBALSTORAGE/VEXROBOTICS.VEXCODE/SDK/CPP/V5/V5_20240223_11_00_00/VEXV5/GCC/INCLUDE/C++/4.9.3"
 			],
-			"compilerPath": "${vex_compilerPath}",
+			"compilerPath": "C:\\msys64\\ucrt64\\bin\\g++.exe",
 			"cStandard": "gnu99",
 			"cppStandard": "gnu++11",
-			"intelliSenseMode": "windows-clang-x86"
+			"intelliSenseMode": "windows-clang-x86",
+			"configurationProvider": "ms-vscode.makefile-tools"
 		},
 		{
 			"name": "Mac",

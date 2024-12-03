@@ -27,7 +27,7 @@ art::Angle shortestTurnPath(const art::Angle target)
 
 void displayLoopFunction()
 {
-    // logger.logStringEntry(100, timePassed(), "Display Loop Task Started");
+    logger.logStringEntry(console, "Display Loop Task Started");
 
     Brain.Screen.setPenWidth(3);
 
@@ -44,10 +44,10 @@ void displayLoopFunction()
         Brain.Screen.print("Rot: %f", art::Angle(smartDrive.m_dir).degrees());
         Brain.Screen.setCursor(4, 1);
         Brain.Screen.clearLine();
-        Brain.Screen.print("Arm_Angle: %f", armRot.position(vex::degrees));
+        Brain.Screen.print("Arm_Angle: %f", armRot.angle(vex::degrees));
         Brain.Screen.setCursor(5, 1);
         Brain.Screen.clearLine();
-        Brain.Screen.print("Arm_Angle: %f", arm.position(vex::degrees) / 3.0);
+        Brain.Screen.print("ArmTarget: %f", armTarget.degrees());
         Brain.Screen.setCursor(6, 1);
         Brain.Screen.clearLine();
         Brain.Screen.print("Intake Temp: %u \370 ", int(intake.temperature(vex::celsius)));

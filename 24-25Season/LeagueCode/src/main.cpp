@@ -108,22 +108,22 @@ void autonomous(void)
 	// logger.logStringEntry(100, timePassed(), "Auton Routine Finished");
 }
 
-int armMacro()
-{
+// int armMacro()
+// {
 
-	// arm.set(-100);
+// 	// arm.set(-100);
 
-	// vex::wait(.25, vex::sec);
+// 	// vex::wait(.25, vex::sec);
 
-	arm.set(75);
-	vex::wait(.25, vex::sec);
-	arm.set(0);
-	arm.stop(vex::hold);
+// 	arm.set(75);
+// 	vex::wait(.25, vex::sec);
+// 	arm.set(0);
+// 	arm.stop(vex::hold);
 
-	macroRunning = false;
+// 	macroRunning = false;
 
-	return 1;
-}
+// 	return 1;
+// }
 
 vex::thread macroThread;
 
@@ -192,54 +192,58 @@ void usercontrol(void)
 			doinkerClamp.set(doinkerClampState);
 		}
 
-		if (Controller1.ButtonR2.pressing())
-		{
-			arm.set(100);
-			macroRunning = false;
-		}
-		else if (Controller1.ButtonL2.pressing())
-		{
-			arm.set(-100);
-			macroRunning = false;
-		}
-		else if (Controller1.ButtonUp.pressing())
-		{
-			arm.set(30);
-			macroRunning = false;
-		}else
-		if (Controller1.ButtonDown.pressing())
-		{
-			arm.set(-30);
-			macroRunning = false;
-		}
-		else if (!macroRunning)
-		{
-			arm.set(0);
-			arm.stop(vex::hold);
-		}
-
-		if (Controller1.ButtonL2.RELEASED)
-		{
-			macroRunning = true;
-			macroThread = vex::thread(armMacro);
-		}
-		else if (Controller1.ButtonDown.PRESSED)
-		{
-			macroRunning = false;
-			macroThread.interrupt();
-		}
-
-		// armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(arm.position(vex::degrees) / 3.0)));
-
-		// if (!(armTarget > art::Degrees(330) && armTarget < art::Degrees(340)) && abs(shortestTurnPath(armTarget - art::Degrees(armRot.angle())).degrees()) >= 2)
+		// if (Controller1.ButtonR2.pressing())
 		// {
-		// 	arm.set(armOut);
+		// 	arm.set(100);
+		// 	macroRunning = false;
 		// }
-		// else
+		// else if (Controller1.ButtonL2.pressing())
+		// {
+		// 	arm.set(-100);
+		// 	macroRunning = false;
+		// }
+		// else if (Controller1.ButtonUp.pressing())
+		// {
+		// 	arm.set(30);
+		// 	macroRunning = false;
+		// }else
+		// if (Controller1.ButtonDown.pressing())
+		// {
+		// 	arm.set(-30);
+		// 	macroRunning = false;
+		// }
+		// else if (!macroRunning)
 		// {
 		// 	arm.set(0);
 		// 	arm.stop(vex::hold);
 		// }
+
+		if (Controller1.ButtonL2.pressing())
+		{
+			macroRunning = false;
+			arm.set(-100);
+		}
+		else if (Controller1.ButtonR2.pressing())
+		{
+			macroRunning = false;
+			arm.set(100);
+		}
+
+		if(Controller1.ButtonUp.PRESSED){
+			macroRunning = true;
+			armTarget = art::Degrees(10);
+		}
+
+		if (macroRunning && abs(shortestTurnPath(armTarget - art::Degrees(armRot.angle())).degrees()) >= 0.5)
+		{
+			armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(armRot.angle())));
+			arm.set(armOut);
+		}
+		else if (!(Controller1.ButtonL2.pressing() || Controller1.ButtonR2.pressing()))
+		{
+			arm.set(0);
+			arm.stop(vex::hold);
+		}
 
 		// if (Controller1.ButtonDown.pressing())
 		// {

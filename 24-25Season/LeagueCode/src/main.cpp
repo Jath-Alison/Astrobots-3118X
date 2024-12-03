@@ -229,7 +229,8 @@ void usercontrol(void)
 			arm.set(100);
 		}
 
-		if(Controller1.ButtonUp.PRESSED){
+		if (Controller1.ButtonUp.PRESSED)
+		{
 			macroRunning = true;
 			armTarget = art::Degrees(10);
 		}
@@ -258,17 +259,18 @@ void usercontrol(void)
 		// 	smartDrive.LeftSplitArcadeCurved(Controller1);
 		// }
 
-		// if (Controller1.ButtonUp.PRESSED)
-		// {
-		// 	// smartDrive.turnToPID(art::Degrees(0));
+		if (Controller1.ButtonDown.PRESSED)
+		{
+			// smartDrive.turnToPID(art::Degrees(0));
 
-		// 	// smartDrive.driveForPID(art::Inches(30));
-		// 	// smartDrive.turnToPID(art::Degrees(180));
-		// 	// smartDrive.driveForPID(art::Inches(30));
-		// 	// smartDrive.turnToPID(art::Degrees(0));
+			// smartDrive.driveForPID(art::Inches(30));
+			// smartDrive.turnToPID(art::Degrees(180));
+			// smartDrive.driveForPID(art::Inches(30));
+			// smartDrive.turnToPID(art::Degrees(0));
 
-		// 	// followPath(testPath, art::Inches(5));
-		// }
+			// followPath(testPath, art::Inches(5));
+			driveTowardPoint(art::Vec2::XandY(art::Tiles(1), art::Tiles(1)));
+		}
 
 		vex::wait(20, vex::msec);
 	}

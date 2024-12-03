@@ -13,6 +13,10 @@ void displayLoopFunction();
 void logLoopFunction();
 
 void followPath(Jath::Path p, art::Length lookaheadDist);
+void followPathRev(Jath::Path p, art::Length lookaheadDist);
+
+void driveTowardPoint(art::Vec2 point);
+void driveTowardPointRev(art::Vec2 point);
 
 void blueSoloAWP();
 void redSoloAWP();

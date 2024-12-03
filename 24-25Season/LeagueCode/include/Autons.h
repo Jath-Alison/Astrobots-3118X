@@ -9,6 +9,8 @@ art::Angle shortestTurnPath(const art::Angle target);
 extern art::Vec2 target;
 extern art::Vec2 travel;
 
+void resetPositionFromGPS();
+
 void displayLoopFunction();
 void logLoopFunction();
 
@@ -34,3 +36,5 @@ void blueAWPGoalFirstNeg();
 
 void redAWPStakeFirstPos();
 void blueAWPStakeFirstPos();
+
+void skills();

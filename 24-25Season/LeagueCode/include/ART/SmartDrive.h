@@ -231,6 +231,8 @@ namespace art
          */
         void driveForPID(Length target);
 
+        bool driveTowardPID(Length target, bool reset);
+
         /**
          * @brief The PID object for the @ref driveFor Method
          *

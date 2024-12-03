@@ -164,11 +164,11 @@ void usercontrol(void)
 
 		if (Controller1.ButtonR1.pressing())
 		{
-			intake.set(90);
+			intake.set(100);
 		}
 		else if (Controller1.ButtonA.pressing())
 		{
-			intake.set(-90);
+			intake.set(-100);
 		}
 		else
 		{
@@ -269,7 +269,8 @@ void usercontrol(void)
 			// smartDrive.turnToPID(art::Degrees(0));
 
 			// followPath(testPath, art::Inches(5));
-			driveTowardPoint(art::Vec2::XandY(art::Tiles(1), art::Tiles(1)));
+			// driveTowardPoint(art::Vec2::XandY(art::Tiles(1), art::Tiles(1)));
+			skills();
 		}
 
 		vex::wait(20, vex::msec);

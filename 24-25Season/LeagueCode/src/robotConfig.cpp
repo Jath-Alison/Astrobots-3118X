@@ -20,26 +20,26 @@
 vex::brain Brain;
 vex::controller Controller1;
 
-vex::gps gpsSensor(vex::PORT17, 5.0, 0, vex::inches, 90);
+vex::gps gpsSensor(vex::PORT6, 5.0, 0, vex::inches, 90);
 
-vex::motor leftMotorA (vex::PORT18, vex::gearSetting::ratio6_1, true);
-vex::motor leftMotorB (vex::PORT19, vex::gearSetting::ratio6_1, true);
-vex::motor leftMotorC (vex::PORT20, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorA (vex::PORT19, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorB (vex::PORT11, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorC (vex::PORT12, vex::gearSetting::ratio6_1, true);
 vex::motor_group leftMotors (leftMotorA, leftMotorB, leftMotorC);
 
-vex::motor rightMotorA (vex::PORT11, vex::gearSetting::ratio6_1, false);
-vex::motor rightMotorB (vex::PORT12, vex::gearSetting::ratio6_1, false);
-vex::motor rightMotorC (vex::PORT13, vex::gearSetting::ratio6_1, false);
+vex::motor rightMotorA (vex::PORT9, vex::gearSetting::ratio6_1, false);
+vex::motor rightMotorB (vex::PORT1, vex::gearSetting::ratio6_1, false);
+vex::motor rightMotorC (vex::PORT2, vex::gearSetting::ratio6_1, false);
 vex::motor_group rightMotors (rightMotorA, rightMotorB, rightMotorC);
 
-vex::inertial inert (vex::PORT10, vex::turnType::right);
+vex::inertial inert (vex::PORT18);
 
 art::TankDrive drive = art::TankDrive(leftMotors, rightMotors);
 art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
     .withGearRatio(36.f/48.f)
     .withWheelSize(art::Inches(2.75))
     .withHorizontalTracker(
-      vex::rotation(vex::PORT1, false),
+      vex::rotation(vex::PORT13, false),
       art::Inches(2),
       1.0
     )
@@ -66,13 +66,13 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
     )
     ;
 
-art::SimpleMotor intake  = art::SimpleMotor(vex::motor(vex::PORT15, vex::gearSetting::ratio6_1, false))
+art::SimpleMotor intake  = art::SimpleMotor(vex::motor(vex::PORT3, vex::gearSetting::ratio6_1, false))
     .withSpeedMode(false);
-vex::digital_out clamp(Brain.ThreeWirePort.G); bool clampState = false;;
+vex::digital_out clamp(Brain.ThreeWirePort.A); bool clampState = false;;
 
-art::SimpleMotor arm = art::SimpleMotor(vex::motor(vex::PORT14, vex::gearSetting::ratio36_1, false))
+art::SimpleMotor arm = art::SimpleMotor(vex::motor(vex::PORT4, vex::gearSetting::ratio36_1, false))
     .withSpeedMode(true);
-vex::rotation armRot = vex::rotation(vex::PORT2, true);
+vex::rotation armRot = vex::rotation(vex::PORT14, true);
 
 art::PID armPID = art::PID()
         .withConstants(3/(art::Degrees(1)), 0, -200)
@@ -86,8 +86,8 @@ art::Angle armTarget = 0;
 double armOut = 0;
 bool macroRunning=false;
 
-vex::digital_out doinkerDeploy(Brain.ThreeWirePort.A); bool doinkerDeployState = false;;
-vex::digital_out doinkerClamp(Brain.ThreeWirePort.B); bool doinkerClampState = false;;
+vex::digital_out doinkerDeploy(Brain.ThreeWirePort.D); bool doinkerDeployState = false;;
+vex::digital_out doinkerClamp(Brain.ThreeWirePort.E); bool doinkerClampState = false;;
 
 
 bool isBlue = true;

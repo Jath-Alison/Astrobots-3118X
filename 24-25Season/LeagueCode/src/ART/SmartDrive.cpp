@@ -174,6 +174,37 @@ namespace art
         }
         arcade(0, 0, 0);
     }
+    bool SmartDrive::driveTowardPID(Length target, bool reset)
+    {
+        if (reset)
+        {
+            std::stringstream ss;
+            ss << "SmartDrive::DriveToward(" << target << ")";
+
+            logger.logStringEntry(Auton_Console, ss.str());
+
+            m_driveForPID.reset();
+
+            return false;
+        }
+
+        double out = 0;
+
+        Angle offset = Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
+        Angle targetRot = Revolutions(target / getWheelTravel()) + offset;
+
+        m_driveForPID.reset();
+
+        Angle dirCopy = m_dir;
+
+        Angle pos = Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
+        out = m_driveForPID.calculate(targetRot - pos);
+
+        smartDrive.m_cmdY = out;
+        smartDrive.update();
+
+        return m_turnToPID.settledTimePassed() > 1.f;
+    }
     SmartDrive &SmartDrive::withDriveForPID(PID pid)
     {
         m_driveForPID = pid;
@@ -332,15 +363,15 @@ namespace art
     {
         if (reset)
         {
+            std::stringstream ss;
+            ss << "SmartDrive::turnToward(" << target << ")";
+
+            logger.logStringEntry(Auton_Console, ss.str());
+
             m_turnToPID.reset();
 
             return false;
         }
-
-        std::stringstream ss;
-        ss << "SmartDrive::turnToward(" << target << ")";
-
-        logger.logStringEntry(Auton_Console, ss.str());
 
         // static bool turnTowardPIDinit = false;
         // if (!turnTowardPIDinit)

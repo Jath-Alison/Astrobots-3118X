@@ -16,6 +16,7 @@
 #include "ART/SmartDrive.h"
 #include "robotConfig.h"
 #include <sstream>
+#include "logging.h"
 
 namespace art
 {
@@ -107,7 +108,7 @@ namespace art
         std::stringstream ss;
         ss << "SmartDrive::driveFor(" << target.inches() << "{in}, " << speed << ")";
 
-        logger.logStringEntry(100, timePassed(), ss.str());
+        logger.logStringEntry(Auton_Console, ss.str());
 
         Angle offset = Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
         Angle targetRot = Revolutions(target / getWheelTravel()) + offset;
@@ -132,20 +133,7 @@ namespace art
         std::stringstream ss;
         ss << "SmartDrive::driveForPID(" << target.inches() << "{in})";
 
-        logger.logStringEntry(100, timePassed(), ss.str());
-
-        static bool driveForPIDinit = false;
-        if (!driveForPIDinit)
-        {
-            driveForPIDinit = true;
-            logger.startDoubleEntry("DriveFor/Target", 101);
-            logger.startDoubleEntry("DriveFor/Current", 102);
-            logger.startDoubleEntry("DriveFor/Error(in)", 103);
-            logger.startDoubleEntry("DriveFor/P", 104);
-            logger.startDoubleEntry("DriveFor/I", 105);
-            logger.startDoubleEntry("DriveFor/D", 106);
-            logger.startDoubleEntry("DriveFor/Out", 107);
-        }
+        logger.logStringEntry(Auton_Console, ss.str());
 
         double out = 0;
 
@@ -174,13 +162,13 @@ namespace art
             // Brain.Screen.setCursor(7, 15);
             // Brain.Screen.print("out: %f", out);
 
-            logger.logDoubleEntry(101, timePassed(), targetRot);
-            logger.logDoubleEntry(102, timePassed(), pos);
-            logger.logDoubleEntry(103, timePassed(), Length(Angle(targetRot - pos).revolutions() * getWheelTravel()).inches());
-            logger.logDoubleEntry(104, timePassed(), m_driveForPID.getProportional());
-            logger.logDoubleEntry(105, timePassed(), m_driveForPID.getIntegral());
-            logger.logDoubleEntry(106, timePassed(), m_driveForPID.getDerivative());
-            logger.logDoubleEntry(107, timePassed(), out);
+            // logger.logDoubleEntry(101, timePassed(), targetRot);
+            // logger.logDoubleEntry(102, timePassed(), pos);
+            // logger.logDoubleEntry(103, timePassed(), Length(Angle(targetRot - pos).revolutions() * getWheelTravel()).inches());
+            // logger.logDoubleEntry(104, timePassed(), m_driveForPID.getProportional());
+            // logger.logDoubleEntry(105, timePassed(), m_driveForPID.getIntegral());
+            // logger.logDoubleEntry(106, timePassed(), m_driveForPID.getDerivative());
+            // logger.logDoubleEntry(107, timePassed(), out);
 
             wait(20, vex::msec);
         }
@@ -198,7 +186,7 @@ namespace art
         std::stringstream ss;
         ss << "SmartDrive::turnFor(" << target << ", " << speed << ")";
 
-        logger.logStringEntry(100, timePassed(), ss.str());
+        logger.logStringEntry(Auton_Console, ss.str());
 
         Angle targetAngle = Degrees(target.degrees() + m_inert.rotation(vex::degrees));
 
@@ -218,20 +206,20 @@ namespace art
         std::stringstream ss;
         ss << "SmartDrive::turnForPID(" << target << ")";
 
-        logger.logStringEntry(100, timePassed(), ss.str());
+        logger.logStringEntry(Auton_Console, ss.str());
 
-        static bool turnForPIDinit = false;
-        if (!turnForPIDinit)
-        {
-            turnForPIDinit = true;
-            logger.startDoubleEntry("TurnFor/Target", 111);
-            logger.startDoubleEntry("TurnFor/Current", 112);
-            logger.startDoubleEntry("TurnFor/Error", 113);
-            logger.startDoubleEntry("TurnFor/P", 114);
-            logger.startDoubleEntry("TurnFor/I", 115);
-            logger.startDoubleEntry("TurnFor/D", 116);
-            logger.startDoubleEntry("TurnFor/Out", 117);
-        }
+        // static bool turnForPIDinit = false;
+        // if (!turnForPIDinit)
+        // {
+        //     turnForPIDinit = true;
+        //     logger.startDoubleEntry("TurnFor/Target", 111);
+        //     logger.startDoubleEntry("TurnFor/Current", 112);
+        //     logger.startDoubleEntry("TurnFor/Error", 113);
+        //     logger.startDoubleEntry("TurnFor/P", 114);
+        //     logger.startDoubleEntry("TurnFor/I", 115);
+        //     logger.startDoubleEntry("TurnFor/D", 116);
+        //     logger.startDoubleEntry("TurnFor/Out", 117);
+        // }
 
         double out = 0;
 
@@ -246,13 +234,13 @@ namespace art
 
             arcade(0, out);
 
-            logger.logDoubleEntry(111, timePassed(), targetAngle);
-            logger.logDoubleEntry(112, timePassed(), art::Angle(m_inert.rotation(vex::degrees)));
-            logger.logDoubleEntry(113, timePassed(), error);
-            logger.logDoubleEntry(114, timePassed(), m_turnToPID.getProportional());
-            logger.logDoubleEntry(115, timePassed(), m_turnToPID.getIntegral());
-            logger.logDoubleEntry(116, timePassed(), m_turnToPID.getDerivative());
-            logger.logDoubleEntry(117, timePassed(), out);
+            // logger.logDoubleEntry(111, timePassed(), targetAngle);
+            // logger.logDoubleEntry(112, timePassed(), art::Angle(m_inert.rotation(vex::degrees)));
+            // logger.logDoubleEntry(113, timePassed(), error);
+            // logger.logDoubleEntry(114, timePassed(), m_turnToPID.getProportional());
+            // logger.logDoubleEntry(115, timePassed(), m_turnToPID.getIntegral());
+            // logger.logDoubleEntry(116, timePassed(), m_turnToPID.getDerivative());
+            // logger.logDoubleEntry(117, timePassed(), out);
 
             wait(20, vex::msec);
         }
@@ -270,7 +258,7 @@ namespace art
         std::stringstream ss;
         ss << "SmartDrive::turnTo(" << target << ", " << speed << ")";
 
-        logger.logStringEntry(100, timePassed(), ss.str());
+        logger.logStringEntry(Auton_Console, ss.str());
 
         Angle error = shortestTurnPath(Degrees(target.degrees() - m_inert.heading(vex::degrees)));
         int errorSign = std::abs(error) / error;
@@ -297,20 +285,20 @@ namespace art
         std::stringstream ss;
         ss << "SmartDrive::turnTo(" << target << ")";
 
-        logger.logStringEntry(100, timePassed(), ss.str());
+        logger.logStringEntry(Auton_Console, ss.str());
 
-        static bool turnToPIDinit = false;
-        if (!turnToPIDinit)
-        {
-            turnToPIDinit = true;
-            logger.startDoubleEntry("TurnTo/Target", 121);
-            logger.startDoubleEntry("TurnTo/Current", 122);
-            logger.startDoubleEntry("TurnTo/Error", 123);
-            logger.startDoubleEntry("TurnTo/P", 124);
-            logger.startDoubleEntry("TurnTo/I", 125);
-            logger.startDoubleEntry("TurnTo/D", 126);
-            logger.startDoubleEntry("TurnTo/Out", 127);
-        }
+        // static bool turnToPIDinit = false;
+        // if (!turnToPIDinit)
+        // {
+        //     turnToPIDinit = true;
+        //     logger.startDoubleEntry("TurnTo/Target", 121);
+        //     logger.startDoubleEntry("TurnTo/Current", 122);
+        //     logger.startDoubleEntry("TurnTo/Error", 123);
+        //     logger.startDoubleEntry("TurnTo/P", 124);
+        //     logger.startDoubleEntry("TurnTo/I", 125);
+        //     logger.startDoubleEntry("TurnTo/D", 126);
+        //     logger.startDoubleEntry("TurnTo/Out", 127);
+        // }
 
         double out = 0;
 
@@ -328,13 +316,13 @@ namespace art
 
             arcade(0, out);
 
-            logger.logDoubleEntry(121, timePassed(), target);
-            logger.logDoubleEntry(122, timePassed(), dirCopy);
-            logger.logDoubleEntry(123, timePassed(), error);
-            logger.logDoubleEntry(124, timePassed(), m_turnToPID.getProportional());
-            logger.logDoubleEntry(125, timePassed(), m_turnToPID.getIntegral());
-            logger.logDoubleEntry(126, timePassed(), m_turnToPID.getDerivative());
-            logger.logDoubleEntry(127, timePassed(), out);
+            // logger.logDoubleEntry(121, timePassed(), target);
+            // logger.logDoubleEntry(122, timePassed(), dirCopy);
+            // logger.logDoubleEntry(123, timePassed(), error);
+            // logger.logDoubleEntry(124, timePassed(), m_turnToPID.getProportional());
+            // logger.logDoubleEntry(125, timePassed(), m_turnToPID.getIntegral());
+            // logger.logDoubleEntry(126, timePassed(), m_turnToPID.getDerivative());
+            // logger.logDoubleEntry(127, timePassed(), out);
 
             wait(20, vex::msec);
         }
@@ -349,23 +337,23 @@ namespace art
             return false;
         }
 
-        // std::stringstream ss;
-        // ss << "SmartDrive::turnToward(" << target << ")";
+        std::stringstream ss;
+        ss << "SmartDrive::turnToward(" << target << ")";
 
-        // logger.logStringEntry(100, timePassed(), ss.str());
+        logger.logStringEntry(Auton_Console, ss.str());
 
-        static bool turnTowardPIDinit = false;
-        if (!turnTowardPIDinit)
-        {
-            turnTowardPIDinit = true;
-            logger.startDoubleEntry("TurnToward/Target", 121);
-            logger.startDoubleEntry("TurnToward/Current", 122);
-            logger.startDoubleEntry("TurnToward/Error", 123);
-            logger.startDoubleEntry("TurnToward/P", 124);
-            logger.startDoubleEntry("TurnToward/I", 125);
-            logger.startDoubleEntry("TurnToward/D", 126);
-            logger.startDoubleEntry("TurnToward/Out", 127);
-        }
+        // static bool turnTowardPIDinit = false;
+        // if (!turnTowardPIDinit)
+        // {
+        //     turnTowardPIDinit = true;
+        //     logger.startDoubleEntry("TurnToward/Target", 121);
+        //     logger.startDoubleEntry("TurnToward/Current", 122);
+        //     logger.startDoubleEntry("TurnToward/Error", 123);
+        //     logger.startDoubleEntry("TurnToward/P", 124);
+        //     logger.startDoubleEntry("TurnToward/I", 125);
+        //     logger.startDoubleEntry("TurnToward/D", 126);
+        //     logger.startDoubleEntry("TurnToward/Out", 127);
+        // }
 
         double out = 0;
 
@@ -380,13 +368,13 @@ namespace art
 
         arcade(0, out);
 
-        logger.logDoubleEntry(121, timePassed(), target);
-        logger.logDoubleEntry(122, timePassed(), dirCopy);
-        logger.logDoubleEntry(123, timePassed(), error);
-        logger.logDoubleEntry(124, timePassed(), m_turnToPID.getProportional());
-        logger.logDoubleEntry(125, timePassed(), m_turnToPID.getIntegral());
-        logger.logDoubleEntry(126, timePassed(), m_turnToPID.getDerivative());
-        logger.logDoubleEntry(127, timePassed(), out);
+        // logger.logDoubleEntry(121, timePassed(), target);
+        // logger.logDoubleEntry(122, timePassed(), dirCopy);
+        // logger.logDoubleEntry(123, timePassed(), error);
+        // logger.logDoubleEntry(124, timePassed(), m_turnToPID.getProportional());
+        // logger.logDoubleEntry(125, timePassed(), m_turnToPID.getIntegral());
+        // logger.logDoubleEntry(126, timePassed(), m_turnToPID.getDerivative());
+        // logger.logDoubleEntry(127, timePassed(), out);
 
         return m_turnToPID.settledTimePassed() > 1.f;
     }

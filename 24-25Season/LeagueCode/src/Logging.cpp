@@ -1,5 +1,7 @@
 #include "Logging.h"
 
+WPILogger logger;
+
 StringLogEntry console("General/Console");
 StringLogEntry errors("General/Errors");
 StringLogEntry competitionState("General/CompetitionState");
@@ -43,6 +45,7 @@ DoubleLogEntry Arm_Current("Arm/current");
 DoubleLogEntry Arm_Velocity("Arm/temperature");
 DoubleLogEntry Arm_Temperature("Arm/velocity");
 DoubleLogEntry Arm_Position("Arm/position");
+DoubleLogEntry Arm_RotAngle("Arm/rotAngle");
 
 DoubleArrayLogEntry Pose_TrackingPose("Pose/trackingPose");//
 DoubleArrayLogEntry Pose_TrackingPose_Blue("Pose/trackingPose(blue)");//

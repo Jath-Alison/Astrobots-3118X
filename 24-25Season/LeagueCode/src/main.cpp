@@ -18,6 +18,7 @@
 #include "WPILogger.h"
 #include "robotConfig.h"
 #include "Autons.h"
+#include "Logging.h"
 
 /**
  * @brief A global instance of competition
@@ -42,9 +43,11 @@ vex::competition Competition;
  */
 void pre_auton(void)
 {
-	logger.logStringEntry(100, timePassed(), "Pre Auton Started");
+	// logger.logStringEntry(100, timePassed(), "Pre Auton Started");
 
 	arm.setPosition(armRot.angle(), vex::degrees);
+	// logger.logStringEntry(100, timePassed(), "Pre Auton Started");
+	logger.logStringEntry(console, "Pre Auton Started");
 }
 
 /**
@@ -63,13 +66,13 @@ void pre_auton(void)
 void autonomous(void)
 {
 
-	logger.logStringEntry(100, timePassed(), "Auton Routine Started");
+	// logger.logStringEntry(100, timePassed(), "Auton Routine Started");
 
 	while (smartDrive.m_inert.isCalibrating())
 	{
 		vex::wait(10, vex::msec);
 	}
-	logger.logStringEntry(100, timePassed(), "Auton - Inertial Finished Calibrating");
+	// logger.logStringEntry(100, timePassed(), "Auton - Inertial Finished Calibrating");
 
 	if (isBlue)
 	{
@@ -102,7 +105,7 @@ void autonomous(void)
 		// redAWPStakeFirstPos();
 	}
 
-	logger.logStringEntry(100, timePassed(), "Auton Routine Finished");
+	// logger.logStringEntry(100, timePassed(), "Auton Routine Finished");
 }
 
 int armMacro()
@@ -148,7 +151,7 @@ void usercontrol(void)
 	{
 		vex::wait(10, vex::msec);
 	}
-	logger.logStringEntry(100, timePassed(), "Driver Control - Inertial Finished Calibrating");
+	logger.logStringEntry(console, "Driver Control - Inertial Finished Calibrating");
 
 	clampState;
 	doinkerDeployState;
@@ -273,7 +276,7 @@ vex::thread loggingThread;
 
 int tracking()
 {
-	logger.logStringEntry(100, timePassed(), "Tracking Thread Started");
+	// logger.logStringEntry(100, timePassed(), "Tracking Thread Started");
 	smartDrive.track();
 	return 1;
 }
@@ -296,7 +299,9 @@ int main()
 
 	logger.logHeader();
 
-	logger.startStringEntry("Console", 100);
+	logger.logStringEntry(console, "Code Started");
+
+	// logger.startStringEntry("Console", 100);
 
 	// Set up callbacks for autonomous and driver control periods.
 	Competition.autonomous(autonomous);
@@ -313,7 +318,8 @@ int main()
 
 	vex::wait(0.25, vex::sec);
 
-	logger.logStringEntry(100, timePassed(), "Robot Fully Configured");
+	// logger.logStringEntry(100, timePassed(), "Robot Fully Configured");
+	logger.logStringEntry(console, "Robot Fully Configured");
 
 	// Prevent main from exiting with an infinite loop.
 	while (true)

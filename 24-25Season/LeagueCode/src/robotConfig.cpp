@@ -20,8 +20,6 @@
 vex::brain Brain;
 vex::controller Controller1;
 
-WPILogger logger;
-
 vex::gps gpsSensor(vex::PORT17, 5.0, 0, vex::inches, 90);
 
 vex::motor leftMotorA (vex::PORT18, vex::gearSetting::ratio6_1, true);

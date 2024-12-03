@@ -1,4 +1,5 @@
 #include "robotConfig.h"
+#include "Logging.h"
 #include "Jath/Path.h"
 
 extern Jath::Path testPath;

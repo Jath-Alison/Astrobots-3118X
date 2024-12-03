@@ -693,6 +693,12 @@ namespace art
          */
         Angle m_LastRightPos;
 
+        Vec2 m_vel;// per second
+        Angle m_rotVel;// per second
+
+        Length m_leftTravel;// per second
+        Length m_rightTravel;// per second
+
     };
 
 } // namespace art

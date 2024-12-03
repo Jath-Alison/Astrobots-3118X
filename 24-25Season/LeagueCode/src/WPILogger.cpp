@@ -5,6 +5,8 @@
 #include <string.h>
 #include "vex.h"
 
+// int logEntry::lastId = 0;
+
 void WPILogger::logHeader()
 {
 	m_data.push_back('W');
@@ -350,6 +352,77 @@ void WPILogger::logDoubleArrayEntry(uint32_t id, uint64_t time, std::vector<doub
 
 void WPILogger::logStringArrayEntry(uint32_t id, uint64_t time, std::vector<std::string> val)
 {
+}
+
+void WPILogger::logBooleanEntry(BooleanLogEntry entry, bool val){
+	if(m_entries.count(&entry) == 0){
+		startBooleanEntry(entry.getName(), entry.getId());
+		m_entries.insert(&entry);
+	}
+	logBooleanEntry(entry.getId(), timePassed(), val);
+}
+void WPILogger::logInt64Entry(Int64LogEntry entry, int64_t val){
+	if(m_entries.count(&entry) == 0){
+		startInt64Entry(entry.getName(), entry.getId());
+		m_entries.insert(&entry);
+	}
+	logInt64Entry(entry.getId(), timePassed(), val);
+}
+void WPILogger::logFloatEntry(FloatLogEntry entry, float val){
+	if(m_entries.count(&entry) == 0){
+		startFloatEntry(entry.getName(), entry.getId());
+		m_entries.insert(&entry);
+	}
+	logFloatEntry(entry.getId(), timePassed(), val);
+}
+void WPILogger::logDoubleEntry(DoubleLogEntry entry, double val){
+	if(m_entries.count(&entry) == 0){
+		startDoubleEntry(entry.getName(), entry.getId());
+		m_entries.insert(&entry);
+	}
+	logDoubleEntry(entry.getId(), timePassed(), val);
+}
+void WPILogger::logStringEntry(StringLogEntry entry, std::string val){
+	if(m_entries.count(&entry) == 0){
+		startStringEntry(entry.getName(), entry.getId());
+		m_entries.insert(&entry);
+	}
+	logStringEntry(entry.getId(), timePassed(), val);
+}
+void WPILogger::logBooleanArrayEntry(BooleanArrayLogEntry entry, std::vector<bool> val){
+	if(m_entries.count(&entry) == 0){
+		startBooleanArrayEntry(entry.getName(), entry.getId());
+		m_entries.insert(&entry);
+	}
+	logBooleanArrayEntry(entry.getId(), timePassed(), val);
+}
+void WPILogger::logInt64ArrayEntry(Int64ArrayLogEntry entry, std::vector<int64_t> val){
+	if(m_entries.count(&entry) == 0){
+		startInt64ArrayEntry(entry.getName(), entry.getId());
+		m_entries.insert(&entry);
+	}
+	logInt64ArrayEntry(entry.getId(), timePassed(), val);
+}
+void WPILogger::logFloatArrayEntry(FloatArrayLogEntry entry, std::vector<float> val){
+	if(m_entries.count(&entry) == 0){
+		startFloatArrayEntry(entry.getName(), entry.getId());
+		m_entries.insert(&entry);
+	}
+	logFloatArrayEntry(entry.getId(), timePassed(), val);
+}
+void WPILogger::logDoubleArrayEntry(DoubleArrayLogEntry entry, std::vector<double> val){
+	if(m_entries.count(&entry) == 0){
+		startDoubleArrayEntry(entry.getName(), entry.getId());
+		m_entries.insert(&entry);
+	}
+	logDoubleArrayEntry(entry.getId(), timePassed(), val);
+}
+void WPILogger::logStringArrayEntry(StringArrayLogEntry entry, std::vector<std::string> val){
+	if(m_entries.count(&entry) == 0){
+		startStringArrayEntry(entry.getName(), entry.getId());
+		m_entries.insert(&entry);
+	}
+	logStringArrayEntry(entry.getId(), timePassed(), val);
 }
 
 void WPILogger::clearFile(std::string filename)

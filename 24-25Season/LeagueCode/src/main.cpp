@@ -19,6 +19,8 @@
 #include "robotConfig.h"
 #include "Autons.h"
 #include "Logging.h"
+#include "Threads.h"
+#include "SubAutons.h"
 
 /**
  * @brief A global instance of competition

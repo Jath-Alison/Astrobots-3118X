@@ -80,14 +80,16 @@ void autonomous(void)
 		// blueSoloAWP();
 		// blueElims();
 
-		Brain.Screen.print("BlueAuto- Rush");
-		blueRushAWP();
+		// Brain.Screen.print("BlueAuto- Rush");
+		// blueRushAWP();
 
 		// blueAWPGoalFirstNeg();
 		// Brain.Screen.print("BlueAuto- Goal First AWPNeg");
 
 		// Brain.Screen.print("BlueAuto- Stake First AWPPos");
 		// blueAWPStakeFirstPos();
+
+		winfred_blueAWPStakeFirstPos();
 	}
 	else
 	{

@@ -38,3 +38,6 @@ void redAWPStakeFirstPos();
 void blueAWPStakeFirstPos();
 
 void skills();
+
+void winfred_redAWPStakeFirstPos();
+void winfred_blueAWPStakeFirstPos();

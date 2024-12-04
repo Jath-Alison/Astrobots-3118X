@@ -46,6 +46,7 @@ DoubleLogEntry Arm_Velocity("Arm/temperature");
 DoubleLogEntry Arm_Temperature("Arm/velocity");
 DoubleLogEntry Arm_Position("Arm/position");
 DoubleLogEntry Arm_RotAngle("Arm/rotAngle");
+DoubleLogEntry Arm_TargetAngle("Arm/targetAngle");
 
 DoubleArrayLogEntry Pose_TrackingPose("Pose/trackingPose");//
 DoubleArrayLogEntry Pose_TrackingPose_Blue("Pose/trackingPose(blue)");//

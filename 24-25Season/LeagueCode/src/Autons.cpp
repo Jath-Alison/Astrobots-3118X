@@ -85,16 +85,18 @@ void displayLoopFunction()
                 isBlue = true;
 
                 // Only for Stake First autos
-                smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2), art::Tiles(-1));
-                smartDrive.m_dir = art::Degrees(90);
+                // smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2), art::Tiles(-1));
+                // smartDrive.m_dir = art::Degrees(90);
+                resetPositionFromGPS();
             }
             if (Brain.Screen.xPosition() > 480 - 5 - 80 && Brain.Screen.xPosition() < 480 - 5 - 80 + 120 - 10 && Brain.Screen.yPosition() > 120 + 5 && Brain.Screen.yPosition() < 5 + 120 - 10 + 120)
             {
                 isBlue = false;
 
                 // Only for Stake First autos
-                smartDrive.m_pos = art::Vec2::XandY(art::Tiles(-2), art::Tiles(-1));
-                smartDrive.m_dir = art::Degrees(-90);
+                // smartDrive.m_pos = art::Vec2::XandY(art::Tiles(-2), art::Tiles(-1));
+                // smartDrive.m_dir = art::Degrees(-90);
+                resetPositionFromGPS();
             }
             // isBlue = !isBlue;
         }
@@ -206,6 +208,7 @@ void logLoopFunction()
         logger.logDoubleEntry(Arm_Temperature, arm.temperature(vex::celsius));
         logger.logDoubleEntry(Arm_Position, arm.position(vex::rotationUnits::deg));
         logger.logDoubleEntry(Arm_RotAngle, armRot.angle());
+        logger.logDoubleEntry(Arm_TargetAngle, armTarget);
 
         logger.logDoubleArrayEntry(Base_Motors_Voltage, baseMotorsVoltage);
         logger.logDoubleArrayEntry(Base_Motors_Current, baseMotorsCurrent);
@@ -242,18 +245,18 @@ void logLoopFunction()
         logger.logDoubleArrayEntry(Pose_CenterPose_Blue, robotCentersPoseBlue);
 
         std::vector<double> robotGPSPose = {
-            art::Length(smartDrive.m_centerPos.x).meters(),
-            art::Length(smartDrive.m_centerPos.y).meters(),
-            art::Angle(smartDrive.m_dir).degrees()};
+            art::Inches(gpsSensor.xPosition(vex::inches)).meters(),
+            art::Inches(gpsSensor.yPosition(vex::inches)).meters(),
+            art::Degrees(gpsSensor.heading(vex::degrees)).degrees()};
         logger.logDoubleArrayEntry(Pose_GPSPose, robotGPSPose);
 
         std::vector<double> robotGPSPoseBlue = {
-            1.8 + art::Length(smartDrive.m_centerPos.x).meters(),
-            1.8 + art::Length(smartDrive.m_centerPos.y).meters(),
-            -(smartDrive.m_dir - art::Degrees(90)) // converted to FRC scheme
+            1.8 + art::Inches(gpsSensor.xPosition(vex::inches)).meters(),
+            1.8 + art::Inches(gpsSensor.yPosition(vex::inches)).meters(),
+            -(art::Degrees(gpsSensor.heading(vex::degrees)) - art::Degrees(90)) // converted to FRC scheme
         };
         logger.logDoubleArrayEntry(Pose_GPSPose_Blue, robotGPSPoseBlue);
-        // logger.logInt64Entry(Pose_GPSAccuracy, )
+        logger.logInt64Entry(Pose_GPSAccuracy, gpsSensor.quality());
 
         std::vector<double> targetPose = {
             art::Length(target.x).meters(),
@@ -267,7 +270,7 @@ void logLoopFunction()
             1.8 + art::Length(target.y).meters(),
             -(smartDrive.m_dir - art::Degrees(90)) // converted to FRC scheme
         };
-        logger.logDoubleArrayEntry(Auton_TargetPoint_Blue, targetPose);
+        logger.logDoubleArrayEntry(Auton_TargetPoint_Blue, targetPoseBlue);
 
         if (Competition.AUTONOMOUS)
         {
@@ -457,7 +460,7 @@ void driveTowardPointRev(art::Vec2 point)
 
     bool driveActive = false;
 
-    smartDrive.turnToPID(travel.direction()+ art::Degrees(180));
+    smartDrive.turnToPID(travel.direction() + art::Degrees(180));
     smartDrive.driveForPID(-travel.magnitude());
 
     // smartDrive.turnTowardPID(0, true);
@@ -1105,6 +1108,47 @@ void blueAWPStakeFirstPos()
     vex::wait(3, vex::sec);
     smartDrive.arcade(0, 0);
 }
+
+bool AutonArmPosRunning = true;
+int autonArmPos()
+{
+    logger.logStringEntry(Auton_Console, "Auton Arm Macro started");
+
+    AutonArmPosRunning = true;
+    // armTarget = art::Degrees(10);
+    armPID.reset();
+
+    while (AutonArmPosRunning)
+    {
+        if (abs(shortestTurnPath(armTarget - art::Degrees(armRot.angle())).degrees()) >= 0.5)
+        {
+            if (shortestTurnPath(armTarget - art::Degrees(armRot.angle())).degrees() > 30 && armTarget.degrees() < 50)
+            {
+                armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(armRot.angle())));
+                arm.set(-armOut);
+            }
+            else
+            {
+                armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(armRot.angle())));
+                arm.set(armOut);
+            }
+        }
+        else
+        {
+            arm.set(0);
+            arm.stop(vex::hold);
+        }
+
+        vex::wait(20, vex::msec);
+    }
+
+    logger.logStringEntry(Auton_Console, "Auton Arm Macro ended");
+
+    arm.set(0);
+    arm.stop(vex::hold);
+    return 1;
+}
+
 void winfred_redAWPStakeFirstPos()
 {
     smartDrive.driveForPID(art::Inches(2));
@@ -1138,55 +1182,53 @@ void winfred_blueAWPStakeFirstPos()
     arm.set(0);
     arm.stop(vex::hold);
 
-    smartDrive.driveForPID(art::Inches(-16));
+    smartDrive.driveForPID(art::Inches(-20));
 
-    arm.set(-100);
-    vex::wait(1.25, vex::seconds);
-    arm.set(0);
-    arm.stop(vex::hold);
-    
+    armTarget = art::Degrees(0);
+    vex::thread armControl(autonArmPos);
 
-    driveTowardPointRev(art::Vec2::XandY(
-        art::Tiles(2), art::Tiles(-1)));
+    // driveTowardPointRev(art::Vec2::XandY(
+    //     art::Tiles(2), art::Tiles(-1)));
 
-    smartDrive.turnToPID(art::Degrees(0));
+    resetPositionFromGPS();
+
+    target = art::Vec2::XandY(art::Tiles(2), art::Tiles(0));
+    travel = art::Vec2(target - smartDrive.m_pos);
+
+    smartDrive.turnToPID(travel.direction());
     intake.set(100);
     smartDrive.driveFor(art::Tiles(1.5), 35);
     intake.set(0);
+    AutonArmPosRunning = false;
+
+    resetPositionFromGPS();
 
     driveTowardPointRev(art::Vec2::XandY(
-        art::Tiles(2), art::Tiles(-1.333)));
+        art::Tiles(2), art::Tiles(-1)));
+    resetPositionFromGPS();
 
     driveTowardPointRev(art::Vec2::XandY(
-        art::Tiles(1), art::Tiles(-1.333)));
+        art::Tiles(1), art::Tiles(-1)));
 
     clamp.set(true);
     intake.set(100);
 
     vex::wait(1, vex::sec);
+    armTarget = art::Degrees(130);
+    armControl = vex::thread (autonArmPos);
 
-    // resetPositionFromGPS();
+    resetPositionFromGPS();
 
     driveTowardPoint(art::Vec2::XandY(
         art::Tiles(1), art::Tiles(-2)));
 
     smartDrive.driveForPID(art::Inches(-14));
-    intake.set(100);
 
-    // driveTowardPoint(art::Vec2::XandY(
-    //     art::Tiles(1), art::Tiles(0)));
-    arm.set(100);
-    vex::wait(1, vex::seconds);
-    arm.set(0);
-
-    // driveTowardPoint(art::Vec2::XandY(
-    //     art::Tiles(1), art::Tiles(0)));
-    smartDrive.driveForPID(art::Inches(-30));
-    arm.set(30);
-    vex::wait(3, vex::seconds);
-    arm.set(0);
+    driveTowardPoint(art::Vec2::XandY(
+        art::Tiles(1), art::Tiles(0)));
 
     smartDrive.arcade(0, 0);
+    AutonArmPosRunning = false;
 }
 
 std::vector<Jath::Point> pickup1Points = {

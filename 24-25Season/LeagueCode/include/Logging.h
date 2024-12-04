@@ -121,6 +121,7 @@ extern DoubleLogEntry Arm_Velocity;
 extern DoubleLogEntry Arm_Temperature;
 extern DoubleLogEntry Arm_Position;
 extern DoubleLogEntry Arm_RotAngle;
+extern DoubleLogEntry Arm_TargetAngle;
 
 //Pose
 extern DoubleArrayLogEntry Pose_TrackingPose;

@@ -37,7 +37,9 @@ void blueAWPGoalFirstNeg();
 void redAWPStakeFirstPos();
 void blueAWPStakeFirstPos();
 
-void skills();
-
 void winfred_redAWPStakeFirstPos();
 void winfred_blueAWPStakeFirstPos();
+
+void JathsSketchyFullFlippingAWP();
+
+void skills();

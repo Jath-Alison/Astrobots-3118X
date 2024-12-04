@@ -1231,6 +1231,67 @@ void winfred_blueAWPStakeFirstPos()
     AutonArmPosRunning = false;
 }
 
+void JathsSketchyFullFlippingAWP()
+{
+    double xSign = 1.0;
+    double ySign = 1.0;
+
+    if(smartDrive.m_pos.x < 0){xSign = -1.0;}
+    if(smartDrive.m_pos.y < 0){ySign = -1.0;}
+
+    smartDrive.driveForPID(art::Inches(2));
+
+    arm.set(100);
+    vex::wait(1.25, vex::seconds);
+    arm.set(0);
+    arm.stop(vex::hold);
+
+    smartDrive.driveForPID(art::Inches(-20));
+
+    armTarget = art::Degrees(0);
+    vex::thread armControl(autonArmPos);
+
+    resetPositionFromGPS();
+
+    target = art::Vec2::XandY(art::Tiles(2 * xSign), art::Tiles(0 * ySign));
+    travel = art::Vec2(target - smartDrive.m_pos);
+
+    smartDrive.turnToPID(travel.direction());
+    intake.set(100);
+    smartDrive.driveFor(art::Tiles(1.5), 35);
+    intake.set(0);
+    AutonArmPosRunning = false;
+
+    resetPositionFromGPS();
+
+    driveTowardPointRev(art::Vec2::XandY(
+        art::Tiles(2 * xSign), art::Tiles(1 * ySign)));
+    resetPositionFromGPS();
+
+    driveTowardPointRev(art::Vec2::XandY(
+        art::Tiles(1 * xSign), art::Tiles(1 * ySign)));
+
+    clamp.set(true);
+    intake.set(100);
+
+    vex::wait(1, vex::sec);
+    armTarget = art::Degrees(130);
+    armControl = vex::thread (autonArmPos);
+
+    resetPositionFromGPS();
+
+    driveTowardPoint(art::Vec2::XandY(
+        art::Tiles(1 * xSign), art::Tiles(2 * ySign)));
+
+    smartDrive.driveForPID(art::Inches(-14));
+
+    driveTowardPoint(art::Vec2::XandY(
+        art::Tiles(1 * xSign), art::Tiles(0 * ySign)));
+
+    smartDrive.arcade(0, 0);
+    AutonArmPosRunning = false;
+}
+
 std::vector<Jath::Point> pickup1Points = {
     Jath::Point(-178.526, -0.695, 12),
     Jath::Point(-176.846, 0.39, 120),

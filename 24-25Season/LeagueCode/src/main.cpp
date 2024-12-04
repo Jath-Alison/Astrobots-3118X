@@ -89,7 +89,8 @@ void autonomous(void)
 		// Brain.Screen.print("BlueAuto- Stake First AWPPos");
 		// blueAWPStakeFirstPos();
 
-		winfred_blueAWPStakeFirstPos();
+		// winfred_blueAWPStakeFirstPos();
+		JathsSketchyFullFlippingAWP();
 	}
 	else
 	{
@@ -97,14 +98,17 @@ void autonomous(void)
 		// redSoloAWP();
 		// redElims();
 
-		Brain.Screen.print("RedAuto- Rush");
-		redRushAWP();
+		// Brain.Screen.print("RedAuto- Rush");
+		// redRushAWP();
 
 		// Brain.Screen.print("RedAuto- Goal First AWPNeg");
 		// redAWPGoalFirstNeg();
 
 		// Brain.Screen.print("RedAuto- Stake First AWPPos");
 		// redAWPStakeFirstPos();
+
+		// winfred_redAWPStakeFirstPos();
+		JathsSketchyFullFlippingAWP();
 	}
 
 	// logger.logStringEntry(100, timePassed(), "Auton Routine Finished");

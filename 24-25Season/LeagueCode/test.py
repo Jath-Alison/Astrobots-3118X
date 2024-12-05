@@ -26,6 +26,9 @@ def main():
             started = True
             continue
         
+        if l[0] == "\n":
+            continue
+                
         p = l.split(",")
         
         # print(f"Point added: {p}")
@@ -41,6 +44,7 @@ def main():
         for point in path:
             # print(f"x: {point[0]}, y: {point[1]}, speed: {point[2]}")
             f.write(f"Jath::Point({point[0]}, {point[1]}, {point[2][0:-1]}), ")
+            
         f.write("\n")
     f.close()
 

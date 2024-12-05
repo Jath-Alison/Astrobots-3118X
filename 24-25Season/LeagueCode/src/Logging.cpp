@@ -32,6 +32,38 @@ Int64ArrayLogEntry Base_Motors_Temperature("Base/Motors/temperature");//
 DoubleArrayLogEntry Base_Motors_Velocity("Base/Motors/velocity");//
 DoubleArrayLogEntry Base_Motors_Position("Base/Motors/position");//
 
+DoubleLogEntry Base_DriveTo_PID_P("Base/PID/DriveTo/Terms/P");
+DoubleLogEntry Base_DriveTo_PID_I("Base/PID/DriveTo/Terms/I");
+DoubleLogEntry Base_DriveTo_PID_D("Base/PID/DriveTo/Terms/D");
+
+DoubleLogEntry Base_DriveTo_PID_kP("Base/PID/DriveTo/Constants/kP");
+DoubleLogEntry Base_DriveTo_PID_kI("Base/PID/DriveTo/Constants/kI");
+DoubleLogEntry Base_DriveTo_PID_kD("Base/PID/DriveTo/Constants/kD");
+DoubleLogEntry Base_Driveto_PID_ff("Base/PID/DriveTo/Constants/kf");
+
+DoubleLogEntry Base_DriveTo_PID_target("Base/PID/DriveTo/target");
+DoubleLogEntry Base_DriveTo_PID_feedback("Base/PID/DriveTo/feedback");
+DoubleLogEntry Base_DriveTo_PID_error("Base/PID/DriveTo/error");
+DoubleLogEntry Base_DriveTo_PID_integral("Base/PID/DriveTo/integral");
+DoubleLogEntry Base_DriveTo_PID_derivative("Base/PID/DriveTo/derivative");
+DoubleLogEntry Base_DriveTo_PID_output("Base/PID/DriveTo/output");
+
+DoubleLogEntry Base_TurnTo_PID_P("Base/PID/TurnTo/Terms/P");
+DoubleLogEntry Base_TurnTo_PID_I("Base/PID/TurnTo/Terms/I");
+DoubleLogEntry Base_TurnTo_PID_D("Base/PID/TurnTo/Terms/D");
+
+DoubleLogEntry Base_TurnTo_PID_kP("Base/PID/TurnTo/Constants/kP");
+DoubleLogEntry Base_TurnTo_PID_kI("Base/PID/TurnTo/Constants/kI");
+DoubleLogEntry Base_TurnTo_PID_kD("Base/PID/TurnTo/Constants/kD");
+DoubleLogEntry Base_TurnTo_PID_ff("Base/PID/TurnTo/Constants/kf");
+
+DoubleLogEntry Base_TurnTo_PID_target("Base/PID/TurnTo/target");
+DoubleLogEntry Base_TurnTo_PID_feedback("Base/PID/TurnTo/feedback");
+DoubleLogEntry Base_TurnTo_PID_error("Base/PID/TurnTo/error");
+DoubleLogEntry Base_TurnTo_PID_integral("Base/PID/TurnTo/integral");
+DoubleLogEntry Base_TurnTo_PID_derivative("Base/PID/TurnTo/derivative");;
+DoubleLogEntry Base_TurnTo_PID_output("Base/PID/TurnTo/output");
+
 DoubleLogEntry Intake_Cmd("Intake/cmd");
 DoubleLogEntry Intake_Voltage("Intake/voltage");
 DoubleLogEntry Intake_Current("Intake/current");

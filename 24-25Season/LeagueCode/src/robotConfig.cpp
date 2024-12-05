@@ -62,7 +62,7 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
         .withIntegralZone(art::Degrees(15))
         .withTimeout(10)
         .withSettleZone(art::Degrees(3))
-        .withSettleTimeout(0.75)
+        .withSettleTimeout(0.75)//Lowkey could be turned down to 0.25
     )
     ;
 

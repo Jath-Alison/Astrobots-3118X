@@ -93,7 +93,7 @@ namespace art
             }
 
             m_vel = posChange * (50.0);
-            m_rotVel = Angle((m_dir - prevDir) * 50.0);
+            m_rotVel = Angle(m_dir - prevDir) * 50.0;
 
             m_pos = m_pos + posChange;
             m_centerPos = m_pos + Vec2::dirAndMag(m_dir, m_tracker.m_offset);
@@ -135,6 +135,11 @@ namespace art
 
         logger.logStringEntry(Auton_Console, ss.str());
 
+        logger.logDoubleEntry(Base_DriveTo_PID_kP, m_driveForPID.getkp());
+        logger.logDoubleEntry(Base_DriveTo_PID_kI, m_driveForPID.getki());
+        logger.logDoubleEntry(Base_DriveTo_PID_kD, m_driveForPID.getkd());
+        logger.logDoubleEntry(Base_Driveto_PID_ff, m_driveForPID.getff());
+
         double out = 0;
 
         Angle offset = Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
@@ -148,27 +153,15 @@ namespace art
 
             arcade(out, 0);
 
-            // Brain.Screen.setCursor(5, 1);
-            // Brain.Screen.print("p: %f", m_driveForPID.getProportional());
-            // Brain.Screen.setCursor(6, 1);
-            // Brain.Screen.print("i: %f", m_driveForPID.getIntegral());
-            // Brain.Screen.setCursor(7, 1);
-            // Brain.Screen.print("d: %f", m_driveForPID.getDerivative());
-
-            // Brain.Screen.setCursor(5, 15);
-            // Brain.Screen.print("current: %f", pos.degrees());
-            // Brain.Screen.setCursor(6, 15);
-            // Brain.Screen.print("error: %f", Length(Angle(targetRot - pos).revolutions() * getWheelTravel()).inches());
-            // Brain.Screen.setCursor(7, 15);
-            // Brain.Screen.print("out: %f", out);
-
-            // logger.logDoubleEntry(101, timePassed(), targetRot);
-            // logger.logDoubleEntry(102, timePassed(), pos);
-            // logger.logDoubleEntry(103, timePassed(), Length(Angle(targetRot - pos).revolutions() * getWheelTravel()).inches());
-            // logger.logDoubleEntry(104, timePassed(), m_driveForPID.getProportional());
-            // logger.logDoubleEntry(105, timePassed(), m_driveForPID.getIntegral());
-            // logger.logDoubleEntry(106, timePassed(), m_driveForPID.getDerivative());
-            // logger.logDoubleEntry(107, timePassed(), out);
+            logger.logDoubleEntry(Base_DriveTo_PID_P, m_driveForPID.getProportional());
+            logger.logDoubleEntry(Base_DriveTo_PID_I, m_driveForPID.getIntegral());
+            logger.logDoubleEntry(Base_DriveTo_PID_D, m_driveForPID.getDerivative());
+            logger.logDoubleEntry(Base_DriveTo_PID_target, targetRot);
+            logger.logDoubleEntry(Base_DriveTo_PID_feedback, pos);
+            logger.logDoubleEntry(Base_DriveTo_PID_error, targetRot - pos);
+            logger.logDoubleEntry(Base_DriveTo_PID_integral, m_driveForPID.getIntegral() / m_driveForPID.getki());
+            logger.logDoubleEntry(Base_DriveTo_PID_derivative, m_driveForPID.getDerivative() / m_driveForPID.getkd());
+            logger.logDoubleEntry(Base_DriveTo_PID_output, out);
 
             wait(20, vex::msec);
         }
@@ -318,18 +311,10 @@ namespace art
 
         logger.logStringEntry(Auton_Console, ss.str());
 
-        // static bool turnToPIDinit = false;
-        // if (!turnToPIDinit)
-        // {
-        //     turnToPIDinit = true;
-        //     logger.startDoubleEntry("TurnTo/Target", 121);
-        //     logger.startDoubleEntry("TurnTo/Current", 122);
-        //     logger.startDoubleEntry("TurnTo/Error", 123);
-        //     logger.startDoubleEntry("TurnTo/P", 124);
-        //     logger.startDoubleEntry("TurnTo/I", 125);
-        //     logger.startDoubleEntry("TurnTo/D", 126);
-        //     logger.startDoubleEntry("TurnTo/Out", 127);
-        // }
+        logger.logDoubleEntry(Base_TurnTo_PID_kP, m_turnToPID.getkp());
+        logger.logDoubleEntry(Base_TurnTo_PID_kI, m_turnToPID.getki());
+        logger.logDoubleEntry(Base_TurnTo_PID_kD, m_turnToPID.getkd());
+        logger.logDoubleEntry(Base_TurnTo_PID_ff, m_turnToPID.getff());
 
         double out = 0;
 
@@ -347,13 +332,15 @@ namespace art
 
             arcade(0, out);
 
-            // logger.logDoubleEntry(121, timePassed(), target);
-            // logger.logDoubleEntry(122, timePassed(), dirCopy);
-            // logger.logDoubleEntry(123, timePassed(), error);
-            // logger.logDoubleEntry(124, timePassed(), m_turnToPID.getProportional());
-            // logger.logDoubleEntry(125, timePassed(), m_turnToPID.getIntegral());
-            // logger.logDoubleEntry(126, timePassed(), m_turnToPID.getDerivative());
-            // logger.logDoubleEntry(127, timePassed(), out);
+            logger.logDoubleEntry(Base_TurnTo_PID_P, m_turnForPID.getProportional());
+            logger.logDoubleEntry(Base_TurnTo_PID_I, m_turnForPID.getIntegral());
+            logger.logDoubleEntry(Base_TurnTo_PID_D, m_turnForPID.getDerivative());
+            logger.logDoubleEntry(Base_TurnTo_PID_target, target);
+            logger.logDoubleEntry(Base_TurnTo_PID_feedback, m_dir);
+            logger.logDoubleEntry(Base_TurnTo_PID_error, error);
+            logger.logDoubleEntry(Base_TurnTo_PID_integral, m_turnForPID.getIntegral() / m_turnForPID.getki());
+            logger.logDoubleEntry(Base_TurnTo_PID_derivative, m_turnForPID.getDerivative() / m_turnForPID.getkd());
+            logger.logDoubleEntry(Base_TurnTo_PID_output, out);
 
             wait(20, vex::msec);
         }
@@ -363,6 +350,11 @@ namespace art
     {
         if (reset)
         {
+            logger.logDoubleEntry(Base_TurnTo_PID_kP, m_turnToPID.getkp());
+            logger.logDoubleEntry(Base_TurnTo_PID_kI, m_turnToPID.getki());
+            logger.logDoubleEntry(Base_TurnTo_PID_kD, m_turnToPID.getkd());
+            logger.logDoubleEntry(Base_TurnTo_PID_ff, m_turnToPID.getff());
+
             std::stringstream ss;
             ss << "SmartDrive::turnToward(" << target << ")";
 
@@ -372,19 +364,6 @@ namespace art
 
             return false;
         }
-
-        // static bool turnTowardPIDinit = false;
-        // if (!turnTowardPIDinit)
-        // {
-        //     turnTowardPIDinit = true;
-        //     logger.startDoubleEntry("TurnToward/Target", 121);
-        //     logger.startDoubleEntry("TurnToward/Current", 122);
-        //     logger.startDoubleEntry("TurnToward/Error", 123);
-        //     logger.startDoubleEntry("TurnToward/P", 124);
-        //     logger.startDoubleEntry("TurnToward/I", 125);
-        //     logger.startDoubleEntry("TurnToward/D", 126);
-        //     logger.startDoubleEntry("TurnToward/Out", 127);
-        // }
 
         double out = 0;
 
@@ -399,13 +378,15 @@ namespace art
 
         arcade(0, out);
 
-        // logger.logDoubleEntry(121, timePassed(), target);
-        // logger.logDoubleEntry(122, timePassed(), dirCopy);
-        // logger.logDoubleEntry(123, timePassed(), error);
-        // logger.logDoubleEntry(124, timePassed(), m_turnToPID.getProportional());
-        // logger.logDoubleEntry(125, timePassed(), m_turnToPID.getIntegral());
-        // logger.logDoubleEntry(126, timePassed(), m_turnToPID.getDerivative());
-        // logger.logDoubleEntry(127, timePassed(), out);
+        logger.logDoubleEntry(Base_TurnTo_PID_P, m_turnForPID.getProportional());
+        logger.logDoubleEntry(Base_TurnTo_PID_I, m_turnForPID.getIntegral());
+        logger.logDoubleEntry(Base_TurnTo_PID_D, m_turnForPID.getDerivative());
+        logger.logDoubleEntry(Base_TurnTo_PID_target, target);
+        logger.logDoubleEntry(Base_TurnTo_PID_feedback, m_dir);
+        logger.logDoubleEntry(Base_TurnTo_PID_error, error);
+        logger.logDoubleEntry(Base_TurnTo_PID_integral, m_turnForPID.getIntegral() / m_turnForPID.getki());
+        logger.logDoubleEntry(Base_TurnTo_PID_derivative, m_turnForPID.getDerivative() / m_turnForPID.getkd());
+        logger.logDoubleEntry(Base_TurnTo_PID_output, out);
 
         return m_turnToPID.settledTimePassed() > 1.f;
     }

@@ -128,7 +128,7 @@ void logLoopFunction()
         logger.logDoubleArrayEntry(Base_XYR_Cmd, baseXYRCmd);
 
         std::vector<double> baseXYRVel = {
-            smartDrive.m_vel.x, smartDrive.m_vel.y, smartDrive.m_rotVel};
+            art::Length(smartDrive.m_vel.x).meters(),art::Length(smartDrive.m_vel.y).meters(), smartDrive.m_rotVel};
         logger.logDoubleArrayEntry(Base_XYR_Vel, baseXYRVel);
 
         std::vector<double> baseLRCmd = {
@@ -139,13 +139,13 @@ void logLoopFunction()
             smartDrive.m_leftTravel.meters(), smartDrive.m_rightTravel.meters()};
         logger.logDoubleArrayEntry(Base_LeftRight_Vel, baseLRVel);
 
-        std::vector<double> baseLSweveState = {
+        std::vector<double> baseLSwerveState = {
             smartDrive.m_leftTravel.meters(), 0};
-        logger.logDoubleArrayEntry(Base_L_SwerveState, baseLSweveState);
+        logger.logDoubleArrayEntry(Base_L_SwerveState, baseLSwerveState);
 
-        std::vector<double> baseRSweveState = {
+        std::vector<double> baseRSwerveState = {
             smartDrive.m_rightTravel.meters(), 0};
-        logger.logDoubleArrayEntry(Base_R_SwerveState, baseRSweveState);
+        logger.logDoubleArrayEntry(Base_R_SwerveState, baseRSwerveState);
 
         std::vector<double> baseMotorsVoltage{};
         std::vector<double> baseMotorsCurrent{};

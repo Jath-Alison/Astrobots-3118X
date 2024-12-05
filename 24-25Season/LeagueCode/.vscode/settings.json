@@ -6,8 +6,11 @@
 		"Auton",
 		"autons",
 		"doinker",
+		"Elims",
 		"JERRYIO",
-		"odometry"
+		"odometry",
+		"wpilog",
+		"Xand"
 	],
 	"files.associations": {
 		"cmath": "cpp",

@@ -92,18 +92,37 @@ extern DoubleArrayLogEntry Base_Motors_Position;
 
 //SmartDrivePIDs
 
-// extern DoubleLogEntry Base_DriveTo_PID_P;
-// extern DoubleLogEntry Base_DriveTo_PID_I;
-// extern DoubleLogEntry Base_DriveTo_PID_D;
-// extern DoubleLogEntry Base_DriveTo_PID_kP;
-// extern DoubleLogEntry Base_DriveTo_PID_kI;
-// extern DoubleLogEntry Base_DriveTo_PID_kD;
-// extern DoubleLogEntry Base_Driveto_PID_ff;
-// extern DoubleLogEntry Base_DriveTo_PID_target;
-// extern DoubleLogEntry Base_DriveTo_PID_feedback;
-// extern DoubleLogEntry Base_DriveTo_PID_error;
-// extern DoubleLogEntry Base_DriveTo_PID_output;
-// extern DoubleLogEntry Base_DriveTo_PID_lastError;
+extern DoubleLogEntry Base_DriveTo_PID_P;
+extern DoubleLogEntry Base_DriveTo_PID_I;
+extern DoubleLogEntry Base_DriveTo_PID_D;
+
+extern DoubleLogEntry Base_DriveTo_PID_kP;
+extern DoubleLogEntry Base_DriveTo_PID_kI;
+extern DoubleLogEntry Base_DriveTo_PID_kD;
+extern DoubleLogEntry Base_Driveto_PID_ff;
+
+extern DoubleLogEntry Base_DriveTo_PID_target;
+extern DoubleLogEntry Base_DriveTo_PID_feedback;
+extern DoubleLogEntry Base_DriveTo_PID_error;
+extern DoubleLogEntry Base_DriveTo_PID_integral;
+extern DoubleLogEntry Base_DriveTo_PID_derivative;
+extern DoubleLogEntry Base_DriveTo_PID_output;
+
+extern DoubleLogEntry Base_TurnTo_PID_P;
+extern DoubleLogEntry Base_TurnTo_PID_I;
+extern DoubleLogEntry Base_TurnTo_PID_D;
+
+extern DoubleLogEntry Base_TurnTo_PID_kP;
+extern DoubleLogEntry Base_TurnTo_PID_kI;
+extern DoubleLogEntry Base_TurnTo_PID_kD;
+extern DoubleLogEntry Base_TurnTo_PID_ff;
+
+extern DoubleLogEntry Base_TurnTo_PID_target;
+extern DoubleLogEntry Base_TurnTo_PID_feedback;
+extern DoubleLogEntry Base_TurnTo_PID_error;
+extern DoubleLogEntry Base_TurnTo_PID_integral;
+extern DoubleLogEntry Base_TurnTo_PID_derivative;
+extern DoubleLogEntry Base_TurnTo_PID_output;
 
 
 //Intake

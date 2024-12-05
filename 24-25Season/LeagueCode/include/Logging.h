@@ -108,6 +108,10 @@ extern DoubleLogEntry Base_DriveTo_PID_integral;
 extern DoubleLogEntry Base_DriveTo_PID_derivative;
 extern DoubleLogEntry Base_DriveTo_PID_output;
 
+extern DoubleLogEntry Base_DriveTo_PID_settleZone;
+extern DoubleLogEntry Base_DriveTo_PID_timeSettled;
+extern DoubleLogEntry Base_DriveTo_PID_timePassed;
+
 extern DoubleLogEntry Base_TurnTo_PID_P;
 extern DoubleLogEntry Base_TurnTo_PID_I;
 extern DoubleLogEntry Base_TurnTo_PID_D;
@@ -124,6 +128,9 @@ extern DoubleLogEntry Base_TurnTo_PID_integral;
 extern DoubleLogEntry Base_TurnTo_PID_derivative;
 extern DoubleLogEntry Base_TurnTo_PID_output;
 
+extern DoubleLogEntry Base_TurnTo_PID_settleZone;
+extern DoubleLogEntry Base_TurnTo_PID_timeSettled;
+extern DoubleLogEntry Base_TurnTo_PID_timePassed;
 
 //Intake
 extern DoubleLogEntry Intake_Cmd;

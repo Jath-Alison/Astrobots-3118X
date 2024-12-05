@@ -36,6 +36,10 @@ DoubleLogEntry Base_DriveTo_PID_P("Base/PID/DriveTo/Terms/P");
 DoubleLogEntry Base_DriveTo_PID_I("Base/PID/DriveTo/Terms/I");
 DoubleLogEntry Base_DriveTo_PID_D("Base/PID/DriveTo/Terms/D");
 
+DoubleLogEntry Base_DriveTo_PID_settleZone("Base/PID/DriveTo/Terms/settleZone");
+DoubleLogEntry Base_DriveTo_PID_timeSettled("Base/PID/DriveTo/Terms/imeSettled");
+DoubleLogEntry Base_DriveTo_PID_timePassed("Base/PID/DriveTo/Terms/timePassed");
+
 DoubleLogEntry Base_DriveTo_PID_kP("Base/PID/DriveTo/Constants/kP");
 DoubleLogEntry Base_DriveTo_PID_kI("Base/PID/DriveTo/Constants/kI");
 DoubleLogEntry Base_DriveTo_PID_kD("Base/PID/DriveTo/Constants/kD");
@@ -51,6 +55,10 @@ DoubleLogEntry Base_DriveTo_PID_output("Base/PID/DriveTo/output");
 DoubleLogEntry Base_TurnTo_PID_P("Base/PID/TurnTo/Terms/P");
 DoubleLogEntry Base_TurnTo_PID_I("Base/PID/TurnTo/Terms/I");
 DoubleLogEntry Base_TurnTo_PID_D("Base/PID/TurnTo/Terms/D");
+
+DoubleLogEntry Base_TurnTo_PID_settleZone("Base/PID/TurnTo/Terms/settleZone");
+DoubleLogEntry Base_TurnTo_PID_timeSettled("Base/PID/TurnTo/Terms/imeSettled");
+DoubleLogEntry Base_TurnTo_PID_timePassed("Base/PID/TurnTo/Terms/timePassed");
 
 DoubleLogEntry Base_TurnTo_PID_kP("Base/PID/TurnTo/Constants/kP");
 DoubleLogEntry Base_TurnTo_PID_kI("Base/PID/TurnTo/Constants/kI");

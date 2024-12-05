@@ -136,6 +136,59 @@ void followPathRev(Jath::Path p, art::Length lookaheadDist)
     }
     logger.logStringEntry(Auton_Console, "Finished Following Path in Reverse");
 }
+void followPathHalfspeed(Jath::Path p, art::Length lookaheadDist)
+{
+
+    logger.logStringEntry(Auton_Console, "Following Path");
+
+    std::vector<double> pathLog;
+    std::vector<double> pathLogBlue = {
+        // 1.8 + art::Length(smartDrive.m_pos.x).meters(),
+        // 1.8 + art::Length(smartDrive.m_pos.y).meters(),
+        // -(smartDrive.m_dir - art::Degrees(90)) // converted to FRC scheme
+    };
+    for (auto point : p.m_points)
+    {
+        pathLog.push_back(art::Length(point.m_pos.x).meters());
+        pathLog.push_back(art::Length(point.m_pos.y).meters());
+        pathLog.push_back(1.02);
+
+        pathLogBlue.push_back(art::Length(point.m_pos.x).meters() + 1.8);
+        pathLogBlue.push_back(art::Length(point.m_pos.y).meters() + 1.8);
+        pathLogBlue.push_back(1.02);
+    }
+
+    logger.logDoubleArrayEntry(Auton_CurrentPath, pathLog);
+    logger.logDoubleArrayEntry(Auton_CurrentPath, pathLogBlue);
+
+    Jath::Point lookahead = p.getLookahead(smartDrive.m_centerPos, lookaheadDist);
+    Jath::Point closest = p.getClosestPoint(smartDrive.m_centerPos);
+
+    smartDrive.turnTowardPID(lookahead.m_pos.direction(), true);
+    while (lookahead.m_speed != 0)
+    {
+
+        if (Controller1.ButtonA.pressing())
+        {
+            return;
+        }
+
+        travel = art::Vec2(lookahead.m_pos - smartDrive.m_centerPos);
+
+        smartDrive.turnTowardPID(travel.direction(), false);
+        smartDrive.m_cmdY = lookahead.m_speed * 0.5;
+        smartDrive.update();
+
+        target = lookahead.m_pos;
+
+        lookahead = p.getLookahead(smartDrive.m_pos, lookaheadDist);
+        closest = p.getClosestPoint(smartDrive.m_pos);
+
+        vex::wait(20, vex::msec);
+    }
+
+    logger.logStringEntry(Auton_Console, "Finished Following Path");
+}
 
 void driveTowardPoint(art::Vec2 point)
 {
@@ -143,7 +196,7 @@ void driveTowardPoint(art::Vec2 point)
     logger.logStringEntry(Auton_Console, "Driving Toward Point");
 
     target = point;
-    travel = art::Vec2(target - smartDrive.m_centerPos);
+    travel = art::Vec2(target - smartDrive.m_pos);
 
     bool driveActive = false;
 
@@ -189,7 +242,7 @@ void driveTowardPointRev(art::Vec2 point)
     logger.logStringEntry(Auton_Console, "Driving Toward Point-Rev");
 
     target = point;
-    travel = art::Vec2(target - smartDrive.m_centerPos);
+    travel = art::Vec2(target - smartDrive.m_pos);
 
     bool driveActive = false;
 

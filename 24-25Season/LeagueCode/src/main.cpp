@@ -110,7 +110,8 @@ void autonomous(void)
 		// redAWPStakeFirstPos();
 
 		// winfred_redAWPStakeFirstPos();
-		JathsSketchyFullFlippingAWP();
+		// negStackedRings();
+		negStackedRingsStakeFirst();
 	}
 
 	// logger.logStringEntry(100, timePassed(), "Auton Routine Finished");

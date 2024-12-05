@@ -723,7 +723,7 @@ void winfred_blueAWPStakeFirstPos()
 
     vex::wait(1, vex::sec);
     armTarget = art::Degrees(130);
-    armControl = vex::thread (autonArmPos);
+    armControl = vex::thread(autonArmPos);
 
     resetPositionFromGPS();
 
@@ -744,8 +744,14 @@ void JathsSketchyFullFlippingAWP()
     double xSign = 1.0;
     double ySign = 1.0;
 
-    if(smartDrive.m_pos.x < 0){xSign = -1.0;}
-    if(smartDrive.m_pos.y < 0){ySign = -1.0;}
+    if (smartDrive.m_pos.x < 0)
+    {
+        xSign = -1.0;
+    }
+    if (smartDrive.m_pos.y < 0)
+    {
+        ySign = -1.0;
+    }
 
     smartDrive.driveForPID(art::Inches(2));
 
@@ -784,7 +790,7 @@ void JathsSketchyFullFlippingAWP()
 
     vex::wait(1, vex::sec);
     armTarget = art::Degrees(130);
-    armControl = vex::thread (autonArmPos);
+    armControl = vex::thread(autonArmPos);
 
     resetPositionFromGPS();
 
@@ -800,26 +806,104 @@ void JathsSketchyFullFlippingAWP()
     AutonArmPosRunning = false;
 }
 
-std::vector<Jath::Point> goal1PathPoints = {
-    Jath::Point(-176.354, -1.238, 10), Jath::Point(-174.354, -1.276, 99.317), Jath::Point(-172.356, -1.365, 97.635), Jath::Point(-170.36, -1.495, 95.952), Jath::Point(-168.367, -1.657, 94.269), Jath::Point(-166.376, -1.844, 92.587), Jath::Point(-164.386, -2.047, 90.904), Jath::Point(-162.397, -2.259, 89.221), Jath::Point(-160.409, -2.473, 87.539), Jath::Point(-158.42, -2.68, 85.856), Jath::Point(-156.429, -2.874, 84.173), Jath::Point(-154.436, -3.045, 82.491), Jath::Point(-152.441, -3.185, 80.808), Jath::Point(-150.444, -3.283, 79.125), Jath::Point(-148.444, -3.329, 77.443), Jath::Point(-146.445, -3.308, 75.76), Jath::Point(-144.447, -3.207, 74.078), Jath::Point(-142.457, -3.008, 72.395), Jath::Point(-140.483, -2.691, 70.712), Jath::Point(-138.536, -2.237, 69.03), Jath::Point(-136.632, -1.627, 67.347), Jath::Point(-134.795, -0.839, 65.664), Jath::Point(-133.05, 0.137, 63.982), Jath::Point(-131.425, 1.301, 62.299), Jath::Point(-129.943, 2.642, 62.764), Jath::Point(-128.62, 4.141, 63.23), Jath::Point(-127.458, 5.768, 63.696), Jath::Point(-126.458, 7.498, 64.161), Jath::Point(-125.603, 9.306, 64.627), Jath::Point(-124.882, 11.171, 65.092), Jath::Point(-124.281, 13.078, 65.558), Jath::Point(-123.893, 15.036, 66.02), Jath::Point(-123.632, 17.019, 66.489), Jath::Point(-123.373, 19.002, 66.955), Jath::Point(-123.117, 20.985, 67.42), Jath::Point(-122.863, 22.969, 67.886), Jath::Point(-122.614, 24.954, 68.351), Jath::Point(-122.37, 26.939, 68.817), Jath::Point(-122.131, 28.924, 71.424), Jath::Point(-121.901, 30.911, 74.031), Jath::Point(-121.678, 32.899, 76.638), Jath::Point(-121.467, 34.887, 79.246), Jath::Point(-121.268, 36.877, 81.853), Jath::Point(-121.082, 38.869, 84.46), Jath::Point(-120.911, 40.862, 87.067), Jath::Point(-120.757, 42.856, 89.674), Jath::Point(-120.62, 44.851, 92.282), Jath::Point(-120.499, 46.847, 94.889), Jath::Point(-120.394, 48.844, 97.496), Jath::Point(-120.305, 50.842, 100.103), Jath::Point(-120.228, 52.841, 100.103), Jath::Point(-120.163, 54.84, 100.103), Jath::Point(-120.108, 56.839, 100.103), Jath::Point(-120.061, 58.839, 100.103), Jath::Point(-120.021, 60.838, 100.103), Jath::Point(-119.987, 62.838, 100.103), Jath::Point(-119.957, 64.838, 100.103), Jath::Point(-119.928, 66.964, 100.10), Jath::Point(-119.928, 66.964, 0), 
-};
-Jath::Path goal1Path = Jath::Path::cm(goal1PathPoints);
+void negStackedRings()
+{
+    double xSign = 1.0;
+
+    if (smartDrive.m_pos.x < 0)
+    {
+        xSign = -1.0;
+    }
+
+    driveTowardPointRev(art::Vec2::XandY(
+        art::Tiles(0.95 * xSign), art::Tiles(1)));
+
+    // target = art::Vec2::XandY(art::Tiles(1 * xSign), art::Tiles(1));
+    // travel = art::Vec2(target - smartDrive.m_pos);
+
+    // smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+    // smartDrive.driveForPID();
+
+    clamp.set(true);
+
+    intake.set(100);
+
+    smartDrive.arcade(0, 0);
+    vex::wait(0.25, vex::sec);
+
+    driveTowardPoint(art::Vec2::XandY(
+        art::Tiles(1 * xSign), art::Tiles(2)));
+
+    smartDrive.driveForPID(art::Inches(-10));
+
+    smartDrive.arcade(0, 0);
+    vex::wait(0.35, vex::sec);
+    resetPositionFromGPS();
+
+    driveTowardPoint(art::Vec2::XandY(
+        art::Inches(10 * xSign), art::Inches(48 - 2)));
+
+    smartDrive.driveForPID(art::Inches(-12));
+    smartDrive.arcade(0, 0);
+    vex::wait(0.35, vex::sec);
+    resetPositionFromGPS();
+
+    driveTowardPoint(art::Vec2::XandY(
+        art::Inches(8 * xSign), art::Inches(48 + 4)));
+    
+    smartDrive.driveForPID(art::Inches(-12));
+
+    armTarget = art::Degrees(120);
+    vex::thread armControl(autonArmPos);
+
+    driveTowardPoint(art::Vec2::XandY(
+        art::Inches(24 * xSign), art::Inches(0)));
+
+    smartDrive.arcade(0, 0);
+}
+void negStackedRingsStakeFirst()
+{
+    double xSign = 1.0;
+
+    if (smartDrive.m_pos.x < 0)
+    {
+        xSign = -1.0;
+    }
+
+    smartDrive.driveForPID(art::Inches(2));
+
+    arm.set(100);
+    vex::wait(1.25, vex::seconds);
+    arm.set(0);
+    arm.stop(vex::hold);
+
+    smartDrive.driveForPID(art::Inches(-20));
+
+    armTarget = art::Degrees(0);
+    vex::thread armControl(autonArmPos);
+
+    negStackedRings();
+}
 
 std::vector<Jath::Point> rings1PathPoints = {
-    Jath::Point(-119.577, 59.417, 10), Jath::Point(-118.464, 61.079, 100.454), Jath::Point(-117.338, 62.732, 99.908), Jath::Point(-116.196, 64.374, 93.931), Jath::Point(-115.033, 66.001, 92.134), Jath::Point(-113.846, 67.611, 90.811), Jath::Point(-112.628, 69.198, 88.601), Jath::Point(-111.377, 70.757, 86.07), Jath::Point(-110.084, 72.284, 83.156), Jath::Point(-108.746, 73.769, 79.793), Jath::Point(-107.353, 75.205, 77.272), Jath::Point(-105.899, 76.578, 71.501), Jath::Point(-104.377, 77.875, 66.524), Jath::Point(-102.78, 79.078, 61.054), Jath::Point(-101.102, 80.165, 55.26), Jath::Point(-99.342, 81.113, 49.452), Jath::Point(-97.499, 81.889, 42.518), Jath::Point(-95.587, 82.471, 38.706), Jath::Point(-93.621, 82.832, 36.566), Jath::Point(-91.627, 82.962, 37.584), Jath::Point(-89.63, 82.862, 42.247), Jath::Point(-87.657, 82.543, 47.589), Jath::Point(-85.725, 82.03, 53.77), Jath::Point(-83.845, 81.348, 60.154), Jath::Point(-82.024, 80.522, 64.277), Jath::Point(-80.264, 79.573, 70.024), Jath::Point(-78.561, 78.525, 73.487), Jath::Point(-76.913, 77.392, 78.078), Jath::Point(-75.318, 76.186, 80.056), Jath::Point(-73.77, 74.92, 79.284), Jath::Point(-72.266, 73.602, 78.511), Jath::Point(-70.801, 72.24, 73.426), Jath::Point(-69.374, 70.839, 68.34), Jath::Point(-67.982, 69.402, 63.255), Jath::Point(-66.621, 67.937, 58.169), Jath::Point(-65.288, 66.446, 53.083), Jath::Point(-63.984, 64.93, 47.998), Jath::Point(-62.702, 63.395, 42.912), Jath::Point(-61.445, 61.839, 37.826), Jath::Point(-60.209, 60.267, 32.74), Jath::Point(-58.91, 58.747, 41.641), Jath::Point(-57.594, 57.241, 50.54), Jath::Point(-56.275, 55.737, 59.44), Jath::Point(-54.952, 54.237, 68.34), Jath::Point(-53.625, 52.741, 77.24), Jath::Point(-52.294, 51.248, 86.14), Jath::Point(-50.958, 49.76, 95.04), Jath::Point(-49.616, 48.277, 94.994), Jath::Point(-48.269, 46.799, 94.949), Jath::Point(-46.916, 45.326, 94.903), Jath::Point(-45.556, 43.86, 94.858), Jath::Point(-44.188, 42.4, 94.813), Jath::Point(-42.813, 40.948, 94.767), Jath::Point(-41.429, 39.505, 94.722), Jath::Point(-40.035, 38.07, 94.676), Jath::Point(-38.631, 36.645, 94.631), Jath::Point(-37.217, 35.231, 94.586), Jath::Point(-35.792, 33.829, 94.54), Jath::Point(-34.354, 32.438, 94.495), Jath::Point(-32.906, 31.059, 94.449), Jath::Point(-31.446, 29.691, 94.404), Jath::Point(-29.977, 28.334, 94.359), Jath::Point(-28.5, 26.986, 94.313), Jath::Point(-27.018, 25.643, 94.268), Jath::Point(-25.532, 24.304, 94.222), Jath::Point(-24.046, 22.966, 94.177), Jath::Point(-22.562, 21.625, 94.131), Jath::Point(-21.082, 20.28, 94.086), Jath::Point(-19.608, 18.928, 94.041), Jath::Point(-18.14, 17.569, 93.995), Jath::Point(-16.68, 16.202, 93.95), Jath::Point(-15.228, 14.828, 93.904), Jath::Point(-13.783, 13.445, 93.859), Jath::Point(-12.345, 12.054, 93.814), Jath::Point(-10.915, 10.656, 93.768), Jath::Point(-9.492, 9.251, 86.775), Jath::Point(-8.075, 7.839, 79.783), Jath::Point(-6.665, 6.422, 72.79), Jath::Point(-5.26, 4.998, 65.797), Jath::Point(-3.86, 3.569, 58.805), Jath::Point(-2.466, 2.135, 51.812), Jath::Point(-1.076, 0.697, 44.819), Jath::Point(0.309, -0.745, 37.82), Jath::Point(1.708, -2.174, 46.387), Jath::Point(3.135, -3.576, 54.948), Jath::Point(4.589, -4.949, 63.509), Jath::Point(6.071, -6.292, 72.07), Jath::Point(7.577, -7.608, 80.63), Jath::Point(9.109, -8.894, 89.191), Jath::Point(10.664, -10.152, 90.265), Jath::Point(12.241, -11.382, 91.338), Jath::Point(13.838, -12.585, 92.412), Jath::Point(15.457, -13.76, 93.485), Jath::Point(17.093, -14.91, 94.559), Jath::Point(18.746, -16.035, 95.632), Jath::Point(20.415, -17.137, 96.706), Jath::Point(22.099, -18.217, 97.779), Jath::Point(23.795, -19.276, 98.853), Jath::Point(25.503, -20.316, 99.926), Jath::Point(27.222, -21.34, 96.457), Jath::Point(28.948, -22.349, 97.281), Jath::Point(30.682, -23.346, 94.137), Jath::Point(32.421, -24.334, 90.706), Jath::Point(34.164, -25.315, 87.274), Jath::Point(35.908, -26.294, 83.843), Jath::Point(37.652, -27.273, 80.412), Jath::Point(39.393, -28.257, 76.98), Jath::Point(41.129, -29.251, 73.549), Jath::Point(42.855, -30.26, 70.117), Jath::Point(44.57, -31.29, 66.686), Jath::Point(46.267, -32.348, 63.255), Jath::Point(47.942, -33.441, 61.559), Jath::Point(49.586, -34.579, 59.864), Jath::Point(51.194, -35.769, 58.169), Jath::Point(52.75, -37.025, 56.474), Jath::Point(54.244, -38.354, 54.778), Jath::Point(55.658, -39.768, 53.083), Jath::Point(56.971, -41.276, 51.388), Jath::Point(58.16, -42.883, 49.693), Jath::Point(59.202, -44.59, 46.915), Jath::Point(60.073, -46.389, 45.508), Jath::Point(60.76, -48.267, 45.954), Jath::Point(61.255, -50.204, 48.62), Jath::Point(61.562, -52.179, 53.215), Jath::Point(61.696, -54.174, 58.593), Jath::Point(61.672, -56.173, 60.712), Jath::Point(61.508, -58.166, 62.831), Jath::Point(61.221, -60.145, 64.9), Jath::Point(60.578, -62.03, 67.069), Jath::Point(59.838, -63.888, 69.188), Jath::Point(59.104, -65.749, 71.307), Jath::Point(58.379, -67.613, 73.426), Jath::Point(57.666, -69.481, 77.24), Jath::Point(56.967, -71.355, 81.054), Jath::Point(56.286, -73.236, 84.868), Jath::Point(55.627, -75.124, 88.683), Jath::Point(54.993, -77.021, 91.819), Jath::Point(54.389, -78.927, 90.664), Jath::Point(53.821, -80.845, 88.807), Jath::Point(53.294, -82.774, 86.817), Jath::Point(52.815, -84.716, 81.054), Jath::Point(52.391, -86.67, 71.519), Jath::Point(52.03, -88.638, 61.983), Jath::Point(51.74, -90.616, 52.448), Jath::Point(51.529, -92.605, 42.912), Jath::Point(51.403, -94.601, 57.434), Jath::Point(51.37, -96.6, 71.956), Jath::Point(51.435, -98.599, 72.912), Jath::Point(51.602, -100.592, 72.624), Jath::Point(51.872, -102.573, 72.847), Jath::Point(52.242, -104.538, 73.558), Jath::Point(52.711, -106.482, 70.685), Jath::Point(53.274, -108.401, 60.579), Jath::Point(53.923, -110.293, 50.474), Jath::Point(54.654, -112.155, 40.369), Jath::Point(55.459, -113.985, 54.99), Jath::Point(56.329, -115.786, 69.612), Jath::Point(57.259, -117.556, 84.233), Jath::Point(58.243, -119.298, 98.854), Jath::Point(59.274, -121.011, 98.854), Jath::Point(60.347, -122.699, 98.854), Jath::Point(61.459, -124.361, 98.854), Jath::Point(62.605, -126, 98.854), Jath::Point(63.781, -127.618, 98.854), Jath::Point(64.984, -129.216, 98.854), Jath::Point(66.211, -130.795, 98.854), Jath::Point(67.224, -132.066, 98.85), Jath::Point(67.224, -132.066, 0), 
+    Jath::Point(-118.646, 55.537, 8), Jath::Point(-118.7, 53.537, 74.144), Jath::Point(-118.717, 51.537, 74.023), Jath::Point(-118.694, 49.538, 73.902), Jath::Point(-118.628, 47.539, 73.781), Jath::Point(-118.514, 45.542, 72.955), Jath::Point(-118.34, 43.55, 72.016), Jath::Point(-118.112, 41.563, 70.986), Jath::Point(-117.811, 39.586, 68.622), Jath::Point(-117.439, 37.621, 67.271), Jath::Point(-116.975, 35.676, 64.19), Jath::Point(-116.414, 33.756, 60.559), Jath::Point(-115.742, 31.873, 56.352), Jath::Point(-114.94, 30.042, 51.597), Jath::Point(-113.991, 28.283, 46.412), Jath::Point(-112.879, 26.622, 41.04), Jath::Point(-111.587, 25.097, 33.497), Jath::Point(-110.11, 23.751, 29.547), Jath::Point(-108.455, 22.632, 26.419), Jath::Point(-106.651, 21.773, 27.278), Jath::Point(-104.739, 21.195, 31.589), Jath::Point(-102.763, 20.897, 35.676), Jath::Point(-100.764, 20.858, 42.481), Jath::Point(-98.774, 21.04, 49.079), Jath::Point(-96.811, 21.417, 53.038), Jath::Point(-94.885, 21.956, 58.143), Jath::Point(-93.005, 22.635, 60.988), Jath::Point(-91.17, 23.431, 63.423), Jath::Point(-89.382, 24.326, 65.491), Jath::Point(-87.641, 25.31, 67.238), Jath::Point(-85.946, 26.371, 69.354), Jath::Point(-84.295, 27.5, 70.482), Jath::Point(-82.687, 28.689, 70.391), Jath::Point(-81.122, 29.935, 70.27), Jath::Point(-79.599, 31.23, 70.149), Jath::Point(-78.115, 32.571, 70.028), Jath::Point(-76.671, 33.955, 69.907), Jath::Point(-75.266, 35.378, 69.786), Jath::Point(-73.9, 36.839, 69.665), Jath::Point(-72.573, 38.335, 69.544), Jath::Point(-71.286, 39.866, 65.894), Jath::Point(-70.038, 41.428, 62.244), Jath::Point(-68.828, 43.021, 58.594), Jath::Point(-67.66, 44.644, 54.944), Jath::Point(-66.533, 46.297, 51.295), Jath::Point(-65.448, 47.977, 47.645), Jath::Point(-64.405, 49.683, 43.995), Jath::Point(-63.41, 51.418, 43.891), Jath::Point(-62.46, 53.178, 43.787), Jath::Point(-61.559, 54.963, 43.683), Jath::Point(-60.707, 56.773, 43.579), Jath::Point(-59.912, 58.608, 43.475), Jath::Point(-59.16, 60.461, 43.37), Jath::Point(-58.381, 62.303, 43.267), Jath::Point(-57.542, 64.118, 43.163), Jath::Point(-56.645, 65.906, 43.059), Jath::Point(-55.689, 67.662, 42.955), Jath::Point(-54.675, 69.386, 45.084), Jath::Point(-53.602, 71.073, 47.213), Jath::Point(-52.477, 72.727, 49.342), Jath::Point(-51.293, 74.339, 51.472), Jath::Point(-50.061, 75.914, 53.601), Jath::Point(-48.782, 77.452, 55.73), Jath::Point(-47.456, 78.949, 57.859), Jath::Point(-46.091, 80.411, 59.988), Jath::Point(-44.691, 81.838, 62.117), Jath::Point(-43.256, 83.232, 64.246), Jath::Point(-41.794, 84.596, 66.375), Jath::Point(-40.308, 85.934, 68.504), Jath::Point(-38.802, 87.251, 65.993), Jath::Point(-37.279, 88.547, 63.481), Jath::Point(-35.745, 89.83, 60.969), Jath::Point(-34.203, 91.104, 58.458), Jath::Point(-32.657, 92.372, 55.946), Jath::Point(-31.11, 93.64, 53.434), Jath::Point(-29.566, 94.911, 50.923), Jath::Point(-28.028, 96.191, 48.411), Jath::Point(-26.502, 97.483, 45.899), Jath::Point(-24.99, 98.792, 43.388), Jath::Point(-23.496, 100.122, 40.876), Jath::Point(-22.023, 101.475, 43.435), Jath::Point(-20.577, 102.856, 45.994), Jath::Point(-19.159, 104.267, 48.553), Jath::Point(-17.773, 105.709, 51.112), Jath::Point(-16.426, 107.186, 53.671), Jath::Point(-15.116, 108.698, 56.231), Jath::Point(-13.849, 110.245, 58.79), Jath::Point(-12.628, 111.829, 61.349), Jath::Point(-11.452, 113.447, 63.908), Jath::Point(-10.33, 115.102, 66.467), Jath::Point(-9.254, 116.788, 69.026), Jath::Point(-8.235, 118.509, 71.585), Jath::Point(-7.265, 120.257, 72.683), Jath::Point(-6.351, 122.036, 71.605), Jath::Point(-5.488, 123.841, 69.066), Jath::Point(-4.677, 125.668, 66.526), Jath::Point(-3.92, 127.52, 63.987), Jath::Point(-3.212, 129.39, 61.448), Jath::Point(-2.55, 131.277, 58.908), Jath::Point(-1.94, 133.182, 56.369), Jath::Point(-1.376, 135.101, 53.83), Jath::Point(-0.855, 137.032, 51.29), Jath::Point(-0.376, 138.973, 48.751), Jath::Point(0.062, 140.925, 48.751), Jath::Point(0.461, 142.884, 48.751), Jath::Point(0.822, 144.851, 48.751), Jath::Point(1.146, 146.825, 48.751), Jath::Point(1.436, 148.804, 48.751), Jath::Point(1.693, 150.787, 48.751), Jath::Point(1.92, 152.774, 48.751), Jath::Point(2.116, 154.765, 48.751), Jath::Point(2.283, 156.758, 48.751), Jath::Point(2.423, 158.753, 48.751), Jath::Point(2.536, 160.749, 48.751), Jath::Point(2.626, 162.747, 48.751), Jath::Point(2.692, 164.746, 48.751), Jath::Point(2.736, 166.746, 48.751), Jath::Point(2.76, 168.746, 48.751), Jath::Point(2.761, 170.746, 48.751), Jath::Point(2.74, 172.746, 48.751), Jath::Point(2.702, 174.745, 48.751), Jath::Point(2.648, 176.744, 48.751), Jath::Point(2.576, 178.743, 48.751), Jath::Point(2.484, 180.741, 48.751), Jath::Point(2.377, 182.738, 48.751), Jath::Point(2.258, 184.734, 48.75), Jath::Point(2.085, 187.244, 48.751), Jath::Point(2.085, 187.244, 0), 
 };
 Jath::Path rings1Path = Jath::Path::cm(rings1PathPoints);
 
-std::vector<Jath::Point> goal2PathPoints = {
-    Jath::Point(88.263, -148.263, 12), Jath::Point(88.418, -146.269, 120), Jath::Point(88.569, -144.274, 120), Jath::Point(88.717, -142.28, 120), Jath::Point(88.863, -140.285, 120), Jath::Point(89.005, -138.29, 120), Jath::Point(89.145, -136.295, 120), Jath::Point(89.283, -134.3, 120), Jath::Point(89.418, -132.304, 120), Jath::Point(89.552, -130.309, 120), Jath::Point(89.684, -128.313, 120), Jath::Point(89.816, -126.318, 120), Jath::Point(89.947, -124.322, 120), Jath::Point(90.078, -122.326, 120), Jath::Point(90.209, -120.33, 120), Jath::Point(90.341, -118.335, 120), Jath::Point(90.476, -116.339, 120), Jath::Point(90.612, -114.344, 120), Jath::Point(90.752, -112.349, 120), Jath::Point(90.895, -110.354, 120), Jath::Point(91.044, -108.36, 120), Jath::Point(91.198, -106.366, 120), Jath::Point(91.358, -104.372, 120), Jath::Point(91.526, -102.379, 120), Jath::Point(91.702, -100.387, 120), Jath::Point(91.888, -98.395, 120), Jath::Point(92.083, -96.405, 120), Jath::Point(92.29, -94.416, 120), Jath::Point(92.509, -92.428, 120), Jath::Point(92.741, -90.441, 120), Jath::Point(92.987, -88.456, 120), Jath::Point(93.247, -86.473, 120), Jath::Point(93.523, -84.493, 120), Jath::Point(93.814, -82.514, 120), Jath::Point(94.123, -80.538, 120), Jath::Point(94.447, -78.564, 120), Jath::Point(94.79, -76.594, 120), Jath::Point(95.148, -74.626, 120), Jath::Point(95.526, -72.662, 120), Jath::Point(95.92, -70.702, 120), Jath::Point(96.333, -68.745, 120), Jath::Point(96.763, -66.791, 120), Jath::Point(97.21, -64.842, 120), Jath::Point(97.674, -62.897, 120), Jath::Point(98.155, -60.955, 120), Jath::Point(98.652, -59.018, 120), Jath::Point(99.165, -57.085, 120), Jath::Point(99.693, -55.156, 120), Jath::Point(100.237, -53.231, 120), Jath::Point(100.794, -51.311, 120), Jath::Point(101.366, -49.394, 120), Jath::Point(101.951, -47.482, 120), Jath::Point(102.549, -45.573, 120), Jath::Point(103.159, -43.668, 120), Jath::Point(103.781, -41.768, 120), Jath::Point(104.415, -39.871, 120), Jath::Point(105.06, -37.978, 120), Jath::Point(105.715, -36.088, 120), Jath::Point(106.38, -34.202, 120), Jath::Point(107.055, -32.319, 120), Jath::Point(107.738, -30.439, 120), Jath::Point(108.43, -28.563, 120), Jath::Point(109.131, -26.69, 120), Jath::Point(109.84, -24.82, 120), Jath::Point(110.556, -22.952, 120), Jath::Point(111.28, -21.088, 120), Jath::Point(112.011, -19.226, 120), Jath::Point(112.748, -17.367, 120), Jath::Point(113.492, -15.51, 120), Jath::Point(114.242, -13.656, 120), Jath::Point(114.998, -11.805, 120), Jath::Point(115.759, -9.955, 120), Jath::Point(116.526, -8.108, 120), Jath::Point(117.298, -6.263, 120), Jath::Point(118.074, -4.42, 120), Jath::Point(118.855, -2.579, 120), Jath::Point(119.641, -0.739, 120), Jath::Point(120.431, 1.098, 120), Jath::Point(121.225, 2.933, 120), Jath::Point(122.024, 4.767, 120), Jath::Point(123.513, 8.163, 12), Jath::Point(123.513, 8.163, 0), 
+std::vector<Jath::Point> rings1_5PathPoints = {
+    Jath::Point(8.671, 160.354, 8), Jath::Point(8.412, 158.37, 83.233), Jath::Point(8.144, 156.389, 83.026), Jath::Point(7.866, 154.408, 82.555), Jath::Point(7.569, 152.43, 81.803), Jath::Point(7.261, 150.454, 81.05), Jath::Point(6.94, 148.48, 80.298), Jath::Point(6.602, 146.509, 79.546), Jath::Point(6.248, 144.54, 78.794), Jath::Point(5.878, 142.575, 78.042), Jath::Point(5.494, 140.612, 77.289), Jath::Point(5.091, 138.653, 76.537), Jath::Point(4.667, 136.699, 75.785), Jath::Point(4.224, 134.748, 75.033), Jath::Point(3.763, 132.802, 74.281), Jath::Point(3.28, 130.861, 73.528), Jath::Point(2.776, 128.926, 72.776), Jath::Point(2.249, 126.997, 72.024), Jath::Point(1.696, 125.075, 71.272), Jath::Point(1.116, 123.161, 70.52), Jath::Point(0.509, 121.255, 69.767), Jath::Point(-0.127, 119.359, 69.015), Jath::Point(-0.794, 117.473, 68.263), Jath::Point(-1.493, 115.599, 67.511), Jath::Point(-2.227, 113.739, 66.759), Jath::Point(-3, 111.895, 66.006), Jath::Point(-3.814, 110.068, 65.254), Jath::Point(-4.669, 108.26, 64.502), Jath::Point(-5.569, 106.474, 63.75), Jath::Point(-6.515, 104.712, 62.998), Jath::Point(-7.522, 102.984, 62.245), Jath::Point(-8.582, 101.288, 61.493), Jath::Point(-9.704, 99.633, 60.741), Jath::Point(-10.894, 98.026, 59.648), Jath::Point(-12.155, 96.473, 55.618), Jath::Point(-13.491, 94.986, 53.439), Jath::Point(-14.913, 93.58, 48.794), Jath::Point(-16.42, 92.267, 43.862), Jath::Point(-18.017, 91.063, 38.824), Jath::Point(-19.703, 89.989, 33.937), Jath::Point(-21.477, 89.068, 29.517), Jath::Point(-23.331, 88.319, 25.903), Jath::Point(-25.25, 87.763, 23.4), Jath::Point(-27.22, 87.421, 22.14), Jath::Point(-29.215, 87.296, 22.998), Jath::Point(-31.212, 87.384, 25.051), Jath::Point(-33.188, 87.687, 29.787), Jath::Point(-35.124, 88.184, 33.606), Jath::Point(-37.007, 88.854, 37.628), Jath::Point(-38.828, 89.68, 43.581), Jath::Point(-40.578, 90.648, 47.201), Jath::Point(-42.256, 91.735, 46.449), Jath::Point(-43.862, 92.926, 45.697), Jath::Point(-45.397, 94.208, 44.945), Jath::Point(-46.861, 95.57, 44.192), Jath::Point(-48.257, 97.001, 43.44), Jath::Point(-49.587, 98.495, 42.688), Jath::Point(-50.854, 100.043, 41.936), Jath::Point(-52.055, 101.641, 41.184), Jath::Point(-53.196, 103.284, 40.431), Jath::Point(-54.279, 104.965, 39.679), Jath::Point(-55.305, 106.682, 39.718), Jath::Point(-56.273, 108.432, 39.757), Jath::Point(-57.184, 110.212, 39.796), Jath::Point(-58.043, 112.018, 39.834), Jath::Point(-58.847, 113.849, 39.873), Jath::Point(-59.595, 115.704, 39.912), Jath::Point(-60.293, 117.578, 39.951), Jath::Point(-60.935, 119.472, 39.98), Jath::Point(-61.555, 121.374, 40.028), Jath::Point(-62.182, 123.273, 40.067), Jath::Point(-62.818, 125.169, 40.106), Jath::Point(-63.464, 127.062, 40.144), Jath::Point(-64.124, 128.95, 40.183), Jath::Point(-64.796, 130.834, 45.943), Jath::Point(-65.483, 132.712, 51.703), Jath::Point(-66.184, 134.585, 57.463), Jath::Point(-66.902, 136.452, 63.222), Jath::Point(-67.638, 138.311, 68.982), Jath::Point(-68.394, 140.163, 74.742), Jath::Point(-69.173, 142.005, 78.798), Jath::Point(-69.976, 143.837, 77.868), Jath::Point(-70.807, 145.656, 75.637), Jath::Point(-71.672, 147.459, 74.301), Jath::Point(-72.572, 149.245, 72.792), Jath::Point(-73.511, 151.011, 69.158), Jath::Point(-74.502, 152.748, 66.981), Jath::Point(-75.543, 154.455, 61.764), Jath::Point(-76.654, 156.118, 58.663), Jath::Point(-77.841, 157.728, 51.336), Jath::Point(-79.118, 159.266, 42.385), Jath::Point(-80.502, 160.709, 31.846), Jath::Point(-82.009, 162.022, 14.091), Jath::Point(-83.66, 163.148, 14), Jath::Point(-85.449, 164.038, 14), Jath::Point(-87.356, 164.631, 14), Jath::Point(-89.335, 164.897, 14), Jath::Point(-91.333, 164.852, 14), Jath::Point(-93.308, 164.546, 30.891), Jath::Point(-95.242, 164.04, 46.89), Jath::Point(-97.131, 163.385, 55.948), Jath::Point(-98.982, 162.628, 67.119), Jath::Point(-100.803, 161.801, 73.165), Jath::Point(-102.603, 160.93, 80.502), Jath::Point(-104.39, 160.031, 80.502), Jath::Point(-106.171, 159.121, 80.502), Jath::Point(-107.952, 158.212, 80.502), Jath::Point(-109.739, 157.314, 79.985), Jath::Point(-111.536, 156.436, 77.521), Jath::Point(-113.347, 155.586, 75.298), Jath::Point(-115.173, 154.772, 73.287), Jath::Point(-117.018, 153.999, 71.472), Jath::Point(-118.881, 153.273, 69.849), Jath::Point(-120.765, 152.601, 68.422), Jath::Point(-122.668, 151.985, 67.203), Jath::Point(-124.59, 151.434, 66.676), Jath::Point(-126.53, 150.95, 65.799), Jath::Point(-128.486, 150.533, 65.171), Jath::Point(-130.456, 150.188, 64.955), Jath::Point(-132.438, 149.92, 64.723), Jath::Point(-134.428, 149.723, 64.76), Jath::Point(-136.425, 149.605, 64.878), Jath::Point(-138.424, 149.56, 65.301), Jath::Point(-140.423, 149.59, 65.602), Jath::Point(-142.421, 149.692, 66.361), Jath::Point(-144.988, 149.927, 66.81), Jath::Point(-144.988, 149.927, 0), 
 };
-Jath::Path goal2Path = Jath::Path::cm(goal2PathPoints);
+Jath::Path rings1_5Path = Jath::Path::cm(rings1_5PathPoints);
 
-std::vector<Jath::Point> rings2PathPoints = {
-    Jath::Point(112.464, 8.134, 9), Jath::Point(110.615, 8.896, 96.468), Jath::Point(108.771, 9.671, 95.936), Jath::Point(106.934, 10.462, 91.826), Jath::Point(105.105, 11.27, 91.395), Jath::Point(103.284, 12.096, 90.949), Jath::Point(101.472, 12.944, 90.252), Jath::Point(99.671, 13.813, 89.769), Jath::Point(97.882, 14.707, 89.02), Jath::Point(96.106, 15.626, 88.504), Jath::Point(94.345, 16.575, 87.708), Jath::Point(92.6, 17.552, 86.889), Jath::Point(90.874, 18.562, 86.333), Jath::Point(89.168, 19.606, 85.49), Jath::Point(87.484, 20.686, 84.925), Jath::Point(85.826, 21.804, 84.081), Jath::Point(84.195, 22.961, 83.25), Jath::Point(82.593, 24.158, 82.445), Jath::Point(81.024, 25.399, 81.93), Jath::Point(79.491, 26.683, 81.2), Jath::Point(77.996, 28.011, 80.536), Jath::Point(76.542, 29.384, 79.713), Jath::Point(75.132, 30.803, 78.841), Jath::Point(73.769, 32.266, 77.969), Jath::Point(72.456, 33.774, 77.098), Jath::Point(71.193, 35.325, 76.226), Jath::Point(69.985, 36.919, 75.354), Jath::Point(68.831, 38.553, 74.482), Jath::Point(67.734, 40.224, 73.611), Jath::Point(66.695, 41.933, 72.739), Jath::Point(65.714, 43.676, 71.867), Jath::Point(64.789, 45.449, 70.996), Jath::Point(63.924, 47.252, 70.124), Jath::Point(63.114, 49.081, 63.102), Jath::Point(62.362, 50.934, 56.079), Jath::Point(61.663, 52.808, 49.057), Jath::Point(61.018, 54.701, 42.035), Jath::Point(60.425, 56.611, 35.013), Jath::Point(59.881, 58.535, 27.99), Jath::Point(59.351, 60.461, 34.54), Jath::Point(58.545, 62.292, 41.091), Jath::Point(57.778, 64.138, 47.641), Jath::Point(57.055, 66.003, 54.191), Jath::Point(56.381, 67.886, 60.741), Jath::Point(55.764, 69.789, 67.291), Jath::Point(55.213, 71.711, 73.841), Jath::Point(54.733, 73.652, 74.531), Jath::Point(54.336, 75.612, 71.848), Jath::Point(54.03, 77.589, 70.195), Jath::Point(53.822, 79.577, 68.753), Jath::Point(53.717, 81.574, 68.414), Jath::Point(53.72, 83.574, 69.113), Jath::Point(53.827, 85.571, 71.159), Jath::Point(54.03, 87.561, 74.404), Jath::Point(54.317, 89.54, 78.551), Jath::Point(54.673, 91.508, 83.222), Jath::Point(55.079, 93.466, 85.972), Jath::Point(55.518, 95.417, 87.075), Jath::Point(55.974, 97.365, 88.178), Jath::Point(56.432, 99.312, 89.28), Jath::Point(56.879, 101.261, 90.383), Jath::Point(57.305, 103.215, 88.885), Jath::Point(57.704, 105.175, 87.548), Jath::Point(58.067, 107.142, 86.331), Jath::Point(58.392, 109.115, 85.802), Jath::Point(58.677, 111.094, 85.558), Jath::Point(58.919, 113.08, 97), Jath::Point(59.119, 115.07, 80.057), Jath::Point(59.276, 117.063, 63.115), Jath::Point(59.392, 119.06, 46.172), Jath::Point(59.468, 121.059, 29.2), Jath::Point(59.519, 123.058, 37.508), Jath::Point(59.541, 125.058, 45.786), Jath::Point(59.529, 127.058, 54.064), Jath::Point(59.483, 129.057, 62.342), Jath::Point(59.398, 131.055, 70.62), Jath::Point(59.267, 133.051, 71.471), Jath::Point(59.089, 135.043, 72.322), Jath::Point(58.852, 137.029, 73.172), Jath::Point(58.551, 139.006, 74.023), Jath::Point(58.177, 140.97, 72.04), Jath::Point(57.717, 142.916, 67.453), Jath::Point(57.156, 144.836, 62.155), Jath::Point(56.477, 146.717, 56.169), Jath::Point(55.665, 148.544, 49.616), Jath::Point(54.695, 150.292, 39.311), Jath::Point(53.553, 151.932, 29.812), Jath::Point(52.22, 153.421, 24.91), Jath::Point(50.7, 154.719, 21.081), Jath::Point(49.014, 155.791, 23.714), Jath::Point(47.194, 156.618, 30.546), Jath::Point(45.284, 157.206, 39.619), Jath::Point(43.32, 157.578, 49.222), Jath::Point(41.33, 157.766, 58.223), Jath::Point(39.33, 157.8, 63.608), Jath::Point(37.333, 157.706, 70.639), Jath::Point(35.343, 157.512, 76.475), Jath::Point(33.362, 157.238, 79.78), Jath::Point(31.391, 156.898, 84.006), Jath::Point(29.429, 156.508, 86.418), Jath::Point(27.476, 156.077, 89.555), Jath::Point(25.53, 155.616, 91.391), Jath::Point(23.59, 155.132, 93.068), Jath::Point(21.653, 154.633, 94.447), Jath::Point(19.718, 154.125, 95.298), Jath::Point(17.785, 153.614, 95.883), Jath::Point(15.851, 153.105, 94.571), Jath::Point(13.915, 152.603, 89.745), Jath::Point(11.975, 152.114, 82.491), Jath::Point(10.032, 151.642, 75.236), Jath::Point(8.083, 151.193, 67.981), Jath::Point(6.128, 150.772, 60.727), Jath::Point(4.166, 150.384, 53.472), Jath::Point(2.196, 150.036, 46.217), Jath::Point(0.219, 149.733, 38.963), Jath::Point(-1.758, 149.439, 31.70), Jath::Point(-3.723, 149.063, 42.59), Jath::Point(-5.68, 148.654, 53.472), Jath::Point(-7.63, 148.209, 64.354), Jath::Point(-9.57, 147.724, 75.236), Jath::Point(-11.499, 147.194, 86.118), Jath::Point(-13.413, 146.616, 81.3), Jath::Point(-15.31, 145.982, 78.57), Jath::Point(-17.184, 145.284, 76.62), Jath::Point(-19.032, 144.52, 73.592), Jath::Point(-20.846, 143.677, 71.585), Jath::Point(-22.617, 142.749, 68.785), Jath::Point(-24.339, 141.731, 66.526), Jath::Point(-25.999, 140.616, 64.985), Jath::Point(-27.59, 139.406, 65.381), Jath::Point(-29.107, 138.103, 68.439), Jath::Point(-30.553, 136.721, 74.511), Jath::Point(-31.94, 135.28, 85.761), Jath::Point(-33.29, 133.804, 87.473), Jath::Point(-34.634, 132.323, 80.392), Jath::Point(-36.005, 130.868, 73.31), Jath::Point(-37.435, 129.47, 66.229), Jath::Point(-38.942, 128.155, 59.148), Jath::Point(-40.534, 126.946, 52.067), Jath::Point(-42.207, 125.85, 44.985), Jath::Point(-43.952, 124.874, 37.904), Jath::Point(-45.754, 124.008, 39.639), Jath::Point(-47.602, 123.244, 41.374), Jath::Point(-49.486, 122.572, 43.109), Jath::Point(-51.396, 121.979, 44.844), Jath::Point(-53.327, 121.458, 46.579), Jath::Point(-55.273, 120.999, 48.314), Jath::Point(-57.231, 120.593, 50.049), Jath::Point(-59.199, 120.236, 51.78), Jath::Point(-61.192, 120.094, 53.518), Jath::Point(-63.19, 119.992, 55.253), Jath::Point(-65.187, 119.888, 55.253), Jath::Point(-67.184, 119.783, 55.253), Jath::Point(-69.181, 119.677, 55.253), Jath::Point(-71.179, 119.572, 55.253), Jath::Point(-73.176, 119.467, 55.253), Jath::Point(-75.173, 119.365, 55.253), Jath::Point(-77.171, 119.266, 55.253), Jath::Point(-79.169, 119.173, 55.253), Jath::Point(-81.167, 119.088, 55.253), Jath::Point(-83.165, 119.014, 55.253), Jath::Point(-85.164, 118.954, 55.253), Jath::Point(-87.164, 118.91, 55.253), Jath::Point(-89.164, 118.885, 55.253), Jath::Point(-91.164, 118.879, 55.253), Jath::Point(-93.164, 118.891, 55.253), Jath::Point(-95.164, 118.919, 55.253), Jath::Point(-97.163, 118.963, 55.253), Jath::Point(-99.162, 119.018, 55.253), Jath::Point(-101.161, 119.084, 55.253), Jath::Point(-103.16, 119.158, 55.253), Jath::Point(-105.158, 119.239, 55.253), Jath::Point(-107.156, 119.326, 55.253), Jath::Point(-109.154, 119.417, 55.253), Jath::Point(-111.152, 119.511, 55.253), Jath::Point(-113.15, 119.609, 55.253), Jath::Point(-115.147, 119.709, 55.253), Jath::Point(-117.145, 119.811, 55.253), Jath::Point(-119.142, 119.914, 55.25), Jath::Point(-121.141, 119.947, 55.253), Jath::Point(-123.141, 119.974, 55.253), Jath::Point(-125.141, 120.001, 55.253), Jath::Point(-127.141, 120.029, 55.253), Jath::Point(-129.141, 120.056, 55.253), Jath::Point(-131.141, 120.084, 55.253), Jath::Point(-133.14, 120.111, 55.253), Jath::Point(-135.14, 120.138, 55.253), Jath::Point(-137.14, 120.166, 55.253), Jath::Point(-139.14, 120.193, 55.253), Jath::Point(-141.14, 120.221, 55.253), Jath::Point(-143.139, 120.248, 55.253), Jath::Point(-145.139, 120.275, 55.253), Jath::Point(-147.139, 120.303, 55.253), Jath::Point(-149.139, 120.33, 55.253), Jath::Point(-151.139, 120.357, 55.253), Jath::Point(-151.544, 120.363, 55.25), Jath::Point(-151.544, 120.363, 0), 
+std::vector<Jath::Point> rings1_6PathPoints = {
+    Jath::Point(-153.768, 150.476, 57.74), Jath::Point(-151.768, 150.467, 57.745), Jath::Point(-149.768, 150.459, 57.745), Jath::Point(-147.768, 150.45, 57.745), Jath::Point(-145.768, 150.442, 57.745), Jath::Point(-143.768, 150.433, 57.745), Jath::Point(-141.768, 150.425, 57.745), Jath::Point(-139.768, 150.416, 57.745), Jath::Point(-137.768, 150.408, 57.745), Jath::Point(-135.768, 150.399, 57.745), Jath::Point(-133.768, 150.391, 57.745), Jath::Point(-131.768, 150.382, 57.745), Jath::Point(-129.769, 150.373, 57.745), Jath::Point(-127.769, 150.365, 57.745), Jath::Point(-125.769, 150.356, 57.745), Jath::Point(-123.769, 150.348, 57.745), Jath::Point(-121.769, 150.339, 57.745), Jath::Point(-119.769, 150.331, 57.745), Jath::Point(-117.769, 150.322, 57.745), Jath::Point(-115.769, 150.314, 57.745), Jath::Point(-113.769, 150.305, 57.745), Jath::Point(-111.769, 150.297, 57.745), Jath::Point(-109.769, 150.288, 57.745), Jath::Point(-107.769, 150.28, 57.745), Jath::Point(-105.769, 150.271, 57.745), Jath::Point(-103.769, 150.263, 57.745), Jath::Point(-101.769, 150.254, 57.745), Jath::Point(-99.769, 150.246, 57.745), Jath::Point(-97.769, 150.237, 57.745), Jath::Point(-95.769, 150.229, 57.745), Jath::Point(-93.769, 150.22, 57.745), Jath::Point(-91.769, 150.212, 57.745), Jath::Point(-89.769, 150.203, 57.745), Jath::Point(-87.769, 150.195, 57.745), Jath::Point(-85.769, 150.186, 57.745), Jath::Point(-83.769, 150.178, 57.745), Jath::Point(-81.769, 150.169, 57.745), Jath::Point(-79.769, 150.161, 57.745), Jath::Point(-77.769, 150.152, 57.745), Jath::Point(-75.769, 150.144, 57.745), Jath::Point(-73.769, 150.135, 57.745), Jath::Point(-71.769, 150.127, 57.745), Jath::Point(-69.769, 150.118, 57.745), Jath::Point(-67.769, 150.11, 57.745), Jath::Point(-65.769, 150.101, 57.745), Jath::Point(-63.769, 150.093, 57.745), Jath::Point(-61.769, 150.084, 57.745), Jath::Point(-59.769, 150.076, 57.745), Jath::Point(-57.769, 150.067, 57.745), Jath::Point(-55.769, 150.059, 57.745), Jath::Point(-53.769, 150.05, 57.745), Jath::Point(-51.769, 150.042, 57.745), Jath::Point(-49.769, 150.033, 57.745), Jath::Point(-47.769, 150.025, 57.745), Jath::Point(-45.769, 150.016, 57.745), Jath::Point(-43.769, 150.008, 57.745), Jath::Point(-41.769, 149.999, 57.745), Jath::Point(-39.769, 149.991, 57.745), Jath::Point(-37.769, 149.982, 57.745), Jath::Point(-35.769, 149.973, 57.745), Jath::Point(-33.769, 149.965, 57.745), Jath::Point(-31.769, 149.956, 57.745), Jath::Point(-29.769, 149.948, 57.745), Jath::Point(-27.769, 149.939, 57.745), Jath::Point(-24.805, 149.927, 57.74), Jath::Point(-24.805, 149.927, 0)
 };
-Jath::Path rings2Path = Jath::Path::cm(rings2PathPoints);
+Jath::Path rings1_6Path = Jath::Path::cm(rings1_6PathPoints);
 
+std::vector<Jath::Point> rings1_75PathPoints = {
+    Jath::Point(-21.512, 148.28, 74.48), Jath::Point(-23.154, 147.139, 74.567), Jath::Point(-24.811, 146.018, 74.637), Jath::Point(-26.48, 144.916, 74.695), Jath::Point(-28.163, 143.835, 74.743), Jath::Point(-29.858, 142.775, 74.781), Jath::Point(-31.566, 141.735, 73.039), Jath::Point(-33.287, 140.715, 71.046), Jath::Point(-35.02, 139.716, 69.053), Jath::Point(-36.764, 138.738, 67.059), Jath::Point(-38.52, 137.781, 65.066), Jath::Point(-40.287, 136.844, 63.072), Jath::Point(-42.066, 135.929, 61.079), Jath::Point(-43.855, 135.036, 59.086), Jath::Point(-45.655, 134.163, 57.092), Jath::Point(-47.465, 133.313, 55.099), Jath::Point(-49.285, 132.484, 53.105), Jath::Point(-51.115, 131.677, 51.112), Jath::Point(-52.955, 130.893, 49.118), Jath::Point(-54.804, 130.131, 47.125), Jath::Point(-56.663, 129.392, 45.132), Jath::Point(-58.53, 128.676, 43.138), Jath::Point(-60.406, 127.983, 43.522), Jath::Point(-62.291, 127.314, 43.906), Jath::Point(-64.184, 126.668, 44.289), Jath::Point(-66.085, 126.047, 44.673), Jath::Point(-67.993, 125.449, 45.057), Jath::Point(-69.909, 124.876, 45.441), Jath::Point(-71.833, 124.328, 45.825), Jath::Point(-73.763, 123.804, 46.208), Jath::Point(-75.7, 123.305, 47.573), Jath::Point(-77.643, 122.831, 48.937), Jath::Point(-79.592, 122.384, 50.302), Jath::Point(-81.547, 121.963, 51.666), Jath::Point(-83.508, 121.567, 53.031), Jath::Point(-85.473, 121.197, 54.395), Jath::Point(-87.443, 120.854, 55.76), Jath::Point(-89.418, 120.538, 57.125), Jath::Point(-91.397, 120.249, 58.489), Jath::Point(-93.38, 119.986, 59.854), Jath::Point(-95.366, 119.75, 61.218), Jath::Point(-97.355, 119.542, 62.583), Jath::Point(-99.347, 119.363, 59.512), Jath::Point(-101.341, 119.21, 56.442), Jath::Point(-103.337, 119.085, 53.372), Jath::Point(-105.335, 118.988, 50.302), Jath::Point(-107.334, 118.92, 47.232), Jath::Point(-109.333, 118.879, 44.162), Jath::Point(-111.333, 118.866, 41.091), Jath::Point(-113.333, 118.883, 38.021), Jath::Point(-115.332, 118.927, 38.021), Jath::Point(-117.331, 118.999, 38.021), Jath::Point(-119.329, 119.101, 38.021), Jath::Point(-121.325, 119.166, 38.02), Jath::Point(-123.321, 119.043, 38.021), Jath::Point(-125.317, 118.921, 38.021), Jath::Point(-127.313, 118.799, 38.021), Jath::Point(-129.31, 118.677, 38.021), Jath::Point(-131.306, 118.554, 38.021), Jath::Point(-133.302, 118.432, 38.021), Jath::Point(-135.298, 118.31, 38.021), Jath::Point(-137.295, 118.188, 38.021), Jath::Point(-139.291, 118.066, 38.021), Jath::Point(-141.287, 117.943, 38.021), Jath::Point(-143.284, 117.821, 38.021), Jath::Point(-145.28, 117.699, 38.021), Jath::Point(-147.276, 117.577, 38.021), Jath::Point(-147.732, 117.549, 38.02), Jath::Point(-147.732, 117.549, 0), 
+};
+Jath::Path rings1_75Path = Jath::Path::cm(rings1_75PathPoints);
 
 void skills()
 {
@@ -828,39 +912,54 @@ void skills()
     smartDrive.m_dir = art::Degrees(-90);
 
     arm.set(100);
-    vex::wait(1.25, vex::seconds);
+    vex::wait(1, vex::seconds);
     arm.set(0);
     arm.stop(vex::hold);
 
-    smartDrive.driveFor(art::Inches(-5), -50);
-    
+    smartDrive.driveForPID(art::Inches(-5));
+
     armTarget = art::Degrees(0);
     vex::thread armControl(autonArmPos);
 
-    followPathRev(goal1Path, art::Inches(7));
+    // followPathRev(goal1Path, art::Inches(13));
+
+    driveTowardPointRev(art::Vec2::XandY(
+        art::Tiles(-2), art::Tiles(1)
+    ));
+
     // maybe add additional drive
+    smartDrive.driveForPID(art::Inches(-2));
     clamp.set(true);
+    smartDrive.arcade(0,0);
+
+    vex::wait(0.75, vex::sec);
 
     resetPositionFromGPS();
 
-    smartDrive.turnToPID(art::Degrees(20));
     intake.set(100);
+    followPath(rings1Path, art::Inches(13));
 
-    followPath(rings1Path, art::Inches(7));
+    smartDrive.turnForPID(art::Degrees(180));
+    smartDrive.arcade(0,0);
+    vex::wait(0.75, vex::sec);
+    resetPositionFromGPS();
 
-    driveTowardPoint(art::Vec2::XandY(art::Tiles(2), art::Tiles(-2.5)));
+    followPath(rings1_5Path, art::Inches(13));
 
-    target = art::Vec2::XandY(art::Tiles(2.75), art::Tiles(2.75));
+    followPathRev(rings1_6Path, art::Inches(13));
+
+    followPath(rings1_75Path, art::Inches(13));
+
+    target = art::Vec2::XandY(art::Tiles(-2.75), art::Tiles(2.75));
     travel = art::Vec2(target - smartDrive.m_pos);
 
     smartDrive.turnToPID(travel.direction() + art::Degrees(180));
     smartDrive.driveForPID(-travel.magnitude() * .9);
 
-    clamp.set(false);    
+    clamp.set(false);
     intake.set(0);
 
     smartDrive.driveForPID(art::Inches(48));
-
 
     smartDrive.arcade(0, 0);
 }

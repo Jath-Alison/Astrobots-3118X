@@ -26,4 +26,7 @@ void winfred_blueAWPStakeFirstPos();
 
 void JathsSketchyFullFlippingAWP();
 
+void negStackedRings();
+void negStackedRingsStakeFirst();
+
 void skills();

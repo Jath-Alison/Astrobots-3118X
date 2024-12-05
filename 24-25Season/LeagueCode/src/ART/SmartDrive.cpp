@@ -139,6 +139,7 @@ namespace art
         logger.logDoubleEntry(Base_DriveTo_PID_kI, m_driveForPID.getki());
         logger.logDoubleEntry(Base_DriveTo_PID_kD, m_driveForPID.getkd());
         logger.logDoubleEntry(Base_Driveto_PID_ff, m_driveForPID.getff());
+        logger.logDoubleEntry(Base_DriveTo_PID_settleZone, art::Revolutions(art::Inches(1) / (M_PI * art::Inches(2.75) * (36.f/48.f))));
 
         double out = 0;
 
@@ -162,6 +163,8 @@ namespace art
             logger.logDoubleEntry(Base_DriveTo_PID_integral, m_driveForPID.getIntegral() / m_driveForPID.getki());
             logger.logDoubleEntry(Base_DriveTo_PID_derivative, m_driveForPID.getDerivative() / m_driveForPID.getkd());
             logger.logDoubleEntry(Base_DriveTo_PID_output, out);
+            logger.logDoubleEntry(Base_DriveTo_PID_timePassed, m_driveForPID.timePassed());
+            logger.logDoubleEntry(Base_DriveTo_PID_timeSettled, m_driveForPID.settledTimePassed());
 
             wait(20, vex::msec);
         }
@@ -315,6 +318,7 @@ namespace art
         logger.logDoubleEntry(Base_TurnTo_PID_kI, m_turnToPID.getki());
         logger.logDoubleEntry(Base_TurnTo_PID_kD, m_turnToPID.getkd());
         logger.logDoubleEntry(Base_TurnTo_PID_ff, m_turnToPID.getff());
+        logger.logDoubleEntry(Base_TurnTo_PID_settleZone, art::Degrees(3));
 
         double out = 0;
 
@@ -341,6 +345,8 @@ namespace art
             logger.logDoubleEntry(Base_TurnTo_PID_integral, m_turnForPID.getIntegral() / m_turnForPID.getki());
             logger.logDoubleEntry(Base_TurnTo_PID_derivative, m_turnForPID.getDerivative() / m_turnForPID.getkd());
             logger.logDoubleEntry(Base_TurnTo_PID_output, out);
+            logger.logDoubleEntry(Base_TurnTo_PID_timePassed, m_turnToPID.timePassed());
+            logger.logDoubleEntry(Base_TurnTo_PID_timeSettled, m_turnToPID.settledTimePassed());
 
             wait(20, vex::msec);
         }
@@ -354,6 +360,7 @@ namespace art
             logger.logDoubleEntry(Base_TurnTo_PID_kI, m_turnToPID.getki());
             logger.logDoubleEntry(Base_TurnTo_PID_kD, m_turnToPID.getkd());
             logger.logDoubleEntry(Base_TurnTo_PID_ff, m_turnToPID.getff());
+            logger.logDoubleEntry(Base_TurnTo_PID_settleZone, art::Degrees(3));
 
             std::stringstream ss;
             ss << "SmartDrive::turnToward(" << target << ")";
@@ -387,6 +394,8 @@ namespace art
         logger.logDoubleEntry(Base_TurnTo_PID_integral, m_turnForPID.getIntegral() / m_turnForPID.getki());
         logger.logDoubleEntry(Base_TurnTo_PID_derivative, m_turnForPID.getDerivative() / m_turnForPID.getkd());
         logger.logDoubleEntry(Base_TurnTo_PID_output, out);
+        logger.logDoubleEntry(Base_TurnTo_PID_timePassed, m_turnToPID.timePassed());
+        logger.logDoubleEntry(Base_TurnTo_PID_timeSettled, m_turnToPID.settledTimePassed());
 
         return m_turnToPID.settledTimePassed() > 1.f;
     }

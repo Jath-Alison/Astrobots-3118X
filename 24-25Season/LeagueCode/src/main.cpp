@@ -246,8 +246,16 @@ void usercontrol(void)
 
 		if (macroRunning && abs(shortestTurnPath(armTarget - art::Degrees(armRot.angle())).degrees()) >= 0.5)
 		{
-			armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(armRot.angle())));
-			arm.set(armOut);
+			if (shortestTurnPath(armTarget - art::Degrees(armRot.angle())).degrees() > 30 && armTarget.degrees() < 50)
+            {
+                armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(armRot.angle())));
+                arm.set(-armOut);
+            }
+            else
+            {
+                armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(armRot.angle())));
+                arm.set(armOut);
+            };
 		}
 		else if (!(Controller1.ButtonL2.pressing() || Controller1.ButtonR2.pressing()))
 		{

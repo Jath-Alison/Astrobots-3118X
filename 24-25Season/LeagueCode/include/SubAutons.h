@@ -15,5 +15,8 @@ void followPath(Jath::Path p, art::Length lookaheadDist);
 void followPathRev(Jath::Path p, art::Length lookaheadDist);
 void followPathHalfspeed(Jath::Path p, art::Length lookaheadDist);
 
+void followPath_flipY(Jath::Path p, art::Length lookaheadDist);
+void followPathRev_flipY(Jath::Path p, art::Length lookaheadDist);
+
 void driveTowardPoint(art::Vec2 point);
 void driveTowardPointRev(art::Vec2 point);

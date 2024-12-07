@@ -76,43 +76,45 @@ void autonomous(void)
 	}
 	// logger.logStringEntry(100, timePassed(), "Auton - Inertial Finished Calibrating");
 
-	if (isBlue)
-	{
-		Brain.Screen.setCursor(10, 1);
-		// blueSoloAWP();
-		// blueElims();
+	skills();
 
-		// Brain.Screen.print("BlueAuto- Rush");
-		// blueRushAWP();
+	// if (isBlue)
+	// {
+	// 	Brain.Screen.setCursor(10, 1);
+	// 	// blueSoloAWP();
+	// 	// blueElims();
 
-		// blueAWPGoalFirstNeg();
-		// Brain.Screen.print("BlueAuto- Goal First AWPNeg");
+	// 	// Brain.Screen.print("BlueAuto- Rush");
+	// 	// blueRushAWP();
 
-		// Brain.Screen.print("BlueAuto- Stake First AWPPos");
-		// blueAWPStakeFirstPos();
+	// 	// blueAWPGoalFirstNeg();
+	// 	// Brain.Screen.print("BlueAuto- Goal First AWPNeg");
 
-		// winfred_blueAWPStakeFirstPos();
-		JathsSketchyFullFlippingAWP();
-	}
-	else
-	{
-		Brain.Screen.setCursor(10, 1);
-		// redSoloAWP();
-		// redElims();
+	// 	// Brain.Screen.print("BlueAuto- Stake First AWPPos");
+	// 	// blueAWPStakeFirstPos();
 
-		// Brain.Screen.print("RedAuto- Rush");
-		// redRushAWP();
+	// 	// winfred_blueAWPStakeFirstPos();
+	// 	JathsSketchyFullFlippingAWP();
+	// }
+	// else
+	// {
+	// 	Brain.Screen.setCursor(10, 1);
+	// 	// redSoloAWP();
+	// 	// redElims();
 
-		// Brain.Screen.print("RedAuto- Goal First AWPNeg");
-		// redAWPGoalFirstNeg();
+	// 	// Brain.Screen.print("RedAuto- Rush");
+	// 	// redRushAWP();
 
-		// Brain.Screen.print("RedAuto- Stake First AWPPos");
-		// redAWPStakeFirstPos();
+	// 	// Brain.Screen.print("RedAuto- Goal First AWPNeg");
+	// 	// redAWPGoalFirstNeg();
 
-		// winfred_redAWPStakeFirstPos();
-		// negStackedRings();
-		negStackedRingsStakeFirst();
-	}
+	// 	// Brain.Screen.print("RedAuto- Stake First AWPPos");
+	// 	// redAWPStakeFirstPos();
+
+	// 	// winfred_redAWPStakeFirstPos();
+	// 	// negStackedRings();
+	// 	negStackedRingsStakeFirst();
+	// }
 
 	// logger.logStringEntry(100, timePassed(), "Auton Routine Finished");
 }

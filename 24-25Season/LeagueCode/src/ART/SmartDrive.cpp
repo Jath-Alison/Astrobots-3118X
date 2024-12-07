@@ -75,7 +75,7 @@ namespace art
             Angle rightTravel = getRightTravel();
 
             m_leftTravel = Length(leftTravel.revolutions() * getWheelTravel());
-            m_leftTravel = Length(rightTravel.revolutions() * getWheelTravel());
+            m_rightTravel = Length(rightTravel.revolutions() * getWheelTravel());
 
             Angle wheelTravel = Angle((leftTravel + rightTravel) / 2.0);
             Length travel = Length(wheelTravel.revolutions() * getWheelTravel());

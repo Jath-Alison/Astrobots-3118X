@@ -770,7 +770,7 @@ void winfred_blueAWPStakeFirstPos()
 
 int intakeOffDelay1Sec()
 {
-    vex::wait(1, vex::sec);
+    vex::wait(0.45, vex::sec);
     intake.set(0);
     return 1;
 }
@@ -813,16 +813,16 @@ void JathsSketchyFullFlippingAWP()
     smartDrive.driveFor(art::Tiles(1.5), 60);
     smartDrive.driveFor(art::Inches(10), 60);
     
-    // vex::thread intakeOffDelay(intakeOffDelay1Sec);
-    intake.set(0);
-    AutonArmPosRunning = false;
+    vex::thread intakeOffDelay(intakeOffDelay1Sec);
+    // intake.set(0);
+    // AutonArmPosRunning = false;
 
     driveTowardPointRev(art::Vec2::XandY(
         art::Tiles(2 * xSign), art::Tiles(1 * ySign)));
     // resetPositionFromGPS();
 
     smartDrive.arcade(0, 0);
-    resetPositionFromGPS();
+    // resetPositionFromGPS();
     vex::wait(0.25, vex::sec);
 
     driveTowardPointRev(art::Vec2::XandY(
@@ -832,16 +832,19 @@ void JathsSketchyFullFlippingAWP()
     clamp.set(true);
     intake.set(100);
 
+    smartDrive.arcade(0,0);
     vex::wait(1, vex::sec);
     armTarget = art::Degrees(130);
     armControl = vex::thread(autonArmPos);
 
-    resetPositionFromGPS();
+    // resetPositionFromGPS();
 
     driveTowardPoint(art::Vec2::XandY(
         art::Tiles(1 * xSign), art::Tiles(2 * ySign)));
 
-    smartDrive.driveForPID(art::Inches(-14));
+        smartDrive.driveForPID(art::Inches(5));
+
+    smartDrive.driveForPID(art::Inches(-19));
 
     target = art::Vec2::XandY(art::Tiles(0.75 * xSign), art::Tiles(0.75 * ySign));
     travel = art::Vec2(target - smartDrive.m_pos);
@@ -884,11 +887,12 @@ void negStackedRings()
     driveTowardPoint(art::Vec2::XandY(
         art::Tiles(1 * xSign), art::Tiles(2)));
 
-    smartDrive.driveForPID(art::Inches(-10));
+    smartDrive.driveForPID(art::Inches(5));
+    smartDrive.driveForPID(art::Inches(-15));
 
     smartDrive.arcade(0, 0);
     vex::wait(0.35, vex::sec);
-    resetPositionFromGPS();
+    // resetPositionFromGPS();
 
     driveTowardPoint(art::Vec2::XandY(
         art::Inches(10 * xSign), art::Inches(48 - 2)));
@@ -896,7 +900,7 @@ void negStackedRings()
     smartDrive.driveForPID(art::Inches(-12));
     smartDrive.arcade(0, 0);
     vex::wait(0.35, vex::sec);
-    resetPositionFromGPS();
+    // resetPositionFromGPS();
 
     driveTowardPoint(art::Vec2::XandY(
         art::Inches(8 * xSign), art::Inches(48 + 4)));
@@ -906,13 +910,14 @@ void negStackedRings()
     armTarget = art::Degrees(120);
     vex::thread armControl(autonArmPos);
 
-    target = art::Vec2::XandY(art::Tiles(1 * xSign), art::Tiles(0));
+    target = art::Vec2::XandY(art::Tiles(0.75 * xSign), art::Tiles(0.75));
     travel = art::Vec2(target - smartDrive.m_pos);
 
     smartDrive.turnToPID(travel.direction());
     smartDrive.driveFor(travel.magnitude(), 50);
 
     smartDrive.arcade(0, 0);
+    AutonArmPosRunning = false;
 }
 void negStackedRingsStakeFirst()
 {

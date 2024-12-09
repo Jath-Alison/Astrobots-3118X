@@ -29,4 +29,6 @@ void JathsSketchyFullFlippingAWP();
 void negStackedRings();
 void negStackedRingsStakeFirst();
 
+void coolBeansRushRed();
+
 void skills();

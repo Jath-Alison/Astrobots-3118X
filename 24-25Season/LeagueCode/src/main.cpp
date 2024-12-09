@@ -76,7 +76,7 @@ void autonomous(void)
 	}
 	// logger.logStringEntry(100, timePassed(), "Auton - Inertial Finished Calibrating");
 
-	skills();
+	coolBeansRushRed();
 
 	// if (isBlue)
 	// {

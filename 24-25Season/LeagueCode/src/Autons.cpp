@@ -1319,3 +1319,37 @@ void skills()
 
     smartDrive.arcade(0, 0);
 }
+
+void coolBeansRushRed()
+{
+    smartDrive.m_pos = art::Vec2::XandY(art::Tiles(-2.25), art::Tiles(-1.5));
+    smartDrive.m_dir = art::Degrees(90);
+
+    vex::task antiJamTask(intakeAntiJam);
+
+    smartDrive.driveForPID(art::Inches(41));
+    smartDrive.turnToPID(art::Degrees(125));
+
+    smartDrive.driveForPID(art::Inches(1));
+
+    arm.set(100);
+    vex::wait(1.25, vex::seconds);
+    arm.set(0);
+    arm.stop(vex::hold);
+
+    armTarget = art::Degrees(120);
+    vex::thread armControl(autonArmPos);
+
+    smartDrive.turnToPID(art::Degrees(135));
+
+    smartDrive.driveForPID(art::Inches(-18));
+    smartDrive.driveForPID(art::Inches(-6));
+    clamp.set(true);
+    vex::wait(0.5,vex::sec);
+    smartDrive.driveForPID(art::Inches(6));
+
+    smartDrive.turnToPID(art::Degrees(175));
+    intake.set(100);
+    smartDrive.driveForPID(art::Inches(30));
+    smartDrive.driveForPID(art::Inches(-10));
+}

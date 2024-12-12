@@ -51,5 +51,6 @@ extern bool macroRunning;
 extern vex::digital_out doinkerDeploy; extern bool doinkerDeployState;
 extern vex::digital_out doinkerClamp; extern bool doinkerClampState;
 
+extern vex::aivision FrontVision;
 
 extern bool isBlue;

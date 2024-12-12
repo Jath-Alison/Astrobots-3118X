@@ -101,3 +101,8 @@ DoubleArrayLogEntry Auton_TargetPoint("Auton/targetPoint");//
 DoubleArrayLogEntry Auton_TargetPoint_Blue("Auton/targetPoint(blue)");//
 DoubleArrayLogEntry Auton_CurrentPath("Auton/currentPath");
 DoubleArrayLogEntry Auton_CurrentPath_Blue("Auton/currentPath(blue)");
+
+DoubleArrayLogEntry Vision_RedObjectPos("Vision/Red/Pos");
+DoubleArrayLogEntry Vision_BlueObjectPos("Vision/Blue/Pos");
+DoubleArrayLogEntry Vision_RedObjectDim("Vision/Red/Dim");
+DoubleArrayLogEntry Vision_BlueObjectDim("Vision/Blue/Dim");

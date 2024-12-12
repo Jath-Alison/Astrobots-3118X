@@ -89,5 +89,6 @@ bool macroRunning=false;
 vex::digital_out doinkerDeploy(Brain.ThreeWirePort.D); bool doinkerDeployState = false;;
 vex::digital_out doinkerClamp(Brain.ThreeWirePort.E); bool doinkerClampState = false;;
 
+extern vex::aivision FrontVision(vex::PORT16);
 
 bool isBlue = true;

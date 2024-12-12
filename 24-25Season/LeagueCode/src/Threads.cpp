@@ -93,6 +93,8 @@ void logLoopFunction()
         &leftMotorA, &leftMotorB, &leftMotorC,
         &rightMotorA, &rightMotorB, &rightMotorC};
 
+    FrontVision.modelDetection(true);
+
     while (1)
     {
         std::vector<int64_t> axesStates = {
@@ -128,7 +130,7 @@ void logLoopFunction()
         logger.logDoubleArrayEntry(Base_XYR_Cmd, baseXYRCmd);
 
         std::vector<double> baseXYRVel = {
-            art::Length(smartDrive.m_vel.x).meters(),art::Length(smartDrive.m_vel.y).meters(), smartDrive.m_rotVel};
+            art::Length(smartDrive.m_vel.x).meters(), art::Length(smartDrive.m_vel.y).meters(), smartDrive.m_rotVel};
         logger.logDoubleArrayEntry(Base_XYR_Vel, baseXYRVel);
 
         std::vector<double> baseLRCmd = {
@@ -260,6 +262,21 @@ void logLoopFunction()
         logger.logInt64Entry(Logger_Capacity, logger.getCapacity());
         logger.logInt64Entry(Logger_Size, logger.getDataSize());
         logger.logDoubleEntry(Logger_TimeSinceLastLogged, logTimePassed());
+
+        FrontVision.takeSnapshot(FrontVision.ALL_AIOBJS);
+
+        std::vector<double> blueObjectPos;
+        std::vector<double> blueObjectDim;
+        for (size_t i = 0; i < FrontVision.objects.getLength(); i++)
+        {
+            blueObjectPos.push_back(FrontVision.objects[i].originX);
+            blueObjectPos.push_back(FrontVision.objects[i].originY);
+
+            blueObjectPos.push_back(FrontVision.objects[i].width);
+            blueObjectPos.push_back(FrontVision.objects[i].height);
+        }
+        logger.logDoubleArrayEntry(Vision_BlueObjectPos,blueObjectPos);
+        logger.logDoubleArrayEntry(Vision_BlueObjectDim,blueObjectDim);
 
         vex::this_thread::sleep_for(20);
     }

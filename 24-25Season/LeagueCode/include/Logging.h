@@ -164,3 +164,10 @@ extern DoubleArrayLogEntry Auton_TargetPoint;
 extern DoubleArrayLogEntry Auton_TargetPoint_Blue;
 extern DoubleArrayLogEntry Auton_CurrentPath;
 extern DoubleArrayLogEntry Auton_CurrentPath_Blue;
+
+//Vision
+
+extern DoubleArrayLogEntry Vision_RedObjectPos;
+extern DoubleArrayLogEntry Vision_BlueObjectPos;
+extern DoubleArrayLogEntry Vision_RedObjectDim;
+extern DoubleArrayLogEntry Vision_BlueObjectDim;

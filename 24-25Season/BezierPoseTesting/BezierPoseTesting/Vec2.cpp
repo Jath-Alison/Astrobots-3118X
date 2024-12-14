@@ -32,6 +32,7 @@ namespace art
 
 	Vec2 Vec2::normalize() const
 	{
+		if (magnitude() == 0.0) { return Vec2(); }
 		double scale = 1.f / magnitude();
 		Vec2 out = *this * scale;
 		return out;

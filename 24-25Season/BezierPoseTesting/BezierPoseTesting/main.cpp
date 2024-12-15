@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Vec2.h"
+#include <iostream>
 
 sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!");
 
@@ -9,6 +10,14 @@ std::vector<art::Vec2> points = {
     art::Vec2::XandY(300,800),
     art::Vec2::XandY(900,900),
 };
+
+static double curvature(art::Vec2 a, art::Vec2 b, art::Vec2 c) {
+    double area = abs((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x));
+
+    //std::cout << (4*area / ((a.distTo(b)) * (b.distTo(c)) * (c.distTo(a)))) << std::endl;
+
+    return 4*area/((a.distTo(b))* (b.distTo(c)) * (c.distTo(a)));
+}
 
 static art::Vec2 lerp(art::Vec2 start, art::Vec2 end, double t) {
     art::Vec2 travel = end - start;
@@ -74,6 +83,8 @@ int main()
     art::Vec2 PrevMousePos;
     art::Vec2 MouseVel;
 
+    bool printed = false;
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -106,6 +117,8 @@ int main()
             if (event.type == sf::Event::MouseButtonReleased) {
                 selectedPoint = -1;
                 //points[1] = points[0] + MouseVel.normalize() * 600;
+                printed = false;
+                std::cout << "\n\n";
             }
         }
         
@@ -135,12 +148,28 @@ int main()
             points[3]
         );
 
+        curvature(points[0], points[1], points[2]);
+
         for (size_t i = 0; i < pathPoints.size(); i++)
         {
-
             shape2.setPosition(pathPoints[i].x, pathPoints[i].y);
+            double c = 0.3;
+            if (i > 0 && i < pathPoints.size() - 1) {
+                c = curvature(pathPoints[i-1], pathPoints[i], pathPoints[i+1]) * 70;
+                if (printed == false) {
+                    std::cout << c << std::endl;
+                }
+            }
+
+            if (c > 1) { c = 1.0; }
+
+            shape2.setFillColor(
+                sf::Color(c * 255.0, 50, c * 255.0)
+            );
+
             window.draw(shape2);
         }
+        if (printed == false) { printed = true; }
         
         window.draw(connectingLine);
 

@@ -78,6 +78,10 @@ int main()
     shape.setOrigin(shape.getRadius(), shape.getRadius());
     shape2.setOrigin(shape2.getRadius(), shape2.getRadius());
 
+    sf::CircleShape bot(20.f);
+    bot.setOrigin(bot.getRadius(), bot.getRadius());
+    bot.setFillColor(sf::Color::Yellow);
+
     int selectedPoint = -1;
     art::Vec2 CurrentMousePos;
     art::Vec2 PrevMousePos;
@@ -172,6 +176,34 @@ int main()
         if (printed == false) { printed = true; }
         
         window.draw(connectingLine);
+
+        art::Vec2 targetPos;
+
+        art::Vec2 botPos = art::Vec2::XandY(bot.getPosition().x, bot.getPosition().y);
+
+        bool inside = false;
+        double curve = 1;
+        for (size_t i = 1; i < pathPoints.size(); i++)
+        {
+            if(botPos.distTo(pathPoints[i]) < 50){
+                inside = true;
+            }
+            if (botPos.distTo(pathPoints[i]) > 50 && inside) {
+                targetPos = pathPoints[i-1];
+                if (i > 1 && i < pathPoints.size() - 1)
+                    curve = curvature(pathPoints[i - 1], pathPoints[i], pathPoints[i + 1]) * 70.0;
+                break;
+            }
+        }
+
+        art::Vec2 travel = targetPos - botPos;
+        travel = travel.normalize() * 10 * (1.0-curve);
+
+        bot.setPosition(
+            bot.getPosition().x + travel.x,
+            bot.getPosition().y + travel.y
+        );
+        window.draw(bot);
 
         window.display();
 

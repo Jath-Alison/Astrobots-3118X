@@ -247,4 +247,6 @@ namespace art
         
     };
 
+    Vec2 lerp(Vec2 start, Vec2 end, double t);
+
 } // namespace art

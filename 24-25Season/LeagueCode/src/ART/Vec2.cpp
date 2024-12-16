@@ -4,9 +4,9 @@
  * @brief Source containing the 2d Vector class
  * @version 1.0-beta
  * @date 07-13-2024
- * 
+ *
  * @copyright Copyright (c) 2024
- * 
+ *
  * This is the Source file defining the Vec2 class. The class aims to provide
  * utilities for vectors in 2 dimentions, such as locations, travel, and
  * displacement as well as several methods to interact with these vectors.
@@ -16,7 +16,7 @@
 
 namespace art
 {
-    Vec2::Vec2() : x(0.0), y(0.0) {}
+	Vec2::Vec2() : x(0.0), y(0.0) {}
 
 	double Vec2::magnitude() const
 	{
@@ -49,44 +49,44 @@ namespace art
 		return dist.direction();
 	}
 
-	Vec2 Vec2::operator+(Vec2 const& obj) const
+	Vec2 Vec2::operator+(Vec2 const &obj) const
 	{
 		Vec2 output = XandY(this->x + obj.x, this->y + obj.y);
 		return output;
 	}
 
-	Vec2 Vec2::operator-(Vec2 const& obj) const
+	Vec2 Vec2::operator-(Vec2 const &obj) const
 	{
 		Vec2 output = XandY(this->x - obj.x, this->y - obj.y);
 		return output;
 	}
 
-	Vec2 Vec2::operator*(double const& scale) const
+	Vec2 Vec2::operator*(double const &scale) const
 	{
 		Vec2 output = XandY(this->x * scale, this->y * scale);
 		return output;
 	}
 
-	double Vec2::operator*(Vec2 const& other) const
+	double Vec2::operator*(Vec2 const &other) const
 	{
-		return  x*other.x + y*other.y ;
+		return x * other.x + y * other.y;
 	}
 
-	Vec2& Vec2::operator+=(Vec2 const& obj)
+	Vec2 &Vec2::operator+=(Vec2 const &obj)
 	{
 		this->x += obj.x;
 		this->y += obj.y;
 		return *this;
 	}
 
-	Vec2& Vec2::operator-=(Vec2 const& obj)
+	Vec2 &Vec2::operator-=(Vec2 const &obj)
 	{
 		this->x -= obj.x;
 		this->y -= obj.y;
 		return *this;
 	}
 
-	Vec2& Vec2::operator*=(double const& scale)
+	Vec2 &Vec2::operator*=(double const &scale)
 	{
 		this->x *= scale;
 		this->y *= scale;
@@ -107,5 +107,13 @@ namespace art
 		output.x = mag * sin(dir);
 		output.y = mag * cos(dir);
 		return output;
+	}
+
+	Vec2 lerp(Vec2 start, Vec2 end, double t)
+	{
+		Vec2 travel = end - start;
+		travel = travel * t;
+
+		return start + travel;
 	}
 } // namespace art

@@ -20,3 +20,5 @@ void followPathRev_flipY(Jath::Path p, art::Length lookaheadDist);
 
 void driveTowardPoint(art::Vec2 point);
 void driveTowardPointRev(art::Vec2 point);
+
+void driveToPose(art::Vec2 pos, art::Angle heading, art::Length approachDist);

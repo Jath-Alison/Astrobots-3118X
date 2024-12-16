@@ -198,7 +198,7 @@ void followPath_flipY(Jath::Path p, art::Length lookaheadDist)
 
     for (size_t i = 0; i < temp.m_points.size(); i++)
     {
-        temp.m_points[i].m_pos.y = temp.m_points[i].m_pos.y * -1.0; 
+        temp.m_points[i].m_pos.y = temp.m_points[i].m_pos.y * -1.0;
     }
 
     logger.logStringEntry(Auton_Console, "Following Path");
@@ -258,7 +258,7 @@ void followPathRev_flipY(Jath::Path p, art::Length lookaheadDist)
 
     for (size_t i = 0; i < temp.m_points.size(); i++)
     {
-        temp.m_points[i].m_pos.y = temp.m_points[i].m_pos.y * -1.0; 
+        temp.m_points[i].m_pos.y = temp.m_points[i].m_pos.y * -1.0;
     }
 
     logger.logStringEntry(Auton_Console, "Following Path in Reverse");
@@ -401,4 +401,65 @@ void driveTowardPointRev(art::Vec2 point)
     // smartDrive.m_right.stop(vex::brake);
 
     logger.logStringEntry(Auton_Console, "Finished Driving Toward Point-Rev");
+}
+
+void driveToPose(art::Vec2 pos, art::Angle heading, art::Length approachDist)
+{
+    logger.logStringEntry(Auton_Console, "Driving to Pose");
+
+    std::vector<art::Vec2> controlPoints = {
+        smartDrive.m_centerPos,
+        smartDrive.m_centerPos 
+            + art::Vec2::dirAndMag(smartDrive.m_dir, art::Inches(10)) // some starting dist
+            + smartDrive.m_vel * (art::Inches(1)/art::Pixels(1)) * 0.5,//some const
+        pos - art::Vec2::dirAndMag(heading, approachDist),
+        pos,
+    };
+
+    Jath::Path p = Jath::bezier(controlPoints, 200.0);
+    p.calculateSpeeds(20, 70.0);
+
+    std::vector<double> pathLog;
+    std::vector<double> pathLogBlue = {};
+    for (auto point : p.m_points)
+    {
+        pathLog.push_back(art::Length(point.m_pos.x).meters());
+        pathLog.push_back(art::Length(point.m_pos.y).meters());
+        pathLog.push_back(1.02);
+
+        pathLogBlue.push_back(art::Length(point.m_pos.x).meters() + 1.8);
+        pathLogBlue.push_back(art::Length(point.m_pos.y).meters() + 1.8);
+        pathLogBlue.push_back(1.02);
+    }
+
+    logger.logDoubleArrayEntry(Auton_CurrentPath, pathLog);
+    logger.logDoubleArrayEntry(Auton_CurrentPath, pathLogBlue);
+
+    Jath::Point lookahead = p.getLookahead(smartDrive.m_centerPos, art::Inches(13));
+    Jath::Point closest = p.getClosestPoint(smartDrive.m_centerPos);
+
+    smartDrive.turnTowardPID(lookahead.m_pos.direction(), true);
+    while (lookahead.m_speed != 0)
+    {
+
+        if (Controller1.ButtonA.pressing())
+        {
+            return;
+        }
+
+        travel = art::Vec2(lookahead.m_pos - smartDrive.m_centerPos);
+
+        smartDrive.turnTowardPID(travel.direction(), false);
+        smartDrive.m_cmdY = std::min(lookahead.m_speed, 50.0);
+        smartDrive.update();
+
+        target = lookahead.m_pos;
+
+        lookahead = p.getLookahead(smartDrive.m_pos, art::Inches(13));
+        closest = p.getClosestPoint(smartDrive.m_pos);
+
+        vex::wait(20, vex::msec);
+    }
+
+    logger.logStringEntry(Auton_Console, "Finished Following Path");
 }

@@ -2,6 +2,8 @@
 #include "Vec2.h"
 #include <iostream>
 
+double lookAhead = 30;
+
 sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!");
 
 std::vector<art::Vec2> points = {
@@ -32,7 +34,7 @@ std::vector<art::Vec2> getBezier(art::Vec2 start, art::Vec2 vel, art::Vec2 endVe
         start,
         start + vel,
         end - endVel,
-        end
+        end,
     };
 
     std::vector<art::Vec2> outputPoints;
@@ -58,11 +60,12 @@ std::vector<art::Vec2> getBezier(art::Vec2 start, art::Vec2 vel, art::Vec2 endVe
 
     for (size_t i = 0; i < targetPoints.size(); i++) {
 
-
         shape.setPosition(targetPoints[i].x, targetPoints[i].y);
 
         window.draw(shape);
     }
+
+
 
     return outputPoints;
 }
@@ -70,6 +73,11 @@ std::vector<art::Vec2> getBezier(art::Vec2 start, art::Vec2 vel, art::Vec2 endVe
 int main()
 {
     window.setFramerateLimit(60);
+
+    sf::CircleShape lookAheadShape(lookAhead);
+    lookAheadShape.setFillColor(sf::Color::Blue);
+    lookAheadShape.setOrigin(lookAheadShape.getRadius(), lookAheadShape.getRadius());
+
 
     sf::CircleShape shape(30.f);
     sf::CircleShape shape2(10.f);
@@ -136,6 +144,8 @@ int main()
         }
 
         window.clear();
+        lookAheadShape.setPosition(bot.getPosition());
+        window.draw(lookAheadShape);
         
         sf::VertexArray connectingLine(sf::PrimitiveType::LineStrip, points.size());
         for (size_t i = 0; i < points.size(); i++)
@@ -185,19 +195,22 @@ int main()
         double curve = 1;
         for (size_t i = 1; i < pathPoints.size(); i++)
         {
-            if(botPos.distTo(pathPoints[i]) < 50){
+            if(botPos.distTo(pathPoints[i]) < lookAhead){
                 inside = true;
             }
-            if (botPos.distTo(pathPoints[i]) > 50 && inside) {
+            if (botPos.distTo(pathPoints[i]) > lookAhead && inside) {
                 targetPos = pathPoints[i-1];
                 if (i > 1 && i < pathPoints.size() - 1)
                     curve = curvature(pathPoints[i - 1], pathPoints[i], pathPoints[i + 1]) * 70.0;
                 break;
             }
+            if (i == pathPoints.size() - 1) {
+                targetPos = pathPoints[pathPoints.size() - 1];
+            }
         }
 
         art::Vec2 travel = targetPos - botPos;
-        travel = travel.normalize() * 10 * (1.0-curve);
+        travel = travel.normalize() * ( 10 * std::max(0.0,1.0-curve) + 2);
 
         bot.setPosition(
             bot.getPosition().x + travel.x,

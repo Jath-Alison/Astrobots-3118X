@@ -290,7 +290,7 @@ void usercontrol(void)
 			// followPath(testPath, art::Inches(5));
 			// driveTowardPoint(art::Vec2::XandY(art::Tiles(1), art::Tiles(1)));
 			// skills();
-			driveToPose(art::Vec2(), art::Degrees(45), art::Inches(10));
+			driveToPose(art::Vec2(), art::Degrees(45), art::Inches(12));
 		}
 
 		vex::wait(20, vex::msec);

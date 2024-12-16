@@ -52,6 +52,8 @@ namespace Jath
 
             m_points[i].m_speed = std::max(calcSpeed, minSpeed);
         }
+
+        m_points.back().m_speed = 0;
     }
 
     Point Path::getClosestPoint(art::Vec2 pos)
@@ -74,12 +76,13 @@ namespace Jath
     {
         bool lastIn = false;
         Point p(m_points.front());
-        for (size_t i = 0; i < m_points.size(); i++)
+        for (size_t i = m_points.size(); i >= 0; i--)
         {
             p = m_points[i];
 
             if (pos.distTo(m_points[i].m_pos) < lookaheadDist)
             {
+                return p;//
                 lastIn = true;
             }
             else

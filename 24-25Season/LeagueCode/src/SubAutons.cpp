@@ -410,8 +410,8 @@ void driveToPose(art::Vec2 pos, art::Angle heading, art::Length approachDist)
     std::vector<art::Vec2> controlPoints = {
         smartDrive.m_centerPos,
         smartDrive.m_centerPos 
-            + art::Vec2::dirAndMag(smartDrive.m_dir, art::Inches(10)) // some starting dist
-            + smartDrive.m_vel * (art::Inches(1)/art::Pixels(1)) * 0.5,//some const
+            + art::Vec2::dirAndMag(smartDrive.m_dir, art::Inches(10)) //10 some starting dist
+            + smartDrive.m_vel * (art::Inches(1)/art::Pixels(1)) * 0.05,//some const
         pos - art::Vec2::dirAndMag(heading, approachDist),
         pos,
     };
@@ -450,7 +450,7 @@ void driveToPose(art::Vec2 pos, art::Angle heading, art::Length approachDist)
         travel = art::Vec2(lookahead.m_pos - smartDrive.m_centerPos);
 
         smartDrive.turnTowardPID(travel.direction(), false);
-        smartDrive.m_cmdY = std::min(lookahead.m_speed, 50.0);
+        smartDrive.m_cmdY = lookahead.m_speed;
         smartDrive.update();
 
         target = lookahead.m_pos;

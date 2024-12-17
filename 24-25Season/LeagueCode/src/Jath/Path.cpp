@@ -76,7 +76,7 @@ namespace Jath
     {
         bool lastIn = false;
         Point p(m_points.front());
-        for (size_t i = m_points.size(); i >= 0; i--)
+        for (size_t i = m_points.size() - 1; i >= 0; i--)
         {
             p = m_points[i];
 

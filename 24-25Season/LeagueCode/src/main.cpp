@@ -249,15 +249,15 @@ void usercontrol(void)
 		if (macroRunning && abs(shortestTurnPath(armTarget - art::Degrees(armRot.angle())).degrees()) >= 0.5)
 		{
 			if (shortestTurnPath(armTarget - art::Degrees(armRot.angle())).degrees() > 30 && armTarget.degrees() < 50)
-            {
-                armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(armRot.angle())));
-                arm.set(-armOut);
-            }
-            else
-            {
-                armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(armRot.angle())));
-                arm.set(armOut);
-            };
+			{
+				armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(armRot.angle())));
+				arm.set(-armOut);
+			}
+			else
+			{
+				armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(armRot.angle())));
+				arm.set(armOut);
+			};
 		}
 		else if (!(Controller1.ButtonL2.pressing() || Controller1.ButtonR2.pressing()))
 		{
@@ -287,10 +287,38 @@ void usercontrol(void)
 			// smartDrive.driveForPID(art::Inches(30));
 			// smartDrive.turnToPID(art::Degrees(0));
 
-			// followPath(testPath, art::Inches(5));
+			followPath(testPath, art::Inches(15));
+			smartDrive.m_left.stop(vex::hold);
+			smartDrive.m_right.stop(vex::hold);
+			smartDrive.arcade(0,0);
+			vex::wait(0.5, vex::sec);
+
+			smartDrive.m_left.stop(vex::coast);
+			smartDrive.m_right.stop(vex::coast);
+
 			// driveTowardPoint(art::Vec2::XandY(art::Tiles(1), art::Tiles(1)));
 			// skills();
-			driveToPose(art::Vec2(), art::Degrees(45), art::Inches(12));
+
+			// driveToPose(
+			// 	art::Vec2::XandY(
+			// 		-2, 2) *
+			// 		art::Tiles(1),
+			// 	art::Degrees(75), art::Inches(24));
+			// driveToPose(
+			// 	art::Vec2::XandY(
+			// 		2, 2) *
+			// 		art::Tiles(1),
+			// 	art::Degrees(180), art::Inches(24));
+			// driveToPose(
+			// 	art::Vec2::XandY(
+			// 		0, -2) *
+			// 		art::Tiles(1),
+			// 	art::Degrees(0), art::Inches(24));
+			// driveToPose(
+			// 	art::Vec2::XandY(
+			// 		-0, 0) *
+			// 		art::Tiles(1),
+			// 	art::Degrees(-45), art::Inches(24));
 		}
 
 		vex::wait(20, vex::msec);

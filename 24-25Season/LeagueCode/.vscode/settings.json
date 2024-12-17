@@ -45,6 +45,10 @@
 		"tuple": "cpp",
 		"type_traits": "cpp",
 		"utility": "cpp",
-		"typeinfo": "cpp"
+		"typeinfo": "cpp",
+		"cstddef": "cpp",
+		"cstring": "cpp",
+		"string": "cpp",
+		"memory": "cpp"
 	}
 }

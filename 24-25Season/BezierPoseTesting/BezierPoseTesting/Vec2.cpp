@@ -12,7 +12,7 @@
  * displacement as well as several methods to interact with these vectors.
  */
 
-#include "ART/Vec2.h"
+#include "Vec2.h"
 
 namespace art
 {
@@ -32,6 +32,7 @@ namespace art
 
 	Vec2 Vec2::normalize() const
 	{
+		if (magnitude() == 0.0) { return Vec2(); }
 		double scale = 1.f / magnitude();
 		Vec2 out = *this * scale;
 		return out;
@@ -49,44 +50,44 @@ namespace art
 		return dist.direction();
 	}
 
-	Vec2 Vec2::operator+(Vec2 const &obj) const
+	Vec2 Vec2::operator+(Vec2 const& obj) const
 	{
 		Vec2 output = XandY(this->x + obj.x, this->y + obj.y);
 		return output;
 	}
 
-	Vec2 Vec2::operator-(Vec2 const &obj) const
+	Vec2 Vec2::operator-(Vec2 const& obj) const
 	{
 		Vec2 output = XandY(this->x - obj.x, this->y - obj.y);
 		return output;
 	}
 
-	Vec2 Vec2::operator*(double const &scale) const
+	Vec2 Vec2::operator*(double const& scale) const
 	{
 		Vec2 output = XandY(this->x * scale, this->y * scale);
 		return output;
 	}
 
-	double Vec2::operator*(Vec2 const &other) const
+	double Vec2::operator*(Vec2 const& other) const
 	{
-		return x * other.x + y * other.y;
+		return  x * other.x + y * other.y;
 	}
 
-	Vec2 &Vec2::operator+=(Vec2 const &obj)
+	Vec2& Vec2::operator+=(Vec2 const& obj)
 	{
 		this->x += obj.x;
 		this->y += obj.y;
 		return *this;
 	}
 
-	Vec2 &Vec2::operator-=(Vec2 const &obj)
+	Vec2& Vec2::operator-=(Vec2 const& obj)
 	{
 		this->x -= obj.x;
 		this->y -= obj.y;
 		return *this;
 	}
 
-	Vec2 &Vec2::operator*=(double const &scale)
+	Vec2& Vec2::operator*=(double const& scale)
 	{
 		this->x *= scale;
 		this->y *= scale;
@@ -107,13 +108,5 @@ namespace art
 		output.x = mag * sin(dir);
 		output.y = mag * cos(dir);
 		return output;
-	}
-
-	Vec2 lerp(Vec2 start, Vec2 end, double t)
-	{
-		Vec2 travel = end - start;
-		travel = travel * t;
-
-		return start + travel;
 	}
 } // namespace art

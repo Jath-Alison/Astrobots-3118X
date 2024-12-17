@@ -17,7 +17,13 @@ namespace Jath
 
         Path(const Path& p);
 
+        void calculateSpeeds(double minSpeed, double factor);
+
         std::vector<Point> m_points;
     };
+
+    double curvature(art::Vec2 a, art::Vec2 b, art::Vec2 c);
+
+    Path bezier(std::vector<art::Vec2> points, double resolution);
 
 } // namespace Jath

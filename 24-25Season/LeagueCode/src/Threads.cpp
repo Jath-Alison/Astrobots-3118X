@@ -141,13 +141,21 @@ void logLoopFunction()
             smartDrive.m_leftTravel.meters(), smartDrive.m_rightTravel.meters()};
         logger.logDoubleArrayEntry(Base_LeftRight_Vel, baseLRVel);
 
-        std::vector<double> baseLSwerveState = {
-            smartDrive.m_leftTravel.meters(), 0};
-        logger.logDoubleArrayEntry(Base_L_SwerveState, baseLSwerveState);
+        std::vector<double> baseVelSwerveState = {
+            smartDrive.m_dir - smartDrive.m_vel.direction(), art::Length(smartDrive.m_vel.magnitude()).meters(),
+            smartDrive.m_dir - smartDrive.m_vel.direction(), art::Length(smartDrive.m_vel.magnitude()).meters(),
+            smartDrive.m_dir - smartDrive.m_vel.direction(), art::Length(smartDrive.m_vel.magnitude()).meters(),
+            smartDrive.m_dir - smartDrive.m_vel.direction(), art::Length(smartDrive.m_vel.magnitude()).meters(),
+        };
+        logger.logDoubleArrayEntry(Base_VelSwerveState, baseVelSwerveState);
 
-        std::vector<double> baseRSwerveState = {
-            smartDrive.m_rightTravel.meters(), 0};
-        logger.logDoubleArrayEntry(Base_R_SwerveState, baseRSwerveState);
+        std::vector<double> baseLRSwerveState = {
+            0, smartDrive.m_leftTravel.meters() * 50,
+            0, smartDrive.m_rightTravel.meters() * 50,
+            0, smartDrive.m_leftTravel.meters() * 50,
+            0, smartDrive.m_rightTravel.meters() * 50,
+            };
+        logger.logDoubleArrayEntry(Base_LR_SwerveState, baseLRSwerveState);
 
         std::vector<double> baseMotorsVoltage{};
         std::vector<double> baseMotorsCurrent{};

@@ -21,10 +21,10 @@ DoubleArrayLogEntry Base_XYR_Pos("Base/pos");//
 DoubleArrayLogEntry Base_XYR_Pos_Blue("Base/pos(blue)");//
 DoubleArrayLogEntry Base_LeftRight_Cmd("Base/cmd(l-r)");//
 DoubleArrayLogEntry Base_LeftRight_Vel("Base/vel(l-r)");//
+DoubleArrayLogEntry Base_VelSwerveState("Base/vel(swerveState)");
 
 // DoubleArrayLogEntry Base_LeftRight_SwerveStates("Base/swerveStates");//
-DoubleArrayLogEntry Base_L_SwerveState("Base/SwerveState-L");
-DoubleArrayLogEntry Base_R_SwerveState("Base/SwerveState-R");
+DoubleArrayLogEntry Base_LR_SwerveState("Base/SwerveState-LR");
 
 DoubleArrayLogEntry Base_Motors_Voltage("Base/Motors/voltage");//
 DoubleArrayLogEntry Base_Motors_Current("Base/Motors/current");//

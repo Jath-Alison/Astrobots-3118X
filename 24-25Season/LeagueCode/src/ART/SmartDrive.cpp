@@ -69,7 +69,6 @@ namespace art
                 m_inert.setHeading(m_dir.degrees(), vex::deg);
             }
             m_dir = Degrees(m_inert.heading(vex::degrees));
-            prevDir = m_dir;
 
             Angle leftTravel = getLeftTravel();
             Angle rightTravel = getRightTravel();
@@ -98,6 +97,8 @@ namespace art
             m_pos = m_pos + posChange;
             m_centerPos = m_pos + Vec2::dirAndMag(m_dir, m_tracker.m_offset);
 
+            prevDir = m_dir;
+            
             vex::wait(20, vex::msec);
         }
     }

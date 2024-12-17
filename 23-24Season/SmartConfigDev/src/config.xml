@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Robot>
+    <Subsystem name="Base">
+        <Motor name="LeftWheels" port="1" invert="false" mode="DC" leader="none">
+            <Pid p="1" i=".01" d="1"/>
+            <Follower port="2" invert="false"/>
+            <Sensor type="Rotation" invert="" port="4"/>
+        </Motor>
+        <Motor name="RightWheels" port="1" mode="DC" >
+            <Pid p="1" i=".01" d="1"/>
+            <Follower port="2" invert="false"/>
+        </Motor>
+    </Subsystem>
+    <Subsystem name="Intake">
+        <Motor>
+
+        </Motor>
+    </Subsystem>
+</Robot>

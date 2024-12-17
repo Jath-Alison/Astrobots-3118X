@@ -80,9 +80,9 @@ extern DoubleArrayLogEntry Base_XYR_Pos;
 extern DoubleArrayLogEntry Base_XYR_Pos_Blue;
 extern DoubleArrayLogEntry Base_LeftRight_Cmd;
 extern DoubleArrayLogEntry Base_LeftRight_Vel;
+extern DoubleArrayLogEntry Base_VelSwerveState;
 
-extern DoubleArrayLogEntry Base_L_SwerveState;
-extern DoubleArrayLogEntry Base_R_SwerveState;
+extern DoubleArrayLogEntry Base_LR_SwerveState;
 
 extern DoubleArrayLogEntry Base_Motors_Voltage;
 extern DoubleArrayLogEntry Base_Motors_Current;

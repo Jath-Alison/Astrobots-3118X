@@ -14,6 +14,8 @@
  */
 
 #include "ART/TankDrive.h"
+#include <cmath>
+#include <algorithm>
 
 namespace art
 {
@@ -32,7 +34,8 @@ namespace art
         m_cmdRot = rot;
         update();
     }
-    void TankDrive::tank(double left, double right){
+    void TankDrive::tank(double left, double right)
+    {
         m_cmdY = left + right;
         m_cmdRot = left - right;
         update();
@@ -48,6 +51,32 @@ namespace art
         arcade(cont.Axis3.position() * cont.Axis3.position() * cont.Axis3.position() * 0.01 * 0.01,
                cont.Axis1.position() * cont.Axis1.position() * cont.Axis1.position() * 0.01 * 0.01);
         update();
+    }
+    void TankDrive::curvatureDrive(double iThrottle, double iCurvature, double iThreshold)
+    {
+        if (std::fabs(iThrottle) <= iThreshold)
+        {
+            arcade(0, iCurvature);
+            return;
+        }
+
+        iThrottle = std::fabs(iThrottle) > iThreshold ? iThrottle : 0;
+        iCurvature = std::fabs(iCurvature) > iThreshold ? iCurvature : 0;
+
+        double left = iThrottle + (std::fabs(iThrottle/100.0) * iCurvature);
+        double right = iThrottle - (std::fabs(iThrottle/100.0) * iCurvature);
+
+        double mag = std::max(std::fabs(left), std::fabs(right));
+        if (mag > 100.0)
+        {
+            left /= mag;
+            left *= 100.0;
+            right /= mag;
+            right *= 100.0;
+        }
+
+        m_left.set(left);
+        m_right.set(right);
     }
     void TankDrive::update()
     {

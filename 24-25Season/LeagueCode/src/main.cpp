@@ -265,10 +265,10 @@ void usercontrol(void)
 			arm.stop(vex::hold);
 		}
 
-		// if (Controller1.ButtonDown.pressing())
-		// {
-		// 	smartDrive.arcade(-100, 0);
-		// }
+		if (Controller1.ButtonDown.pressing())
+		{
+			smartDrive.curvatureDrive(Controller1.Axis3.position(), Controller1.Axis1.position(), 25.0);
+		}
 		// else if (Controller1.ButtonUp.pressing())
 		// {
 		// 	smartDrive.arcade(100, 0);
@@ -287,14 +287,14 @@ void usercontrol(void)
 			// smartDrive.driveForPID(art::Inches(30));
 			// smartDrive.turnToPID(art::Degrees(0));
 
-			followPath(testPath, art::Inches(15));
-			smartDrive.m_left.stop(vex::hold);
-			smartDrive.m_right.stop(vex::hold);
-			smartDrive.arcade(0,0);
-			vex::wait(0.5, vex::sec);
+			// followPath(testPath, art::Inches(15));
+			// smartDrive.m_left.stop(vex::hold);
+			// smartDrive.m_right.stop(vex::hold);
+			// smartDrive.arcade(0,0);
+			// vex::wait(0.5, vex::sec);
 
-			smartDrive.m_left.stop(vex::coast);
-			smartDrive.m_right.stop(vex::coast);
+			// smartDrive.m_left.stop(vex::coast);
+			// smartDrive.m_right.stop(vex::coast);
 
 			// driveTowardPoint(art::Vec2::XandY(art::Tiles(1), art::Tiles(1)));
 			// skills();

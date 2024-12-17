@@ -47,6 +47,8 @@
 		"utility": "cpp",
 		"typeinfo": "cpp",
 		"deque": "cpp",
-		"string": "cpp"
+		"string": "cpp",
+		"cstddef": "cpp",
+		"cstring": "cpp"
 	}
 }

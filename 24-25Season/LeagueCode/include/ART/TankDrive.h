@@ -142,6 +142,8 @@ namespace art
 		 */
 		void LeftSplitArcadeCurved(const vex::controller &cont);
 
+		void curvatureDrive(double iThrottle, double iCurvature, double iThreshold);
+
 		/**
 		 * @brief Uses the stored commands to command the motors
 		 * 

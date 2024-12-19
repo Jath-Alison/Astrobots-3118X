@@ -352,19 +352,19 @@ int main()
       <shades>
         <screen id="home">
           <box id="box" x="0" y="0" width="480" height="240" callback="" color="0x4287F5FF"/>
-          <text id="title" x="15" y="15" text="3118B - Astrobots" color="0xFCB040FF" />
-          <text id="title" x="15" y="45" text="Shades" color="0xFCB040FF" />
+          <text id="title" x="15" y="15" text="3118B - Astrobots" color="0xD07F07" bkgColor="0x4287F5FF" />
+          <text id="title2" x="15" y="105" text="Shades" color="0xFF0000" bkgColor="0x4287F5FF" font="prop60" />
 
           <image id="0" x="7" y="107" src="AstrobotsLogo.png" callback="" />
 
           <box id="auton_button" x="260" y="15" width="200" height="60" color="0xFFFFFFFF" callback="auton" />
-          <text id="0" x="275" y="25" text="Auton Select" color="0x000000FF" callback="" />
+          <text id="0" x="275" y="25" text="Auton Select" color="0x000000FF" callback="" bkgColor="0xFFFFFF00" />
 
           <box id="stats_home_button" x="260" y="90" width="200" height="60" color="0xFFFFFFFF" callback="stats_home" />
-          <text id="0" x="275" y="100" text="Robot Stats" color="0x000000FF" callback="" />
+          <text id="0" x="275" y="100" text="Robot Stats" color="0x000000FF" callback="" font="mono30" />
 
           <box id="0" x="260" y="165" width="200" height="60" color="0xFFFFFFFF" callback="" />
-          <text id="programData" x="260" y="175" text="" color="0x000000FF" callback="" />
+          <text id="programData" x="260" y="175" text="Program Data" color="0x000000FF" callback="" bkgColor="0xFFFFFF" />
         </screen>
         
         <screen id="auton">

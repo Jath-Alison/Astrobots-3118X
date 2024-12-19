@@ -20,7 +20,9 @@ namespace sds {
 			const char* id;
 			int x, y, size;
 			const char* text;
+			const char* font;
 			int64_t color;
+			int64_t bkgColor;
 			const char* callbackId;
 
 			if (elem->Attribute("id") == NULL) { id = ""; }
@@ -35,8 +37,14 @@ namespace sds {
 			if (elem->Attribute("text") == NULL) { text = "No Text"; }
 			else { elem->QueryStringAttribute("text", &text); }
 
+			if (elem->Attribute("font") == NULL) { font = "mono15"; }
+			else { elem->QueryStringAttribute("font", &font); }
+
 			if (elem->Attribute("color") == NULL) { color = 0xFFFFFFFF; }
 			else { elem->QueryInt64Attribute("color", &color); }
+
+			if (elem->Attribute("bkgColor") == NULL) { bkgColor = 0x00000000; }
+			else { elem->QueryInt64Attribute("bkgColor", &bkgColor); }
 
 			if (elem->Attribute("callback") == NULL) { callbackId = "none"; }
 			else {
@@ -46,16 +54,22 @@ namespace sds {
 
 			m_id = id;
 			m_text = text;
+			if(fontMap.find(font)!= fontMap.end()) {
+				m_font = fontMap[font];
+			}else{
+				m_font = vex::fontType::mono15;
+			}
 			m_x = x;
 			m_y = y;
 			m_color = color;
+			m_bkgColor = bkgColor;
 		}
 
 		void display() override {
-			Brain.Screen.setPenColor(vex::color::red);
-			Brain.Screen.setFillColor(vex::color::white);
-			Brain.Screen.printAt(m_x, m_y+12, m_text.c_str());
-			Brain.Screen.print( m_text.c_str());
+			Brain.Screen.setFillColor(m_bkgColor);
+			Brain.Screen.setPenColor(m_color);
+			Brain.Screen.setFont(m_font);
+			Brain.Screen.printAt(m_x, m_y, m_text.c_str());
 
 		};
 
@@ -67,6 +81,37 @@ namespace sds {
 	private:
 		int m_x, m_y;
 		uint32_t m_color;
+		uint32_t m_bkgColor;
+		vex::fontType m_font;
+
+		std::map<std::string, vex::fontType> fontMap = {
+			{ "mono12", vex::fontType::mono12 },
+			{ "mono15", vex::fontType::mono15 },
+			{ "mono20", vex::fontType::mono20 },
+			{ "mono30", vex::fontType::mono30 },
+			{ "mono40", vex::fontType::mono40 },
+			{ "mono60", vex::fontType::mono60 },
+
+			{ "prop20", vex::fontType::prop20 },
+			{ "prop30", vex::fontType::prop30 },
+			{ "prop40", vex::fontType::prop40 },
+			{ "prop60", vex::fontType::prop60 },
+
+			{ "CJK16", vex::fontType::cjk16 },
+
+			{ "monoXS", vex::fontType::mono12 },
+			{ "monoS", vex::fontType::mono15 },
+			{ "monoM", vex::fontType::mono20 },
+			{ "monoL", vex::fontType::mono30 },
+			{ "monoXL", vex::fontType::mono40 },
+			{ "monoXXL", vex::fontType::mono60 },
+
+			{ "propM", vex::fontType::prop20 },
+			{ "propL", vex::fontType::prop30 },
+			{ "propXL", vex::fontType::prop40 },
+			{ "propXXL", vex::fontType::prop60 },
+		};
+			
 	};
 
 }

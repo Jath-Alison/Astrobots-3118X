@@ -49,6 +49,11 @@
 		"cstddef": "cpp",
 		"cstring": "cpp",
 		"string": "cpp",
-		"memory": "cpp"
+		"memory": "cpp",
+		"algorithm": "cpp",
+		"deque": "cpp",
+		"numeric": "cpp",
+		"map": "cpp",
+		"random": "cpp"
 	}
 }

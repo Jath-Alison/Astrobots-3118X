@@ -171,7 +171,8 @@ void usercontrol(void)
 	while (1)
 	{
 
-		smartDrive.LeftSplitArcadeCurved(Controller1);
+		// smartDrive.LeftSplitArcadeCurved(Controller1);
+		smartDrive.curvatureDrive(Controller1.Axis3.position(), Controller1.Axis1.position(), 25.0);
 
 		if (Controller1.ButtonR1.pressing())
 		{
@@ -265,10 +266,10 @@ void usercontrol(void)
 			arm.stop(vex::hold);
 		}
 
-		if (Controller1.ButtonDown.pressing())
-		{
-			smartDrive.curvatureDrive(Controller1.Axis3.position(), Controller1.Axis1.position(), 25.0);
-		}
+		// if (Controller1.ButtonDown.pressing())
+		// {
+			
+		// }
 		// else if (Controller1.ButtonUp.pressing())
 		// {
 		// 	smartDrive.arcade(100, 0);
@@ -292,6 +293,8 @@ void usercontrol(void)
 			// smartDrive.m_right.stop(vex::hold);
 			// smartDrive.arcade(0,0);
 			// vex::wait(0.5, vex::sec);
+
+			resetPositionFromGPS();
 
 			// smartDrive.m_left.stop(vex::coast);
 			// smartDrive.m_right.stop(vex::coast);

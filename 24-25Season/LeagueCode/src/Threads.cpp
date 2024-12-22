@@ -93,7 +93,7 @@ void logLoopFunction()
         &leftMotorA, &leftMotorB, &leftMotorC,
         &rightMotorA, &rightMotorB, &rightMotorC};
 
-    FrontVision.modelDetection(true);
+    FrontVision.colorDetection(true);
 
     while (1)
     {
@@ -142,19 +142,27 @@ void logLoopFunction()
         logger.logDoubleArrayEntry(Base_LeftRight_Vel, baseLRVel);
 
         std::vector<double> baseVelSwerveState = {
-            smartDrive.m_dir - smartDrive.m_vel.direction(), art::Length(smartDrive.m_vel.magnitude()).meters(),
-            smartDrive.m_dir - smartDrive.m_vel.direction(), art::Length(smartDrive.m_vel.magnitude()).meters(),
-            smartDrive.m_dir - smartDrive.m_vel.direction(), art::Length(smartDrive.m_vel.magnitude()).meters(),
-            smartDrive.m_dir - smartDrive.m_vel.direction(), art::Length(smartDrive.m_vel.magnitude()).meters(),
+            smartDrive.m_dir - smartDrive.m_vel.direction(),
+            art::Length(smartDrive.m_vel.magnitude()).meters(),
+            smartDrive.m_dir - smartDrive.m_vel.direction(),
+            art::Length(smartDrive.m_vel.magnitude()).meters(),
+            smartDrive.m_dir - smartDrive.m_vel.direction(),
+            art::Length(smartDrive.m_vel.magnitude()).meters(),
+            smartDrive.m_dir - smartDrive.m_vel.direction(),
+            art::Length(smartDrive.m_vel.magnitude()).meters(),
         };
         logger.logDoubleArrayEntry(Base_VelSwerveState, baseVelSwerveState);
 
         std::vector<double> baseLRSwerveState = {
-            0, smartDrive.m_leftTravel.meters() * 50,
-            0, smartDrive.m_rightTravel.meters() * 50,
-            0, smartDrive.m_leftTravel.meters() * 50,
-            0, smartDrive.m_rightTravel.meters() * 50,
-            };
+            0,
+            smartDrive.m_leftTravel.meters() * 50,
+            0,
+            smartDrive.m_rightTravel.meters() * 50,
+            0,
+            smartDrive.m_leftTravel.meters() * 50,
+            0,
+            smartDrive.m_rightTravel.meters() * 50,
+        };
         logger.logDoubleArrayEntry(Base_LR_SwerveState, baseLRSwerveState);
 
         std::vector<double> baseMotorsVoltage{};
@@ -271,7 +279,10 @@ void logLoopFunction()
         logger.logInt64Entry(Logger_Size, logger.getDataSize());
         logger.logDoubleEntry(Logger_TimeSinceLastLogged, logTimePassed());
 
-        FrontVision.takeSnapshot(FrontVision.ALL_AIOBJS);
+        // Create a new Color Signature "Red" with the Colordesc class.
+        vex::aivision::colordesc Red = vex::aivision::colordesc(1, 207, 19, 25, 10.00, 0.20);
+
+        FrontVision.takeSnapshot(Red);
 
         std::vector<double> blueObjectPos;
         std::vector<double> blueObjectDim;
@@ -280,11 +291,11 @@ void logLoopFunction()
             blueObjectPos.push_back(FrontVision.objects[i].originX);
             blueObjectPos.push_back(FrontVision.objects[i].originY);
 
-            blueObjectPos.push_back(FrontVision.objects[i].width);
-            blueObjectPos.push_back(FrontVision.objects[i].height);
+            blueObjectDim.push_back(FrontVision.objects[i].width);
+            blueObjectDim.push_back(FrontVision.objects[i].height);
         }
-        logger.logDoubleArrayEntry(Vision_BlueObjectPos,blueObjectPos);
-        logger.logDoubleArrayEntry(Vision_BlueObjectDim,blueObjectDim);
+        logger.logDoubleArrayEntry(Vision_BlueObjectPos, blueObjectPos);
+        logger.logDoubleArrayEntry(Vision_BlueObjectDim, blueObjectDim);
 
         vex::this_thread::sleep_for(20);
     }

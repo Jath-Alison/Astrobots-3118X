@@ -1,6 +1,6 @@
 #pragma once
-#include "ART\Vec2.h"
-#include "ART\Units.h"
+#include "ART/Vec2.h"
+#include "ART/Units.h"
 
 namespace Jath
 {

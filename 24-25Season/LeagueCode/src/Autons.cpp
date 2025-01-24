@@ -395,8 +395,8 @@ void blueRushAWP()
     smartDrive.driveForPID(art::Inches(-5));
     doinkerDeploy.set(false);
 
-    smartDrive.m_pos = art::Vec2::XandY(art::Inches(gpsSensor.xPosition(vex::inches)), art::Inches(gpsSensor.yPosition(vex::inches)));
-    smartDrive.m_dir = art::Degrees(gpsSensor.heading(vex::degrees));
+    smartDrive.m_pos = art::Vec2::XandY(art::Inches(gpsSensorL.xPosition(vex::inches)), art::Inches(gpsSensorL.yPosition(vex::inches)));
+    smartDrive.m_dir = art::Degrees(gpsSensorL.heading(vex::degrees));
 
     target = art::Vec2::XandY(art::Tiles(1), art::Tiles(-1));
     travel = art::Vec2(target - smartDrive.m_pos);
@@ -418,8 +418,8 @@ void blueRushAWP()
 
     intake.set(100);
 
-    smartDrive.m_pos = art::Vec2::XandY(art::Inches(gpsSensor.xPosition(vex::inches)), art::Inches(gpsSensor.yPosition(vex::inches)));
-    smartDrive.m_dir = art::Degrees(gpsSensor.heading(vex::degrees));
+    smartDrive.m_pos = art::Vec2::XandY(art::Inches(gpsSensorL.xPosition(vex::inches)), art::Inches(gpsSensorL.yPosition(vex::inches)));
+    smartDrive.m_dir = art::Degrees(gpsSensorL.heading(vex::degrees));
 
     target = art::Vec2::XandY(art::Tiles(1), art::Tiles(-2));
     travel = art::Vec2(target - smartDrive.m_pos);
@@ -1318,6 +1318,42 @@ void skills()
     smartDrive.driveForPID(art::Inches(24));
 
     smartDrive.arcade(0, 0);
+}
+
+void ladyBrownTest()
+{
+    armTarget = art::Degrees(3);
+    vex::thread armControl(autonArmPos);
+
+    intake.set(100);
+
+    smartDrive.driveForPID(art::Inches(20));
+
+    vex::wait(1.5,vex::sec);
+
+    // for (size_t i = 0; i < 3; i++)
+    // {
+    //     intake.set(100);
+    //     vex::wait(.125,vex::sec);
+    //     intake.set(0);
+    //     vex::wait(.125,vex::sec);
+    // }
+    
+    smartDrive.arcade(25,0);
+
+    intake.set(0);
+
+    armTarget = art::Degrees(135);
+
+    vex::wait(1, vex::sec);
+
+    smartDrive.arcade(-25,0);
+    vex::wait(.125, vex::sec);
+
+    smartDrive.arcade(75,0);
+    vex::wait(.25, vex::sec);
+    
+    smartDrive.driveForPID(art::Inches(-10));
 }
 
 void coolBeansRushRed()

@@ -14,7 +14,7 @@
  */
 
 #include "vex.h"
-#include "Art\ART.h"
+#include "Art/ART.h"
 #include "WPILogger.h"
 #include "robotConfig.h"
 #include "Autons.h"
@@ -171,8 +171,8 @@ void usercontrol(void)
 	while (1)
 	{
 
-		// smartDrive.LeftSplitArcadeCurved(Controller1);
-		smartDrive.curvatureDrive(Controller1.Axis3.position(), Controller1.Axis1.position(), 25.0);
+		smartDrive.LeftSplitArcadeCurved(Controller1);
+		// smartDrive.curvatureDrive(Controller1.Axis3.position(), Controller1.Axis1.position(), 25.0);
 
 		if (Controller1.ButtonR1.pressing())
 		{
@@ -244,7 +244,12 @@ void usercontrol(void)
 		if (Controller1.ButtonUp.PRESSED)
 		{
 			macroRunning = true;
-			armTarget = art::Degrees(10);
+			armTarget = art::Degrees(3);
+		}
+		if (Controller1.ButtonDown.PRESSED)
+		{
+			macroRunning = true;
+			armTarget = art::Degrees(135);
 		}
 
 		if (macroRunning && abs(shortestTurnPath(armTarget - art::Degrees(armRot.angle())).degrees()) >= 0.5)
@@ -279,7 +284,7 @@ void usercontrol(void)
 		// 	smartDrive.LeftSplitArcadeCurved(Controller1);
 		// }
 
-		if (Controller1.ButtonDown.PRESSED)
+		if (Controller1.ButtonLeft.PRESSED)
 		{
 			// smartDrive.turnToPID(art::Degrees(0));
 
@@ -294,7 +299,22 @@ void usercontrol(void)
 			// smartDrive.arcade(0,0);
 			// vex::wait(0.5, vex::sec);
 
-			resetPositionFromGPS();
+			// resetPositionFromGPS();
+
+			// ladyBrownTest();
+			outtakeOptical.setLight(vex::ledState::on);
+			intake.set(100);
+			while (!outtakeOptical.isNearObject())
+			{
+				vex::wait(10,vex::msec);
+			}
+			// if(outtakeOptical.hue() < 270 && outtakeOptical.hue() > 150){
+				// intake.set(0);
+			// }else{
+				// vex::wait(0.5, vex::sec);
+				intake.set(0);
+			// }
+			
 
 			// smartDrive.m_left.stop(vex::coast);
 			// smartDrive.m_right.stop(vex::coast);

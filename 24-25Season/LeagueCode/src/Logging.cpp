@@ -92,9 +92,12 @@ DoubleArrayLogEntry Pose_TrackingPose("Pose/trackingPose");//
 DoubleArrayLogEntry Pose_TrackingPose_Blue("Pose/trackingPose(blue)");//
 DoubleArrayLogEntry Pose_CenterPose("Pose/centerPose");//
 DoubleArrayLogEntry Pose_CenterPose_Blue("Pose/centerPose(blue)");//
-DoubleArrayLogEntry Pose_GPSPose("Pose/GPSPose");
-DoubleArrayLogEntry Pose_GPSPose_Blue("Pose/GPSPose(blue)");
-Int64LogEntry Pose_GPSAccuracy("Pose/GPSAccuracy");
+DoubleArrayLogEntry Pose_GPSPose_L("Pose/GPSPose-L");
+DoubleArrayLogEntry Pose_GPSPose_Blue_L("Pose/GPSPose(blue)-L");
+Int64LogEntry Pose_GPSAccuracy_L("Pose/GPSAccuracy-L");
+DoubleArrayLogEntry Pose_GPSPose_R("Pose/GPSPose-R");
+DoubleArrayLogEntry Pose_GPSPose_Blue_R("Pose/GPSPose(blue)-R");
+Int64LogEntry Pose_GPSAccuracy_R("Pose/GPSAccuracy-R");
 
 StringLogEntry Auton_Console("Auton/Console");
 DoubleArrayLogEntry Auton_TargetPoint("Auton/targetPoint");//

@@ -154,9 +154,12 @@ extern DoubleArrayLogEntry Pose_TrackingPose;
 extern DoubleArrayLogEntry Pose_TrackingPose_Blue;
 extern DoubleArrayLogEntry Pose_CenterPose;
 extern DoubleArrayLogEntry Pose_CenterPose_Blue;
-extern DoubleArrayLogEntry Pose_GPSPose;
-extern DoubleArrayLogEntry Pose_GPSPose_Blue;
-extern Int64LogEntry Pose_GPSAccuracy;
+extern DoubleArrayLogEntry Pose_GPSPose_L;
+extern DoubleArrayLogEntry Pose_GPSPose_Blue_L;
+extern Int64LogEntry Pose_GPSAccuracy_L;
+extern DoubleArrayLogEntry Pose_GPSPose_R;
+extern DoubleArrayLogEntry Pose_GPSPose_Blue_R;
+extern Int64LogEntry Pose_GPSAccuracy_R;
 
 //Auton Entries
 extern StringLogEntry Auton_Console;

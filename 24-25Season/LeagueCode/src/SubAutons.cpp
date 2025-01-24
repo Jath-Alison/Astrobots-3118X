@@ -29,8 +29,8 @@ void resetPositionFromGPS()
 {
     logger.logStringEntry(Auton_Console, "ResetPos");
 
-    smartDrive.m_pos = art::Vec2::XandY(art::Inches(gpsSensor.xPosition(vex::inches)), art::Inches(gpsSensor.yPosition(vex::inches)));
-    smartDrive.m_dir = art::Degrees(gpsSensor.heading(vex::degrees));
+    smartDrive.m_pos = art::Vec2::XandY(art::Inches(gpsSensorL.xPosition(vex::inches)), art::Inches(gpsSensorL.yPosition(vex::inches)));
+    smartDrive.m_dir = art::Degrees(gpsSensorL.heading(vex::degrees));
 }
 
 void followPath(Jath::Path p, art::Length lookaheadDist)

@@ -229,19 +229,33 @@ void logLoopFunction()
         };
         logger.logDoubleArrayEntry(Pose_CenterPose_Blue, robotCentersPoseBlue);
 
-        std::vector<double> robotGPSPose = {
-            art::Inches(gpsSensor.xPosition(vex::inches)).meters(),
-            art::Inches(gpsSensor.yPosition(vex::inches)).meters(),
-            art::Degrees(gpsSensor.heading(vex::degrees)).degrees()};
-        logger.logDoubleArrayEntry(Pose_GPSPose, robotGPSPose);
+        std::vector<double> robotGPSPose_L = {
+            art::Inches(gpsSensorL.xPosition(vex::inches)).meters(),
+            art::Inches(gpsSensorL.yPosition(vex::inches)).meters(),
+            art::Degrees(gpsSensorL.heading(vex::degrees)).degrees()};
+        logger.logDoubleArrayEntry(Pose_GPSPose_L, robotGPSPose_L);
 
-        std::vector<double> robotGPSPoseBlue = {
-            1.8 + art::Inches(gpsSensor.xPosition(vex::inches)).meters(),
-            1.8 + art::Inches(gpsSensor.yPosition(vex::inches)).meters(),
-            -(art::Degrees(gpsSensor.heading(vex::degrees)) - art::Degrees(90)) // converted to FRC scheme
+        std::vector<double> robotGPSPoseBlue_L = {
+            1.8 + art::Inches(gpsSensorL.xPosition(vex::inches)).meters(),
+            1.8 + art::Inches(gpsSensorL.yPosition(vex::inches)).meters(),
+            -(art::Degrees(gpsSensorL.heading(vex::degrees)) - art::Degrees(90)) // converted to FRC scheme
         };
-        logger.logDoubleArrayEntry(Pose_GPSPose_Blue, robotGPSPoseBlue);
-        logger.logInt64Entry(Pose_GPSAccuracy, gpsSensor.quality());
+        logger.logDoubleArrayEntry(Pose_GPSPose_Blue_L, robotGPSPoseBlue_L);
+        logger.logInt64Entry(Pose_GPSAccuracy_L, gpsSensorL.quality());
+        
+        std::vector<double> robotGPSPose_R = {
+            art::Inches(gpsSensorR.xPosition(vex::inches)).meters(),
+            art::Inches(gpsSensorR.yPosition(vex::inches)).meters(),
+            art::Degrees(gpsSensorR.heading(vex::degrees)).degrees()};
+        logger.logDoubleArrayEntry(Pose_GPSPose_R, robotGPSPose_R);
+
+        std::vector<double> robotGPSPoseBlue_R = {
+            1.8 + art::Inches(gpsSensorR.xPosition(vex::inches)).meters(),
+            1.8 + art::Inches(gpsSensorR.yPosition(vex::inches)).meters(),
+            -(art::Degrees(gpsSensorR.heading(vex::degrees)) - art::Degrees(90)) // converted to FRC scheme
+        };
+        logger.logDoubleArrayEntry(Pose_GPSPose_Blue_R, robotGPSPoseBlue_R);
+        logger.logInt64Entry(Pose_GPSAccuracy_R, gpsSensorR.quality());
 
         std::vector<double> targetPose = {
             art::Length(target.x).meters(),

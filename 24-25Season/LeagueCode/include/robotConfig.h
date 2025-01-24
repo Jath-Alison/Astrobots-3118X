@@ -17,9 +17,10 @@
 #pragma once
 
 #include "vex.h"
-#include "Art\ART.h"
+#include "ART/ART.h"
 
-extern vex::gps gpsSensor;
+extern vex::gps gpsSensorL;
+extern vex::gps gpsSensorR;
 
 extern vex::motor leftMotorA;
 extern vex::motor leftMotorB;
@@ -52,5 +53,7 @@ extern vex::digital_out doinkerDeploy; extern bool doinkerDeployState;
 extern vex::digital_out doinkerClamp; extern bool doinkerClampState;
 
 extern vex::aivision FrontVision;
+extern vex::optical intakeOptical;
+extern vex::optical outtakeOptical;
 
 extern bool isBlue;

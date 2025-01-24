@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "Jath\Point.h"
+#include "Jath/Point.h"
 
 namespace Jath
 {

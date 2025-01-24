@@ -32,3 +32,5 @@ void negStackedRingsStakeFirst();
 void coolBeansRushRed();
 
 void skills();
+
+void ladyBrownTest();

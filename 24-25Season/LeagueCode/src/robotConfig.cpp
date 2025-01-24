@@ -20,7 +20,8 @@
 vex::brain Brain;
 vex::controller Controller1;
 
-vex::gps gpsSensor(vex::PORT6, 5.0, 0, vex::inches, 90);
+vex::gps gpsSensorL(vex::PORT6, 5.0, 0, vex::inches, 90);
+vex::gps gpsSensorR(vex::PORT6, -5.0, 0, vex::inches, 270);
 
 vex::motor leftMotorA (vex::PORT19, vex::gearSetting::ratio6_1, true);
 vex::motor leftMotorB (vex::PORT11, vex::gearSetting::ratio6_1, true);
@@ -75,7 +76,7 @@ art::SimpleMotor arm = art::SimpleMotor(vex::motor(vex::PORT4, vex::gearSetting:
 vex::rotation armRot = vex::rotation(vex::PORT14, true);
 
 art::PID armPID = art::PID()
-        .withConstants(3/(art::Degrees(1)), 0, -200)
+        .withConstants(1/(art::Degrees(1)), 0, -200)
         // .withIntegralZone(art::Degrees(15))
         // .withTimeout(10)
         // .withSettleZone(art::Degrees(3))
@@ -89,6 +90,8 @@ bool macroRunning=false;
 vex::digital_out doinkerDeploy(Brain.ThreeWirePort.D); bool doinkerDeployState = false;;
 vex::digital_out doinkerClamp(Brain.ThreeWirePort.E); bool doinkerClampState = false;;
 
-extern vex::aivision FrontVision(vex::PORT16);
+vex::aivision FrontVision(vex::PORT16);
+vex::optical intakeOptical(vex::PORT15);
+vex::optical outtakeOptical(vex::PORT15);
 
 bool isBlue = true;

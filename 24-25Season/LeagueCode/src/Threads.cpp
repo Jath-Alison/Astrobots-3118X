@@ -54,7 +54,7 @@ void displayLoopFunction()
                 // Only for Stake First autos
                 // smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2), art::Tiles(-1));
                 // smartDrive.m_dir = art::Degrees(90);
-                resetPositionFromGPS();
+                localizeAvg();
             }
             if (Brain.Screen.xPosition() > 480 - 5 - 80 && Brain.Screen.xPosition() < 480 - 5 - 80 + 120 - 10 && Brain.Screen.yPosition() > 120 + 5 && Brain.Screen.yPosition() < 5 + 120 - 10 + 120)
             {
@@ -63,7 +63,7 @@ void displayLoopFunction()
                 // Only for Stake First autos
                 // smartDrive.m_pos = art::Vec2::XandY(art::Tiles(-2), art::Tiles(-1));
                 // smartDrive.m_dir = art::Degrees(-90);
-                resetPositionFromGPS();
+                localizeAvg();
             }
             // isBlue = !isBlue;
         }
@@ -294,22 +294,27 @@ void logLoopFunction()
         logger.logDoubleEntry(Logger_TimeSinceLastLogged, logTimePassed());
 
         // Create a new Color Signature "Red" with the Colordesc class.
-        vex::aivision::colordesc Red = vex::aivision::colordesc(1, 207, 19, 25, 10.00, 0.20);
+        // vex::aivision::colordesc Red = vex::aivision::colordesc(1, 207, 19, 25, 10.00, 0.20);
 
-        FrontVision.takeSnapshot(Red);
+        // FrontVision.takeSnapshot(Red);
 
-        std::vector<double> blueObjectPos;
-        std::vector<double> blueObjectDim;
-        for (size_t i = 0; i < FrontVision.objects.getLength(); i++)
-        {
-            blueObjectPos.push_back(FrontVision.objects[i].originX);
-            blueObjectPos.push_back(FrontVision.objects[i].originY);
+        // std::vector<double> blueObjectPos;
+        // std::vector<double> blueObjectDim;
+        // for (size_t i = 0; i < FrontVision.objects.getLength(); i++)
+        // {
+        //     blueObjectPos.push_back(FrontVision.objects[i].originX);
+        //     blueObjectPos.push_back(FrontVision.objects[i].originY);
 
-            blueObjectDim.push_back(FrontVision.objects[i].width);
-            blueObjectDim.push_back(FrontVision.objects[i].height);
-        }
-        logger.logDoubleArrayEntry(Vision_BlueObjectPos, blueObjectPos);
-        logger.logDoubleArrayEntry(Vision_BlueObjectDim, blueObjectDim);
+        //     blueObjectDim.push_back(FrontVision.objects[i].width);
+        //     blueObjectDim.push_back(FrontVision.objects[i].height);
+        // }
+        // logger.logDoubleArrayEntry(Vision_BlueObjectPos, blueObjectPos);
+        // logger.logDoubleArrayEntry(Vision_BlueObjectDim, blueObjectDim);
+
+        logger.logInt64Entry(Optics_LowerOpticalHue, intakeOptical.hue());
+        logger.logBooleanEntry(Optics_LowerOpticalDist, intakeOptical.isNearObject());
+        logger.logInt64Entry(Optics_UpperOpticalHue, outtakeOptical.hue());
+        logger.logBooleanEntry(Optics_UpperOpticalDist, outtakeOptical.isNearObject());
 
         vex::this_thread::sleep_for(20);
     }

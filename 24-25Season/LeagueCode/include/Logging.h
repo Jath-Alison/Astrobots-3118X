@@ -174,3 +174,8 @@ extern DoubleArrayLogEntry Vision_RedObjectPos;
 extern DoubleArrayLogEntry Vision_BlueObjectPos;
 extern DoubleArrayLogEntry Vision_RedObjectDim;
 extern DoubleArrayLogEntry Vision_BlueObjectDim;
+
+extern Int64LogEntry Optics_LowerOpticalHue;
+extern BooleanLogEntry Optics_LowerOpticalDist;
+extern Int64LogEntry Optics_UpperOpticalHue;
+extern BooleanLogEntry Optics_UpperOpticalDist;

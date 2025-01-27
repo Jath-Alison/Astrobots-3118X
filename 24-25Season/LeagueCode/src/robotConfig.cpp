@@ -20,8 +20,8 @@
 vex::brain Brain;
 vex::controller Controller1;
 
-vex::gps gpsSensorL(vex::PORT6, 5.0, 0, vex::inches, 90);
-vex::gps gpsSensorR(vex::PORT6, -5.0, 0, vex::inches, 270);
+vex::gps gpsSensorL(vex::PORT10, -5.0, 0, vex::inches, 270);
+vex::gps gpsSensorR(vex::PORT6, 5.0, 0, vex::inches, 90);
 
 vex::motor leftMotorA (vex::PORT19, vex::gearSetting::ratio6_1, true);
 vex::motor leftMotorB (vex::PORT11, vex::gearSetting::ratio6_1, true);
@@ -87,11 +87,11 @@ art::Angle armTarget = 0;
 double armOut = 0;
 bool macroRunning=false;
 
-vex::digital_out doinkerDeploy(Brain.ThreeWirePort.D); bool doinkerDeployState = false;;
+vex::digital_out doinkerDeploy(Brain.ThreeWirePort.B); bool doinkerDeployState = false;;
 vex::digital_out doinkerClamp(Brain.ThreeWirePort.E); bool doinkerClampState = false;;
 
 vex::aivision FrontVision(vex::PORT16);
-vex::optical intakeOptical(vex::PORT15);
+vex::optical intakeOptical(vex::PORT17);
 vex::optical outtakeOptical(vex::PORT15);
 
 bool isBlue = true;

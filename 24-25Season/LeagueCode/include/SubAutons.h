@@ -9,7 +9,11 @@ art::Angle shortestTurnPath(const art::Angle target);
 extern art::Vec2 target;
 extern art::Vec2 travel;
 
-void resetPositionFromGPS();
+void resetPositionFromGPSL();
+void resetPositionFromGPSR();
+
+void localizeAvg();
+void localizeAvgSafe();
 
 void followPath(Jath::Path p, art::Length lookaheadDist);
 void followPathRev(Jath::Path p, art::Length lookaheadDist);

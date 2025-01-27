@@ -47,9 +47,12 @@ void pre_auton(void)
 {
 	// logger.logStringEntry(100, timePassed(), "Pre Auton Started");
 
-	arm.setPosition(armRot.angle(), vex::degrees);
 	// logger.logStringEntry(100, timePassed(), "Pre Auton Started");
 	logger.logStringEntry(console, "Pre Auton Started");
+
+	arm.setPosition(armRot.angle(), vex::degrees);
+	intakeOptical.integrationTime(5);
+	outtakeOptical.integrationTime(5);
 }
 
 /**
@@ -137,6 +140,30 @@ void autonomous(void)
 // }
 
 vex::thread macroThread;
+
+vex::thread sortingThread;
+int sort()
+{
+	outtakeOptical.setLight(vex::ledState::on);
+	intakeOptical.setLight(vex::ledState::on);
+	intake.set(100);
+	while (!((
+		(intakeOptical.hue() > 130 && intakeOptical.hue() < 200) ||
+		(outtakeOptical.hue() > 130 && outtakeOptical.hue() < 200))))
+	{
+		vex::wait(10, vex::msec);
+	}
+	// if(outtakeOptical.hue() < 270 && outtakeOptical.hue() > 150){
+	// intake.set(0);
+	// }else{
+	vex::wait(0.0625, vex::sec);
+	intake.set(0);
+	// }
+
+	outtakeOptical.setLight(vex::ledState::off);
+	intakeOptical.setLight(vex::ledState::off);
+	return 0;
+}
 
 /**
  * @brief Runs the User Control Task
@@ -273,7 +300,7 @@ void usercontrol(void)
 
 		// if (Controller1.ButtonDown.pressing())
 		// {
-			
+
 		// }
 		// else if (Controller1.ButtonUp.pressing())
 		// {
@@ -302,19 +329,10 @@ void usercontrol(void)
 			// resetPositionFromGPS();
 
 			// ladyBrownTest();
-			outtakeOptical.setLight(vex::ledState::on);
-			intake.set(100);
-			while (!outtakeOptical.isNearObject())
-			{
-				vex::wait(10,vex::msec);
-			}
-			// if(outtakeOptical.hue() < 270 && outtakeOptical.hue() > 150){
-				// intake.set(0);
-			// }else{
-				// vex::wait(0.5, vex::sec);
-				intake.set(0);
-			// }
-			
+
+			// sortingThread = vex::thread(sort);
+
+			ringRushBlue();
 
 			// smartDrive.m_left.stop(vex::coast);
 			// smartDrive.m_right.stop(vex::coast);

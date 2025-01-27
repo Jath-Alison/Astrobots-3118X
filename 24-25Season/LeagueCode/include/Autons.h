@@ -34,3 +34,5 @@ void coolBeansRushRed();
 void skills();
 
 void ladyBrownTest();
+
+void ringRushBlue();

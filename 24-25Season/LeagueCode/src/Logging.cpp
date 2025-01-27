@@ -109,3 +109,8 @@ DoubleArrayLogEntry Vision_RedObjectPos("Vision/Red/Pos");
 DoubleArrayLogEntry Vision_BlueObjectPos("Vision/Blue/Pos");
 DoubleArrayLogEntry Vision_RedObjectDim("Vision/Red/Dim");
 DoubleArrayLogEntry Vision_BlueObjectDim("Vision/Blue/Dim");
+
+Int64LogEntry Optics_LowerOpticalHue("Optics/Lower/Hue");
+BooleanLogEntry Optics_LowerOpticalDist("Optics/Lower/Dist");
+Int64LogEntry Optics_UpperOpticalHue("Optics/Upper/Hue");
+BooleanLogEntry Optics_UpperOpticalDist("Optics/Upper/Dist");

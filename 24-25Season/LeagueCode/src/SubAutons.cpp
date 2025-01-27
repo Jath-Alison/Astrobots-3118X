@@ -25,12 +25,52 @@ art::Angle shortestTurnPath(const art::Angle target)
     return art::Angle();
 }
 
-void resetPositionFromGPS()
+void resetPositionFromGPSL()
 {
-    logger.logStringEntry(Auton_Console, "ResetPos");
+    logger.logStringEntry(Auton_Console, "ResetPos-R");
 
     smartDrive.m_pos = art::Vec2::XandY(art::Inches(gpsSensorL.xPosition(vex::inches)), art::Inches(gpsSensorL.yPosition(vex::inches)));
     smartDrive.m_dir = art::Degrees(gpsSensorL.heading(vex::degrees));
+}
+
+void resetPositionFromGPSR(){
+    logger.logStringEntry(Auton_Console, "ResetPos-R");
+
+    smartDrive.m_pos = art::Vec2::XandY(art::Inches(gpsSensorR.xPosition(vex::inches)), art::Inches(gpsSensorR.yPosition(vex::inches)));
+    smartDrive.m_dir = art::Degrees(gpsSensorR.heading(vex::degrees));
+}
+
+void localizeAvg(){
+    logger.logStringEntry(Auton_Console, "ResetPos-Avg");
+
+    art::Vec2 leftGPSPos = art::Vec2::XandY(art::Inches(gpsSensorL.xPosition(vex::inches)), art::Inches(gpsSensorL.yPosition(vex::inches)));
+    art::Vec2 rightGPSPos = art::Vec2::XandY(art::Inches(gpsSensorR.xPosition(vex::inches)), art::Inches(gpsSensorR.yPosition(vex::inches)));
+
+    smartDrive.m_dir = art::Degrees(gpsSensorL.heading(vex::degrees) + gpsSensorR.heading(vex::degrees)) * 0.5;
+
+    smartDrive.m_pos = (leftGPSPos + rightGPSPos) * 0.5;
+}
+
+void localizeAvgSafe(){
+    logger.logStringEntry(Auton_Console, "ResetPos-AvgSafe");
+
+    art::Vec2 leftGPSPos = art::Vec2::XandY(art::Inches(gpsSensorL.xPosition(vex::inches)), art::Inches(gpsSensorL.yPosition(vex::inches)));
+    art::Vec2 rightGPSPos = art::Vec2::XandY(art::Inches(gpsSensorR.xPosition(vex::inches)), art::Inches(gpsSensorR.yPosition(vex::inches)));
+
+    if(gpsSensorL.heading(vex::degrees) - smartDrive.m_dir < art::Degrees(2)
+    && gpsSensorR.heading(vex::degrees) - smartDrive.m_dir < art::Degrees(2)){
+        smartDrive.m_pos = (leftGPSPos + rightGPSPos) * 0.5;
+    }else
+    if(gpsSensorL.heading(vex::degrees) - smartDrive.m_dir < art::Degrees(2)){
+        smartDrive.m_pos = leftGPSPos;
+    }else
+    if(gpsSensorR.heading(vex::degrees) - smartDrive.m_dir < art::Degrees(2)){
+        smartDrive.m_pos = rightGPSPos;
+    }else{
+        logger.logStringEntry(Auton_Console, "Failed to Localize");
+    }
+
+    
 }
 
 void followPath(Jath::Path p, art::Length lookaheadDist)

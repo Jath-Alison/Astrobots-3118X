@@ -54,7 +54,8 @@ void displayLoopFunction()
                 // Only for Stake First autos
                 // smartDrive.m_pos = art::Vec2::XandY(art::Tiles(2), art::Tiles(-1));
                 // smartDrive.m_dir = art::Degrees(90);
-                localizeAvg();
+                // localizeAvg();
+                resetPositionFromGPSL();
             }
             if (Brain.Screen.xPosition() > 480 - 5 - 80 && Brain.Screen.xPosition() < 480 - 5 - 80 + 120 - 10 && Brain.Screen.yPosition() > 120 + 5 && Brain.Screen.yPosition() < 5 + 120 - 10 + 120)
             {
@@ -64,6 +65,7 @@ void displayLoopFunction()
                 // smartDrive.m_pos = art::Vec2::XandY(art::Tiles(-2), art::Tiles(-1));
                 // smartDrive.m_dir = art::Degrees(-90);
                 localizeAvg();
+                // resetPositionFromGPSL();
             }
             // isBlue = !isBlue;
         }

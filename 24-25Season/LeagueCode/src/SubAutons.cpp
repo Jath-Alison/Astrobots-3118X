@@ -46,7 +46,7 @@ void localizeAvg(){
     art::Vec2 leftGPSPos = art::Vec2::XandY(art::Inches(gpsSensorL.xPosition(vex::inches)), art::Inches(gpsSensorL.yPosition(vex::inches)));
     art::Vec2 rightGPSPos = art::Vec2::XandY(art::Inches(gpsSensorR.xPosition(vex::inches)), art::Inches(gpsSensorR.yPosition(vex::inches)));
 
-    smartDrive.m_dir = art::Degrees(gpsSensorL.heading(vex::degrees) + gpsSensorR.heading(vex::degrees)) * 0.5;
+    smartDrive.m_dir = art::Degrees((gpsSensorL.heading(vex::degrees) + gpsSensorR.heading(vex::degrees))* 0.5);
 
     smartDrive.m_pos = (leftGPSPos + rightGPSPos) * 0.5;
 }

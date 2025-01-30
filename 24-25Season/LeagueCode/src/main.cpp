@@ -141,28 +141,14 @@ void autonomous(void)
 
 vex::thread macroThread;
 
-vex::thread sortingThread;
-int sort()
-{
-	outtakeOptical.setLight(vex::ledState::on);
-	intakeOptical.setLight(vex::ledState::on);
-	intake.set(100);
-	while (!((
-		(intakeOptical.hue() > 130 && intakeOptical.hue() < 200) ||
-		(outtakeOptical.hue() > 130 && outtakeOptical.hue() < 200))))
-	{
-		vex::wait(10, vex::msec);
-	}
-	// if(outtakeOptical.hue() < 270 && outtakeOptical.hue() > 150){
-	// intake.set(0);
-	// }else{
-	vex::wait(0.0625, vex::sec);
+vex::thread tinyIntakeDelayThread;
+bool tinyIntakeDelayThreadRunning = false;
+int tinyIntakeDelay(){
+	tinyIntakeDelayThreadRunning = true;
+	vex::wait(0.25, vex::seconds);
 	intake.set(0);
-	// }
-
-	outtakeOptical.setLight(vex::ledState::off);
-	intakeOptical.setLight(vex::ledState::off);
-	return 0;
+	tinyIntakeDelayThreadRunning = false;
+	return 1;
 }
 
 /**
@@ -211,7 +197,9 @@ void usercontrol(void)
 		}
 		else
 		{
-			intake.set(0);
+			if(!tinyIntakeDelayThreadRunning){
+				intake.set(0);
+			}
 		}
 
 		if (Controller1.ButtonL1.PRESSED)
@@ -266,17 +254,22 @@ void usercontrol(void)
 		{
 			macroRunning = false;
 			arm.set(100);
+			intake.set(-30);
+			tinyIntakeDelayThread = vex::thread(tinyIntakeDelay);
 		}
 
 		if (Controller1.ButtonUp.PRESSED)
 		{
 			macroRunning = true;
-			armTarget = art::Degrees(3);
+			armTarget = art::Degrees(10);
 		}
 		if (Controller1.ButtonDown.PRESSED)
 		{
 			macroRunning = true;
 			armTarget = art::Degrees(135);
+
+			intake.set(-30);
+			tinyIntakeDelayThread = vex::thread(tinyIntakeDelay);
 		}
 
 		if (macroRunning && abs(shortestTurnPath(armTarget - art::Degrees(armRot.angle())).degrees()) >= 0.5)
@@ -313,53 +306,9 @@ void usercontrol(void)
 
 		if (Controller1.ButtonLeft.PRESSED)
 		{
-			// smartDrive.turnToPID(art::Degrees(0));
-
-			// smartDrive.driveForPID(art::Inches(30));
-			// smartDrive.turnToPID(art::Degrees(180));
-			// smartDrive.driveForPID(art::Inches(30));
-			// smartDrive.turnToPID(art::Degrees(0));
-
-			// followPath(testPath, art::Inches(15));
-			// smartDrive.m_left.stop(vex::hold);
-			// smartDrive.m_right.stop(vex::hold);
-			// smartDrive.arcade(0,0);
-			// vex::wait(0.5, vex::sec);
-
-			// resetPositionFromGPS();
-
-			// ladyBrownTest();
-
-			// sortingThread = vex::thread(sort);
 
 			ringRushBlue();
 
-			// smartDrive.m_left.stop(vex::coast);
-			// smartDrive.m_right.stop(vex::coast);
-
-			// driveTowardPoint(art::Vec2::XandY(art::Tiles(1), art::Tiles(1)));
-			// skills();
-
-			// driveToPose(
-			// 	art::Vec2::XandY(
-			// 		-2, 2) *
-			// 		art::Tiles(1),
-			// 	art::Degrees(75), art::Inches(24));
-			// driveToPose(
-			// 	art::Vec2::XandY(
-			// 		2, 2) *
-			// 		art::Tiles(1),
-			// 	art::Degrees(180), art::Inches(24));
-			// driveToPose(
-			// 	art::Vec2::XandY(
-			// 		0, -2) *
-			// 		art::Tiles(1),
-			// 	art::Degrees(0), art::Inches(24));
-			// driveToPose(
-			// 	art::Vec2::XandY(
-			// 		-0, 0) *
-			// 		art::Tiles(1),
-			// 	art::Degrees(-45), art::Inches(24));
 		}
 
 		vex::wait(20, vex::msec);

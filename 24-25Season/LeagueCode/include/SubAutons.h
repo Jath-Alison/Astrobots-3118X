@@ -26,3 +26,9 @@ void driveTowardPoint(art::Vec2 point);
 void driveTowardPointRev(art::Vec2 point);
 
 void driveToPose(art::Vec2 pos, art::Angle heading, art::Length approachDist);
+
+int intakeRejectBlue();
+int intakeRejectRed();
+
+int intakePauseBlue();
+int intakePauseRed();

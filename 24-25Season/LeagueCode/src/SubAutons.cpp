@@ -503,3 +503,112 @@ void driveToPose(art::Vec2 pos, art::Angle heading, art::Length approachDist)
 
     logger.logStringEntry(Auton_Console, "Finished Following Path");
 }
+
+int intakeRejectBlue(){
+	outtakeOptical.setLight(vex::ledState::on);
+	intakeOptical.setLight(vex::ledState::on);
+	intake.set(100);
+
+	bool blue = true;
+
+	while (!
+	((
+		(intakeOptical.isNearObject() && intakeOptical.getRgb().blue > 50) //||
+		// (outtakeOptical.isNearObject() && outtakeOptical.getRgb().blue > 100)
+	) && blue) || (!blue && (
+		(intakeOptical.isNearObject() && intakeOptical.getRgb().red > 50) //||
+		// (outtakeOptical.isNearObject() && outtakeOptical.getRgb().red > 100)
+	))
+	)
+	{
+		vex::wait(10, vex::msec);
+	}
+
+	vex::wait(0.125, vex::sec);
+	intake.set(0);
+
+	outtakeOptical.setLight(vex::ledState::off);
+	intakeOptical.setLight(vex::ledState::off);
+	return 0;
+}
+int intakeRejectRed(){
+	outtakeOptical.setLight(vex::ledState::on);
+	intakeOptical.setLight(vex::ledState::on);
+	intake.set(100);
+
+	bool blue = false;
+
+	while (!
+	((
+		(intakeOptical.isNearObject() && intakeOptical.getRgb().blue > 50) //||
+		// (outtakeOptical.isNearObject() && outtakeOptical.getRgb().blue > 100)
+	) && blue) || (!blue && (
+		(intakeOptical.isNearObject() && intakeOptical.getRgb().red > 50) //||
+		// (outtakeOptical.isNearObject() && outtakeOptical.getRgb().red > 100)
+	))
+	)
+	{
+		vex::wait(10, vex::msec);
+	}
+
+	vex::wait(0.125, vex::sec);
+	intake.set(0);
+
+	outtakeOptical.setLight(vex::ledState::off);
+	intakeOptical.setLight(vex::ledState::off);
+	return 0;
+}
+int intakePauseBlue(){
+	outtakeOptical.setLight(vex::ledState::on);
+	intakeOptical.setLight(vex::ledState::on);
+	intake.set(100);
+
+	bool blue = true;
+
+	while (!
+	((
+		(intakeOptical.isNearObject() && intakeOptical.getRgb().blue > 50) //||
+		// (outtakeOptical.isNearObject() && outtakeOptical.getRgb().blue > 100)
+	) && blue) || (!blue && (
+		(intakeOptical.isNearObject() && intakeOptical.getRgb().red > 50) //||
+		// (outtakeOptical.isNearObject() && outtakeOptical.getRgb().red > 100)
+	))
+	)
+	{
+		vex::wait(10, vex::msec);
+	}
+
+	// vex::wait(0.125, vex::sec);
+	intake.set(0);
+
+	outtakeOptical.setLight(vex::ledState::off);
+	intakeOptical.setLight(vex::ledState::off);
+	return 0;
+}
+int intakePauseRed(){
+	outtakeOptical.setLight(vex::ledState::on);
+	intakeOptical.setLight(vex::ledState::on);
+	intake.set(100);
+
+	bool blue = false;
+
+	while (!
+	((
+		(intakeOptical.isNearObject() && intakeOptical.getRgb().blue > 50) //||
+		// (outtakeOptical.isNearObject() && outtakeOptical.getRgb().blue > 100)
+	) && blue) || (!blue && (
+		(intakeOptical.isNearObject() && intakeOptical.getRgb().red > 50) //||
+		// (outtakeOptical.isNearObject() && outtakeOptical.getRgb().red > 100)
+	))
+	)
+	{
+		vex::wait(10, vex::msec);
+	}
+
+	// vex::wait(0.125, vex::sec);
+	intake.set(0);
+
+	outtakeOptical.setLight(vex::ledState::off);
+	intakeOptical.setLight(vex::ledState::off);
+	return 0;
+}

@@ -805,31 +805,46 @@ void JathsSketchyFullFlippingAWP()
 
     // resetPositionFromGPSL();
 
-    target = art::Vec2::XandY(art::Tiles(2 * xSign), art::Tiles(0 * ySign));
+    target = art::Vec2::XandY(art::Tiles(2.45 * xSign), art::Tiles(0 * ySign));
     travel = art::Vec2(target - smartDrive.m_pos);
 
     smartDrive.turnToPID(travel.direction());
+    smartDrive.driveForPID(travel.magnitude()*0.25);
+    
+    doinkerDeploy.set(true);
+    vex::wait(0.25,vex::sec);
+    smartDrive.driveForPID(art::Inches(-18));
+    vex::wait(0.5,vex::sec);
+    doinkerDeploy.set(false);
+
+    smartDrive.turnForPID(art::Degrees(15));
+
     intake.set(100);
-    smartDrive.driveFor(art::Tiles(1.5), 60);
+    vex::thread waitForBlue(intakePauseBlue);
+    // smartDrive.driveFor(art::Tiles(1.5), 60);
+    // smartDrive.driveFor(art::Inches(10), 60);
+
     smartDrive.driveFor(art::Inches(10), 60);
     
-    vex::thread intakeOffDelay(intakeOffDelay1Sec);
+    // vex::thread intakeOffDelay(intakeOffDelay1Sec);
     // intake.set(0);
     // AutonArmPosRunning = false;
 
-    driveTowardPointRev(art::Vec2::XandY(
-        art::Tiles(2 * xSign), art::Tiles(1 * ySign)));
+    // driveTowardPointRev(art::Vec2::XandY(
+    //     art::Tiles(2 * xSign), art::Tiles(1 * ySign)));
     // resetPositionFromGPSL();
 
     smartDrive.arcade(0, 0);
     // resetPositionFromGPSL();
+    localizeAvg();
     vex::wait(0.25, vex::sec);
 
     driveTowardPointRev(art::Vec2::XandY(
         art::Tiles(1.1 * xSign), art::Tiles(1 * ySign)));
 
-    smartDrive.driveForPID(art::Inches(-2));
+    smartDrive.driveForPID(art::Inches(-3));
     clamp.set(true);
+    waitForBlue.interrupt();
     intake.set(100);
 
     smartDrive.arcade(0,0);
@@ -1396,7 +1411,7 @@ Jath::Path ringRushBluePath = Jath::Path::cm(ringRushBluePoints);
 
 int waitForOptical(){
     intakeOptical.setLight(vex::ledState::on);
-    while (!(intakeOptical.isNearObject() && (intakeOptical.getRgb().red > 50) || (intakeOptical.getRgb().blue > 50)))
+    while (!(intakeOptical.isNearObject() && (intakeOptical.getRgb().red > 50 || intakeOptical.getRgb().blue > 50)))
     {
         vex::wait(10,vex::msec);
     }
@@ -1411,12 +1426,7 @@ void ringRushBlue(){
     // resetPositionFromGPSL();
 
     vex::thread intakeAntiJa(intakeAntiJam);
-
-    intake.set(100);
-
-    vex::thread delayThread(waitForOptical);
-
-    vex::wait(100,vex::sec);
+    vex::thread intakeStop(intakePauseBlue);
 
     clamp.set(false);
     doinkerDeploy.set(true);
@@ -1425,8 +1435,9 @@ void ringRushBlue(){
     travel = target - smartDrive.m_pos;
 
     intake.set(100);
-    smartDrive.driveForPID(art::Inches(48));
+    smartDrive.driveForPID(art::Inches(50));//up from 48
     // followPath(ringRushBluePath, art::Inches(15));
+
     smartDrive.driveForPID(art::Inches(-2));
     // intake.set(0);
 
@@ -1452,9 +1463,53 @@ void ringRushBlue(){
     resetPositionFromGPSR();
 
     intake.set(100);
+    intakeStop = vex::thread(intakeRejectRed);
+
     vex::wait(0.25,vex::sec);
 
-    smartDrive.turnToPID(art::Degrees(10));
-    smartDrive.driveFor(art::Inches(30),50);
+    smartDrive.turnToPID(art::Degrees(-10));
+    smartDrive.driveFor(art::Inches(15),75);
 
+    smartDrive.turnToPID(art::Degrees(10));
+    smartDrive.driveFor(art::Inches(15),75);
+
+    vex::wait(0.25, vex::sec);
+
+    smartDrive.driveForPID(art::Inches(-5));
+    smartDrive.turnToPID(art::Degrees(-10));
+    smartDrive.driveForPID(art::Inches(-25));
+
+    localizeAvg();
+    vex::wait(0.5, vex::sec);
+
+    smartDrive.turnToPID(smartDrive.m_pos.angleTo(art::Vec2::XandY(art::Tiles(3),0)));
+
+    vex::thread armControl(autonArmPos);
+    armTarget = art::Degrees(10);
+
+    intake.set(100);
+
+    smartDrive.driveForPID(art::Inches(30));
+
+    smartDrive.arcade(50,0);
+    vex::wait(0.5, vex::sec);
+
+    smartDrive.driveForPID(art::Inches(-4));
+
+    intakePauseBlue();
+
+    intakeAntiJa.interrupt();
+    vex::wait(0.25, vex::sec);
+
+    intake.set(100);
+    vex::wait(0.5, vex::sec);
+
+    intake.set(-25);
+    armTarget = art::Degrees(180);
+
+    vex::wait(1.5, vex::sec);
+
+    smartDrive.driveForPID(art::Inches(-6));
+
+    vex::wait(25, vex::sec);
 }

@@ -61,7 +61,7 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
     .withTurnToPID(art::PID()
         .withConstants(2/(art::Degrees(1)), 10, -500)// / by 2, 10, -500
         .withIntegralZone(art::Degrees(15))
-        .withTimeout(10)
+        .withTimeout(3)
         .withSettleZone(art::Degrees(3))
         .withSettleTimeout(0.25)//Lowkey could be turned down to 0.25
     )

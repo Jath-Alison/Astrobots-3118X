@@ -79,7 +79,10 @@ void autonomous(void)
 	}
 	// logger.logStringEntry(100, timePassed(), "Auton - Inertial Finished Calibrating");
 
-	coolBeansRushRed();
+	// coolBeansRushRed();
+
+	// ringRushBlue();
+	JathsSketchyFullFlippingAWP();
 
 	// if (isBlue)
 	// {

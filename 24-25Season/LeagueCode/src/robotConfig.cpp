@@ -87,8 +87,8 @@ art::Angle armTarget = 0;
 double armOut = 0;
 bool macroRunning=false;
 
-vex::digital_out doinkerDeploy(Brain.ThreeWirePort.B); bool doinkerDeployState = false;;
-vex::digital_out doinkerClamp(Brain.ThreeWirePort.E); bool doinkerClampState = false;;
+vex::digital_out doinkerDeployR(Brain.ThreeWirePort.B); bool doinkerDeployRState = false;
+vex::digital_out doinkerDeployL(Brain.ThreeWirePort.H); bool doinkerDeployLState = false;
 
 vex::aivision FrontVision(vex::PORT16);
 vex::optical intakeOptical(vex::PORT17);

@@ -17,7 +17,7 @@
 #include "Art/ART.h"
 #include "WPILogger.h"
 #include "robotConfig.h"
-#include "Autons.h"
+#include "UILAutons.h"
 #include "Logging.h"
 #include "Threads.h"
 #include "SubAutons.h"
@@ -81,8 +81,8 @@ void autonomous(void)
 
 	// coolBeansRushRed();
 
-	// ringRushBlue();
-	JathsSketchyFullFlippingAWP();
+	ringRushBlue_UIL();
+	// JathsSketchyFullFlippingAWP();
 
 	// if (isBlue)
 	// {
@@ -181,8 +181,10 @@ void usercontrol(void)
 	logger.logStringEntry(console, "Driver Control - Inertial Finished Calibrating");
 
 	clampState;
-	doinkerDeployState;
-	doinkerClampState;
+	doinkerDeployRState = false;
+	doinkerDeployR.set(false);
+	doinkerDeployLState = false;
+	doinkerDeployL.set(false);
 
 	while (1)
 	{
@@ -194,7 +196,7 @@ void usercontrol(void)
 		{
 			intake.set(100);
 		}
-		else if (Controller1.ButtonA.pressing())
+		else if (Controller1.ButtonB.pressing())
 		{
 			intake.set(-100);
 		}
@@ -211,15 +213,15 @@ void usercontrol(void)
 			clamp.set(clampState);
 		}
 
-		if (Controller1.ButtonX.PRESSED)
+		if (Controller1.ButtonA.PRESSED)
 		{
-			doinkerDeployState = !doinkerDeployState;
-			doinkerDeploy.set(doinkerDeployState);
+			doinkerDeployRState = !doinkerDeployRState;
+			doinkerDeployR.set(doinkerDeployRState);
 		}
-		if (Controller1.ButtonB.PRESSED)
+		if (Controller1.ButtonY.PRESSED)
 		{
-			doinkerClampState = !doinkerClampState;
-			doinkerClamp.set(doinkerClampState);
+			doinkerDeployLState = !doinkerDeployLState;
+			doinkerDeployL.set(doinkerDeployLState);
 		}
 
 		// if (Controller1.ButtonR2.pressing())
@@ -310,7 +312,7 @@ void usercontrol(void)
 		if (Controller1.ButtonLeft.PRESSED)
 		{
 
-			ringRushBlue();
+			ringRushBlue_UIL();
 
 		}
 

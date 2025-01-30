@@ -612,3 +612,72 @@ int intakePauseRed(){
 	intakeOptical.setLight(vex::ledState::off);
 	return 0;
 }
+
+int intakeAntiJam()
+{
+
+    double lastcmd = intake.get();
+
+    while (true)
+    {
+
+        if (intake.get() != lastcmd)
+        {
+            lastcmd = intake.get();
+            vex::wait(0.25, vex::sec);
+        }
+
+        if (intake.get() > 50 && intake.velocity(vex::pct) < 5)
+        {
+            double temp = intake.get();
+
+            intake.set(-100);
+            vex::wait(0.25, vex::sec);
+
+            intake.set(temp);
+        }
+
+        vex::wait(100, vex::msec);
+    }
+    return 1;
+}
+
+bool AutonArmPosRunning = true;
+
+int autonArmPos(){
+    logger.logStringEntry(Auton_Console, "Auton Arm Macro started");
+
+    AutonArmPosRunning = true;
+    // armTarget = art::Degrees(10);
+    armPID.reset();
+
+    while (AutonArmPosRunning)
+    {
+        if (abs(shortestTurnPath(armTarget - art::Degrees(armRot.angle())).degrees()) >= 0.5)
+        {
+            if (shortestTurnPath(armTarget - art::Degrees(armRot.angle())).degrees() > 30 && armTarget.degrees() < 50)
+            {
+                armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(armRot.angle())));
+                arm.set(-armOut);
+            }
+            else
+            {
+                armOut = armPID.calculate(shortestTurnPath(armTarget - art::Degrees(armRot.angle())));
+                arm.set(armOut);
+            }
+        }
+        else
+        {
+            arm.set(0);
+            arm.stop(vex::hold);
+        }
+
+        vex::wait(20, vex::msec);
+    }
+
+    logger.logStringEntry(Auton_Console, "Auton Arm Macro ended");
+
+    arm.set(0);
+    arm.stop(vex::hold);
+    return 1;
+}

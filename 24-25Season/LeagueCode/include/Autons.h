@@ -24,7 +24,7 @@ void blueAWPStakeFirstPos();
 void winfred_redAWPStakeFirstPos();
 void winfred_blueAWPStakeFirstPos();
 
-void JathsSketchyFullFlippingAWP();
+// void JathsSketchyFullFlippingAWP();
 
 void negStackedRings();
 void negStackedRingsStakeFirst();
@@ -35,4 +35,4 @@ void skills();
 
 void ladyBrownTest();
 
-void ringRushBlue();
+// void ringRushBlue();

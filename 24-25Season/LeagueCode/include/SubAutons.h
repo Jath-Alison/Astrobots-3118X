@@ -32,3 +32,8 @@ int intakeRejectRed();
 
 int intakePauseBlue();
 int intakePauseRed();
+
+int intakeAntiJam();
+
+extern bool AutonArmPosRunning;
+int autonArmPos();

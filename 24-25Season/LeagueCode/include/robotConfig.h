@@ -49,8 +49,8 @@ extern art::Angle armTarget;
 extern double armOut;
 extern bool macroRunning;
 
-extern vex::digital_out doinkerDeploy; extern bool doinkerDeployState;
-extern vex::digital_out doinkerClamp; extern bool doinkerClampState;
+extern vex::digital_out doinkerDeployR; extern bool doinkerDeployRState;
+extern vex::digital_out doinkerDeployL; extern bool doinkerDeployLState;
 
 extern vex::aivision FrontVision;
 extern vex::optical intakeOptical;

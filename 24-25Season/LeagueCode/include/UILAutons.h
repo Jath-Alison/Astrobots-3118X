@@ -4,4 +4,7 @@
 #include "Jath/Path.h"
 
 void JathsSketchyFullFlippingAWP_UIL();
+
+
 void ringRushBlue_UIL();
+void ringRushBlueCurved_UIL();

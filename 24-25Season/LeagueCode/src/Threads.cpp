@@ -64,7 +64,7 @@ void displayLoopFunction()
                 // Only for Stake First autos
                 // smartDrive.m_pos = art::Vec2::XandY(art::Tiles(-2), art::Tiles(-1));
                 // smartDrive.m_dir = art::Degrees(-90);
-                localizeAvg();
+                resetPositionFromGPSR();
                 // resetPositionFromGPSL();
             }
             // isBlue = !isBlue;

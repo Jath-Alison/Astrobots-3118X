@@ -81,8 +81,11 @@ void autonomous(void)
 
 	// coolBeansRushRed();
 
-	ringRushBlue_UIL();
-	// JathsSketchyFullFlippingAWP();
+	// ringRushBlue_UIL();
+	JathsSketchyFullFlippingAWP_UIL();
+
+	// ringRushBlueCurved_UIL();
+
 
 	// if (isBlue)
 	// {
@@ -312,7 +315,7 @@ void usercontrol(void)
 		if (Controller1.ButtonLeft.PRESSED)
 		{
 
-			ringRushBlue_UIL();
+			// ringRushBlue_UIL();
 
 		}
 

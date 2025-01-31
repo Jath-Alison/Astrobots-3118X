@@ -31,8 +31,8 @@ void JathsSketchyFullFlippingAWP_UIL()
 
     smartDrive.driveForPID(art::Inches(-20));
 
-    armTarget = art::Degrees(0);
-    vex::thread armControl(autonArmPos);
+    armTarget = art::Degrees(345);
+    vex::task armControl(autonArmPos);
 
     localizeAvg();
     vex::wait(0.25,vex::sec);
@@ -83,7 +83,7 @@ void JathsSketchyFullFlippingAWP_UIL()
     smartDrive.arcade(0,0);
     vex::wait(1, vex::sec);
     armTarget = art::Degrees(130);
-    armControl = vex::thread(autonArmPos);
+    armControl = vex::task(autonArmPos);
 
     // resetPositionFromGPSL();
 
@@ -700,225 +700,225 @@ void skills_UIL()
     intake.set(100);
     followPath(rings1Path_UIL, art::Inches(13));
 
-    antiJamTask.interrupt();
-    armTarget = art::Degrees(10);
+    // antiJamTask.interrupt();//new
+    // armTarget = art::Degrees(10);
 
-    smartDrive.arcade(40, 0);
-    vex::wait(0.25,vex::sec);
-    smartDrive.arcade(-40, 0);
-    vex::wait(0.125,vex::sec);
-    smartDrive.arcade(30, 0);
-    vex::wait(0.25,vex::sec);
+    // smartDrive.arcade(40, 0);
+    // vex::wait(0.25,vex::sec);
+    // smartDrive.arcade(-40, 0);
+    // vex::wait(0.125,vex::sec);
+    // smartDrive.arcade(30, 0);
+    // vex::wait(0.25,vex::sec);
 
 
-    intake.set(0);
+    // intake.set(0);
 
-    armTarget = art::Degrees(135);
+    // armTarget = art::Degrees(135);
 
-    vex::wait(1, vex::sec);
+    // vex::wait(1, vex::sec);
 
-    smartDrive.arcade(-25,0);
-    vex::wait(.125, vex::sec);
+    // smartDrive.arcade(-25,0);
+    // vex::wait(.125, vex::sec);
 
-    smartDrive.arcade(75,0);
-    vex::wait(.25, vex::sec);
+    // smartDrive.arcade(75,0);
+    // vex::wait(.25, vex::sec);
     
-    smartDrive.driveForPID(art::Inches(-10));
+    // smartDrive.driveForPID(art::Inches(-10));
 
-    antiJamTask = vex::thread(intakeAntiJam);
+    // antiJamTask = vex::thread(intakeAntiJam);
 
-    // smartDrive.driveForPID(art::Inches(-3));
-    // smartDrive.turnForPID(art::Degrees(165));
-    // smartDrive.arcade(0,0);
-    // vex::wait(0.75, vex::sec);
-    // resetPositionFromGPSL();
+    smartDrive.driveForPID(art::Inches(-3));//orig
+    smartDrive.turnForPID(art::Degrees(165));
+    smartDrive.arcade(0,0);
+    vex::wait(0.75, vex::sec);
+    resetPositionFromGPSL();
 
     smartDrive.arcade(0,0);
     vex::wait(0.15, vex::sec);
     localizeAvg();
 
-    // // followPath(rings1_5Path, art::Inches(13));
-    // // smartDrive.driveForPID(art::Inches(5));
-
-    // // followPathRev(rings1_6Path, art::Inches(13));
-
-    // followPath(rings1_75Path_UIL, art::Inches(13));
-    // smartDrive.arcade(75, 0);
-    // vex::wait( 0.3,vex::sec);
-
-    // smartDrive.driveForPID(art::Inches(-5));
-
-    // target = art::Vec2::XandY(art::Tiles(-2.75), art::Tiles(2.75));
-    // travel = art::Vec2(target - smartDrive.m_pos);
-
-    // smartDrive.turnToPID(travel.direction() + art::Degrees(180));
-    // smartDrive.arcade(-75, 0);
-    // vex::wait(1,vex::sec);
-
-    // clamp.set(false);
-    // intake.set(0);
-
-    // smartDrive.driveForPID(art::Inches(24));
-
-    // smartDrive.arcade(0,0);
-    // vex::wait(0.5, vex::sec);
-    // resetPositionFromGPSL();
-
-    // driveTowardPointRev(art::Vec2::XandY(
-    //     art::Tiles(-2), art::Tiles(0)
-    // ));
-
-    // smartDrive.arcade(0,0);
-    // vex::wait(0.5, vex::sec);
-    // resetPositionFromGPSL();
-
-    // driveTowardPointRev(art::Vec2::XandY(
-    //     art::Tiles(-2), art::Tiles(-0.95)
-    // ));
-
-    // // maybe add additional drive
-    // smartDrive.driveForPID(art::Inches(-2));
-    // clamp.set(true);
-    // smartDrive.arcade(0,0);
-
-    // smartDrive.arcade(0,0);
-    // vex::wait(0.75, vex::sec);
-    // resetPositionFromGPSL();
-
-    // intake.set(100);
-    // followPath_flipY(rings1Path_UIL, art::Inches(13));
-    // smartDrive.arcade(40, 0);
-    // vex::wait( 0.3,vex::sec);
-
-    // smartDrive.driveForPID(art::Inches(-3));
-    // smartDrive.turnForPID(art::Degrees(-15));
-    // smartDrive.arcade(0,0);
-    // vex::wait(0.75, vex::sec); logger.logStringEntry(Auton_Console, "Waiting to reset");
-    // resetPositionFromGPSL();
-
-    // // followPath_flipY(rings1_5Path, art::Inches(13));
-    // // smartDrive.driveForPID(art::Inches(5));
-
-    // // followPathRev_flipY(rings1_6Path, art::Inches(13));
-
-    // followPath_flipY(rings1_75Path_UIL, art::Inches(13));
-    // smartDrive.arcade(75, 0);
-    // vex::wait( 0.3,vex::sec);
-
-    // smartDrive.driveForPID(art::Inches(-5));
-
-    // target = art::Vec2::XandY(art::Tiles(-2.75), art::Tiles(2.75 * -1.0));
-    // travel = art::Vec2(target - smartDrive.m_pos);
-
-    // smartDrive.turnToPID(travel.direction() + art::Degrees(180));
-    // smartDrive.arcade(-75, 0);
-    // vex::wait(1,vex::sec);
-
-    // clamp.set(false);
-    // intake.set(0);
-
-    // smartDrive.driveForPID(art::Inches(48));
-
-    // //End of Red
-
-    // smartDrive.turnToPID(art::Degrees(135));
-
-    // smartDrive.arcade(0,0);
-    // vex::wait(0.5, vex::sec);
-    // resetPositionFromGPSL(); // Delete this
-
-    // smartDrive.arcade(0,0);
-    // vex::wait(0.75, vex::sec);
-    // resetPositionFromGPSL();
-
-    // intake.set(100);
-    // followPath(goal3Path_UIL, art::Inches(13));
-
-    // // smartDrive.arcade(0,0);
-    // // vex::wait(0.75, vex::sec);
-    // // resetPositionFromGPSL();
-
-    // // target = art::Vec2::XandY(art::Tiles(2.5), art::Tiles(-1.0));
-    // // travel = art::Vec2(target - smartDrive.m_pos);
-
-    // smartDrive.turnToPID(art::Degrees(135));
-    // intake.set(-100);
-
-    // smartDrive.arcade(75, 0);
-    // vex::wait(1.75, vex::sec);
-
-    // smartDrive.driveForPID(art::Inches(-54));
-    // smartDrive.turnToPID(art::Degrees(60));
-    // intake.set(0);
-
-    // smartDrive.arcade(0,0);
-    // vex::wait(0.5, vex::sec);
-    // resetPositionFromGPSL();
-
-    // driveTowardPointRev(art::Vec2::XandY(
-    //     art::Tiles(2), art::Tiles(-1.0)
-    // ));
-
-    // smartDrive.arcade(0,0);
-    // vex::wait(0.5, vex::sec);
-    // resetPositionFromGPSL();
-
-    // driveTowardPointRev(art::Vec2::XandY(
-    //     art::Tiles(2), art::Tiles(0.0)
-    // ));
-
-    // // maybe add additional drive
-    // smartDrive.driveForPID(art::Inches(-3));
-    // clamp.set(true);
-    // smartDrive.arcade(0,0);
-
-    // smartDrive.arcade(0,0);
-    // vex::wait(0.5, vex::sec);
-    // resetPositionFromGPSL();
-
-    // intake.set(100);
-
-    // // followPath(RingsFinal1, art::Inches(13));
-    // // smartDrive.turnToPID(art::Degrees(45));
-    
-    // followPath(RingsFinal2_UIL, art::Inches(13));
-
+    // followPath(rings1_5Path, art::Inches(13));
     // smartDrive.driveForPID(art::Inches(5));
+
+    // followPathRev(rings1_6Path, art::Inches(13));
+
+    followPath(rings1_75Path_UIL, art::Inches(13));
+    smartDrive.arcade(75, 0);
+    vex::wait( 0.3,vex::sec);
+
+    smartDrive.driveForPID(art::Inches(-5));
+
+    target = art::Vec2::XandY(art::Tiles(-2.75), art::Tiles(2.75));
+    travel = art::Vec2(target - smartDrive.m_pos);
+
+    smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+    smartDrive.arcade(-75, 0);
+    vex::wait(1,vex::sec);
+
+    clamp.set(false);
+    intake.set(0);
+
+    smartDrive.driveForPID(art::Inches(24));
+
+    smartDrive.arcade(0,0);
+    vex::wait(0.5, vex::sec);
+    resetPositionFromGPSL();
+
+    driveTowardPointRev(art::Vec2::XandY(
+        art::Tiles(-2), art::Tiles(0)
+    ));
+
+    smartDrive.arcade(0,0);
+    vex::wait(0.5, vex::sec);
+    resetPositionFromGPSL();
+
+    driveTowardPointRev(art::Vec2::XandY(
+        art::Tiles(-2), art::Tiles(-0.95)
+    ));
+
+    // maybe add additional drive
+    smartDrive.driveForPID(art::Inches(-2));
+    clamp.set(true);
+    smartDrive.arcade(0,0);
+
+    smartDrive.arcade(0,0);
+    vex::wait(0.75, vex::sec);
+    resetPositionFromGPSL();
+
+    intake.set(100);
+    followPath_flipY(rings1Path_UIL, art::Inches(13));
+    smartDrive.arcade(40, 0);
+    vex::wait( 0.3,vex::sec);
+
+    smartDrive.driveForPID(art::Inches(-3));
+    smartDrive.turnForPID(art::Degrees(-15));
+    smartDrive.arcade(0,0);
+    vex::wait(0.75, vex::sec); logger.logStringEntry(Auton_Console, "Waiting to reset");
+    resetPositionFromGPSL();
+
+    // followPath_flipY(rings1_5Path, art::Inches(13));
+    // smartDrive.driveForPID(art::Inches(5));
+
+    // followPathRev_flipY(rings1_6Path, art::Inches(13));
+
+    followPath_flipY(rings1_75Path_UIL, art::Inches(13));
+    smartDrive.arcade(75, 0);
+    vex::wait( 0.3,vex::sec);
+
+    smartDrive.driveForPID(art::Inches(-5));
+
+    target = art::Vec2::XandY(art::Tiles(-2.75), art::Tiles(2.75 * -1.0));
+    travel = art::Vec2(target - smartDrive.m_pos);
+
+    smartDrive.turnToPID(travel.direction() + art::Degrees(180));
+    smartDrive.arcade(-75, 0);
+    vex::wait(1,vex::sec);
+
+    clamp.set(false);
+    intake.set(0);
+
+    smartDrive.driveForPID(art::Inches(48));
+
+    //End of Red
+
+    smartDrive.turnToPID(art::Degrees(135));
+
+    smartDrive.arcade(0,0);
+    vex::wait(0.5, vex::sec);
+    resetPositionFromGPSL(); // Delete this
+
+    smartDrive.arcade(0,0);
+    vex::wait(0.75, vex::sec);
+    resetPositionFromGPSL();
+
+    intake.set(100);
+    followPath(goal3Path_UIL, art::Inches(13));
+
+    // smartDrive.arcade(0,0);
+    // vex::wait(0.75, vex::sec);
+    // resetPositionFromGPSL();
+
+    // target = art::Vec2::XandY(art::Tiles(2.5), art::Tiles(-1.0));
+    // travel = art::Vec2(target - smartDrive.m_pos);
+
+    smartDrive.turnToPID(art::Degrees(135));
+    intake.set(-100);
+
+    smartDrive.arcade(75, 0);
+    vex::wait(1.75, vex::sec);
+
+    smartDrive.driveForPID(art::Inches(-54));
+    smartDrive.turnToPID(art::Degrees(60));
+    intake.set(0);
+
+    smartDrive.arcade(0,0);
+    vex::wait(0.5, vex::sec);
+    resetPositionFromGPSL();
+
+    driveTowardPointRev(art::Vec2::XandY(
+        art::Tiles(2), art::Tiles(-1.0)
+    ));
+
+    smartDrive.arcade(0,0);
+    vex::wait(0.5, vex::sec);
+    resetPositionFromGPSL();
+
+    driveTowardPointRev(art::Vec2::XandY(
+        art::Tiles(2), art::Tiles(0.0)
+    ));
+
+    // maybe add additional drive
+    smartDrive.driveForPID(art::Inches(-3));
+    clamp.set(true);
+    smartDrive.arcade(0,0);
+
+    smartDrive.arcade(0,0);
+    vex::wait(0.5, vex::sec);
+    resetPositionFromGPSL();
+
+    intake.set(100);
+
+    // followPath(RingsFinal1, art::Inches(13));
+    // smartDrive.turnToPID(art::Degrees(45));
+    
+    followPath(RingsFinal2_UIL, art::Inches(13));
+
+    smartDrive.driveForPID(art::Inches(5));
+    smartDrive.driveForPID(art::Inches(-5));
+
+    // smartDrive.arcade(0,0);
+    // vex::wait(0.5, vex::sec);
+    // resetPositionFromGPSL();
+
+    // driveTowardPoint(art::Vec2::XandY(
+    //     art::Tiles(2),art::Tiles(1.95)
+    // ));
+
+    // smartDrive.driveForPID(art::Inches(-15));
+
+    // driveTowardPoint(art::Vec2::XandY(
+    //     art::Tiles(2),art::Tiles(2.5)
+    // ));
+
     // smartDrive.driveForPID(art::Inches(-5));
 
-    // // smartDrive.arcade(0,0);
-    // // vex::wait(0.5, vex::sec);
-    // // resetPositionFromGPSL();
+    // smartDrive.arcade(0,0);
+    // vex::wait(0.5, vex::sec);
+    // resetPositionFromGPSL();
 
-    // // driveTowardPoint(art::Vec2::XandY(
-    // //     art::Tiles(2),art::Tiles(1.95)
-    // // ));
+    // target = art::Vec2::XandY(art::Tiles(2.75), art::Tiles(2.75));
+    // travel = art::Vec2(target - smartDrive.m_pos);
 
-    // // smartDrive.driveForPID(art::Inches(-15));
+    // smartDrive.turnForPID(art::Degrees(travel.direction()) + art::Degrees(180));
 
-    // // driveTowardPoint(art::Vec2::XandY(
-    // //     art::Tiles(2),art::Tiles(2.5)
-    // // ));
+    smartDrive.turnToPID(art::Degrees(-135));
+    smartDrive.arcade(-75, 0);
+    vex::wait(1.75, vex::sec);
 
-    // // smartDrive.driveForPID(art::Inches(-5));
+    clamp.set(false);
+    intake.set(0);
 
-    // // smartDrive.arcade(0,0);
-    // // vex::wait(0.5, vex::sec);
-    // // resetPositionFromGPSL();
+    smartDrive.driveForPID(art::Inches(24));
 
-    // // target = art::Vec2::XandY(art::Tiles(2.75), art::Tiles(2.75));
-    // // travel = art::Vec2(target - smartDrive.m_pos);
-
-    // // smartDrive.turnForPID(art::Degrees(travel.direction()) + art::Degrees(180));
-
-    // smartDrive.turnToPID(art::Degrees(-135));
-    // smartDrive.arcade(-75, 0);
-    // vex::wait(1.75, vex::sec);
-
-    // clamp.set(false);
-    // intake.set(0);
-
-    // smartDrive.driveForPID(art::Inches(24));
-
-    // smartDrive.arcade(0, 0);
+    smartDrive.arcade(0, 0);
 }

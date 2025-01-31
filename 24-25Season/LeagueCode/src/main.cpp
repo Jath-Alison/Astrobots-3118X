@@ -87,9 +87,9 @@ void autonomous(void)
 	// JathsSketchyFullFlippingAWP_UIL();
 
 	// ringRushBlueCurved_UIL();
-	ringRushRedCurved_UIL();
+	// ringRushRedCurved_UIL();
 
-	// skills_UIL();
+	skills_UIL();
 
 	// if (isBlue)
 	// {
@@ -186,6 +186,8 @@ void usercontrol(void)
 		vex::wait(10, vex::msec);
 	}
 	logger.logStringEntry(console, "Driver Control - Inertial Finished Calibrating");
+
+	AutonArmPosRunning = false;
 
 	clampState;
 	doinkerDeployRState = false;

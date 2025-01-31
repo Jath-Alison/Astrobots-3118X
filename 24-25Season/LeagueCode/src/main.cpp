@@ -89,6 +89,7 @@ void autonomous(void)
 	// ringRushBlueCurved_UIL();
 	ringRushRedCurved_UIL();
 
+	// skills_UIL();
 
 	// if (isBlue)
 	// {
@@ -202,7 +203,7 @@ void usercontrol(void)
 		{
 			intake.set(100);
 		}
-		else if (Controller1.ButtonB.pressing())
+		else if (Controller1.ButtonA.pressing())
 		{
 			intake.set(-100);
 		}
@@ -219,16 +220,16 @@ void usercontrol(void)
 			clamp.set(clampState);
 		}
 
-		if (Controller1.ButtonA.PRESSED)
+		if (Controller1.ButtonLeft.PRESSED)
 		{
 			doinkerDeployRState = !doinkerDeployRState;
 			doinkerDeployR.set(doinkerDeployRState);
 		}
-		if (Controller1.ButtonY.PRESSED)
-		{
-			doinkerDeployLState = !doinkerDeployLState;
-			doinkerDeployL.set(doinkerDeployLState);
-		}
+		// if (Controller1.ButtonY.PRESSED)
+		// {
+		// 	doinkerDeployLState = !doinkerDeployLState;
+		// 	doinkerDeployL.set(doinkerDeployLState);
+		// }
 
 		// if (Controller1.ButtonR2.pressing())
 		// {

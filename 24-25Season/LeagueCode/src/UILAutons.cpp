@@ -211,15 +211,18 @@ void ringRushBlueCurved_UIL()
     vex::thread intakeAntiJa(intakeAntiJam);
     vex::thread intakeStop(intakePauseBlue);
 
-    clamp.set(false);
-    doinkerDeployR.set(true);
+    double xFlip = 1.0;
 
-    target = art::Vec2::XandY(art::Inches(4),art::Inches(48 - 4));
+    clamp.set(false);
+    doinkerDeployL.set(true);
+
+    target = art::Vec2::XandY(art::Inches(4*xFlip),art::Inches(48 - 4));
     travel = target - smartDrive.m_pos;
 
     intake.set(100);
     // smartDrive.driveForPID(art::Inches(50));//up from 48
-    followPath(ringRushBluePath, art::Inches(15));
+    
+    followPath_flipX(ringRushBluePath, art::Inches(15));
     smartDrive.driveForPID(art::Inches(2));
 
     smartDrive.driveForPID(art::Inches(-2));
@@ -230,33 +233,33 @@ void ringRushBlueCurved_UIL()
     // vex::thread delayThread(waitForOptical);
     
 
-    smartDrive.turnToPID(art::Degrees(-45));
+    smartDrive.turnToPID(art::Degrees(-45*xFlip));
 
     smartDrive.driveForPID(art::Inches(-20));
     resetPositionFromGPSL();
 
-    target = art::Vec2::XandY(art::Tiles(0),art::Tiles(1));
+    target = art::Vec2::XandY(art::Tiles(0*xFlip),art::Tiles(1));
     travel = target - smartDrive.m_pos;
 
     // smartDrive.turnToPID(art::Degrees(-45));
     // smartDrive.driveForPID(-travel.magnitude());
     smartDrive.driveForPID(art::Inches(-5));
-    doinkerDeployR.set(false);
+    doinkerDeployL.set(false);
     vex::wait(0.125,vex::sec);
     clamp.set(true);
     resetPositionFromGPSR();
 
     intake.set(100);
-    intakeStop = vex::thread(intakeRejectRed);
+    intakeStop = vex::thread(intakeRejectBlue);
 
     vex::wait(0.125,vex::sec);
 
-    smartDrive.turnForPID(art::Degrees(10));
+    smartDrive.turnForPID(art::Degrees(10*xFlip));
     smartDrive.driveFor(art::Inches(15),75);
 
     resetPositionFromGPSR();
 
-    smartDrive.turnToPID(smartDrive.m_pos.angleTo(art::Vec2::XandY(art::Tiles(1),art::Tiles(2))) + art::Degrees(20));
+    smartDrive.turnToPID(smartDrive.m_pos.angleTo(art::Vec2::XandY(art::Tiles(1.35*xFlip),art::Tiles(1.75))) + art::Degrees(20));
 
     smartDrive.driveFor(art::Inches(10),75);
 
@@ -264,38 +267,40 @@ void ringRushBlueCurved_UIL()
 
     smartDrive.driveForPID(art::Inches(-18));
 
-    localizeAvg();
+    // localizeAvg();
+    resetPositionFromGPSR();
     vex::wait(0.15, vex::sec);
 
-    intakeStop = vex::thread(intakePauseBlue);
+    intakeStop = vex::thread(intakePauseRed);
 
     vex::thread armControl(autonArmPos);
     armTarget = art::Degrees(10);
 
-    driveTowardPoint(art::Vec2::XandY(art::Tiles(2.2),art::Tiles(1.2)));
+    driveTowardPoint(art::Vec2::XandY(art::Tiles(2.5*xFlip),art::Tiles(1)));
 
-    smartDrive.turnToPID(smartDrive.m_pos.angleTo(art::Vec2::XandY(art::Tiles(2.5),0)));
+    smartDrive.turnToPID(smartDrive.m_pos.angleTo(art::Vec2::XandY(art::Tiles(2.5*xFlip),0)));
 
 
     intake.set(100);
 
     intakeAntiJa.interrupt();
-    smartDrive.driveForPID(art::Inches(20));
+    smartDrive.driveForPID(smartDrive.m_pos.distTo(art::Vec2::XandY(art::Tiles(2.5*xFlip),0)));
 
-    smartDrive.turnToPID(90);
+    smartDrive.turnToPID(90*xFlip);
 
-    smartDrive.arcade(50,0);
+    smartDrive.arcade(50,0*xFlip);
     vex::wait(0.40, vex::sec);
 
     smartDrive.driveForPID(art::Inches(-4));
 
-    // intakePauseBlue();
+    // intakePauseRed();
 
-    intakeAntiJa.interrupt();
     vex::wait(0.125, vex::sec);
 
     intake.set(100);
     vex::wait(0.25, vex::sec);
+
+    // smartDrive.driveForPID(art::Inches(2));
 
     intake.set(-25);
     armTarget = art::Degrees(180);
@@ -459,7 +464,7 @@ void ringRushRedCurved_UIL()
 
     resetPositionFromGPSR();
 
-    smartDrive.turnToPID(smartDrive.m_pos.angleTo(art::Vec2::XandY(art::Tiles(1.35*xFlip),art::Tiles(2))) + art::Degrees(20));
+    smartDrive.turnToPID(smartDrive.m_pos.angleTo(art::Vec2::XandY(art::Tiles(1.35*xFlip),art::Tiles(1.75))) + art::Degrees(20));
 
     smartDrive.driveFor(art::Inches(10),75);
 
@@ -476,7 +481,7 @@ void ringRushRedCurved_UIL()
     vex::thread armControl(autonArmPos);
     armTarget = art::Degrees(10);
 
-    driveTowardPoint(art::Vec2::XandY(art::Tiles(2.2*xFlip),art::Tiles(1.2)));
+    driveTowardPoint(art::Vec2::XandY(art::Tiles(2.5*xFlip),art::Tiles(1)));
 
     smartDrive.turnToPID(smartDrive.m_pos.angleTo(art::Vec2::XandY(art::Tiles(2.5*xFlip),0)));
 
@@ -484,7 +489,7 @@ void ringRushRedCurved_UIL()
     intake.set(100);
 
     intakeAntiJa.interrupt();
-    smartDrive.driveForPID(art::Inches(20));
+    smartDrive.driveForPID(smartDrive.m_pos.distTo(art::Vec2::XandY(art::Tiles(2.5*xFlip),0)));
 
     smartDrive.turnToPID(90*xFlip);
 

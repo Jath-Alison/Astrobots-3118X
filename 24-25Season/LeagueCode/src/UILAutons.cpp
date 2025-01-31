@@ -464,7 +464,7 @@ void ringRushRedCurved_UIL()
 
     resetPositionFromGPSR();
 
-    smartDrive.turnToPID(smartDrive.m_pos.angleTo(art::Vec2::XandY(art::Tiles(1.35*xFlip),art::Tiles(1.75))) + art::Degrees(20));
+    smartDrive.turnToPID(smartDrive.m_pos.angleTo(art::Vec2::XandY(art::Tiles(1.5*xFlip),art::Tiles(1.75))) + art::Degrees(20));
 
     smartDrive.driveFor(art::Inches(10),75);
 
@@ -491,12 +491,12 @@ void ringRushRedCurved_UIL()
     intakeAntiJa.interrupt();
     smartDrive.driveForPID(smartDrive.m_pos.distTo(art::Vec2::XandY(art::Tiles(2.5*xFlip),0)));
 
-    smartDrive.turnToPID(90*xFlip);
+    smartDrive.turnToPID(art::Degrees(90)*xFlip);
 
     smartDrive.arcade(50,0*xFlip);
     vex::wait(0.40, vex::sec);
 
-    smartDrive.driveForPID(art::Inches(-4));
+    smartDrive.driveForPID(art::Inches(-6));
 
     // intakePauseRed();
 

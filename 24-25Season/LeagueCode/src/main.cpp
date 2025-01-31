@@ -87,9 +87,9 @@ void autonomous(void)
 	// JathsSketchyFullFlippingAWP_UIL();
 
 	// ringRushBlueCurved_UIL();
-	// ringRushRedCurved_UIL();
+	ringRushRedCurved_UIL();
 
-	skills_UIL();
+	// skills_UIL();
 
 	// if (isBlue)
 	// {
@@ -226,6 +226,7 @@ void usercontrol(void)
 		{
 			doinkerDeployRState = !doinkerDeployRState;
 			doinkerDeployR.set(doinkerDeployRState);
+			// doinkerDeployL.set(doinkerDeployRState);
 		}
 		// if (Controller1.ButtonY.PRESSED)
 		// {

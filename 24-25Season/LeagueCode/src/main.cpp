@@ -82,9 +82,12 @@ void autonomous(void)
 	// coolBeansRushRed();
 
 	// ringRushBlue_UIL();
-	JathsSketchyFullFlippingAWP_UIL();
+	// ringRushBlue_UIL();
+
+	// JathsSketchyFullFlippingAWP_UIL();
 
 	// ringRushBlueCurved_UIL();
+	ringRushRedCurved_UIL();
 
 
 	// if (isBlue)

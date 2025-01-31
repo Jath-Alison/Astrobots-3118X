@@ -8,3 +8,6 @@ void JathsSketchyFullFlippingAWP_UIL();
 
 void ringRushBlue_UIL();
 void ringRushBlueCurved_UIL();
+
+void ringRushRed_UIL();
+void ringRushRedCurved_UIL();

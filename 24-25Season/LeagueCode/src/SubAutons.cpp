@@ -27,7 +27,7 @@ art::Angle shortestTurnPath(const art::Angle target)
 
 void resetPositionFromGPSL()
 {
-    logger.logStringEntry(Auton_Console, "ResetPos-R");
+    logger.logStringEntry(Auton_Console, "ResetPos-L");
 
     smartDrive.m_pos = art::Vec2::XandY(art::Inches(gpsSensorL.xPosition(vex::inches)), art::Inches(gpsSensorL.yPosition(vex::inches)));
     smartDrive.m_dir = art::Degrees(gpsSensorL.heading(vex::degrees));
@@ -52,6 +52,54 @@ void localizeAvg(){
 }
 
 void localizeAvgSafe(){
+    logger.logStringEntry(Auton_Console, "ResetPos-AvgSafe");
+
+    art::Vec2 leftGPSPos = art::Vec2::XandY(art::Inches(gpsSensorL.xPosition(vex::inches)), art::Inches(gpsSensorL.yPosition(vex::inches)));
+    art::Vec2 rightGPSPos = art::Vec2::XandY(art::Inches(gpsSensorR.xPosition(vex::inches)), art::Inches(gpsSensorR.yPosition(vex::inches)));
+
+    if(gpsSensorL.heading(vex::degrees) - smartDrive.m_dir < art::Degrees(2)
+    && gpsSensorR.heading(vex::degrees) - smartDrive.m_dir < art::Degrees(2)){
+        smartDrive.m_pos = (leftGPSPos + rightGPSPos) * 0.5;
+    }else
+    if(gpsSensorL.heading(vex::degrees) - smartDrive.m_dir < art::Degrees(2)){
+        smartDrive.m_pos = leftGPSPos;
+    }else
+    if(gpsSensorR.heading(vex::degrees) - smartDrive.m_dir < art::Degrees(2)){
+        smartDrive.m_pos = rightGPSPos;
+    }else{
+        logger.logStringEntry(Auton_Console, "Failed to Localize");
+    }
+
+    
+}
+
+void resetPositionFromGPSL_NoHeading()
+{
+    logger.logStringEntry(Auton_Console, "ResetPos-L");
+
+    smartDrive.m_pos = art::Vec2::XandY(art::Inches(gpsSensorL.xPosition(vex::inches)), art::Inches(gpsSensorL.yPosition(vex::inches)));
+    // smartDrive.m_dir = art::Degrees(gpsSensorL.heading(vex::degrees));
+}
+
+void resetPositionFromGPSR_NoHeading(){
+    logger.logStringEntry(Auton_Console, "ResetPos-R");
+
+    smartDrive.m_pos = art::Vec2::XandY(art::Inches(gpsSensorR.xPosition(vex::inches)), art::Inches(gpsSensorR.yPosition(vex::inches)));
+    // smartDrive.m_dir = art::Degrees(gpsSensorR.heading(vex::degrees));
+}
+
+void localizeAvg_NoHeading(){
+    logger.logStringEntry(Auton_Console, "ResetPos-Avg");
+
+    art::Vec2 leftGPSPos = art::Vec2::XandY(art::Inches(gpsSensorL.xPosition(vex::inches)), art::Inches(gpsSensorL.yPosition(vex::inches)));
+    art::Vec2 rightGPSPos = art::Vec2::XandY(art::Inches(gpsSensorR.xPosition(vex::inches)), art::Inches(gpsSensorR.yPosition(vex::inches)));
+
+    // smartDrive.m_dir = art::Degrees((gpsSensorL.heading(vex::degrees) + gpsSensorR.heading(vex::degrees))* 0.5);
+
+    smartDrive.m_pos = (leftGPSPos + rightGPSPos) * 0.5;
+}
+
+void localizeAvgSafe_NoHeading(){
     logger.logStringEntry(Auton_Console, "ResetPos-AvgSafe");
 
     art::Vec2 leftGPSPos = art::Vec2::XandY(art::Inches(gpsSensorL.xPosition(vex::inches)), art::Inches(gpsSensorL.yPosition(vex::inches)));
@@ -299,6 +347,125 @@ void followPathRev_flipY(Jath::Path p, art::Length lookaheadDist)
     for (size_t i = 0; i < temp.m_points.size(); i++)
     {
         temp.m_points[i].m_pos.y = temp.m_points[i].m_pos.y * -1.0;
+    }
+
+    logger.logStringEntry(Auton_Console, "Following Path in Reverse");
+
+    std::vector<double> pathLog;
+    std::vector<double> pathLogBlue = {
+        // 1.8 + art::Length(smartDrive.m_pos.x).meters(),
+        // 1.8 + art::Length(smartDrive.m_pos.y).meters(),
+        // -(smartDrive.m_dir - art::Degrees(90)) // converted to FRC scheme
+    };
+    for (auto point : temp.m_points)
+    {
+        pathLog.push_back(art::Length(point.m_pos.x).meters());
+        pathLog.push_back(art::Length(point.m_pos.y).meters());
+        pathLog.push_back(1.02);
+
+        pathLogBlue.push_back(art::Length(point.m_pos.x).meters() + 1.8);
+        pathLogBlue.push_back(art::Length(point.m_pos.y).meters() + 1.8);
+        pathLogBlue.push_back(1.02);
+    }
+
+    logger.logDoubleArrayEntry(Auton_CurrentPath, pathLog);
+    logger.logDoubleArrayEntry(Auton_CurrentPath, pathLogBlue);
+
+    Jath::Point lookahead = temp.getLookahead(smartDrive.m_centerPos, lookaheadDist);
+    Jath::Point closest = temp.getClosestPoint(smartDrive.m_centerPos);
+
+    smartDrive.turnTowardPID(lookahead.m_pos.direction() + art::Degrees(180), true);
+    while (lookahead.m_speed != 0)
+    {
+
+        if (Controller1.ButtonA.pressing())
+        {
+            return;
+        }
+
+        travel = art::Vec2(lookahead.m_pos - smartDrive.m_centerPos);
+
+        smartDrive.turnTowardPID(travel.direction() + art::Degrees(180), false);
+        smartDrive.m_cmdY = -lookahead.m_speed;
+        smartDrive.update();
+
+        target = lookahead.m_pos;
+
+        lookahead = temp.getLookahead(smartDrive.m_pos, lookaheadDist);
+        closest = temp.getClosestPoint(smartDrive.m_pos);
+
+        vex::wait(20, vex::msec);
+    }
+    logger.logStringEntry(Auton_Console, "Finished Following Path in Reverse");
+}
+
+void followPath_flipX(Jath::Path p, art::Length lookaheadDist)
+{
+    Jath::Path temp(p.m_points);
+
+    for (size_t i = 0; i < temp.m_points.size(); i++)
+    {
+        temp.m_points[i].m_pos.x = temp.m_points[i].m_pos.x * -1.0;
+    }
+
+    logger.logStringEntry(Auton_Console, "Following Path");
+
+    std::vector<double> pathLog;
+    std::vector<double> pathLogBlue = {
+        // 1.8 + art::Length(smartDrive.m_pos.x).meters(),
+        // 1.8 + art::Length(smartDrive.m_pos.y).meters(),
+        // -(smartDrive.m_dir - art::Degrees(90)) // converted to FRC scheme
+    };
+    for (auto point : temp.m_points)
+    {
+        pathLog.push_back(art::Length(point.m_pos.x).meters());
+        pathLog.push_back(art::Length(point.m_pos.y).meters());
+        pathLog.push_back(1.02);
+
+        pathLogBlue.push_back(art::Length(point.m_pos.x).meters() + 1.8);
+        pathLogBlue.push_back(art::Length(point.m_pos.y).meters() + 1.8);
+        pathLogBlue.push_back(1.02);
+    }
+
+    logger.logDoubleArrayEntry(Auton_CurrentPath, pathLog);
+    logger.logDoubleArrayEntry(Auton_CurrentPath, pathLogBlue);
+
+    Jath::Point lookahead = temp.getLookahead(smartDrive.m_centerPos, lookaheadDist);
+    Jath::Point closest = temp.getClosestPoint(smartDrive.m_centerPos);
+
+    smartDrive.turnTowardPID(lookahead.m_pos.direction(), true);
+    while (lookahead.m_speed != 0)
+    {
+
+        if (Controller1.ButtonA.pressing())
+        {
+            return;
+        }
+
+        travel = art::Vec2(lookahead.m_pos - smartDrive.m_centerPos);
+
+        smartDrive.turnTowardPID(travel.direction(), false);
+        smartDrive.m_cmdY = lookahead.m_speed;
+        smartDrive.update();
+
+        target = lookahead.m_pos;
+
+        lookahead = temp.getLookahead(smartDrive.m_pos, lookaheadDist);
+        closest = temp.getClosestPoint(smartDrive.m_pos);
+
+        vex::wait(20, vex::msec);
+    }
+
+    logger.logStringEntry(Auton_Console, "Finished Following Path");
+}
+void followPathRev_flipX(Jath::Path p, art::Length lookaheadDist)
+{
+
+    Jath::Path temp(p.m_points);
+
+    for (size_t i = 0; i < temp.m_points.size(); i++)
+    {
+        temp.m_points[i].m_pos.x = temp.m_points[i].m_pos.x * -1.0;
     }
 
     logger.logStringEntry(Auton_Console, "Following Path in Reverse");

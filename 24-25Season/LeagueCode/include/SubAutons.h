@@ -15,12 +15,21 @@ void resetPositionFromGPSR();
 void localizeAvg();
 void localizeAvgSafe();
 
+void resetPositionFromGPSL_NoHeading();
+void resetPositionFromGPSR_NoHeading();
+
+void localizeAvg_NoHeading();
+void localizeAvgSafe_NoHeading();
+
 void followPath(Jath::Path p, art::Length lookaheadDist);
 void followPathRev(Jath::Path p, art::Length lookaheadDist);
 void followPathHalfspeed(Jath::Path p, art::Length lookaheadDist);
 
 void followPath_flipY(Jath::Path p, art::Length lookaheadDist);
 void followPathRev_flipY(Jath::Path p, art::Length lookaheadDist);
+
+void followPath_flipX(Jath::Path p, art::Length lookaheadDist);
+void followPathRev_flipX(Jath::Path p, art::Length lookaheadDist);
 
 void driveTowardPoint(art::Vec2 point);
 void driveTowardPointRev(art::Vec2 point);

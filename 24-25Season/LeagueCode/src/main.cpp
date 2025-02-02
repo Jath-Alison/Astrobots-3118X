@@ -84,10 +84,10 @@ void autonomous(void)
 	// ringRushBlue_UIL();
 	// ringRushBlue_UIL();
 
-	// JathsSketchyFullFlippingAWP_UIL();
+	JathsSketchyFullFlippingAWP_UIL();
 
 	// ringRushBlueCurved_UIL();
-	ringRushRedCurved_UIL();
+	// ringRushRedCurved_UIL();
 
 	// skills_UIL();
 

@@ -94,13 +94,13 @@ void JathsSketchyFullFlippingAWP_UIL()
 
     smartDrive.driveForPID(art::Inches(-19));
 
-    target = art::Vec2::XandY(art::Tiles(0.75 * xSign), art::Tiles(0.75 * ySign));
-    travel = art::Vec2(target - smartDrive.m_pos);
+    // target = art::Vec2::XandY(art::Tiles(0.75 * xSign), art::Tiles(0.75 * ySign));
+    // travel = art::Vec2(target - smartDrive.m_pos);
 
-    smartDrive.turnToPID(travel.direction()+art::Degrees(180));
-    smartDrive.driveFor(travel.magnitude(), -50);
+    // smartDrive.turnToPID(travel.direction()+art::Degrees(180));
+    // smartDrive.driveFor(travel.magnitude(), -50);
 
-    smartDrive.arcade(0, 0);
+    // smartDrive.arcade(0, 0);
     AutonArmPosRunning = false;
 }
 

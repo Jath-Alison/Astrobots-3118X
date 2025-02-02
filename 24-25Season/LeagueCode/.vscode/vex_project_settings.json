@@ -4,12 +4,12 @@
 		"json": 2
 	},
 	"project": {
-		"name": "UIL-RedRush",
+		"name": "UIL-Flipping",
 		"description": "",
 		"creationDate": "Thu, 23 Jan 2025 13:36:35 GMT",
 		"platform": "V5",
 		"language": "cpp",
-		"slot": 2,
+		"slot": 1,
 		"sdkVersion": "V5_20240802_15_00_00",
 		"cpp": {
 			"includePath": [],

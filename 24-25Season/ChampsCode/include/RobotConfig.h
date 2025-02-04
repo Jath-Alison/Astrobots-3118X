@@ -18,6 +18,7 @@
 
 #include "vex.h"
 #include "ART/ART.h"
+#include "Subsystems/Intake.h"
 
 extern vex::gps gpsSensorL;
 extern vex::gps gpsSensorR;
@@ -37,7 +38,9 @@ extern vex::inertial inert;
 extern art::TankDrive drive;
 extern art::SmartDrive smartDrive;
 
-extern art::SimpleMotor intake;
+// extern art::SimpleMotor intake;
+extern Intake intake;
+
 extern vex::digital_out clamp; extern bool clampState;
 
 extern art::SimpleMotor arm;
@@ -50,5 +53,5 @@ extern vex::digital_out doinkerDeployR; extern bool doinkerDeployRState;
 extern vex::digital_out doinkerDeployL; extern bool doinkerDeployLState;
 
 extern vex::aivision FrontVision;
-extern vex::optical intakeOptical;
-extern vex::optical outtakeOptical;
+// extern vex::optical intakeOptical;
+// extern vex::optical outtakeOptical;

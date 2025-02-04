@@ -67,8 +67,10 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
     )
     ;
 
-art::SimpleMotor intake  = art::SimpleMotor(vex::motor(vex::PORT3, vex::gearSetting::ratio6_1, false))
-    .withSpeedMode(false);
+// art::SimpleMotor intake  = art::SimpleMotor(vex::motor(vex::PORT3, vex::gearSetting::ratio6_1, false))
+//     .withSpeedMode(false);
+Intake intake(vex::motor(vex::PORT3, vex::gearSetting::ratio6_1, false), vex::optical(vex::PORT17));
+
 vex::digital_out clamp(Brain.ThreeWirePort.A); bool clampState = false;;
 
 art::SimpleMotor arm = art::SimpleMotor(vex::motor(vex::PORT4, vex::gearSetting::ratio36_1, false))
@@ -87,5 +89,5 @@ vex::digital_out doinkerDeployR(Brain.ThreeWirePort.B); bool doinkerDeployRState
 vex::digital_out doinkerDeployL(Brain.ThreeWirePort.H); bool doinkerDeployLState = false;
 
 vex::aivision FrontVision(vex::PORT16);
-vex::optical intakeOptical(vex::PORT17);
-vex::optical outtakeOptical(vex::PORT15);
+// vex::optical intakeOptical(vex::PORT17);
+// vex::optical outtakeOptical(vex::PORT15);

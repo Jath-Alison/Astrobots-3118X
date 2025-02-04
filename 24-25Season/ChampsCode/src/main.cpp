@@ -43,8 +43,8 @@ vex::competition Competition;
 void pre_auton(void)
 {
 	arm.setPosition(armRot.angle(), vex::degrees);
-	intakeOptical.integrationTime(5);
-	outtakeOptical.integrationTime(5);
+	// intakeOptical.integrationTime(5);
+	// outtakeOptical.integrationTime(5);
 }
 
 /**
@@ -109,15 +109,15 @@ void usercontrol(void)
 
 		if (Controller1.ButtonR1.pressing())
 		{
-			intake.set(100);
+			intake.handleInput(100);
 		}
 		else if (Controller1.ButtonA.pressing())
 		{
-			intake.set(-100);
+			intake.handleInput(-100);
 		}
 		else
 		{
-			intake.set(0);
+			intake.handleInput(0);
 		}
 
 		if (Controller1.ButtonL1.PRESSED)
@@ -139,8 +139,10 @@ void usercontrol(void)
 		else if (Controller1.ButtonR2.pressing())
 		{
 			arm.set(100);
-			intake.set(-30);
+			intake.handleInput(-30);
 		}
+
+		intake.periodic();
 
 		vex::wait(20, vex::msec);
 	}

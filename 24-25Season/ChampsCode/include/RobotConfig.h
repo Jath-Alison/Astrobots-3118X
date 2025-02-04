@@ -45,7 +45,6 @@ extern art::SimpleMotor arm;
 extern vex::rotation armRot;
 
 extern art::PID armPID;
-extern art::Angle armTarget;
 
 extern vex::digital_out doinkerDeployR; extern bool doinkerDeployRState;
 extern vex::digital_out doinkerDeployL; extern bool doinkerDeployLState;

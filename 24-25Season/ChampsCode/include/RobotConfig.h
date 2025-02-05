@@ -19,6 +19,7 @@
 #include "vex.h"
 #include "ART/ART.h"
 #include "Subsystems/Intake.h"
+#include "Subsystems/Arm.h"
 
 extern vex::gps gpsSensorL;
 extern vex::gps gpsSensorR;
@@ -43,11 +44,11 @@ extern Intake intake;
 
 extern vex::digital_out clamp; extern bool clampState;
 
-extern art::SimpleMotor arm;
+// extern art::SimpleMotor arm;
+// extern vex::rotation armRot;
+// extern art::PID armPID;
 
-extern vex::rotation armRot;
-
-extern art::PID armPID;
+extern Arm arm;
 
 extern vex::digital_out doinkerDeployR; extern bool doinkerDeployRState;
 extern vex::digital_out doinkerDeployL; extern bool doinkerDeployLState;

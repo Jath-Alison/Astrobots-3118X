@@ -73,17 +73,22 @@ Intake intake(vex::motor(vex::PORT3, vex::gearSetting::ratio6_1, false), vex::op
 
 vex::digital_out clamp(Brain.ThreeWirePort.A); bool clampState = false;;
 
-art::SimpleMotor arm = art::SimpleMotor(vex::motor(vex::PORT4, vex::gearSetting::ratio36_1, false))
-    .withSpeedMode(true);
-vex::rotation armRot = vex::rotation(vex::PORT14, true);
-
-art::PID armPID = art::PID()
+Arm arm = Arm(vex::motor(vex::PORT4, vex::gearSetting::ratio36_1, false), vex::rotation(vex::PORT14, true), art::PID()
         .withConstants(1/(art::Degrees(1)), 0, -200)
-        // .withIntegralZone(art::Degrees(15))
-        // .withTimeout(10)
-        // .withSettleZone(art::Degrees(3))
-        // .withSettleTimeout(0.75)
-        ;
+        .withSettleZone(art::Degrees(1))
+        );
+
+// art::SimpleMotor arm = art::SimpleMotor(vex::motor(vex::PORT4, vex::gearSetting::ratio36_1, false))
+//     .withSpeedMode(true);
+// vex::rotation armRot = vex::rotation(vex::PORT14, true);
+
+// art::PID armPID = art::PID()
+//         .withConstants(1/(art::Degrees(1)), 0, -200)
+//         // .withIntegralZone(art::Degrees(15))
+//         // .withTimeout(10)
+//         // .withSettleZone(art::Degrees(3))
+//         // .withSettleTimeout(0.75)
+//         ;
 
 vex::digital_out doinkerDeployR(Brain.ThreeWirePort.B); bool doinkerDeployRState = false;
 vex::digital_out doinkerDeployL(Brain.ThreeWirePort.H); bool doinkerDeployLState = false;

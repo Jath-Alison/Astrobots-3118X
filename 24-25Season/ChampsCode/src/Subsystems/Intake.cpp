@@ -2,6 +2,7 @@
 
 Intake::Intake(vex::motor mot, vex::optical opt) : m_motor(mot), m_optical(opt)
 {
+    m_optical.integrationTime(5);
 }
 
 void Intake::periodic()
@@ -13,7 +14,7 @@ void Intake::periodic()
         break;
     case REJECT_RED:
         m_cmd = 100;
-        if (m_optical.getRgb().red > 100)
+        if (m_optical.getRgb().red > 75 && m_optical.getRgb().blue < 75)
         {
             setState(DELAY_OFF);
             m_delay = 0.25;
@@ -22,7 +23,7 @@ void Intake::periodic()
         break;
     case REJECT_BLUE:
         m_cmd = 100;
-        if (m_optical.getRgb().blue > 100)
+        if (m_optical.getRgb().blue > 75 && m_optical.getRgb().red < 75)
         {
             setState(DELAY_OFF);
             m_delay = 0.25;
@@ -31,20 +32,24 @@ void Intake::periodic()
         break;
     case STOP_RED:
         m_cmd = 100;
-        if (m_optical.getRgb().red > 100)
+        m_optical.setLight(vex::ledState::on);
+        if (m_optical.getRgb().red > 75 && m_optical.getRgb().blue < 75)
         {
             m_cmd = 0;
             m_input_cmd = 0;
             setState(CONTROL);
+            m_optical.setLight(vex::ledState::off);
         }
         break;
     case STOP_BLUE:
         m_cmd = 100;
-        if (m_optical.getRgb().blue > 100)
+        m_optical.setLight(vex::ledState::on);
+        if (m_optical.getRgb().blue > 75 && m_optical.getRgb().red < 75)
         {
             m_cmd = 0;
             m_input_cmd = 0;
             setState(CONTROL);
+            m_optical.setLight(vex::ledState::off);
         }
         break;
     case DELAY_OFF:
@@ -52,6 +57,8 @@ void Intake::periodic()
         {
             m_cmd = 0;
             setState(CONTROL);
+        }else{
+            m_cmd = 100;
         }
         break;
     case DELAY_ON:
@@ -59,6 +66,8 @@ void Intake::periodic()
         {
             m_cmd = 100;
             setState(CONTROL);
+        }else{
+            m_cmd = 0;
         }
         break;
     default:
@@ -79,6 +88,11 @@ void Intake::setState(IntakeState state)
 }
 void Intake::resetDelay()
 {
+    m_startTime = std::chrono::high_resolution_clock::now();
+}
+void Intake::resetDelay(double time)
+{
+    m_delay = time;
     m_startTime = std::chrono::high_resolution_clock::now();
 }
 double Intake::timePassed()

@@ -74,7 +74,7 @@ Intake intake(vex::motor(vex::PORT3, vex::gearSetting::ratio6_1, false), vex::op
 vex::digital_out clamp(Brain.ThreeWirePort.A); bool clampState = false;;
 
 Arm arm = Arm(vex::motor(vex::PORT4, vex::gearSetting::ratio36_1, false), vex::rotation(vex::PORT14, true), art::PID()
-        .withConstants(1/(art::Degrees(1)), 0, -200)
+        .withConstants(3/(art::Degrees(1)), 0, -100)
         .withSettleZone(art::Degrees(1))
         );
 

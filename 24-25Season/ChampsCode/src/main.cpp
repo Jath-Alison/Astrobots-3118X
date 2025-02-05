@@ -142,12 +142,16 @@ void usercontrol(void)
 			arm.handleCmdInput(100);
 
 			intake.handleInput(-30);
+		}else{
+			arm.handleCmdInput(0);
 		}
 
 		if (Controller1.ButtonUp.pressing())
 		{
 			arm.setState(Arm::POSITION);
 			arm.handlePosInput(art::Degrees(10));
+
+			intake.setState(Intake::STOP_BLUE);
 		}
 		else if (Controller1.ButtonDown.pressing())
 		{
@@ -156,9 +160,6 @@ void usercontrol(void)
 
 			intake.handleInput(-30);
 		}
-
-		intake.periodic();
-
 		vex::wait(20, vex::msec);
 	}
 }

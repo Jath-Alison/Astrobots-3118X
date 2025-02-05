@@ -1,4 +1,5 @@
 #include "Subsystems/Subsystem.h"
+#include "RobotConfig.h"
 
 std::vector<Subsystem *> Subsystem::m_subsystems = {};
 
@@ -14,7 +15,9 @@ vex::thread periodicThread;
 int periodicLoop()
 {
     while(true){
-        Subsystem::periodicAll();
+        intake.periodic();
+		arm.periodic();
+
         vex::wait(10, vex::msec);
     }
     return 0;

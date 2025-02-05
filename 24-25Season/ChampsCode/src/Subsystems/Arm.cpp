@@ -2,6 +2,7 @@
 
 Arm::Arm(vex::motor mot, vex::rotation rot, art::PID pid) : m_motor(mot), m_rotation(rot), m_pid(pid)
 {
+    m_motor.setBrake(vex::hold);
 }
 
 void Arm::periodic()

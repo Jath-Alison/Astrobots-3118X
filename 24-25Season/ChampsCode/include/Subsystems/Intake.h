@@ -24,6 +24,7 @@ public:
 
     void setState(IntakeState state);
     void resetDelay();
+    void resetDelay(double time);
 
 private:
     double m_input_cmd{0.0};

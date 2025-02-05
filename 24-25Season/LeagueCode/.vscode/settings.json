@@ -46,9 +46,21 @@
 		"type_traits": "cpp",
 		"utility": "cpp",
 		"typeinfo": "cpp",
+<<<<<<< HEAD
 		"deque": "cpp",
 		"string": "cpp",
 		"cstddef": "cpp",
 		"cstring": "cpp"
+=======
+		"cstddef": "cpp",
+		"cstring": "cpp",
+		"string": "cpp",
+		"memory": "cpp",
+		"algorithm": "cpp",
+		"deque": "cpp",
+		"numeric": "cpp",
+		"map": "cpp",
+		"random": "cpp"
+>>>>>>> ShadesDev
 	}
 }

@@ -1,9 +1,10 @@
 #pragma once
 
+#include "Subsystems/Subsystem.h"
 #include "ART/SimpleMotor.h"
 #include "ART/PID.h"
 
-class Intake
+class Intake : public Subsystem
 {
 public:
     enum IntakeState{

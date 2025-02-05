@@ -1,10 +1,11 @@
 #pragma once
 
+#include "Subsystems/Subsystem.h"
 #include "ART/SimpleMotor.h"
 #include "ART/PID.h"
 #include "ART/Units.h"
 
-class Arm
+class Arm : public Subsystem
 {
 public:
     enum ArmState{

@@ -45,7 +45,7 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
       1.0
     )
     .withDriveForPID(art::PID()
-        .withConstants(8, 0.6, -10.0)//Somehow already in 1/(1inch) P * 3, D * 4
+        .withConstants(10, 0.6, -10.0)//Somehow already in 1/(1inch) P * 3, D * 4
         .withIntegralZone(art::Revolutions(art::Inches(2) / (M_PI * art::Inches(2.75) * (36.f/48.f))))//still need conversion from inches to revolutions
         .withTimeout(7.5)   
         .withSettleZone(art::Revolutions(art::Inches(1) / (M_PI * art::Inches(2.75) * (36.f/48.f))))
@@ -66,6 +66,8 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
         .withSettleTimeout(0.25)//Lowkey could be turned down to 0.25
     )
     ;
+
+AsyncDrive asyncDrive(smartDrive);
 
 // art::SimpleMotor intake  = art::SimpleMotor(vex::motor(vex::PORT3, vex::gearSetting::ratio6_1, false))
 //     .withSpeedMode(false);

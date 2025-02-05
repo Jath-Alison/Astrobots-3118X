@@ -104,8 +104,10 @@ void usercontrol(void)
 	while (1)
 	{
 
-		smartDrive.LeftSplitArcadeCurved(Controller1);
+		// smartDrive.LeftSplitArcadeCurved(Controller1);
 		// smartDrive.curvatureDrive(Controller1.Axis3.position(), Controller1.Axis1.position(), 25.0);
+
+		asyncDrive.handleInputs(Controller1.Axis3.position(), Controller1.Axis1.position());
 
 		if (Controller1.ButtonR1.pressing())
 		{
@@ -136,6 +138,9 @@ void usercontrol(void)
 		{
 			arm.setState(Arm::CONTROL);
 			arm.handleCmdInput(-100);
+
+			asyncDrive.setDriveTarget(art::Inches(15));
+			asyncDrive.setState(AsyncDrive::DRIVE);
 		}
 		else if (Controller1.ButtonR2.pressing())
 		{
@@ -143,6 +148,8 @@ void usercontrol(void)
 			arm.handleCmdInput(100);
 
 			intake.handleInput(-30);
+
+			asyncDrive.setState(AsyncDrive::CONTROL);
 		}else{
 			arm.handleCmdInput(0);
 		}
@@ -152,7 +159,6 @@ void usercontrol(void)
 			arm.setState(Arm::POSITION);
 			arm.handlePosInput(art::Degrees(10));
 
-			intake.setState(Intake::STOP_BLUE);
 		}
 		else if (Controller1.ButtonDown.pressing())
 		{

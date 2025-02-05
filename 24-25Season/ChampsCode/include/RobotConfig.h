@@ -20,6 +20,7 @@
 #include "ART/ART.h"
 #include "Subsystems/Intake.h"
 #include "Subsystems/Arm.h"
+#include "Subsystems/AsyncDrive.h"
 
 extern vex::gps gpsSensorL;
 extern vex::gps gpsSensorR;
@@ -38,6 +39,7 @@ extern vex::inertial inert;
 
 extern art::TankDrive drive;
 extern art::SmartDrive smartDrive;
+extern AsyncDrive asyncDrive;
 
 // extern art::SimpleMotor intake;
 extern Intake intake;

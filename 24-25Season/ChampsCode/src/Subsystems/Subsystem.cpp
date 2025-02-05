@@ -17,6 +17,7 @@ int periodicLoop()
     while(true){
         intake.periodic();
 		arm.periodic();
+        asyncDrive.periodic();
 
         vex::wait(10, vex::msec);
     }

@@ -25,6 +25,8 @@ void AsyncDrive::periodic()
         logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_P, m_smartDrive.m_driveForPID.getProportional());
         logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_I, m_smartDrive.m_driveForPID.getIntegral());
         logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_D, m_smartDrive.m_driveForPID.getDerivative());
+        logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_feedback, pos);
+        logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_target, m_driveTarget);
 
         break;
     case DRIVE_HEADING_CORRECTED:
@@ -38,18 +40,26 @@ void AsyncDrive::periodic()
         logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_P, m_smartDrive.m_driveForPID.getProportional());
         logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_I, m_smartDrive.m_driveForPID.getIntegral());
         logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_D, m_smartDrive.m_driveForPID.getDerivative());
+        logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_feedback, pos);
+        logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_target, m_driveTarget);
+
         logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_P, m_smartDrive.m_turnForPID.getProportional());
         logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_I, m_smartDrive.m_turnForPID.getIntegral());
         logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_D, m_smartDrive.m_turnForPID.getDerivative());
+        logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_feedback, m_smartDrive.m_inert.rotation(vex::degrees));
+        logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_target, m_turnTarget.degrees());
+
         break;
     case TURN:
 
-        error = art::Degrees(m_turnTarget.degrees() - m_smartDrive.m_inert.rotation(vex::degrees));
+        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_smartDrive.m_inert.rotation(vex::degrees)));
         m_smartDrive.arcade(0, m_smartDrive.m_turnForPID.calculate(error));
 
         logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_P, m_smartDrive.m_turnForPID.getProportional());
         logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_I, m_smartDrive.m_turnForPID.getIntegral());
         logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_D, m_smartDrive.m_turnForPID.getDerivative());
+        logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_feedback, m_smartDrive.m_inert.rotation(vex::degrees));
+        logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_target, m_turnTarget.degrees());
 
         break;
     case PATH:
@@ -71,10 +81,12 @@ void AsyncDrive::setDriveTarget(art::Length target)
 {
     m_driveOffset = art::Degrees((m_smartDrive.m_left.position(vex::degrees) + m_smartDrive.m_right.position(vex::degrees)) / 2.f);
     m_driveTarget = art::Angle(art::Revolutions(target / m_smartDrive.getWheelTravel()) + m_driveOffset);
+    m_smartDrive.m_driveForPID.reset();
 }
 void AsyncDrive::setTurnTarget(art::Angle target)
 {
     m_turnTarget = target;
+    m_smartDrive.m_turnForPID.reset();
 }
 bool AsyncDrive::driveComplete()
 {

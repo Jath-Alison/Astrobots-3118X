@@ -28,7 +28,7 @@ extern vex::competition Competition;
 #define waitUntil(condition) \
 	do                       \
 	{                        \
-		wait(5, msec);       \
+		vex::wait(5, vex::msec);       \
 	} while (!(condition))
 
 #define repeat(iterations) \

@@ -7,6 +7,12 @@ Arm::Arm(vex::motor mot, vex::rotation rot, art::PID pid) : m_motor(mot), m_rota
 
 void Arm::periodic()
 {
+
+    art::Angle adjusted_pos_cmd = art::Angle(m_pos_cmd) - art::Degrees(90);
+    art::Angle feedbackAngle = art::Degrees(m_rotation.angle()) - art::Degrees(90);
+    feedbackAngle.constrain();
+    adjusted_pos_cmd.constrain();
+    
     switch (m_state)
     {
     case CONTROL:
@@ -14,16 +20,11 @@ void Arm::periodic()
         m_pos_cmd = art::Degrees(m_rotation.angle());
         break;
     case POSITION:
-        if (abs(art::shortestTurnPath(m_pos_cmd - art::Degrees(m_rotation.angle())).degrees()) >= 0.5)
+        if (fabs(art::Angle(adjusted_pos_cmd - feedbackAngle).degrees()) >= 0.5)
         {
-            if (art::shortestTurnPath(m_pos_cmd - art::Degrees(m_rotation.angle())).degrees() > 30 && m_pos_cmd.degrees() < 50)
-            {
-                m_output = -m_pid.calculate(art::shortestTurnPath(m_pos_cmd - art::Degrees(m_rotation.angle())));
-            }
-            else
-            {
-                m_output = m_pid.calculate(art::shortestTurnPath(m_pos_cmd - art::Degrees(m_rotation.angle())));
-            };
+            m_output = m_pid.calculate(adjusted_pos_cmd - feedbackAngle);
+        }else{
+            m_output = 0;
         }
         break;
     default:
@@ -34,6 +35,7 @@ void Arm::periodic()
 }
 void Arm::handlePosInput(art::Angle input)
 {
+    m_pid.reset();
     m_pos_cmd = input;
 }
 void Arm::handleCmdInput(double input)
@@ -44,4 +46,8 @@ void Arm::handleCmdInput(double input)
 void Arm::setState(ArmState state)
 {
     m_state = state;
+}
+bool Arm::isComplete()
+{
+    return m_pid.isCompleted();
 }

@@ -45,7 +45,7 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
       1.0
     )
     .withDriveForPID(art::PID()
-        .withConstants(10, 0.6, -10.0)//Somehow already in 1/(1inch) P * 3, D * 4
+        .withConstants(10, 0.6, -5.0)//Somehow already in 1/(1inch) P * 3, D * 4
         .withIntegralZone(art::Revolutions(art::Inches(2) / (M_PI * art::Inches(2.75) * (36.f/48.f))))//still need conversion from inches to revolutions
         .withTimeout(7.5)   
         .withSettleZone(art::Revolutions(art::Inches(1) / (M_PI * art::Inches(2.75) * (36.f/48.f))))
@@ -77,7 +77,10 @@ vex::digital_out clamp(Brain.ThreeWirePort.A); bool clampState = false;;
 
 Arm arm = Arm(vex::motor(vex::PORT4, vex::gearSetting::ratio36_1, false), vex::rotation(vex::PORT14, true), art::PID()
         .withConstants(3/(art::Degrees(1)), 0, -100)
-        .withSettleZone(art::Degrees(1))
+        .withSettleZone(art::Degrees(3))
+        .withSettleTimeout(0.25)
+        .withTimeout(1)
+
         );
 
 // art::SimpleMotor arm = art::SimpleMotor(vex::motor(vex::PORT4, vex::gearSetting::ratio36_1, false))

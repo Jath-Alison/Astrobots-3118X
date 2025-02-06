@@ -121,12 +121,15 @@ namespace logging
 
     int logLoop()
     {
+        logger.clearFile("ChampsCodelog.wpilog");
         while (true)
         {
-            if (logger.getDataSize() > 10000)
-            {
-                logger.writeToFile("ChampsCode/log.wpilog");
-            }
+            // if (logger.getDataSize() > 5000)
+            // {
+                logger.writeToFile("ChampsCodelog.wpilog");
+            // }
+
+            vex::wait(1, vex::sec);
         }
 
         return 0;

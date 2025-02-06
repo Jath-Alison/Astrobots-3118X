@@ -21,6 +21,8 @@ public:
 
     void setState(ArmState state);
 
+    bool isComplete();
+
 private:
     double m_cmd{0.0};
     art::Angle m_pos_cmd{0.0};

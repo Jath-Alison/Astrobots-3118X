@@ -19,6 +19,7 @@
 #include "Logging/WPILogger.h"
 #include "Logging/Logging.h"
 #include "Shades/Shades.h"
+#include "Autons.h"
 
 /**
  * @brief A global instance of competition
@@ -138,9 +139,6 @@ void usercontrol(void)
 		{
 			arm.setState(Arm::CONTROL);
 			arm.handleCmdInput(-100);
-
-			asyncDrive.setDriveTarget(art::Inches(15));
-			asyncDrive.setState(AsyncDrive::DRIVE);
 		}
 		else if (Controller1.ButtonR2.pressing())
 		{
@@ -148,8 +146,6 @@ void usercontrol(void)
 			arm.handleCmdInput(100);
 
 			intake.handleInput(-30);
-
-			asyncDrive.setState(AsyncDrive::CONTROL);
 		}else{
 			arm.handleCmdInput(0);
 		}
@@ -167,6 +163,13 @@ void usercontrol(void)
 
 			intake.handleInput(-30);
 		}
+
+		if (Controller1.ButtonRight.PRESSED){
+			flippingAWPAuton();
+
+			asyncDrive.setState(AsyncDrive::CONTROL);
+		}
+
 		vex::wait(20, vex::msec);
 	}
 }
@@ -195,6 +198,7 @@ int tracking()
 int main()
 {
 
+	logging::logger.logHeader();
 
 	// Set up callbacks for autonomous and driver control periods.
 	Competition.autonomous(autonomous);
@@ -290,7 +294,7 @@ int main()
     </root>    
   )";
 
-	if (Brain.SDcard.isInserted())
+	if (Brain.SDcard.isInserted() && Brain.SDcard.exists("ConfigFile.xml"))
 	{
 		sds::Screen::initialize();
 	}

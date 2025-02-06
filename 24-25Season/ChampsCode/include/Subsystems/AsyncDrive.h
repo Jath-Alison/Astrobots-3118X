@@ -8,6 +8,7 @@ class AsyncDrive : public Subsystem
 {
 public:
     enum DriveState{
+        WAIT,
         CONTROL,
         DRIVE,
         DRIVE_HEADING_CORRECTED,

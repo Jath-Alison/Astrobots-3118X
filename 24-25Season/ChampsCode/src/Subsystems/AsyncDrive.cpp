@@ -12,6 +12,8 @@ void AsyncDrive::periodic()
 
     switch (m_state)
     {
+    case WAIT:
+        m_smartDrive.arcade(0, 0);
     case CONTROL:
         m_smartDrive.arcade(drive_input, rot_input);
         break;

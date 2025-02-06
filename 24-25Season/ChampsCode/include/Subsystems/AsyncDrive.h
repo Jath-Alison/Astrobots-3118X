@@ -22,7 +22,14 @@ public:
 
     void periodic();
 
+    bool driveComplete();
+    bool turnComplete();
+
+    double driveError();
+    double turnError();
+
     void setDriveTarget(art::Length target);
+    void setTurnTarget(art::Angle target);
 
 private:
     DriveState m_state{CONTROL};

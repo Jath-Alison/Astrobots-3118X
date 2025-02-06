@@ -2,6 +2,7 @@
 
 #include "Subsystems/Subsystem.h"
 #include "ART/SmartDrive.h"
+#include "Logging/Logging.h"
 
 class AsyncDrive : public Subsystem
 {

@@ -118,4 +118,19 @@ namespace logging
     BooleanLogEntry Optics_LowerOpticalDist("Optics/Lower/Dist");
     Int64LogEntry Optics_UpperOpticalHue("Optics/Upper/Hue");
     BooleanLogEntry Optics_UpperOpticalDist("Optics/Upper/Dist");
+
+    int logLoop()
+    {
+        while (true)
+        {
+            if (logger.getDataSize() > 10000)
+            {
+                logger.writeToFile("ChampsCode/log.wpilog");
+            }
+        }
+
+        return 0;
+    }
+    vex::thread logThread;
+
 } // namespace logging

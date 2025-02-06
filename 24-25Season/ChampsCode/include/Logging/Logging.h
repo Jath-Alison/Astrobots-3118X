@@ -1,6 +1,7 @@
 #pragma once
 
 #include "WPILogger.h"
+#include "vex.h"
 
 namespace logging
 {
@@ -182,5 +183,8 @@ namespace logging
     extern BooleanLogEntry Optics_LowerOpticalDist;
     extern Int64LogEntry Optics_UpperOpticalHue;
     extern BooleanLogEntry Optics_UpperOpticalDist;
+
+    int logLoop();
+    extern vex::thread logThread;
 
 } // namespace logging

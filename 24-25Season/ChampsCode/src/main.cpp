@@ -207,6 +207,7 @@ int main()
 
 	trackingThread = vex::thread(tracking);
 	periodicThread = vex::thread(periodicLoop);
+	logging::logThread = vex::thread(logging::logLoop);
 
 	vex::wait(0.25, vex::sec);
 

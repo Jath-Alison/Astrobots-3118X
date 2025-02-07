@@ -28,6 +28,7 @@ public:
     void resetDelay(double time);
 
     void setAntiJam(bool runningAntiJam);
+    bool getAntiJam();
 
 private:
     double m_input_cmd{0.0};
@@ -38,7 +39,7 @@ private:
     double timePassed();
 
     IntakeState m_state{CONTROL};
-    
+
     IntakeState m_lastState{CONTROL};
     bool m_runningAntijam{false};
 

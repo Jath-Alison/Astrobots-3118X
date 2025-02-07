@@ -123,3 +123,4 @@ double Intake::timePassed()
 }
 
 void Intake::setAntiJam(bool runningAntiJam) { m_runningAntijam = runningAntiJam; };
+bool Intake::getAntiJam() { return m_runningAntijam; };

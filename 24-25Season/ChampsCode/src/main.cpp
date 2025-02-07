@@ -164,6 +164,10 @@ void usercontrol(void)
 			intake.handleInput(-30);
 		}
 
+		if (Controller1.ButtonY.PRESSED){
+			intake.setAntiJam(!intake.getAntiJam());
+		}
+
 		if (Controller1.ButtonRight.PRESSED){
 			// flippingAWPAuton();
 			centerRings();

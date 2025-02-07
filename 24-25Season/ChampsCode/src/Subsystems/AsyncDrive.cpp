@@ -1,4 +1,5 @@
 #include "Subsystems/AsyncDrive.h"
+#include "AsyncDrive.h"
 
 AsyncDrive::AsyncDrive(art::SmartDrive &drive) : m_smartDrive(drive)
 {
@@ -89,6 +90,10 @@ void AsyncDrive::setTurnTarget(art::Angle target)
 {
     m_turnTarget = target;
     m_smartDrive.m_turnForPID.reset();
+}
+void AsyncDrive::zeroGyro()
+{
+    m_smartDrive.m_dir = 0;
 }
 bool AsyncDrive::driveComplete()
 {

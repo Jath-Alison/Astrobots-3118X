@@ -54,6 +54,7 @@ namespace sds {
 
 			m_id = id;
 			m_text = text;
+			m_base_text = text;
 			if(fontMap.find(font)!= fontMap.end()) {
 				m_font = fontMap[font];
 			}else{

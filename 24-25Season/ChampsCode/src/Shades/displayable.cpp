@@ -11,8 +11,12 @@ namespace sds {
 		return m_id;
 	}
 
-	void displayable::registerCallback(std::string callbackId)
-	{
+    std::string displayable::getBaseText()
+    {
+        return m_base_text;
+    }
+    void displayable::registerCallback(std::string callbackId)
+    {
 		m_callbackId = callbackId;
 	}
 
@@ -34,6 +38,7 @@ namespace sds {
 	// 	};
   void displayable::setText(std::string text){
     m_text = text;
+	sds::Screen::forceChange();
   };
 
 }

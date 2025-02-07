@@ -13,8 +13,8 @@ namespace sds {
 	{
 	public:
 
-		Image(std::string id, int x, int y, std::string src) : displayable(id), m_x(x), m_y(y), m_src(src) {
-
+		Image(std::string id, int x, int y, std::string src) : displayable(id), m_x(x), m_y(y) {
+			setText(src);
 		}
 
 		Image(tinyxml2::XMLElement* elem) {
@@ -43,14 +43,14 @@ namespace sds {
 			}
 
 			m_id = id;
-			m_src = src;
+			m_text = src;
 			m_x = x;
 			m_y = y;
 
 		}
 
 		void display() override {
-			Brain.Screen.drawImageFromFile(m_src.c_str(), m_x, m_y);
+			Brain.Screen.drawImageFromFile(m_text.c_str(), m_x, m_y);
 		};
 
 		bool checkBounds(int x, int y) override {
@@ -70,7 +70,7 @@ namespace sds {
 		//sf::Texture texture;
 		int m_x, m_y;
 		//sf::Sprite m_sprite;
-		std::string m_src;
+		// std::string m_src;
 	};
 
 }

@@ -33,6 +33,8 @@ public:
     void setDriveTarget(art::Length target);
     void setTurnTarget(art::Angle target);
 
+    void zeroGyro();
+
 private:
     DriveState m_state{CONTROL};
     

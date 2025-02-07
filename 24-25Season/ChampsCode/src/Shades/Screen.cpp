@@ -18,7 +18,10 @@ namespace sds
 	tinyxml2::XMLElement *Screen::m_shadesXml = nullptr;
 	std::map<std::string, tinyxml2::XMLElement *> Screen::m_screens = {};
 
+	std::string Screen::m_currentScreen = "";
+
 	bool Screen::m_changed = false;
+	void Screen::forceChange(){m_changed = true;}
 
 	int Screen::m_refreshRate = 500;
 
@@ -109,6 +112,7 @@ namespace sds
 		{
 			m_displayables[i]->display();
 		}
+		Brain.Screen.render();
 	}
 
 	void Screen::load(std::string screenId)
@@ -119,6 +123,7 @@ namespace sds
 		m_displayables.clear();
 
 		tinyxml2::XMLElement *screen = getScreen(screenId);
+		m_currentScreen = screenId;
 
 		std::cout << screen->Name() << ":" << screen->Attribute("id") << std::endl;
 
@@ -155,6 +160,11 @@ namespace sds
 		}
 	}
 
+	std::string Screen::getCurrentScreen()
+	{
+		return m_currentScreen;
+	}
+
 	void Screen::executeCallback(std::string callbackId)
 	{
 		if (m_functions.find(callbackId) != m_functions.end())
@@ -162,6 +172,10 @@ namespace sds
 			m_functions[callbackId]();
 		}
 	}
+	void Screen::addCallback(std::string callbackId, std::function<void(void)> function)
+    {
+		m_functions[callbackId] = function;
+    }
 
 	void Screen::handleClick(int x, int y)
 	{

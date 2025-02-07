@@ -126,3 +126,155 @@ void centerRings()
     asyncDrive.setDriveTarget(art::Inches(20));
     waitUntil(asyncDrive.driveComplete());
 }
+
+void ringSideToCorner() {
+    //drive 2 inches and score ladybrown
+    asyncDrive.setDriveTarget(art::Inches(2));
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+    asyncDrive.setState(AsyncDrive::WAIT);
+
+
+    arm.handlePosInput(art::Degrees(180));
+    arm.setState(Arm::POSITION);
+    waitUntil(arm.isComplete());
+
+    //Back out
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    asyncDrive.setDriveTarget(art::Inches(-15));
+    waitUntil(asyncDrive.driveComplete());
+    arm.handlePosInput(art::Degrees(-5));
+
+    //TurnToGoal
+    asyncDrive.setTurnTarget(art::Degrees(-90));
+    asyncDrive.setState(AsyncDrive::TURN);
+    waitUntil(asyncDrive.turnComplete());
+
+    asyncDrive.setDriveTarget(art::Inches(-15));
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    asyncDrive.setState(AsyncDrive::CONTROL);
+    asyncDrive.handleInputs(-60, 0);
+    vex::wait(0.75, vex::sec);
+
+    clamp.set(true);
+
+    vex::wait(0.25, vex::sec);
+
+    asyncDrive.setDriveTarget(0);
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    //TurnToRingStash
+    asyncDrive.setTurnTarget(art::Degrees(45));
+    asyncDrive.setState(AsyncDrive::TURN);
+    waitUntil(asyncDrive.turnComplete());
+
+    asyncDrive.setDriveTarget(art::Inches(15));
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    doinkerDeployR.set(true);
+    vex::wait(0.5, vex::sec);
+
+    asyncDrive.setTurnTarget(art::Degrees(-15));
+    asyncDrive.setState(AsyncDrive::TURN);
+    waitUntil(asyncDrive.turnComplete());
+    doinkerDeployR.set(false);
+
+
+    asyncDrive.setDriveTarget(art::Inches(-3));
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    asyncDrive.setTurnTarget(art::Degrees(0));
+    asyncDrive.setState(AsyncDrive::TURN);
+    waitUntil(asyncDrive.turnComplete());
+
+    asyncDrive.setDriveTarget(art::Inches(-5));
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    asyncDrive.setTurnTarget(art::Degrees(45));
+    asyncDrive.setState(AsyncDrive::TURN);
+    waitUntil(asyncDrive.turnComplete());
+
+    asyncDrive.setDriveTarget(art::Inches(4));
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    intake.setState(Intake::CONTROL);
+    intake.handleInput(100);
+
+    asyncDrive.setTurnTarget(art::Degrees(15));
+    asyncDrive.setState(AsyncDrive::TURN);
+    waitUntil(asyncDrive.turnComplete());
+
+    asyncDrive.setDriveTarget(art::Inches(7));
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    asyncDrive.setTurnTarget(art::Degrees(5));
+    asyncDrive.setState(AsyncDrive::TURN);
+    waitUntil(asyncDrive.turnComplete());
+
+    asyncDrive.setDriveTarget(art::Inches(7));
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    asyncDrive.setTurnTarget(art::Degrees(0));
+    asyncDrive.setState(AsyncDrive::TURN);
+    waitUntil(asyncDrive.turnComplete());
+
+    asyncDrive.setDriveTarget(art::Inches(13.5));
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    asyncDrive.setTurnTarget(art::Degrees(20));
+    asyncDrive.setState(AsyncDrive::SWING_ABOUT_LEFT);
+    waitUntil(asyncDrive.turnComplete());
+
+    asyncDrive.setDriveTarget(art::Inches(-30));
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    //Go for ring stack
+    asyncDrive.setTurnTarget(art::Degrees(-15));
+    asyncDrive.setState(AsyncDrive::TURN);
+    waitUntil(asyncDrive.turnComplete());
+
+    asyncDrive.setDriveTarget(art::Inches(22));
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    //Go for Corner
+    asyncDrive.setTurnTarget(art::Degrees(-55));
+    asyncDrive.setState(AsyncDrive::TURN);
+    waitUntil(asyncDrive.turnComplete());
+
+    doinkerDeployR.set(true);
+
+    asyncDrive.setDriveTarget(art::Inches(25));
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    asyncDrive.setState(AsyncDrive::CONTROL);
+    asyncDrive.handleInputs(80, 0);
+    vex::wait(0.75, vex::sec);
+
+    asyncDrive.setState(AsyncDrive::CONTROL);
+    asyncDrive.handleInputs(0, -90);
+    vex::wait(0.75, vex::sec);
+
+    doinkerDeployR.set(false);
+
+    asyncDrive.setTurnTarget(art::Degrees(-55));
+    asyncDrive.setState(AsyncDrive::TURN);
+    waitUntil(asyncDrive.turnComplete());
+
+    asyncDrive.setState(AsyncDrive::CONTROL);
+    asyncDrive.handleInputs(80, 0);
+    vex::wait(0.75, vex::sec);
+
+}

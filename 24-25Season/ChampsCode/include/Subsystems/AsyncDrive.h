@@ -13,6 +13,8 @@ public:
         DRIVE,
         DRIVE_HEADING_CORRECTED,
         TURN,
+        SWING_ABOUT_LEFT,
+        SWING_ABOUT_RIGHT,
         PATH,
 
     };

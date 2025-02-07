@@ -133,6 +133,8 @@ void usercontrol(void)
 		{
 			doinkerDeployRState = !doinkerDeployRState;
 			doinkerDeployR.set(doinkerDeployRState);
+			// doinkerDeployLState = !doinkerDeployLState;
+			// doinkerDeployL.set(doinkerDeployLState);
 		}
 
 		if (Controller1.ButtonL2.pressing())
@@ -170,10 +172,11 @@ void usercontrol(void)
 
 		if (Controller1.ButtonRight.PRESSED){
 			// flippingAWPAuton();
-			centerRings();
+			// centerRings();
+			ringSideToCorner();
 			// asyncDrive.setTurnTarget(art::Degrees(0));
-			// asyncDrive.setState(AsyncDrive::TURN);
-			// waitUntil(asyncDrive.turnComplete());
+			// asyncDrive.setState(AsyncDrive::SWING_ABOUT_LEFT);
+			waitUntil(asyncDrive.turnComplete());
 
 			asyncDrive.setState(AsyncDrive::CONTROL);
 		}

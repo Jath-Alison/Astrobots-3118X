@@ -5,3 +5,4 @@
 void flippingAWPAuton();
 
 void centerRings();
+void ringSideToCorner();

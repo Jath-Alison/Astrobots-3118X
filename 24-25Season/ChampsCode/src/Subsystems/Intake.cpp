@@ -88,11 +88,12 @@ void Intake::periodic()
         break;
     }
 
-    if (m_runningAntijam && m_motor.velocity(vex::pct) < 5 && m_state != ANTI_JAM_REVERSE)
+    if (m_runningAntijam && m_motor.get() > 50 && m_motor.velocity(vex::pct) < 5 && m_state != ANTI_JAM_REVERSE)
     {
+        m_delay = 0.25;
+        resetDelay();
         m_lastState = m_state;
         m_state = ANTI_JAM_REVERSE;
-        resetDelay(0.25);
     }
 
     m_motor.set(m_cmd);

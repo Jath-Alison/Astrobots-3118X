@@ -37,8 +37,9 @@ void AsyncDrive::periodic()
 
         error = art::Degrees(m_turnTarget.degrees() - m_smartDrive.m_inert.rotation(vex::degrees));
 
-        if(abs(a) > 100){
-            a *= 100.0/fabs(a);
+        if (abs(a) > 100)
+        {
+            a *= 100.0 / fabs(a);
         }
 
         m_smartDrive.arcade(a, m_smartDrive.m_turnToPID.calculate(error));
@@ -67,6 +68,16 @@ void AsyncDrive::periodic()
         logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_feedback, m_smartDrive.m_inert.rotation(vex::degrees));
         logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_target, m_turnTarget.degrees());
 
+        break;
+    case SWING_ABOUT_LEFT:
+        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_smartDrive.m_inert.rotation(vex::degrees)));
+        a = m_smartDrive.m_turnToPID.calculate(error);
+        m_smartDrive.m_right.set(-a);
+        break;
+    case SWING_ABOUT_RIGHT:
+        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_smartDrive.m_inert.rotation(vex::degrees)));
+        a = m_smartDrive.m_turnToPID.calculate(error);
+        m_smartDrive.m_left.set(a);
         break;
     case PATH:
         break;

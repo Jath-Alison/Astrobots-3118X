@@ -23,7 +23,7 @@ namespace sds
 	bool Screen::m_changed = false;
 	void Screen::forceChange(){m_changed = true;}
 
-	int Screen::m_refreshRate = 500;
+	int Screen::m_refreshRate = 30;
 
 	void Screen::initialize()
 	{
@@ -123,6 +123,7 @@ namespace sds
 		m_displayables.clear();
 
 		tinyxml2::XMLElement *screen = getScreen(screenId);
+		if(!screen){return;}
 		m_currentScreen = screenId;
 
 		std::cout << screen->Name() << ":" << screen->Attribute("id") << std::endl;

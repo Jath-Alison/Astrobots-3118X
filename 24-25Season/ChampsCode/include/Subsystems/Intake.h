@@ -14,7 +14,8 @@ public:
         STOP_RED,
         STOP_BLUE,
         DELAY_OFF,
-        DELAY_ON
+        DELAY_ON,
+        ANTI_JAM_REVERSE
     };
 
     Intake(vex::motor mot, vex::optical opt);
@@ -26,6 +27,8 @@ public:
     void resetDelay();
     void resetDelay(double time);
 
+    void setAntiJam(bool runningAntiJam);
+
 private:
     double m_input_cmd{0.0};
     double m_cmd{0.0};
@@ -35,6 +38,9 @@ private:
     double timePassed();
 
     IntakeState m_state{CONTROL};
+    
+    IntakeState m_lastState{CONTROL};
+    bool m_runningAntijam{false};
 
     art::SimpleMotor m_motor;
     vex::optical m_optical;

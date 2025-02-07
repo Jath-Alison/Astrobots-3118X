@@ -13,6 +13,7 @@
 
             <box id="RedAutonsButton" x="5" y="136" width="150" height="67" color="0x000000" callback="RedAutons" outlineWidth="3" outlineColor="0xFF0000" />
             <box id="ZeroGyroButton" x="163" y="136" width="150" height="67" color="0x000000" callback="ZeroGyro" outlineWidth="3" outlineColor="0x00FF00" />
+                <text id="ZeroGyroLabel" x="189" y="177" text="Zero Gyro" color="0x0FFF0F" bkgColor="0x0000"  font="mono15" />
             <box id="BlueAutonsButton" x="320" y="136" width="150" height="67" color="0x000000" callback="BlueAutons" outlineWidth="3" outlineColor="0x0000FF" />
 
             <text id="TitleMimicL" x="10" y="232" text="Selected Auton Info" color="0x000000" bkgColor="0x32bff4"  font="prop20" />

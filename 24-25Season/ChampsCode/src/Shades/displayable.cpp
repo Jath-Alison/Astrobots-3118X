@@ -22,6 +22,7 @@ namespace sds {
 
 	void displayable::executeCallback()
 	{
+		std::cout << "Executing Callback: " << m_callbackId << std::endl;
 		Screen::executeCallback(m_callbackId);
 	}
 

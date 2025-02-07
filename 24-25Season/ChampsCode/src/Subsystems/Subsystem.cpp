@@ -19,7 +19,7 @@ int periodicLoop()
 		arm.periodic();
         asyncDrive.periodic();
 
-        vex::wait(10, vex::msec);
+        vex::wait(20, vex::msec);
     }
     return 0;
 }

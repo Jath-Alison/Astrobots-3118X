@@ -165,7 +165,11 @@ void usercontrol(void)
 		}
 
 		if (Controller1.ButtonRight.PRESSED){
-			flippingAWPAuton();
+			// flippingAWPAuton();
+			centerRings();
+			// asyncDrive.setTurnTarget(art::Degrees(0));
+			// asyncDrive.setState(AsyncDrive::TURN);
+			// waitUntil(asyncDrive.turnComplete());
 
 			asyncDrive.setState(AsyncDrive::CONTROL);
 		}

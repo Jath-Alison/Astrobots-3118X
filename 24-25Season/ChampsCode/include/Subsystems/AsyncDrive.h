@@ -12,8 +12,8 @@ public:
         WAIT,
         CONTROL,
         DRIVE,
-        DRIVE_HEADING_CORRECTED,
         TURN,
+        DRIVE_HEADING_CORRECTED,
         SWING_ABOUT_LEFT,
         SWING_ABOUT_RIGHT,
         PATH,
@@ -37,6 +37,23 @@ public:
     void setState(DriveState state);
 
     void periodic();
+
+    //Auto functions
+
+    void driveForA(art::Length target);
+    void driveForA(art::Length target, art::PID pid);
+    void driveForS(art::Length target);
+    void driveForS(art::Length target, art::PID pid);
+
+    void turnToA(art::Angle target);
+    void turnToA(art::Angle target, art::PID pid);
+    void turnToS(art::Angle target);
+    void turnToS(art::Angle target, art::PID pid);
+
+    void driveForHeadingCorrectedA(art::Length target, art::Angle heading);
+    void driveForHeadingCorrectedA(art::Length target, art::Angle heading, art::PID drivePID, art::PID turnPID);
+    void driveForHeadingCorrectedS(art::Length target, art::Angle heading);
+    void driveForHeadingCorrectedS(art::Length target, art::Angle heading, art::PID drivePID, art::PID turnPID);
 
     bool driveComplete();
     bool turnComplete();

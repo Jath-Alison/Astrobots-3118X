@@ -43,9 +43,7 @@ AsyncDrive asyncDrive = AsyncDrive(drive, inert)
       vex::rotation(vex::PORT13, false),
       art::Inches(2),
       1.0
-    )
-    
-    ;
+    );
 
 // .withDriveForPID(art::PID()
 //         .withConstants(10, 0.06, -5.0)//Somehow already in 1/(1inch) P * 3, D * 4

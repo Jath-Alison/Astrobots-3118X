@@ -21,6 +21,7 @@
 #include "Subsystems/Intake.h"
 #include "Subsystems/Arm.h"
 #include "Subsystems/AsyncDrive.h"
+#include "pids.h"
 
 extern vex::gps gpsSensorL;
 extern vex::gps gpsSensorR;

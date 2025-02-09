@@ -134,6 +134,10 @@ namespace art
         {
             return true;
         }
+        if(m_timeout == 0 && m_settleTimeout == 0)
+        {
+            return true;
+        }
         return false;
     }
 

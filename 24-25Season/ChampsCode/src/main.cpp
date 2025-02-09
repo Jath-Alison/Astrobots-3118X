@@ -174,10 +174,11 @@ Controller1.ButtonA.RELEASED)
 		if (Controller1.ButtonRight.PRESSED){
 			// flippingAWPAuton();
 			// centerRings();
-			ringSideToCorner();
-			// asyncDrive.setTurnTarget(art::Degrees(0));
-			// asyncDrive.setState(AsyncDrive::SWING_ABOUT_LEFT);
-			waitUntil(asyncDrive.turnComplete());
+			// ringSideToCorner();
+			
+			asyncDrive.driveForS(art::Inches(10), oldDrivePID);
+			asyncDrive.turnToS(art::Degrees(180), oldTurnPID);
+			asyncDrive.driveForS(art::Inches(10), oldDrivePID);
 
 			asyncDrive.setState(AsyncDrive::CONTROL);
 		}

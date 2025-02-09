@@ -7,7 +7,7 @@ void AsyncDrive::driveForA(art::Length target)
 }
 void AsyncDrive::driveForA(art::Length target, art::PID pid)
 {
-    m_drivePID = pid;
+    m_drivePID = pid; m_drivePID.reset();
     driveForA(target);
 }
 void AsyncDrive::driveForS(art::Length target)
@@ -17,7 +17,7 @@ void AsyncDrive::driveForS(art::Length target)
 }
 void AsyncDrive::driveForS(art::Length target, art::PID pid)
 {
-    m_drivePID = pid;
+    m_drivePID = pid; m_drivePID.reset();
 
     driveForA(target);
 
@@ -31,21 +31,21 @@ void AsyncDrive::turnToA(art::Angle target)
 }
 void AsyncDrive::turnToA(art::Angle target, art::PID pid)
 {
-    m_drivePID = pid;
+    m_turnPID = pid; m_turnPID.reset();
     turnToA(target);
 }
 void AsyncDrive::turnToS(art::Angle target)
 {
     turnToA(target);
-    waitUntil(m_drivePID.isCompleted());
+    waitUntil(m_turnPID.isCompleted());
 }
 void AsyncDrive::turnToS(art::Angle target, art::PID pid)
 {
-    m_drivePID = pid;
+    m_turnPID = pid; m_turnPID.reset();
 
     turnToA(target);
 
-    waitUntil(m_drivePID.isCompleted());
+    waitUntil(m_turnPID.isCompleted());
 }
 
 void AsyncDrive::driveForHeadingCorrectedA(art::Length target, art::Angle heading)
@@ -56,8 +56,8 @@ void AsyncDrive::driveForHeadingCorrectedA(art::Length target, art::Angle headin
 }
 void AsyncDrive::driveForHeadingCorrectedA(art::Length target, art::Angle heading, art::PID drivePID, art::PID turnPID)
 {
-    m_drivePID = drivePID;
-    m_turnPID = turnPID;
+    m_drivePID = drivePID; m_drivePID.reset();
+    m_turnPID = turnPID; m_turnPID.reset();
     driveForHeadingCorrectedA(target, heading);
 }
 void AsyncDrive::driveForHeadingCorrectedS(art::Length target, art::Angle heading)
@@ -67,8 +67,8 @@ void AsyncDrive::driveForHeadingCorrectedS(art::Length target, art::Angle headin
 }
 void AsyncDrive::driveForHeadingCorrectedS(art::Length target, art::Angle heading, art::PID drivePID, art::PID turnPID)
 {
-    m_drivePID = drivePID;
-    m_turnPID = turnPID;
+    m_drivePID = drivePID; m_drivePID.reset();
+    m_turnPID = turnPID; m_turnPID.reset();
 
     driveForHeadingCorrectedA(target, heading);
 

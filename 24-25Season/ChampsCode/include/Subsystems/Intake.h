@@ -35,8 +35,10 @@ private:
     double m_cmd{0.0};
 
     art::TimePoint m_startTime;
+    art::TimePoint m_startMovingTime;
     double m_delay{0.0};
     double timePassed();
+    double timeMoving();
 
     IntakeState m_state{CONTROL};
 

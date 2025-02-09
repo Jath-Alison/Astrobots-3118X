@@ -110,16 +110,20 @@ void usercontrol(void)
 
 		asyncDrive.handleInputs(Controller1.Axis3.position(), Controller1.Axis1.position());
 
-		if (Controller1.ButtonR1.pressing())
+		if (Controller1.ButtonR1.PRESSED)
 		{
-			intake.handleInput(100);
+			// intake.handleInput(100);
+			intake.setState(Intake::REJECT_BLUE);
 		}
 		else if (Controller1.ButtonA.pressing())
 		{
+			intake.setState(Intake::CONTROL);
 			intake.handleInput(-100);
 		}
-		else
+		else if(Controller1.ButtonR1.RELEASED ||
+Controller1.ButtonA.RELEASED)
 		{
+			intake.setState(Intake::CONTROL);
 			intake.handleInput(0);
 		}
 

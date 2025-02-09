@@ -11,22 +11,27 @@ void Intake::periodic()
     {
     case CONTROL:
         m_cmd = m_input_cmd;
+        m_optical.setLight(vex::ledState::off);
         break;
     case REJECT_RED:
         m_cmd = 100;
+        m_optical.setLight(vex::ledState::on);
         if (m_optical.getRgb().red > 75 && m_optical.getRgb().blue < 75)
         {
             setState(DELAY_OFF);
-            m_delay = 0.25;
+            m_optical.setLight(vex::ledState::off);
+            m_delay = 0.17;
             resetDelay();
         }
         break;
     case REJECT_BLUE:
         m_cmd = 100;
+        m_optical.setLight(vex::ledState::on);
         if (m_optical.getRgb().blue > 75 && m_optical.getRgb().red < 75)
         {
             setState(DELAY_OFF);
-            m_delay = 0.25;
+            m_optical.setLight(vex::ledState::off);
+            m_delay = 0.17;
             resetDelay();
         }
         break;
@@ -77,6 +82,8 @@ void Intake::periodic()
     case ANTI_JAM_REVERSE:
         if (timePassed() > m_delay)
         {
+            m_startMovingTime = std::chrono::high_resolution_clock::now();
+
             m_cmd = 100;
             setState(m_lastState);
         }
@@ -88,7 +95,9 @@ void Intake::periodic()
         break;
     }
 
-    if (m_runningAntijam && m_motor.get() > 50 && m_motor.velocity(vex::pct) < 5 && m_state != ANTI_JAM_REVERSE)
+    if (m_runningAntijam && timeMoving() > 0.125 &&
+        m_motor.get() > 50 && m_motor.velocity(vex::pct) < 5 &&
+        m_state != ANTI_JAM_REVERSE)
     {
         m_delay = 0.25;
         resetDelay();
@@ -101,11 +110,17 @@ void Intake::periodic()
 
 void Intake::handleInput(double input)
 {
+    if (input == m_input_cmd)
+    {
+        return;
+    }
+    m_startMovingTime = std::chrono::high_resolution_clock::now();
     m_input_cmd = input;
 }
 
 void Intake::setState(IntakeState state)
 {
+    m_startMovingTime = std::chrono::high_resolution_clock::now();
     m_state = state;
 }
 void Intake::resetDelay()
@@ -123,5 +138,10 @@ double Intake::timePassed()
     return std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - m_startTime).count() / 1000.0F;
 }
 
+double Intake::timeMoving()
+{
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    return std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - m_startMovingTime).count() / 1000.0F;
+}
 void Intake::setAntiJam(bool runningAntiJam) { m_runningAntijam = runningAntiJam; };
 bool Intake::getAntiJam() { return m_runningAntijam; };

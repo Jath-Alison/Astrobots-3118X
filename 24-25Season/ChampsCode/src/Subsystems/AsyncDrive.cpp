@@ -94,6 +94,10 @@ art::Vec2 AsyncDrive::getPos()
 {
     return m_pos;
 }
+art::Vec2 AsyncDrive::getVel()
+{
+    return m_vel;
+}
 void AsyncDrive::periodic()
 {
 
@@ -120,7 +124,7 @@ void AsyncDrive::periodic()
         pos = art::Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
         a = m_drivePID.calculate(m_driveTarget - pos);
 
-        error = art::Degrees(m_turnTarget.degrees() - m_inert.rotation(vex::degrees));
+        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_inert.rotation(vex::degrees)));
 
         if (abs(a) > 100)
         {

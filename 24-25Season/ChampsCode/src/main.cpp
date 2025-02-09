@@ -68,7 +68,6 @@ void autonomous(void)
 	{
 		vex::wait(10, vex::msec);
 	}
-
 }
 
 /**
@@ -117,8 +116,8 @@ void usercontrol(void)
 			intake.setState(Intake::CONTROL);
 			intake.handleInput(-100);
 		}
-		else if(Controller1.ButtonR1.RELEASED ||
-Controller1.ButtonA.RELEASED)
+		else if (Controller1.ButtonR1.RELEASED ||
+				 Controller1.ButtonA.RELEASED)
 		{
 			intake.setState(Intake::CONTROL);
 			intake.handleInput(0);
@@ -149,7 +148,9 @@ Controller1.ButtonA.RELEASED)
 			arm.handleCmdInput(100);
 
 			intake.handleInput(-30);
-		}else{
+		}
+		else
+		{
 			arm.handleCmdInput(0);
 		}
 
@@ -157,7 +158,6 @@ Controller1.ButtonA.RELEASED)
 		{
 			arm.setState(Arm::POSITION);
 			arm.handlePosInput(art::Degrees(10));
-
 		}
 		else if (Controller1.ButtonDown.pressing())
 		{
@@ -167,18 +167,29 @@ Controller1.ButtonA.RELEASED)
 			intake.handleInput(-30);
 		}
 
-		if (Controller1.ButtonY.PRESSED){
+		if (Controller1.ButtonY.PRESSED)
+		{
 			intake.setAntiJam(!intake.getAntiJam());
 		}
 
-		if (Controller1.ButtonRight.PRESSED){
+		if (Controller1.ButtonRight.PRESSED)
+		{
 			// flippingAWPAuton();
 			// centerRings();
 			// ringSideToCorner();
-			
+
+			art::PID fastTurnPID = art::PID()
+								.withConstants(2 / (art::Degrees(1)), 3.0, -450)
+								.withIntegralZone(art::Degrees(10))
+								.withTimeout(2)
+								.withSettleZone(art::Degrees(6))
+								.withSettleTimeout(0.0625);
+
 			asyncDrive.driveForS(art::Inches(10), oldDrivePID);
-			asyncDrive.turnToS(art::Degrees(180), oldTurnPID);
-			asyncDrive.driveForS(art::Inches(10), oldDrivePID);
+
+			asyncDrive.turnToS(art::Degrees(180), fastTurnPID);
+
+			asyncDrive.driveForHeadingCorrectedS(art::Inches(10), art::Degrees(180), oldDrivePID, oldTurnPID);
 
 			asyncDrive.setState(AsyncDrive::CONTROL);
 		}

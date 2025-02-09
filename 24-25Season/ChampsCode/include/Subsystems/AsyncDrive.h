@@ -32,6 +32,7 @@ public:
 
     art::Angle getDir();
     art::Vec2 getPos();
+    art::Vec2 getVel();
 
     void handleInputs(double drive, double rot);
     void setState(DriveState state);

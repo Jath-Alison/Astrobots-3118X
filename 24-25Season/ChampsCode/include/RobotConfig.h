@@ -38,7 +38,6 @@ extern vex::motor_group rightMotors;
 extern vex::inertial inert;
 
 extern art::TankDrive drive;
-extern art::SmartDrive smartDrive;
 extern AsyncDrive asyncDrive;
 
 // extern art::SimpleMotor intake;

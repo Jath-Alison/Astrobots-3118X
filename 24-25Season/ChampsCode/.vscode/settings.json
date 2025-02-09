@@ -41,7 +41,9 @@
 		"typeinfo": "cpp",
 		"iostream": "cpp",
 		"cstddef": "cpp",
-		"cstring": "cpp"
+		"cstring": "cpp",
+		"memory": "cpp",
+		"random": "cpp"
 	},
 	"C_Cpp.errorSquiggles": "enabled"
 }

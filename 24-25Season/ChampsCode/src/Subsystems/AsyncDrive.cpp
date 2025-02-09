@@ -1,7 +1,98 @@
 #include "Subsystems/AsyncDrive.h"
 
-AsyncDrive::AsyncDrive(art::SmartDrive &drive) : m_smartDrive(drive)
+AsyncDrive::AsyncDrive(art::TankDrive drive, vex::inertial inert) : art::TankDrive(drive), m_inert(inert)
 {
+    m_inert.calibrate();
+}
+
+AsyncDrive &AsyncDrive::withWheelSize(art::Length size)
+{
+    m_wheelSize = size;
+    return *this;
+}
+
+AsyncDrive &AsyncDrive::withGearRatio(double ratio)
+{
+    m_gearRatio = ratio;
+    return *this;
+}
+
+AsyncDrive &AsyncDrive::withHorizontalTracker(vex::rotation rotation, art::Length wheelSize, double gearRatio)
+{
+    m_tracker = HorizontalTracker(rotation, wheelSize, gearRatio);
+    return *this;
+}
+
+AsyncDrive &AsyncDrive::withHorizontalTracker(vex::rotation rotation, art::Length wheelSize, double gearRatio, art::Length wheelOffset)
+{
+    m_tracker = HorizontalTracker(rotation, wheelSize, gearRatio, wheelOffset);
+    return *this;
+}
+
+int AsyncDrive::track()
+{
+    if (m_tracker.m_rotation)
+    {
+        m_tracker.m_rotation->setPosition(0, vex::deg);
+    }
+    while (m_inert.isCalibrating())
+    {
+        vex::wait(5, vex::msec);
+    }
+
+    while (true)
+    {
+        static art::Angle prevDir;
+        if (m_dir != prevDir)
+        {
+            m_inert.setHeading(m_dir.degrees(), vex::deg);
+        }
+        m_dir = art::Degrees(m_inert.heading(vex::degrees));
+
+        art::Angle leftTravel = getLeftTravel();
+        art::Angle rightTravel = getRightTravel();
+
+        m_leftTravel = art::Length(leftTravel.revolutions() * getWheelTravel());
+        m_rightTravel = art::Length(rightTravel.revolutions() * getWheelTravel());
+
+        art::Angle wheelTravel = art::Angle((leftTravel + rightTravel) / 2.0);
+        art::Length travel = art::Length(wheelTravel.revolutions() * getWheelTravel());
+
+        // Distance travel = Inches(change*((3.25 * 3.1415)/360.f) / (72.f/48.f));
+        art::Vec2 posChange = art::Vec2::dirAndMag(m_dir, travel);
+
+        if (m_tracker.m_rotation != nullptr)
+        {
+            art::Length hTravel = m_tracker.getTravel();
+
+            art::Vec2 trackerTravel = art::Vec2::dirAndMag(m_dir + art::Degrees(90), hTravel);
+
+            posChange = posChange + trackerTravel;
+        }
+
+        m_vel = posChange * (50.0);
+        m_rotVel = art::Angle(m_dir - prevDir) * 50.0;
+
+        m_pos = m_pos + posChange;
+        m_centerPos = m_pos + art::Vec2::dirAndMag(m_dir, m_tracker.m_offset);
+
+        prevDir = m_dir;
+
+        vex::wait(20, vex::msec);
+    }
+}
+
+bool AsyncDrive::isCalibrating()
+{
+    return m_inert.isCalibrating();
+}
+art::Angle AsyncDrive::getDir()
+{
+    return m_dir;
+}
+art::Vec2 AsyncDrive::getPos()
+{
+    return m_pos;
 }
 void AsyncDrive::periodic()
 {
@@ -13,71 +104,47 @@ void AsyncDrive::periodic()
     switch (m_state)
     {
     case WAIT:
-        m_smartDrive.arcade(0, 0);
+        arcade(0, 0);
     case CONTROL:
-        m_smartDrive.arcade(drive_input, rot_input);
+        arcade(drive_input, rot_input);
         break;
     case DRIVE:
 
-        pos = art::Degrees((m_smartDrive.m_left.position(vex::degrees) + m_smartDrive.m_right.position(vex::degrees)) / 2.f);
-        a = m_smartDrive.m_driveForPID.calculate(m_driveTarget - pos);
+        pos = art::Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
+        a = m_drivePID.calculate(m_driveTarget - pos);
 
-        m_smartDrive.arcade(a, 0);
-
-        logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_P, m_smartDrive.m_driveForPID.getProportional());
-        logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_I, m_smartDrive.m_driveForPID.getIntegral());
-        logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_D, m_smartDrive.m_driveForPID.getDerivative());
-        logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_feedback, pos);
-        logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_target, m_driveTarget);
+        arcade(a, 0);
 
         break;
     case DRIVE_HEADING_CORRECTED:
-        pos = art::Degrees((m_smartDrive.m_left.position(vex::degrees) + m_smartDrive.m_right.position(vex::degrees)) / 2.f);
-        a = m_smartDrive.m_driveForPID.calculate(m_driveTarget - pos);
+        pos = art::Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
+        a = m_drivePID.calculate(m_driveTarget - pos);
 
-        error = art::Degrees(m_turnTarget.degrees() - m_smartDrive.m_inert.rotation(vex::degrees));
+        error = art::Degrees(m_turnTarget.degrees() - m_inert.rotation(vex::degrees));
 
         if (abs(a) > 100)
         {
             a *= 100.0 / fabs(a);
         }
 
-        m_smartDrive.arcade(a, m_smartDrive.m_turnToPID.calculate(error));
-
-        logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_P, m_smartDrive.m_driveForPID.getProportional());
-        logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_I, m_smartDrive.m_driveForPID.getIntegral());
-        logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_D, m_smartDrive.m_driveForPID.getDerivative());
-        logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_feedback, pos);
-        logging::logger.logDoubleEntry(logging::Base_DriveTo_PID_target, m_driveTarget);
-
-        logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_P, m_smartDrive.m_turnToPID.getProportional());
-        logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_I, m_smartDrive.m_turnToPID.getIntegral());
-        logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_D, m_smartDrive.m_turnToPID.getDerivative());
-        logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_feedback, m_smartDrive.m_inert.rotation(vex::degrees));
-        logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_target, m_turnTarget.degrees());
+        arcade(a, m_turnPID.calculate(error));
 
         break;
     case TURN:
 
-        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_smartDrive.m_inert.rotation(vex::degrees)));
-        m_smartDrive.arcade(0, m_smartDrive.m_turnToPID.calculate(error));
-
-        logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_P, m_smartDrive.m_turnToPID.getProportional());
-        logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_I, m_smartDrive.m_turnToPID.getIntegral());
-        logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_D, m_smartDrive.m_turnToPID.getDerivative());
-        logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_feedback, m_smartDrive.m_inert.rotation(vex::degrees));
-        logging::logger.logDoubleEntry(logging::Base_TurnTo_PID_target, m_turnTarget.degrees());
+        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_inert.rotation(vex::degrees)));
+        arcade(0, m_turnPID.calculate(error));
 
         break;
     case SWING_ABOUT_LEFT:
-        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_smartDrive.m_inert.rotation(vex::degrees)));
-        a = m_smartDrive.m_turnToPID.calculate(error);
-        m_smartDrive.m_right.set(-a);
+        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_inert.rotation(vex::degrees)));
+        a = m_turnPID.calculate(error);
+        m_right.set(-a);
         break;
     case SWING_ABOUT_RIGHT:
-        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_smartDrive.m_inert.rotation(vex::degrees)));
-        a = m_smartDrive.m_turnToPID.calculate(error);
-        m_smartDrive.m_left.set(a);
+        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_inert.rotation(vex::degrees)));
+        a = m_turnPID.calculate(error);
+        m_left.set(a);
         break;
     case PATH:
         break;
@@ -96,33 +163,78 @@ void AsyncDrive::handleInputs(double drive, double rot)
 }
 void AsyncDrive::setDriveTarget(art::Length target)
 {
-    m_driveOffset = art::Degrees((m_smartDrive.m_left.position(vex::degrees) + m_smartDrive.m_right.position(vex::degrees)) / 2.f);
-    m_driveTarget = art::Angle(art::Revolutions(target / m_smartDrive.getWheelTravel()) + m_driveOffset);
-    m_smartDrive.m_driveForPID.reset();
+    m_driveOffset = art::Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
+    m_driveTarget = art::Angle(art::Revolutions(target / getWheelTravel()) + m_driveOffset);
+    m_drivePID.reset();
 }
 void AsyncDrive::setTurnTarget(art::Angle target)
 {
     m_turnTarget = target;
-    m_smartDrive.m_turnToPID.reset();
+    m_turnPID.reset();
 }
 void AsyncDrive::zeroGyro()
 {
-    m_smartDrive.m_dir = art::Angle(0);
+    m_dir = art::Angle(0);
 }
 bool AsyncDrive::driveComplete()
 {
-    return m_smartDrive.m_driveForPID.isCompleted();
+    return m_drivePID.isCompleted();
 }
 bool AsyncDrive::turnComplete()
 {
-    return m_smartDrive.m_turnToPID.isCompleted();
+    return m_turnPID.isCompleted();
 }
 
 double AsyncDrive::driveError()
 {
-    return m_smartDrive.m_driveForPID.getProportional() / m_smartDrive.m_driveForPID.getkp();
+    return m_drivePID.getProportional() / m_drivePID.getkp();
 }
 double AsyncDrive::turnError()
 {
-    return m_smartDrive.m_turnToPID.getProportional() / m_smartDrive.m_turnToPID.getkp();
+    return m_turnPID.getProportional() / m_turnPID.getkp();
+}
+
+art::Angle AsyncDrive::getLeftTravel()
+{
+    art::Angle currentAngle = art::Degrees(m_left.position(vex::degrees));
+
+    art::Angle tempAngle = art::Angle(currentAngle - m_LastLeftPos);
+    m_LastLeftPos = currentAngle;
+
+    return tempAngle;
+}
+art::Angle AsyncDrive::getRightTravel()
+{
+    art::Angle currentAngle = art::Degrees(m_right.position(vex::degrees));
+
+    art::Angle tempAngle = art::Angle(currentAngle - m_LastRightPos);
+    m_LastRightPos = currentAngle;
+
+    return tempAngle;
+}
+
+art::Length AsyncDrive::getWheelTravel()
+{
+    return art::Length(M_PI * m_wheelSize * m_gearRatio);
+}
+
+AsyncDrive::HorizontalTracker::HorizontalTracker() {}
+AsyncDrive::HorizontalTracker::HorizontalTracker(vex::rotation rotation, art::Length wheelSize, double gearRatio) : m_wheelSize(wheelSize), m_gearRatio(gearRatio)
+{
+    m_rotation = std::make_shared<vex::rotation>(rotation);
+}
+AsyncDrive::HorizontalTracker::HorizontalTracker(vex::rotation rotation, art::Length wheelSize, double gearRatio, art::Length wheelOffset) : m_wheelSize(wheelSize), m_gearRatio(gearRatio), m_offset(wheelOffset)
+{
+    m_rotation = std::make_shared<vex::rotation>(rotation);
+}
+art::Length AsyncDrive::HorizontalTracker::getTravel()
+{
+    art::Angle currentAngle = art::Degrees(m_rotation->position(vex::degrees));
+
+    m_travelAngle = art::Angle(currentAngle - m_lastAngle);
+    m_lastAngle = currentAngle;
+
+    m_travelDistance = art::Length(m_travelAngle * (m_wheelSize / 2.0) * m_gearRatio);
+
+    return m_travelDistance;
 }

@@ -36,7 +36,7 @@ vex::motor_group rightMotors (rightMotorA, rightMotorB, rightMotorC);
 vex::inertial inert (vex::PORT18);
 
 art::TankDrive drive = art::TankDrive(leftMotors, rightMotors);
-art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
+AsyncDrive asyncDrive = AsyncDrive(drive, inert)
     .withGearRatio(36.f/48.f)
     .withWheelSize(art::Inches(2.75))
     .withHorizontalTracker(
@@ -44,30 +44,30 @@ art::SmartDrive smartDrive = art::SmartDrive(drive, inert)
       art::Inches(2),
       1.0
     )
-    .withDriveForPID(art::PID()
-        .withConstants(10, 0.06, -5.0)//Somehow already in 1/(1inch) P * 3, D * 4
-        .withIntegralZone(art::Revolutions(art::Inches(2) / (M_PI * art::Inches(2.75) * (36.f/48.f))))//still need conversion from inches to revolutions
-        .withTimeout(7.5)   
-        .withSettleZone(art::Revolutions(art::Inches(1) / (M_PI * art::Inches(2.75) * (36.f/48.f))))
-        .withSettleTimeout(0.25)
-    )
-    .withTurnForPID(art::PID()
-        .withConstants(3/(art::Degrees(1)), 3.0, -750)
-        .withIntegralZone(art::Degrees(10))
-        .withTimeout(2)
-        .withSettleZone(art::Degrees(3))
-        .withSettleTimeout(0.25)
-    )
-    .withTurnToPID(art::PID()
-        .withConstants(3/(art::Degrees(1)), 3.0, -750)// / by 2, 10, -500
-        .withIntegralZone(art::Degrees(15))
-        .withTimeout(3)
-        .withSettleZone(art::Degrees(3))
-        .withSettleTimeout(0.25)//Lowkey could be turned down to 0.25
-    )
+    
     ;
 
-AsyncDrive asyncDrive(smartDrive);
+// .withDriveForPID(art::PID()
+//         .withConstants(10, 0.06, -5.0)//Somehow already in 1/(1inch) P * 3, D * 4
+//         .withIntegralZone(art::Revolutions(art::Inches(2) / (M_PI * art::Inches(2.75) * (36.f/48.f))))//still need conversion from inches to revolutions
+//         .withTimeout(7.5)   
+//         .withSettleZone(art::Revolutions(art::Inches(1) / (M_PI * art::Inches(2.75) * (36.f/48.f))))
+//         .withSettleTimeout(0.25)
+//     )
+//     .withTurnForPID(art::PID()
+//         .withConstants(3/(art::Degrees(1)), 3.0, -750)
+//         .withIntegralZone(art::Degrees(10))
+//         .withTimeout(2)
+//         .withSettleZone(art::Degrees(3))
+//         .withSettleTimeout(0.25)
+//     )
+//     .withTurnToPID(art::PID()
+//         .withConstants(3/(art::Degrees(1)), 3.0, -750)// / by 2, 10, -500
+//         .withIntegralZone(art::Degrees(15))
+//         .withTimeout(3)
+//         .withSettleZone(art::Degrees(3))
+//         .withSettleTimeout(0.25)//Lowkey could be turned down to 0.25
+//     )
 
 // art::SimpleMotor intake  = art::SimpleMotor(vex::motor(vex::PORT3, vex::gearSetting::ratio6_1, false))
 //     .withSpeedMode(false);

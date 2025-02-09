@@ -85,7 +85,7 @@ namespace sds
                 ss.clear();
                 if (d)
                 {
-                    ss << d->getBaseText() << smartDrive.m_dir.degrees();
+                    ss << d->getBaseText() << asyncDrive.getDir().degrees();
                     d->setText(ss.str().c_str());
                 }
             }

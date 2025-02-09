@@ -64,7 +64,7 @@ void pre_auton(void)
 void autonomous(void)
 {
 
-	while (smartDrive.m_inert.isCalibrating())
+	while (asyncDrive.isCalibrating())
 	{
 		vex::wait(10, vex::msec);
 	}
@@ -91,7 +91,7 @@ void autonomous(void)
  */
 void usercontrol(void)
 {
-	while (smartDrive.m_inert.isCalibrating())
+	while (asyncDrive.isCalibrating())
 	{
 		vex::wait(10, vex::msec);
 	}
@@ -104,9 +104,6 @@ void usercontrol(void)
 
 	while (1)
 	{
-
-		// smartDrive.LeftSplitArcadeCurved(Controller1);
-		// smartDrive.curvatureDrive(Controller1.Axis3.position(), Controller1.Axis1.position(), 25.0);
 
 		asyncDrive.handleInputs(Controller1.Axis3.position(), Controller1.Axis1.position());
 
@@ -193,7 +190,7 @@ vex::thread trackingThread;
 
 int tracking()
 {
-	smartDrive.track();
+	asyncDrive.track();
 	return 1;
 }
 

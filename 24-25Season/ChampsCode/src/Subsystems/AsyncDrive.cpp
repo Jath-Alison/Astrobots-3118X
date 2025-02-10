@@ -124,7 +124,7 @@ void AsyncDrive::periodic()
         pos = art::Degrees((m_left.position(vex::degrees) + m_right.position(vex::degrees)) / 2.f);
         a = m_drivePID.calculate(m_driveTarget - pos);
 
-        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_inert.rotation(vex::degrees)));
+        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_dir.degrees()));
 
         if (abs(a) > 100)
         {
@@ -136,17 +136,17 @@ void AsyncDrive::periodic()
         break;
     case TURN:
 
-        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_inert.rotation(vex::degrees)));
+        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_dir.degrees()));
         arcade(0, m_turnPID.calculate(error));
 
         break;
     case SWING_ABOUT_LEFT:
-        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_inert.rotation(vex::degrees)));
+        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_dir.degrees()));
         a = m_turnPID.calculate(error);
         m_right.set(-a);
         break;
     case SWING_ABOUT_RIGHT:
-        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_inert.rotation(vex::degrees)));
+        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_dir.degrees()));
         a = m_turnPID.calculate(error);
         m_left.set(a);
         break;

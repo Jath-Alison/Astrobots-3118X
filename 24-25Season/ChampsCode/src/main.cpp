@@ -179,17 +179,28 @@ void usercontrol(void)
 			// ringSideToCorner();
 
 			art::PID fastTurnPID = art::PID()
-								.withConstants(2 / (art::Degrees(1)), 3.0, -450)
-								.withIntegralZone(art::Degrees(10))
-								.withTimeout(2)
-								.withSettleZone(art::Degrees(6))
-								.withSettleTimeout(0.0625);
+									   .withConstants(2 / (art::Degrees(1)), 3.0, -450)
+									   .withIntegralZone(art::Degrees(10))
+									   .withTimeout(2)
+									   .withSettleZone(art::Degrees(6))
+									   .withSettleTimeout(0.0625);
 
-			asyncDrive.driveForS(art::Inches(10), oldDrivePID);
+			art::PID fastDrive = art::PID()
+									 .withConstants(10, 0.06, -5.0)																	  // Somehow already in 1/(1inch) P * 3, D * 4
+									 .withIntegralZone(art::Revolutions(art::Inches(2) / (M_PI * art::Inches(2.75) * (36.f / 48.f)))) // still need conversion from inches to revolutions
+									 .withTimeout(7.5)
+									 .withSettleZone(art::Revolutions(art::Inches(2) / (M_PI * art::Inches(2.75) * (36.f / 48.f))))
+									 .withSettleTimeout(0.0625);
 
-			asyncDrive.turnToS(art::Degrees(180), fastTurnPID);
+			oldDrivePID.setSettleTimeout(0.0625);
 
-			asyncDrive.driveForHeadingCorrectedS(art::Inches(10), art::Degrees(180), oldDrivePID, oldTurnPID);
+			asyncDrive.driveForS(art::Inches(24), oldDrivePID);
+
+			asyncDrive.turnToS(art::Degrees(90), fastTurnPID);
+			asyncDrive.driveForHeadingCorrectedS(art::Inches(24), art::Degrees(90), oldDrivePID, oldDrivePID);
+
+			asyncDrive.turnToS(art::Degrees(0), fastTurnPID);
+			asyncDrive.driveForHeadingCorrectedS(art::Inches(24), art::Degrees(0), oldDrivePID, oldDrivePID);
 
 			asyncDrive.setState(AsyncDrive::CONTROL);
 		}

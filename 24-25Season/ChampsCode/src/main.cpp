@@ -25,7 +25,7 @@
  * @brief A global instance of competition
  *
  * This object takes care of running the different Competition Tasks when
- * commands are recived from the field control.
+ * commands are received from the field control.
  */
 vex::competition Competition;
 

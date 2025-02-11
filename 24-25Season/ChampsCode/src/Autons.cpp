@@ -115,11 +115,11 @@ void centerRings()
     vex::wait(0.75, vex::sec);
 
     clamp.set(true);
-    intake.resetDelay(0.5);
-    intake.setState(Intake::DELAY_OFF);
     vex::wait(0.25, vex::sec);
 
     asyncDrive.turnToS(art::Degrees(-45), oldTurnPID);
+    intake.resetDelay(0.5);
+    intake.setState(Intake::DELAY_OFF);
 
     asyncDrive.driveForHeadingCorrectedS(art::Inches(18), art::Degrees(-45), oldDrivePID, oldTurnPID);
 
@@ -137,16 +137,25 @@ void centerRings()
     doinkerDeployL.set(false);
     doinkerDeployR.set(false);
 
-    asyncDrive.turnToS(art::Degrees(-45));
+    asyncDrive.turnToS(art::Degrees(-46));
 
     intake.setState(Intake::CONTROL);
     intake.handleInput(100);
 
-    asyncDrive.driveForS(art::Inches(15), oldDrivePID);
+    asyncDrive.driveForS(art::Inches(14), oldDrivePID);
     vex::wait(0.25, vex::sec);
     asyncDrive.turnToS(art::Degrees(-145));
 
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(15),art::Degrees(-145), oldDrivePID, oldTurnPID);
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(36-15),art::Degrees(-145), oldDrivePID, oldTurnPID);
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(2),art::Degrees(-145), oldDrivePID, oldTurnPID);
+    
+    asyncDrive.turnToS(art::Degrees(-100));
+
+    asyncDrive.driveForS(art::Inches(-36), driveFastExit);
+    clamp.set(false);
     asyncDrive.driveForS(art::Inches(36), driveFastExit);
+    asyncDrive.turnToS(art::Degrees(90));
 
 
 }

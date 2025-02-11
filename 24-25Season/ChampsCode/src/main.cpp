@@ -175,9 +175,10 @@ void usercontrol(void)
 		if (Controller1.ButtonRight.PRESSED)
 		{
 			// flippingAWPAuton();
-			// centerRings();
+			centerRings();
 			// ringSideToCorner();
 
+			/*
 			art::PID fastTurnPID = art::PID()
 									   .withConstants(2 / (art::Degrees(1)), 3.0, -450)
 									   .withIntegralZone(art::Degrees(10))
@@ -201,6 +202,7 @@ void usercontrol(void)
 
 			asyncDrive.turnToS(art::Degrees(0), fastTurnPID);
 			asyncDrive.driveForHeadingCorrectedS(art::Inches(24), art::Degrees(0), oldDrivePID, oldDrivePID);
+			*/
 
 			asyncDrive.setState(AsyncDrive::CONTROL);
 		}

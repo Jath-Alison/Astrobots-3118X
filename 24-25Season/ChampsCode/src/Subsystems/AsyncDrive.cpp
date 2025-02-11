@@ -17,6 +17,12 @@ AsyncDrive &AsyncDrive::withGearRatio(double ratio)
     return *this;
 }
 
+AsyncDrive &AsyncDrive::withDefaultPIDs(art::PID drivePid, art::PID turnPid)
+{
+    m_drivePID = drivePid;
+    m_turnPID = turnPid;
+    return *this;
+}
 AsyncDrive &AsyncDrive::withHorizontalTracker(vex::rotation rotation, art::Length wheelSize, double gearRatio)
 {
     m_tracker = HorizontalTracker(rotation, wheelSize, gearRatio);

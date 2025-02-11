@@ -39,6 +39,7 @@ art::TankDrive drive = art::TankDrive(leftMotors, rightMotors);
 AsyncDrive asyncDrive = AsyncDrive(drive, inert)
     .withGearRatio(36.f/48.f)
     .withWheelSize(art::Inches(2.75))
+    .withDefaultPIDs(oldDrivePID, oldTurnPID)
     .withHorizontalTracker(
       vex::rotation(vex::PORT13, false),
       art::Inches(2),

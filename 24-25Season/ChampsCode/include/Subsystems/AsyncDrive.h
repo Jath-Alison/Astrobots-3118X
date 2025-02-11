@@ -24,6 +24,7 @@ public:
 
     AsyncDrive &withWheelSize(art::Length size);
     AsyncDrive &withGearRatio(double ratio);
+    AsyncDrive &withDefaultPIDs(art::PID drivePid, art::PID turnPid);
     AsyncDrive &withHorizontalTracker(vex::rotation rotation, art::Length wheelSize, double gearRatio);
     AsyncDrive &withHorizontalTracker(vex::rotation rotation, art::Length wheelSize, double gearRatio, art::Length wheelOffset);
 

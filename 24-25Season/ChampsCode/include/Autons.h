@@ -6,3 +6,5 @@ void flippingAWPAuton();
 
 void centerRings();
 void ringSideToCorner();
+
+void skills();

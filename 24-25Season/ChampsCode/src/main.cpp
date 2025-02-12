@@ -181,15 +181,7 @@ void usercontrol(void)
 			// centerRings();
 			// ringSideToCorner();
 
-			zeroGyro();
-
-			intake.setState(Intake::STOP_RED);
-
-			asyncDrive.driveForS(art::Inches(48+6));
-			asyncDrive.turnToS(art::Degrees(-90));
-			asyncDrive.driveForS(art::Inches(5));
-
-			ladyBrownMacroTest();
+			skills();
 
 			asyncDrive.setState(AsyncDrive::CONTROL);
 		}

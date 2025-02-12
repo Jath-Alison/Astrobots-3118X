@@ -1,4 +1,5 @@
 #include "Autons.h"
+#include "SubAutons.h"
 #include <iostream>
 
 void flippingAWPAuton()
@@ -306,4 +307,65 @@ void ringSideToCorner()
     asyncDrive.setState(AsyncDrive::CONTROL);
     asyncDrive.handleInputs(80, 0);
     vex::wait(0.75, vex::sec);
+}
+
+void skills()
+{
+    intake.setAntiJam(true);
+
+    arm.handlePosInput(art::Degrees(180));
+    arm.setState(Arm::POSITION);
+    waitUntil(arm.isComplete());
+
+    // Back out
+    asyncDrive.driveForS(art::Inches(-8));
+    arm.handlePosInput(art::Degrees(-5));
+
+    asyncDrive.turnToS(art::Degrees(180));
+    asyncDrive.driveForS(art::Inches(-12));
+
+    asyncDrive.setState(AsyncDrive::CONTROL);
+    asyncDrive.handleInputs(-60, 0);
+    vex::wait(0.75, vex::sec);
+
+    clamp.set(true);
+
+    vex::wait(0.25, vex::sec);
+
+    asyncDrive.turnToS(art::Degrees(90));
+
+    intake.setState(Intake::CONTROL);
+    intake.handleInput(100);
+
+    asyncDrive.driveForS(art::Inches(19));
+
+    asyncDrive.turnToS(art::Degrees(45));
+    asyncDrive.driveForS(art::Inches(33));
+
+    intake.setState(Intake::STOP_RED);
+    
+    arm.handlePosInput(art::Degrees(10));
+    intake.setAntiJam(false);
+    
+    asyncDrive.turnToS(art::Degrees(90));
+    asyncDrive.driveForS(art::Inches(26));
+    
+    intake.resetDelay(0.5);
+    intake.setState(Intake::DELAY_OFF);
+    asyncDrive.driveForS(art::Inches(-20));
+
+    asyncDrive.turnToS(art::Degrees(0));
+    arm.handlePosInput(art::Degrees(60));
+    asyncDrive.driveForS(art::Inches(5));
+
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(5), 0, oldDrivePID, oldTurnPID);
+
+    asyncDrive.setState(AsyncDrive::CONTROL);
+    asyncDrive.handleInputs(80, 0);
+    vex::wait(0.5, vex::sec);
+
+    arm.handlePosInput(art::Degrees(135));
+    intake.setState(Intake::CONTROL);
+    intake.handleInput(-30);
+
 }

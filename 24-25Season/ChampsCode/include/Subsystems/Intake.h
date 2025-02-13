@@ -24,6 +24,7 @@ public:
     void handleInput(double input);
 
     void setState(IntakeState state);
+    IntakeState getState();
     void resetDelay();
     void resetDelay(double time);
 

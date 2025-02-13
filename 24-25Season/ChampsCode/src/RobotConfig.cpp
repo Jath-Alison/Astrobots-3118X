@@ -76,8 +76,8 @@ vex::digital_out clamp(Brain.ThreeWirePort.A); bool clampState = false;;
 
 Arm arm = Arm(vex::motor(vex::PORT4, vex::gearSetting::ratio36_1, false), vex::rotation(vex::PORT14, true), art::PID()
         .withConstants(3/(art::Degrees(1)), 0, -100)
-        .withSettleZone(art::Degrees(3))
-        .withSettleTimeout(0.25)
+        .withSettleZone(art::Degrees(5))
+        .withSettleTimeout(0.07)
         .withTimeout(1)
 
         );

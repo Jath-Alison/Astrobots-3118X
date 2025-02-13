@@ -123,6 +123,10 @@ void Intake::setState(IntakeState state)
     m_startMovingTime = std::chrono::high_resolution_clock::now();
     m_state = state;
 }
+Intake::IntakeState Intake::getState()
+{
+    return m_state;
+}
 void Intake::resetDelay()
 {
     m_startTime = std::chrono::high_resolution_clock::now();

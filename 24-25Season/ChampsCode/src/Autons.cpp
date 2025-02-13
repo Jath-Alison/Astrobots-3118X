@@ -163,6 +163,12 @@ void centerRings()
 
 void ringSideToCorner()
 {
+
+    intake.setAntiJam(true);
+
+    oldDrivePID.withSettleTimeout(0.125);
+    oldTurnPID.withSettleTimeout(0.125);
+
     // drive 2 inches and score ladybrown
     asyncDrive.driveForS(art::Inches(2), oldDrivePID);
     waitUntil(asyncDrive.driveComplete());
@@ -219,76 +225,49 @@ void ringSideToCorner()
     asyncDrive.setState(AsyncDrive::DRIVE);
     waitUntil(asyncDrive.driveComplete());
 
-    asyncDrive.setTurnTarget(art::Degrees(0));
-    asyncDrive.setState(AsyncDrive::TURN);
-    waitUntil(asyncDrive.turnComplete());
-
-    asyncDrive.setDriveTarget(art::Inches(-5));
-    asyncDrive.setState(AsyncDrive::DRIVE);
-    waitUntil(asyncDrive.driveComplete());
-
     asyncDrive.setTurnTarget(art::Degrees(45));
     asyncDrive.setState(AsyncDrive::TURN);
     waitUntil(asyncDrive.turnComplete());
 
-    asyncDrive.setDriveTarget(art::Inches(4));
-    asyncDrive.setState(AsyncDrive::DRIVE);
-    waitUntil(asyncDrive.driveComplete());
+    asyncDrive.driveForS(art::Inches(4));
 
     intake.setState(Intake::CONTROL);
     intake.handleInput(100);
 
-    asyncDrive.setTurnTarget(art::Degrees(15));
-    asyncDrive.setState(AsyncDrive::TURN);
-    waitUntil(asyncDrive.turnComplete());
-
-    asyncDrive.setDriveTarget(art::Inches(7));
-    asyncDrive.setState(AsyncDrive::DRIVE);
-    waitUntil(asyncDrive.driveComplete());
-
-    asyncDrive.setTurnTarget(art::Degrees(5));
-    asyncDrive.setState(AsyncDrive::TURN);
-    waitUntil(asyncDrive.turnComplete());
-
-    asyncDrive.setDriveTarget(art::Inches(7));
-    asyncDrive.setState(AsyncDrive::DRIVE);
-    waitUntil(asyncDrive.driveComplete());
-
     asyncDrive.setTurnTarget(art::Degrees(0));
-    asyncDrive.setState(AsyncDrive::TURN);
+    asyncDrive.setState(AsyncDrive::SWING_ABOUT_LEFT);
     waitUntil(asyncDrive.turnComplete());
 
-    asyncDrive.setDriveTarget(art::Inches(13.5));
-    asyncDrive.setState(AsyncDrive::DRIVE);
-    waitUntil(asyncDrive.driveComplete());
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(10), 0);
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(10), 0);
 
     asyncDrive.setTurnTarget(art::Degrees(20));
     asyncDrive.setState(AsyncDrive::SWING_ABOUT_LEFT);
     waitUntil(asyncDrive.turnComplete());
 
-    asyncDrive.setDriveTarget(art::Inches(-30));
+    asyncDrive.setDriveTarget(art::Inches(-25));
     asyncDrive.setState(AsyncDrive::DRIVE);
     waitUntil(asyncDrive.driveComplete());
 
     // Go for ring stack
-    asyncDrive.setTurnTarget(art::Degrees(-15));
+    asyncDrive.setTurnTarget(art::Degrees(-25));
     asyncDrive.setState(AsyncDrive::TURN);
     waitUntil(asyncDrive.turnComplete());
 
-    asyncDrive.setDriveTarget(art::Inches(22));
+    asyncDrive.setDriveTarget(art::Inches(15));
     asyncDrive.setState(AsyncDrive::DRIVE);
     waitUntil(asyncDrive.driveComplete());
 
-    // Go for Corner
+    // // Go for Corner
     asyncDrive.setTurnTarget(art::Degrees(-55));
     asyncDrive.setState(AsyncDrive::TURN);
     waitUntil(asyncDrive.turnComplete());
 
     doinkerDeployR.set(true);
 
-    asyncDrive.setDriveTarget(art::Inches(25));
-    asyncDrive.setState(AsyncDrive::DRIVE);
-    waitUntil(asyncDrive.driveComplete());
+    oldDrivePID.withSettleTimeout(0.0625);
+
+    asyncDrive.driveForS(art::Inches(25),oldDrivePID);
 
     asyncDrive.setState(AsyncDrive::CONTROL);
     asyncDrive.handleInputs(80, 0);
@@ -304,9 +283,18 @@ void ringSideToCorner()
     asyncDrive.setState(AsyncDrive::TURN);
     waitUntil(asyncDrive.turnComplete());
 
+    intake.setState(Intake::REJECT_BLUE);
+
     asyncDrive.setState(AsyncDrive::CONTROL);
     asyncDrive.handleInputs(80, 0);
     vex::wait(0.75, vex::sec);
+
+    asyncDrive.driveForS(art::Inches(-5));
+
+    waitUntil(intake.getState() == Intake::CONTROL);
+    intake.handleInput(100);
+    
+    vex::wait(5, vex::sec);
 }
 
 void skills()

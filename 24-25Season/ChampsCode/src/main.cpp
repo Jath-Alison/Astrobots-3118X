@@ -179,9 +179,9 @@ void usercontrol(void)
 		{
 			// flippingAWPAuton();
 			// centerRings();
-			// ringSideToCorner();
+			ringSideToCorner();
 
-			skills();
+			// skills();
 
 			asyncDrive.setState(AsyncDrive::CONTROL);
 		}

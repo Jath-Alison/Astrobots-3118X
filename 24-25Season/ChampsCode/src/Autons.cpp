@@ -208,14 +208,14 @@ void centerRingsWWallstake()
 
     vex::wait(0.25, vex::sec);
 
-    asyncDrive.turnToS(art::Degrees(135), turnFastExit);
+    asyncDrive.turnToS(art::Degrees(135), oldTurnPID);
 
     asyncDrive.driveForHeadingCorrectedS(art::Inches(18), art::Degrees(135), oldDrivePID, oldTurnPID);
 
     doinkerDeployL.set(true);
     vex::wait(0.55, vex::sec);
 
-    asyncDrive.turnToS(art::Degrees(113));
+    asyncDrive.turnToS(art::Degrees(108));
     asyncDrive.driveForS(art::Inches(4));
 
     doinkerDeployR.set(true);
@@ -238,13 +238,17 @@ void centerRingsWWallstake()
     asyncDrive.turnToS(art::Degrees(55));
 
     asyncDrive.driveForHeadingCorrectedS(art::Inches(15),art::Degrees(55), driveFastExit, oldTurnPID);
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(36-15),art::Degrees(35), driveFastExit, oldTurnPID);
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(2),art::Degrees(35), driveFastExit, oldTurnPID);
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(36-15),art::Degrees(15), driveFastExit, oldTurnPID);
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(2),art::Degrees(15), driveFastExit, oldTurnPID);
 
-    asyncDrive.turnToS(art::Degrees(90), turnFastExit);
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(15),art::Degrees(90), driveFastExit, oldTurnPID);
+    asyncDrive.turnToS(art::Degrees(100), turnFastExit);
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(13),art::Degrees(108), driveFastExit, oldTurnPID);
+
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(-13),art::Degrees(45), driveFastExit, oldTurnPID);
     
-    
+    asyncDrive.setState(AsyncDrive::CONTROL);
+    asyncDrive.handleInputs(-85, 0);
+    vex::wait(0.35, vex::sec);
 }
 
 void ringSideToCorner()

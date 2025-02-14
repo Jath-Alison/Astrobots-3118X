@@ -25,6 +25,7 @@ public:
 
     void setState(IntakeState state);
     IntakeState getState();
+    void setContinousSorting();
     void resetDelay();
     void resetDelay(double time);
 
@@ -45,6 +46,7 @@ private:
 
     IntakeState m_lastState{CONTROL};
     bool m_runningAntijam{false};
+    bool m_continousSorting{false};
 
     art::SimpleMotor m_motor;
     vex::optical m_optical;

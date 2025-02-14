@@ -116,6 +116,7 @@ void usercontrol(void)
 		if (Controller1.ButtonR1.PRESSED)
 		{
 			// intake.handleInput(100);
+			intake.setContinousSorting();
 			intake.setState(Intake::REJECT_BLUE);
 		}
 		else if (Controller1.ButtonA.pressing())
@@ -183,13 +184,15 @@ void usercontrol(void)
 
 		if (Controller1.ButtonRight.PRESSED)
 		{
+
 			// flippingAWPAuton();
 			// centerRings();
 			// ringSideToCorner();
+			centerRingsWWallstake();
 
 			// skills();
 
-			asyncDrive.followPathS(testPath);
+			// asyncDrive.followPathS(testPath);
 
 			// waitUntil(Controller1.ButtonRight.PRESSED);
 

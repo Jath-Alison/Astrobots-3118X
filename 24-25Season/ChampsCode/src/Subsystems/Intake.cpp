@@ -61,7 +61,17 @@ void Intake::periodic()
         if (timePassed() > m_delay)
         {
             m_cmd = 0;
-            setState(CONTROL);
+            if (m_continousSorting)
+            {
+                setState(m_lastState);
+                setState(DELAY_ON);
+                resetDelay(0.25);
+
+            }
+            else
+            {
+                setState(CONTROL);
+            }
         }
         else
         {
@@ -72,7 +82,14 @@ void Intake::periodic()
         if (timePassed() > m_delay)
         {
             m_cmd = 100;
-            setState(CONTROL);
+            if (m_continousSorting)
+            {
+                setState(m_lastState);
+            }
+            else
+            {
+                setState(CONTROL);
+            }
         }
         else
         {
@@ -120,12 +137,17 @@ void Intake::handleInput(double input)
 
 void Intake::setState(IntakeState state)
 {
+    m_lastState = m_state;
     m_startMovingTime = std::chrono::high_resolution_clock::now();
     m_state = state;
 }
 Intake::IntakeState Intake::getState()
 {
     return m_state;
+}
+void Intake::setContinousSorting()
+{
+    m_continousSorting = true;
 }
 void Intake::resetDelay()
 {

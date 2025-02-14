@@ -1,4 +1,5 @@
 #include "Subsystems/AsyncDrive.h"
+#include <iostream>
 
 AsyncDrive::AsyncDrive(art::TankDrive drive, vex::inertial inert) : art::TankDrive(drive), m_inert(inert)
 {
@@ -111,6 +112,8 @@ void AsyncDrive::periodic()
     art::Angle error;
     art::Angle pos;
 
+    art::Vec2 travel;
+
     switch (m_state)
     {
     case WAIT:
@@ -157,6 +160,17 @@ void AsyncDrive::periodic()
         m_left.set(a);
         break;
     case PATH:
+        
+        m_lookahead = m_path.getLookahead(m_centerPos, m_lookaheadDist);
+        
+        // m_closest = m_path.getClosestPoint(m_centerPos);
+        
+
+        travel = art::Vec2(m_lookahead.m_pos - m_centerPos);
+
+        error = shortestTurnPath(art::Degrees(art::Angle(travel.direction()).degrees() - m_dir.degrees()));
+        arcade(m_lookahead.m_speed, m_turnPID.calculate(error));
+        
         break;
     default:
         break;
@@ -195,6 +209,10 @@ bool AsyncDrive::turnComplete()
     return m_turnPID.isCompleted();
 }
 
+bool AsyncDrive::pathComplete()
+{
+    return m_lookahead.m_speed == -1;
+}
 double AsyncDrive::driveError()
 {
     return m_drivePID.getProportional() / m_drivePID.getkp();

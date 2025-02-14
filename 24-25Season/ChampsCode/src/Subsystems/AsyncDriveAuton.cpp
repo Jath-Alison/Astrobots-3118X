@@ -1,4 +1,5 @@
 #include "Subsystems/AsyncDrive.h"
+#include <iostream>
 
 void AsyncDrive::driveForA(art::Length target)
 {
@@ -73,4 +74,40 @@ void AsyncDrive::driveForHeadingCorrectedS(art::Length target, art::Angle headin
     driveForHeadingCorrectedA(target, heading);
 
     waitUntil(m_drivePID.isCompleted());
+}
+
+void AsyncDrive::followPathA(Jath::Path p){
+    m_path = p;
+    if(m_path.m_points.size() > 0){
+        m_pos = m_path.m_points.front().m_pos;
+        std::cout << "m_lookahead.m_speed << << error" << std::endl;
+    }
+
+    m_turnPID.reset();
+    m_state = AsyncDrive::PATH;
+
+}
+void AsyncDrive::followPathA(Jath::Path p, art::Length lookahead){
+    m_lookaheadDist = lookahead;
+    followPathA(p);
+}
+void AsyncDrive::followPathA(Jath::Path p, art::Length lookahead, art::PID turnPID){
+    m_lookaheadDist = lookahead;
+    m_turnPID = turnPID;
+    followPathA(p);
+}
+void AsyncDrive::followPathS(Jath::Path p){
+    followPathA(p);
+    waitUntil(pathComplete());
+}
+void AsyncDrive::followPathS(Jath::Path p, art::Length lookahead){
+    m_lookaheadDist = lookahead;
+    followPathA(p);
+    waitUntil(pathComplete());
+}
+void AsyncDrive::followPathS(Jath::Path p, art::Length lookahead, art::PID turnPID){
+    m_lookaheadDist = lookahead;
+    m_turnPID = turnPID;
+    followPathA(p);
+    waitUntil(pathComplete());
 }

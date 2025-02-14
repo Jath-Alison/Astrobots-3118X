@@ -3,6 +3,7 @@
 #include "Subsystems/Subsystem.h"
 #include "ART/SmartDrive.h"
 #include "Logging/Logging.h"
+#include "ART/Jath/Path.h"
 
 class AsyncDrive : public Subsystem, public art::TankDrive
 {
@@ -57,8 +58,16 @@ public:
     void driveForHeadingCorrectedS(art::Length target, art::Angle heading);
     void driveForHeadingCorrectedS(art::Length target, art::Angle heading, art::PID drivePID, art::PID turnPID);
 
+    void followPathA(Jath::Path p);
+    void followPathA(Jath::Path p, art::Length lookahead);
+    void followPathA(Jath::Path p, art::Length lookahead, art::PID turnPID);
+    void followPathS(Jath::Path p);
+    void followPathS(Jath::Path p, art::Length lookahead);
+    void followPathS(Jath::Path p, art::Length lookahead, art::PID turnPID);
+
     bool driveComplete();
     bool turnComplete();
+    bool pathComplete();
 
     double driveError();
     double turnError();
@@ -74,6 +83,12 @@ private:
     art::Angle m_driveTarget;
     art::Angle m_driveOffset;
     art::Angle m_turnTarget;
+
+    Jath::Path m_path;
+    art::Length m_lookaheadDist = art::Inches(10);
+
+    Jath::Point m_lookahead;
+    Jath::Point m_closest;
 
     double drive_input{0.0};
     double rot_input{0.0};

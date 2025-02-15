@@ -188,9 +188,9 @@ void usercontrol(void)
 			// flippingAWPAuton();
 			// centerRings();
 			// ringSideToCorner();
-			centerRingsWWallstake();
+			// centerRingsWWallstake();
 
-			// skills();
+			skills();
 
 			// asyncDrive.followPathS(testPath);
 

@@ -1,7 +1,9 @@
 #include "SubAutons.h"
 
+bool gyroZeroed = false;
 void zeroGyro()
 {
+    gyroZeroed = true;
     asyncDrive.zeroGyro();
 }
 

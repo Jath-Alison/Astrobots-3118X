@@ -36,6 +36,10 @@ AsyncDrive &AsyncDrive::withHorizontalTracker(vex::rotation rotation, art::Lengt
     return *this;
 }
 
+void AsyncDrive::setXFlip(bool flip)
+{
+    m_flipX = flip;
+}
 int AsyncDrive::track()
 {
     if (m_tracker.m_rotation)
@@ -193,7 +197,12 @@ void AsyncDrive::setDriveTarget(art::Length target)
 }
 void AsyncDrive::setTurnTarget(art::Angle target)
 {
-    m_turnTarget = target;
+    if (m_flipX)
+    {
+        target = art::Degrees(180) - target;
+    }else{
+        m_turnTarget = target;
+    }
     m_turnPID.reset();
 }
 void AsyncDrive::zeroGyro()

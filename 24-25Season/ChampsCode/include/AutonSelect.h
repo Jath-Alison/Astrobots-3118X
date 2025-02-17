@@ -95,5 +95,5 @@ extern Auton BlueCenterRingsNeg;
 extern Auton RedFlippingAWPPos;
 extern Auton BlueFlippingAWPPos;
 
-extern Auton RedFlippingAWPNeg;
-extern Auton BlueFlippingAWPNeg;
+extern Auton RedRingsToCorner;
+extern Auton BlueRingsToCorner;

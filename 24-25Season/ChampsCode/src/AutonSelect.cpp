@@ -14,26 +14,26 @@ void skills();*/
 Auton Skills("Skills", skills);
 
 Auton RedCenterRingsPos("Red Center Rings Pos", []()
-                        { centerRings(); });
+                        { asyncDrive.setXFlip(true); centerRings(); });
 Auton BlueCenterRingsPos("Blue Center Rings Pos", []()
                          { centerRings(); });
 
-Auton RedCenterRingsNeg("Red Center Rings Neg", []()
-                        { centerRings(); });
-Auton BlueCenterRingsNeg("Blue Center Rings Neg", []()
-                         { centerRings(); });
+Auton RedCenterRingsNeg("Red(Wall) Center Rings Neg", []()
+                        { centerRingsWWallstake(); });
+Auton BlueCenterRingsNeg("Blue(Wall) Center Rings Neg", []()
+                         { asyncDrive.setXFlip(true); centerRingsWWallstake; });
 
 Auton RedFlippingAWPPos("Red Flipping AWP Pos", []()
                         { flippingAWPAuton(); });
 Auton BlueFlippingAWPPos("Blue Flipping AWP Pos", []()
-                         { flippingAWPAuton(); });
+                         { asyncDrive.setXFlip(true); flippingAWPAuton(); });
 ;
 
-Auton RedFlippingAWPNeg("Red Flipping AWP Neg", []()
-                        { flippingAWPAuton(); });
-Auton BlueFlippingAWPNeg("Blue Flipping AWP Neg", []()
-                         { flippingAWPAuton(); });
-;
+Auton RedRingsToCorner("Red Rings To Corner", []()
+                        { centerRings(); });
+Auton BlueRingsToCorner("Blue Rings To Corner", []()
+                         { asyncDrive.setXFlip(true); centerRings(); });
+
 
 std::vector<Auton> autons = {
     Skills,
@@ -43,8 +43,8 @@ std::vector<Auton> autons = {
     BlueCenterRingsNeg,
     RedFlippingAWPPos,
     BlueFlippingAWPPos,
-    RedFlippingAWPNeg,
-    BlueFlippingAWPNeg};
+    RedRingsToCorner,
+    BlueRingsToCorner};
 
 AutonSelect autonSelect(autons);
 int currentAutonId = 0;

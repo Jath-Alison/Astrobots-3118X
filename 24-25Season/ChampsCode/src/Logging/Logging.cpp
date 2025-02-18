@@ -1,4 +1,5 @@
 #include "Logging/Logging.h"
+#include "RobotConfig.h"
 
 namespace logging
 {
@@ -119,17 +120,227 @@ namespace logging
     Int64LogEntry Optics_UpperOpticalHue("Optics/Upper/Hue");
     BooleanLogEntry Optics_UpperOpticalDist("Optics/Upper/Dist");
 
+    auto last_logged = std::chrono::high_resolution_clock::now();
+    auto current_time_logLoop = std::chrono::high_resolution_clock::now();
+
+    uint64_t logTimePassed()
+    {
+        current_time_logLoop = std::chrono::high_resolution_clock::now();
+        return uint64_t(std::chrono::duration_cast<std::chrono::microseconds>(current_time_logLoop - last_logged).count());
+    }
+
     int logLoop()
     {
         logger.clearFile("ChampsCodelog.wpilog");
+
+        logger.logStringEntry(console, "Log Loop Started");
+
+        logger.clearFile("TestLog.wpilog");
+        logger.logStringEntry(console, "LogFile Cleared");
+
+        std::vector<vex::motor *> baseMotors = {
+            &leftMotorA, &leftMotorB, &leftMotorC,
+            &rightMotorA, &rightMotorB, &rightMotorC};
+
         while (true)
         {
-            // if (logger.getDataSize() > 5000)
-            // {
-                logger.writeToFile("ChampsCodelog.wpilog");
-            // }
+            std::vector<int64_t> axesStates = {
+                Controller1.Axis1.position(),
+                Controller1.Axis2.position(),
+                Controller1.Axis3.position(),
+                Controller1.Axis4.position()};
+            std::vector<bool> buttonStates = {
+                Controller1.ButtonUp.pressing(),
+                Controller1.ButtonRight.pressing(),
+                Controller1.ButtonDown.pressing(),
+                Controller1.ButtonLeft.pressing(),
+                Controller1.ButtonX.pressing(),
+                Controller1.ButtonA.pressing(),
+                Controller1.ButtonB.pressing(),
+                Controller1.ButtonY.pressing(),
+                Controller1.ButtonL1.pressing(),
+                Controller1.ButtonL2.pressing(),
+                Controller1.ButtonR1.pressing(),
+                Controller1.ButtonR2.pressing(),
+            };
+            std::vector<int64_t> povStates = {
+                int64_t(art::Vec2::XandY(Controller1.Axis1.position(), Controller1.Axis2.position()).direction()),
+                int64_t(art::Vec2::XandY(Controller1.Axis4.position(), Controller1.Axis3.position()).direction()),
+            };
 
-            vex::wait(1, vex::sec);
+            logger.logInt64ArrayEntry(Controller1_Axes, axesStates);
+            logger.logBooleanArrayEntry(Controller1_Buttons, buttonStates);
+            logger.logInt64ArrayEntry(Controller1_Povs, povStates);
+
+            std::vector<double> baseXYRCmd = {
+                asyncDrive.m_cmdX, asyncDrive.m_cmdY, asyncDrive.m_cmdRot};
+            logger.logDoubleArrayEntry(Base_XYR_Cmd, baseXYRCmd);
+
+            std::vector<double> baseXYRVel = {
+                art::Length(asyncDrive.m_vel.x).meters(), art::Length(asyncDrive.m_vel.y).meters(), asyncDrive.m_rotVel};
+            logger.logDoubleArrayEntry(Base_XYR_Vel, baseXYRVel);
+
+            std::vector<double> baseLRCmd = {
+                asyncDrive.m_left.get(), asyncDrive.m_right.get()};
+            logger.logDoubleArrayEntry(Base_LeftRight_Cmd, baseLRCmd);
+
+            std::vector<double> baseLRVel = {
+                asyncDrive.m_leftTravel.meters(), asyncDrive.m_rightTravel.meters()};
+            logger.logDoubleArrayEntry(Base_LeftRight_Vel, baseLRVel);
+
+            std::vector<double> baseVelSwerveState = {
+                asyncDrive.m_dir - asyncDrive.m_vel.direction(),
+                art::Length(asyncDrive.m_vel.magnitude()).meters(),
+                asyncDrive.m_dir - asyncDrive.m_vel.direction(),
+                art::Length(asyncDrive.m_vel.magnitude()).meters(),
+                asyncDrive.m_dir - asyncDrive.m_vel.direction(),
+                art::Length(asyncDrive.m_vel.magnitude()).meters(),
+                asyncDrive.m_dir - asyncDrive.m_vel.direction(),
+                art::Length(asyncDrive.m_vel.magnitude()).meters(),
+            };
+            logger.logDoubleArrayEntry(Base_VelSwerveState, baseVelSwerveState);
+
+            std::vector<double> baseLRSwerveState = {
+                0,
+                asyncDrive.m_leftTravel.meters() * 50,
+                0,
+                asyncDrive.m_rightTravel.meters() * 50,
+                0,
+                asyncDrive.m_leftTravel.meters() * 50,
+                0,
+                asyncDrive.m_rightTravel.meters() * 50,
+            };
+            logger.logDoubleArrayEntry(Base_LR_SwerveState, baseLRSwerveState);
+
+            std::vector<double> baseMotorsVoltage{};
+            std::vector<double> baseMotorsCurrent{};
+            std::vector<int64_t> baseMotorsTemperature{};
+            std::vector<double> baseMotorsVelocity{};
+            std::vector<double> baseMotorsPosition{};
+            for (auto motor : baseMotors)
+            {
+                baseMotorsVoltage.push_back(motor->voltage());
+                baseMotorsCurrent.push_back(motor->current());
+                baseMotorsTemperature.push_back(motor->temperature(vex::celsius));
+                baseMotorsVelocity.push_back(motor->velocity(vex::velocityUnits::pct));
+                baseMotorsPosition.push_back(motor->position(vex::rotationUnits::deg));
+            }
+
+            logger.logDoubleEntry(Intake_Cmd, intake.getMotor().get());
+            logger.logDoubleEntry(Intake_Voltage, intake.getMotor().voltage());
+            logger.logDoubleEntry(Intake_Current, intake.getMotor().current());
+            logger.logDoubleEntry(Intake_Velocity, intake.getMotor().velocity(vex::velocityUnits::pct));
+            logger.logDoubleEntry(Intake_Temperature, intake.getMotor().temperature(vex::celsius));
+            logger.logDoubleEntry(Intake_Position, intake.getMotor().position(vex::rotationUnits::deg));
+
+            logger.logDoubleEntry(Arm_Cmd, arm.getMotor().get());
+            logger.logDoubleEntry(Arm_Voltage, arm.getMotor().voltage());
+            logger.logDoubleEntry(Arm_Current, arm.getMotor().current());
+            logger.logDoubleEntry(Arm_Velocity, arm.getMotor().velocity(vex::velocityUnits::pct));
+            logger.logDoubleEntry(Arm_Temperature, arm.getMotor().temperature(vex::celsius));
+            logger.logDoubleEntry(Arm_Position, arm.getMotor().position(vex::rotationUnits::deg));
+            logger.logDoubleEntry(Arm_RotAngle, arm.getRotation().angle());
+            logger.logDoubleEntry(Arm_TargetAngle, arm.getPosCmd());
+
+            logger.logDoubleArrayEntry(Base_Motors_Voltage, baseMotorsVoltage);
+            logger.logDoubleArrayEntry(Base_Motors_Current, baseMotorsCurrent);
+            logger.logInt64ArrayEntry(Base_Motors_Temperature, baseMotorsTemperature);
+            logger.logDoubleArrayEntry(Base_Motors_Velocity, baseMotorsVelocity);
+            logger.logDoubleArrayEntry(Base_Motors_Position, baseMotorsPosition);
+
+            std::vector<double> robotPose = {
+                art::Length(asyncDrive.m_pos.x).meters(),
+                art::Length(asyncDrive.m_pos.y).meters(),
+                art::Angle(asyncDrive.m_dir).degrees()};
+            logger.logDoubleArrayEntry(Pose_TrackingPose, robotPose);
+            logger.logDoubleArrayEntry(Base_XYR_Pos, robotPose);
+
+            std::vector<double> robotPoseBlue = {
+                1.8 + art::Length(asyncDrive.m_pos.x).meters(),
+                1.8 + art::Length(asyncDrive.m_pos.y).meters(),
+                -(asyncDrive.m_dir - art::Degrees(90)) // converted to FRC scheme
+            };
+            logger.logDoubleArrayEntry(Pose_TrackingPose_Blue, robotPoseBlue);
+            logger.logDoubleArrayEntry(Base_XYR_Pos_Blue, robotPoseBlue);
+
+            std::vector<double> robotCentersPose = {
+                art::Length(asyncDrive.m_centerPos.x).meters(),
+                art::Length(asyncDrive.m_centerPos.y).meters(),
+                art::Angle(asyncDrive.m_dir).degrees()};
+            logger.logDoubleArrayEntry(Pose_CenterPose, robotCentersPose);
+
+            std::vector<double> robotCentersPoseBlue = {
+                1.8 + art::Length(asyncDrive.m_centerPos.x).meters(),
+                1.8 + art::Length(asyncDrive.m_centerPos.y).meters(),
+                -(asyncDrive.m_dir - art::Degrees(90)) // converted to FRC scheme
+            };
+            logger.logDoubleArrayEntry(Pose_CenterPose_Blue, robotCentersPoseBlue);
+
+            std::vector<double> robotGPSPose_L = {
+                art::Inches(gpsSensorL.xPosition(vex::inches)).meters(),
+                art::Inches(gpsSensorL.yPosition(vex::inches)).meters(),
+                art::Degrees(gpsSensorL.heading(vex::degrees)).degrees()};
+            logger.logDoubleArrayEntry(Pose_GPSPose_L, robotGPSPose_L);
+
+            std::vector<double> robotGPSPoseBlue_L = {
+                1.8 + art::Inches(gpsSensorL.xPosition(vex::inches)).meters(),
+                1.8 + art::Inches(gpsSensorL.yPosition(vex::inches)).meters(),
+                -(art::Degrees(gpsSensorL.heading(vex::degrees)) - art::Degrees(90)) // converted to FRC scheme
+            };
+            logger.logDoubleArrayEntry(Pose_GPSPose_Blue_L, robotGPSPoseBlue_L);
+            logger.logInt64Entry(Pose_GPSAccuracy_L, gpsSensorL.quality());
+
+            std::vector<double> robotGPSPose_R = {
+                art::Inches(gpsSensorR.xPosition(vex::inches)).meters(),
+                art::Inches(gpsSensorR.yPosition(vex::inches)).meters(),
+                art::Degrees(gpsSensorR.heading(vex::degrees)).degrees()};
+            logger.logDoubleArrayEntry(Pose_GPSPose_R, robotGPSPose_R);
+
+            std::vector<double> robotGPSPoseBlue_R = {
+                1.8 + art::Inches(gpsSensorR.xPosition(vex::inches)).meters(),
+                1.8 + art::Inches(gpsSensorR.yPosition(vex::inches)).meters(),
+                -(art::Degrees(gpsSensorR.heading(vex::degrees)) - art::Degrees(90)) // converted to FRC scheme
+            };
+            logger.logDoubleArrayEntry(Pose_GPSPose_Blue_R, robotGPSPoseBlue_R);
+            logger.logInt64Entry(Pose_GPSAccuracy_R, gpsSensorR.quality());
+
+            // std::vector<double> targetPose = {
+            //     art::Length(target.x).meters(),
+            //     art::Length(target.y).meters(),
+            //     art::Angle(asyncDrive.m_dir).degrees() // converted to FRC scheme
+            // };
+            // logger.logDoubleArrayEntry(Auton_TargetPoint, targetPose);
+
+            // std::vector<double> targetPoseBlue = {
+            //     1.8 + art::Length(target.x).meters(),
+            //     1.8 + art::Length(target.y).meters(),
+            //     -(asyncDrive.m_dir - art::Degrees(90)) // converted to FRC scheme
+            // };
+            // logger.logDoubleArrayEntry(Auton_TargetPoint_Blue, targetPoseBlue);
+
+            if (Competition.AUTONOMOUS)
+            {
+                logger.logStringEntry(competitionState, "Auton Started");
+            }
+            if (Competition.DRIVER_CONTROL)
+            {
+                logger.logStringEntry(competitionState, "Driver Control Started");
+            }
+            if (Competition.DISABLED)
+            {
+                logger.logStringEntry(competitionState, "Robot Disabled");
+            }
+
+            if (logger.getDataSize() > 5000)
+            {
+                last_logged = std::chrono::high_resolution_clock::now();
+                logger.writeToFile("ChampsCodeLog.wpilog");
+            }
+            logger.logInt64Entry(Logger_Capacity, logger.getCapacity());
+            logger.logInt64Entry(Logger_Size, logger.getDataSize());
+            logger.logDoubleEntry(Logger_TimeSinceLastLogged, logTimePassed());
+
+            vex::wait(20, vex::msec);
         }
 
         return 0;

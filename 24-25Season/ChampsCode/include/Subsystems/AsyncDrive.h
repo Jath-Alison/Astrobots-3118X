@@ -79,7 +79,7 @@ public:
 
     void zeroGyro();
 
-private:
+// private:
     DriveState m_state{CONTROL};
 
     bool m_flipX{false};

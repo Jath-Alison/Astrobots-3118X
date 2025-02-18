@@ -171,3 +171,7 @@ double Intake::timeMoving()
 }
 void Intake::setAntiJam(bool runningAntiJam) { m_runningAntijam = runningAntiJam; };
 bool Intake::getAntiJam() { return m_runningAntijam; };
+art::SimpleMotor &Intake::getMotor()
+{
+    return m_motor;
+}

@@ -23,6 +23,10 @@ public:
 
     bool isComplete();
 
+    art::SimpleMotor& getMotor();
+    vex::rotation& getRotation();
+    art::Angle getPosCmd();
+
 private:
     double m_cmd{0.0};
     art::Angle m_pos_cmd{0.0};

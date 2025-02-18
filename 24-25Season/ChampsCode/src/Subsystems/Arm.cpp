@@ -51,3 +51,17 @@ bool Arm::isComplete()
 {
     return m_pid.isCompleted();
 }
+art::SimpleMotor &Arm::getMotor()
+{
+    return m_motor;
+}
+
+art::Angle Arm::getPosCmd()
+{
+    return m_pos_cmd;
+}
+
+vex::rotation &Arm::getRotation()
+{
+    return m_rotation;
+}

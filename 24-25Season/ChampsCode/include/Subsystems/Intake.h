@@ -32,6 +32,8 @@ public:
     void setAntiJam(bool runningAntiJam);
     bool getAntiJam();
 
+    art::SimpleMotor& getMotor();
+
 private:
     double m_input_cmd{0.0};
     double m_cmd{0.0};

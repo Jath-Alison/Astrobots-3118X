@@ -80,7 +80,6 @@ void AsyncDrive::followPathA(Jath::Path p){
     m_path = p;
     if(m_path.m_points.size() > 0){
         m_pos = m_path.m_points.front().m_pos;
-        std::cout << "m_lookahead.m_speed << << error" << std::endl;
     }
 
     m_turnPID.reset();

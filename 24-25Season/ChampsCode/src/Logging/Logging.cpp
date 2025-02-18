@@ -135,7 +135,6 @@ namespace logging
 
         logger.logStringEntry(console, "Log Loop Started");
 
-        logger.clearFile("TestLog.wpilog");
         logger.logStringEntry(console, "LogFile Cleared");
 
         std::vector<vex::motor *> baseMotors = {

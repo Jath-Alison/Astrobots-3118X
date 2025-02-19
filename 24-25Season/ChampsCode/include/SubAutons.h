@@ -8,3 +8,4 @@ extern bool gyroZeroed;
 void ladyBrownMacroTest();
 
 void localize(double scale);
+extern bool localizing;

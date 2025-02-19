@@ -354,7 +354,7 @@ void usercontrol(void)
 			intake.setState(Intake::CONTROL);
 		}
 
-		localize(0.25);
+		localizing = true;
 
 		vex::wait(20, vex::msec);
 	}

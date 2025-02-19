@@ -215,8 +215,6 @@ void AsyncDrive::setTurnTarget(art::Angle target)
         targetCopy = art::Angle(art::Degrees(180) - targetCopy);
     }
 
-    std::cout << "target: " << target.degrees() << ", Converted: " << targetCopy.degrees() <<std::endl; 
-
     m_turnTarget = targetCopy;
     
     m_turnPID.reset();

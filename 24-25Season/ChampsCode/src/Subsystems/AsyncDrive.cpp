@@ -40,6 +40,10 @@ void AsyncDrive::setXFlip(bool flip)
 {
     m_flipX = flip;
 }
+void AsyncDrive::setYFlip(bool flip)
+{
+    m_flipY = flip;
+}
 int AsyncDrive::track()
 {
     if (m_tracker.m_rotation)
@@ -201,12 +205,20 @@ void AsyncDrive::setDriveTarget(art::Length target)
 }
 void AsyncDrive::setTurnTarget(art::Angle target)
 {
+    art::Angle targetCopy = art::Angle(target);
     if (m_flipX)
     {
-        target = art::Degrees(180) - target;
-    }else{
-        m_turnTarget = target;
+        targetCopy = art::Angle(targetCopy * -1);
     }
+    if (m_flipY)
+    {
+        targetCopy = art::Angle(art::Degrees(180) - targetCopy);
+    }
+
+    std::cout << "target: " << target.degrees() << ", Converted: " << targetCopy.degrees() <<std::endl; 
+
+    m_turnTarget = targetCopy;
+    
     m_turnPID.reset();
 }
 void AsyncDrive::zeroGyro()

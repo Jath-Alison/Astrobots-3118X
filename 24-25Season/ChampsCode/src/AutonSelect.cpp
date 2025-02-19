@@ -11,6 +11,7 @@ void ringSideToCorner();
 
 void skills();*/
 
+Auton SimpleSkills("Simple Skills", simpleSkills);
 Auton Skills("Skills", skills);
 
 Auton RedCenterRingsPos("Red Center Rings Pos", []()
@@ -39,6 +40,7 @@ Auton BlueRingsToCorner("Blue Rings To Corner", []()
                         { asyncDrive.setXFlip(true); centerRings(); });
 
 std::vector<Auton> autons = {
+    SimpleSkills,
     Skills,
     RedCenterRingsPos,
     BlueCenterRingsPos,

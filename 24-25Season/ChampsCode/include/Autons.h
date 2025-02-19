@@ -9,3 +9,5 @@ void centerRingsWWallstake();
 void ringSideToCorner();
 
 void skills();
+
+void simpleSkills();

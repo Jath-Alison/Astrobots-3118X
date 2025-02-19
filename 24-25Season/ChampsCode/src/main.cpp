@@ -254,7 +254,8 @@ void usercontrol(void)
 		{
 			oldDrivePID.withSettleZone(art::Revolutions(art::Inches(1.5) / (M_PI * art::Inches(2.75) * (36.f / 48.f))))
 			.withSettleTimeout(0.0625);
-			asyncDrive.driveForA(art::Inches(-6));
+			asyncDrive.driveForA(art::Inches(-7));
+
 		}
 		if (Controller1.ButtonX.pressing())
 		{

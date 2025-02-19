@@ -97,6 +97,10 @@ bool AsyncDrive::isCalibrating()
 {
     return m_inert.isCalibrating();
 }
+void AsyncDrive::setPos(art::Vec2 pos)
+{
+    m_pos = pos;
+}
 art::Angle AsyncDrive::getDir()
 {
     return m_dir;

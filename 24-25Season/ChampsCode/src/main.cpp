@@ -326,14 +326,14 @@ void usercontrol(void)
 			intake.handleInput(-30);
 		}
 
-		if (fabs(10 - arm.getRotation().angle(vex::degrees)) > 3)
+		if (fabs(10 - arm.getRotation().angle(vex::degrees)) > 6)
 		{
 			intake.setAntiJam(true);
 		}else{
 			intake.setAntiJam(false);
 		}
 
-		if (Controller1.ButtonX.pressing() && Controller1.ButtonB.pressing())
+		if (Controller1.ButtonB.pressing() && Controller1.ButtonRight.pressing())
 		{
 
 			// flippingAWPAuton();

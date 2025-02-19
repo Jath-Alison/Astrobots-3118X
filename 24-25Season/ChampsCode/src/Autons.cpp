@@ -668,7 +668,11 @@ void skillsFirstHalf()
 
 void skillsSecondHalf()
 {
-    asyncDrive.driveForS(art::Inches(-6));
+    bigTurnPID.withSettleZone(0.125)
+    .withConstants(2/(art::Degrees(1)), 3.0, -750)
+    ;
+
+    asyncDrive.driveForS(art::Inches(-7));
 
     intake.setState(Intake::CONTROL);
     intake.handleInput(-30);
@@ -678,21 +682,21 @@ void skillsSecondHalf()
     waitUntil(arm.isComplete());
 
     
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(-8), art::Degrees(90));
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(-8), art::Degrees(90), oldDrivePID, oldTurnPID);
     arm.handlePosInput(art::Degrees(-5));
     
     intake.handleInput(100);
     intake.setAntiJam(true);
     
 
-    asyncDrive.turnToS(art::Degrees(-45));
+    asyncDrive.turnToS(art::Degrees(-45), bigTurnPID);
     waitUntil(arm.isComplete());
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(34), art::Degrees(-45));
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(32), art::Degrees(-45), oldDrivePID, oldTurnPID);
 
     asyncDrive.turnToS(art::Degrees(-135));
 
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(34 * 3 - 8), art::Degrees(-135));
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(6), art::Degrees(-135));
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(34 * 3 - 15), art::Degrees(-135));
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(13), art::Degrees(-135));
 
     asyncDrive.turnToS(art::Degrees(-90));
     asyncDrive.driveForHeadingCorrectedS(art::Inches(12), art::Degrees(-90));
@@ -701,19 +705,115 @@ void skillsSecondHalf()
     asyncDrive.turnToS(art::Degrees(135));
     asyncDrive.driveForHeadingCorrectedS(art::Inches(18), art::Degrees(135));
 
-    asyncDrive.turnToS(art::Degrees(60));
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(-16), art::Degrees(60));
+    asyncDrive.turnToS(art::Degrees(75));
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(-16), art::Degrees(75));
 
     clamp.set(false);
 
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(24), art::Degrees(30));
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(8), art::Degrees(75));
+
+    asyncDrive.turnToS(art::Degrees(180));
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(-22), art::Degrees(180));
+
+    asyncDrive.setState(AsyncDrive::CONTROL);
+    asyncDrive.handleInputs(-60, 0);
+    vex::wait(0.75, vex::sec);
+
+    clamp.set(true);
+    
+    vex::wait(0.25, vex::sec);
+    
+    intake.setState(Intake::STOP_RED);
+    intake.setAntiJam(true);
+    arm.handlePosInput(art::Degrees(10));
+    
+    asyncDrive.turnToS(art::Degrees(135));
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(33), art::Degrees(135));
+    
+    asyncDrive.turnToS(art::Degrees(75));
+    intake.setAntiJam(false);
+    intake.resetDelay(0.5);
+    intake.setState(Intake::DELAY_OFF);
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(25), art::Degrees(75));
+    
+    asyncDrive.turnToS(art::Degrees(180));
+    
+    //Wall stake
+    arm.setState(Arm::CONTROL);
+    arm.handleCmdInput(30);
+    intake.setState(Intake::CONTROL);
+    intake.handleInput(-30);
+
+    asyncDrive.driveForA(art::Inches(5));
+    vex::wait(0.35, vex::sec);
+    intake.handleInput(100);
+    waitUntil(asyncDrive.driveComplete());
+
+    intake.setState(Intake::STOP_RED);
+
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(3), art::Degrees(180), oldDrivePID, oldTurnPID);
+
+    asyncDrive.setState(AsyncDrive::CONTROL);
+    asyncDrive.handleInputs(80, 0);
+    vex::wait(0.5, vex::sec);
+
+    arm.setState(Arm::POSITION);
+    arm.handlePosInput(art::Degrees(135));
+
+    waitUntil(arm.isComplete());
+
+    intake.setAntiJam(true);
+    intake.setState(Intake::CONTROL);
+    intake.handleInput(100);
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(-12), art::Degrees(180), oldDrivePID, oldTurnPID);
+
+    arm.handlePosInput(art::Degrees(90));
+
+    //Final rings
+
+    asyncDrive.turnToS(art::Degrees(90));
+    intake.setContinousSorting();
+    intake.setState(Intake::REJECT_BLUE);
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(24), art::Degrees(90));
+    
+    asyncDrive.turnToS(art::Degrees(0));
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(24), art::Degrees(0));
+
+    asyncDrive.turnToS(art::Degrees(60));
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(30), art::Degrees(60));
+
+    asyncDrive.turnToS(art::Degrees(165));
+    clamp.set(false);
+    asyncDrive.driveForS(art::Inches(33));
+
+    asyncDrive.setState(AsyncDrive::CONTROL);
+    asyncDrive.handleInputs(85, 0);
+    vex::wait(0.75, vex::sec);
+
+    asyncDrive.setTurnTarget(art::Degrees(135));
+    asyncDrive.setState(AsyncDrive::SWING_ABOUT_LEFT);
+    waitUntil(asyncDrive.turnComplete());
+
+    arm.handlePosInput(art::Degrees(232));
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(-55), art::Degrees(135));
+
+    asyncDrive.setState(AsyncDrive::CONTROL);
+    asyncDrive.handleInputs(-85, 0);
+    vex::wait(0.75, vex::sec);
+
+    asyncDrive.setState(AsyncDrive::CONTROL);
+    asyncDrive.handleInputs(60, 0);
+    vex::wait(0.75, vex::sec);
+    asyncDrive.handleInputs(0, 0);
+
+
 }
 
 void skills()
 {
-    oldDrivePID.withSettleTimeout(0.1);
-    oldTurnPID.withSettleTimeout(0.1);
+    oldDrivePID.withSettleTimeout(0.15);
+    oldTurnPID.withSettleTimeout(0.15);
 
-    // skillsFirstHalf();
+    skillsFirstHalf();
     skillsSecondHalf();
 }

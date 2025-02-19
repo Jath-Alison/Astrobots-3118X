@@ -43,7 +43,7 @@ void flippingAWPAuton()
     waitUntil(asyncDrive.driveComplete());
 
     // TurnToGoal
-    asyncDrive.setTurnTarget(art::Degrees(-90 + -20));
+    asyncDrive.setTurnTarget(art::Degrees(-110));
     asyncDrive.setState(AsyncDrive::TURN);
     waitUntil(asyncDrive.turnComplete());
 

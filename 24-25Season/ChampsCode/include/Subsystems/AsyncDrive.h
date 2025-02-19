@@ -30,6 +30,7 @@ public:
     AsyncDrive &withHorizontalTracker(vex::rotation rotation, art::Length wheelSize, double gearRatio, art::Length wheelOffset);
 
     void setXFlip(bool flip);
+    void setYFlip(bool flip);
 
     int track();
     bool isCalibrating();
@@ -83,6 +84,7 @@ public:
     DriveState m_state{CONTROL};
 
     bool m_flipX{false};
+    bool m_flipY{false};
 
     art::Angle m_driveTarget;
     art::Angle m_driveOffset;

@@ -23,17 +23,20 @@ Auton RedCenterRingsNeg("Red(Wall) Center Rings Neg", []()
 Auton BlueCenterRingsNeg("Blue(Wall) Center Rings Neg", []()
                          { asyncDrive.setXFlip(true); centerRingsWWallstake; });
 
-Auton RedFlippingAWPPos("Red Flipping AWP Pos", []()
+Auton RedFlippingAWPNeg("Red Flipping AWP Neg", []()
                         { flippingAWPAuton(); });
-Auton BlueFlippingAWPPos("Blue Flipping AWP Pos", []()
+Auton BlueFlippingAWPNeg("Blue Flipping AWP Neg", []()
                          { asyncDrive.setXFlip(true); flippingAWPAuton(); });
-;
+
+Auton RedFlippingAWPPos("Red Flipping AWP Pos", []()
+                        { asyncDrive.setYFlip(true); flippingAWPAuton(); });
+Auton BlueFlippingAWPPos("Blue Flipping AWP Pos", []()
+                         { asyncDrive.setYFlip(true); asyncDrive.setXFlip(true); flippingAWPAuton(); });
 
 Auton RedRingsToCorner("Red Rings To Corner", []()
-                        { centerRings(); });
+                       { centerRings(); });
 Auton BlueRingsToCorner("Blue Rings To Corner", []()
-                         { asyncDrive.setXFlip(true); centerRings(); });
-
+                        { asyncDrive.setXFlip(true); centerRings(); });
 
 std::vector<Auton> autons = {
     Skills,
@@ -41,7 +44,9 @@ std::vector<Auton> autons = {
     BlueCenterRingsPos,
     RedCenterRingsNeg,
     BlueCenterRingsNeg,
+    RedFlippingAWPNeg,
     RedFlippingAWPPos,
+    BlueFlippingAWPNeg,
     BlueFlippingAWPPos,
     RedRingsToCorner,
     BlueRingsToCorner};

@@ -35,6 +35,8 @@ public:
     int track();
     bool isCalibrating();
 
+    void setPos(art::Vec2 pos);
+
     art::Angle getDir();
     art::Vec2 getPos();
     art::Vec2 getVel();

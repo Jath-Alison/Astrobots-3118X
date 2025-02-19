@@ -1,5 +1,6 @@
 #include "Subsystems/Subsystem.h"
 #include "RobotConfig.h"
+#include "SubAutons.h"
 
 std::vector<Subsystem *> Subsystem::m_subsystems = {};
 
@@ -18,6 +19,10 @@ int periodicLoop()
         intake.periodic();
 		arm.periodic();
         asyncDrive.periodic();
+
+        if(localizing){
+            localize(0.2);
+        }
 
         vex::wait(20, vex::msec);
     }

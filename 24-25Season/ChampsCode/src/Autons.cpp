@@ -112,7 +112,7 @@ void flippingAWPAuton()
     // waitUntil(fabs(asyncDrive.driveError()) < art::Degrees(45));
 
     asyncDrive.setState(AsyncDrive::CONTROL);
-    asyncDrive.handleInputs(-65, 0);
+    asyncDrive.handleInputs(-73, 0);
     
     // asyncDrive.setDriveTarget(art::Inches(-40));
     // waitUntil(asyncDrive.driveComplete());
@@ -124,12 +124,19 @@ void flippingAWPAuton()
 
     vex::wait(0.75, vex::sec);
     
-    // arm.handlePosInput(art::Degrees(180));
+    // arm.handlePosInput(art::Degrees(180)); 
     // arm.setState(Arm::POSITION);
 }
 
 void centerRings()
 {
+    vex::digital_out* currentDoinker = &doinkerDeployL; //r
+    vex::digital_out* oppDoinker = &doinkerDeployR; //r
+    if(asyncDrive.getXFlip()){//there was a typo here
+        currentDoinker = &doinkerDeployR; // fixed?? doesnt work my nigga
+        oppDoinker = &doinkerDeployL; // fixed?? doesnt work my nigga
+    }
+
     art::PID driveFastExit = oldDrivePID;
     driveFastExit
         .withSettleTimeout(0.0625)
@@ -152,19 +159,19 @@ void centerRings()
 
     asyncDrive.driveForHeadingCorrectedS(art::Inches(18), art::Degrees(-45), oldDrivePID, oldTurnPID);
 
-    doinkerDeployL.set(true);
+    currentDoinker->set(true);
     vex::wait(0.55, vex::sec);
 
     asyncDrive.turnToS(art::Degrees(295));
     asyncDrive.driveForS(art::Inches(4));
 
-    doinkerDeployR.set(true);
+    oppDoinker->set(true);
     vex::wait(0.55, vex::sec);
 
     asyncDrive.driveForS(art::Inches(-47), driveFastExit);
 
-    doinkerDeployL.set(false);
-    doinkerDeployR.set(false);
+    currentDoinker->set(false);
+    oppDoinker->set(false);
 
     asyncDrive.turnToS(art::Degrees(-46));
 

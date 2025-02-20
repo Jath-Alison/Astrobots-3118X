@@ -157,12 +157,12 @@ void centerRings()
     intake.resetDelay(0.5);
     intake.setState(Intake::DELAY_OFF);
 
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(18), art::Degrees(-45), oldDrivePID, oldTurnPID);
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(17), art::Degrees(-45), oldDrivePID, oldTurnPID);
 
     currentDoinker->set(true);
     vex::wait(0.55, vex::sec);
 
-    asyncDrive.turnToS(art::Degrees(295));
+    asyncDrive.turnToS(art::Degrees(-70));
     asyncDrive.driveForS(art::Inches(4));
 
     oppDoinker->set(true);
@@ -188,7 +188,8 @@ void centerRings()
 
     asyncDrive.turnToS(art::Degrees(-100));
 
-    asyncDrive.driveForS(art::Inches(-36), driveFastExit);
+    asyncDrive.driveForS(art::Inches(-30), driveFastExit);
+    vex::wait(0.5, vex::sec);
     clamp.set(false);
     asyncDrive.driveForS(art::Inches(36), driveFastExit);
     asyncDrive.turnToS(art::Degrees(90));

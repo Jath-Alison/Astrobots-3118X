@@ -91,4 +91,4 @@ void localize(double scale)
     
 }
 
-bool localizing = false;
+bool localizing = true;

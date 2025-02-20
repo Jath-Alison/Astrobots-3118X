@@ -11,8 +11,8 @@ art::PID noStallPID = art::PID().withConstants(10, 0.06, -5.0)//Somehow already 
 void flippingAWPAuton()
 {
     vex::digital_out* currentDoinker = &doinkerDeployR; //r
-    if(asyncDrive.getYFlip() == asyncDrive.getYFlip()){
-        currentDoinker = &doinkerDeployL;
+    if(asyncDrive.getYFlip() == asyncDrive.getXFlip()){//there was a typo here
+        currentDoinker = &doinkerDeployL; // fixed?? doesnt work my nigga
     }
 
     intake.setAntiJam(true);
@@ -40,17 +40,25 @@ void flippingAWPAuton()
     waitUntil(asyncDrive.driveComplete());
 
     // Put out doinker and back up
-    currentDoinker->set(true);
+    // currentDoinker->set(true);
+    doinkerDeployL.set(true);
     vex::wait(0.25, vex::sec);
     asyncDrive.setDriveTarget(art::Inches(-15));
     waitUntil(asyncDrive.driveComplete());
 
-    currentDoinker->set(false);
-    asyncDrive.setTurnTarget(art::Degrees(165 + 15));
+    // currentDoinker->set(false);
+    doinkerDeployL.set(false);
+    asyncDrive.setTurnTarget(art::Degrees(165 + 20));
     asyncDrive.setState(AsyncDrive::TURN);
     waitUntil(asyncDrive.turnComplete());
 
-    intake.setState(Intake::STOP_RED);
+
+    if(asyncDrive.getXFlip()){
+        intake.setState(Intake::STOP_BLUE);
+    }else{
+        intake.setState(Intake::STOP_RED);
+    }
+    
     asyncDrive.setDriveTarget(art::Inches(20));
     asyncDrive.setState(AsyncDrive::DRIVE);
     waitUntil(asyncDrive.driveComplete());
@@ -92,7 +100,6 @@ void flippingAWPAuton()
     asyncDrive.setDriveTarget(art::Inches(-5));
     asyncDrive.setState(AsyncDrive::DRIVE);
     waitUntil(asyncDrive.driveComplete());
-    std::cout << asyncDrive.driveError() << std::endl;
 
     asyncDrive.setTurnTarget(art::Degrees(-15));
     asyncDrive.setState(AsyncDrive::TURN);
@@ -105,12 +112,20 @@ void flippingAWPAuton()
     // waitUntil(fabs(asyncDrive.driveError()) < art::Degrees(45));
 
     asyncDrive.setState(AsyncDrive::CONTROL);
-    asyncDrive.handleInputs(-80, 0);
+    asyncDrive.handleInputs(-65, 0);
+    
+    // asyncDrive.setDriveTarget(art::Inches(-40));
+    // waitUntil(asyncDrive.driveComplete());
 
-    vex::wait(0.75, vex::sec);
+    vex::wait(1.5, vex::sec);
 
     arm.setState(Arm::CONTROL);
-    arm.handleCmdInput(-75);
+    arm.handleCmdInput(-40);
+
+    vex::wait(0.75, vex::sec);
+    
+    // arm.handlePosInput(art::Degrees(180));
+    // arm.setState(Arm::POSITION);
 }
 
 void centerRings()

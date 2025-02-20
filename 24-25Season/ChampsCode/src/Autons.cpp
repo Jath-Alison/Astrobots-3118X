@@ -120,7 +120,8 @@ void flippingAWPAuton()
     vex::wait(1.5, vex::sec);
 
     arm.setState(Arm::CONTROL);
-    arm.handleCmdInput(-40);
+    arm.handleCmdInput(40);
+    asyncDrive.handleInputs(0, 0);
 
     vex::wait(0.75, vex::sec);
     

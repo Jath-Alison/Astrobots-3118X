@@ -184,7 +184,9 @@ void centerRings()
     asyncDrive.turnToS(art::Degrees(-145));
 
     asyncDrive.driveForHeadingCorrectedS(art::Inches(15), art::Degrees(-145), oldDrivePID, oldTurnPID);
+    vex::wait(0.5, vex::sec);
     asyncDrive.driveForHeadingCorrectedS(art::Inches(36 - 15), art::Degrees(-145), oldDrivePID, oldTurnPID);
+    vex::wait(0.125, vex::sec);
     asyncDrive.driveForHeadingCorrectedS(art::Inches(2), art::Degrees(-145), oldDrivePID, oldTurnPID);
 
     asyncDrive.turnToS(art::Degrees(-100));

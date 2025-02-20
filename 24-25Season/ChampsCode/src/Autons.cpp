@@ -10,9 +10,9 @@ art::PID noStallPID = art::PID().withConstants(10, 0.06, -5.0)//Somehow already 
 
 void flippingAWPAuton()
 {
-    vex::digital_out* currentDoinker = &doinkerDeployR; //r
+    vex::digital_out* currentDoinker = &doinkerDeployL; 
     if(asyncDrive.getYFlip() == asyncDrive.getXFlip()){//there was a typo here
-        currentDoinker = &doinkerDeployL; // fixed?? doesnt work my nigga
+        currentDoinker = &doinkerDeployR; 
     }
 
     intake.setAntiJam(true);
@@ -41,13 +41,13 @@ void flippingAWPAuton()
 
     // Put out doinker and back up
     // currentDoinker->set(true);
-    doinkerDeployL.set(true);
+    currentDoinker->set(true);
     vex::wait(0.25, vex::sec);
     asyncDrive.setDriveTarget(art::Inches(-15));
     waitUntil(asyncDrive.driveComplete());
 
     // currentDoinker->set(false);
-    doinkerDeployL.set(false);
+    currentDoinker->set(false);
     asyncDrive.setTurnTarget(art::Degrees(165 + 20));
     asyncDrive.setState(AsyncDrive::TURN);
     waitUntil(asyncDrive.turnComplete());
@@ -95,7 +95,7 @@ void flippingAWPAuton()
     asyncDrive.setState(AsyncDrive::DRIVE);
     waitUntil(asyncDrive.driveComplete());
 
-    arm.handlePosInput(art::Degrees(115));
+    arm.handlePosInput(art::Degrees(65));
 
     asyncDrive.setDriveTarget(art::Inches(-5));
     asyncDrive.setState(AsyncDrive::DRIVE);

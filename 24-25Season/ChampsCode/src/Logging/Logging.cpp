@@ -131,7 +131,7 @@ namespace logging
 
     int logLoop()
     {
-        logger.clearFile("ChampsCodelog.wpilog");
+        logger.clearFile("ChampsCodeLog.wpilog");
 
         logger.logStringEntry(console, "Log Loop Started");
 

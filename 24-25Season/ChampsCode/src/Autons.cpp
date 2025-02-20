@@ -10,6 +10,13 @@ art::PID noStallPID = art::PID().withConstants(10, 0.06, -5.0)//Somehow already 
 
 void flippingAWPAuton()
 {
+    vex::digital_out* currentDoinker = &doinkerDeployR; //r
+    if(asyncDrive.getYFlip() == asyncDrive.getYFlip()){
+        currentDoinker = &doinkerDeployL;
+    }
+
+    intake.setAntiJam(true);
+    
     // drive 2 inches and score ladybrown
     asyncDrive.driveForS(art::Inches(2), oldDrivePID);
     asyncDrive.setState(AsyncDrive::WAIT);
@@ -20,26 +27,26 @@ void flippingAWPAuton()
 
     // Back out
     asyncDrive.setState(AsyncDrive::DRIVE);
-    asyncDrive.setDriveTarget(art::Inches(-15));
+    asyncDrive.setDriveTarget(art::Inches(-20));
     waitUntil(asyncDrive.driveComplete());
     arm.handlePosInput(art::Degrees(-5));
 
     // Move to Rings
-    asyncDrive.turnToS(art::Degrees(158), oldTurnPID);
+    asyncDrive.turnToS(art::Degrees(165), oldTurnPID);
     waitUntil(asyncDrive.turnComplete());
 
-    asyncDrive.setDriveTarget(art::Inches(7));
+    asyncDrive.setDriveTarget(art::Inches(10));
     asyncDrive.setState(AsyncDrive::DRIVE);
     waitUntil(asyncDrive.driveComplete());
 
     // Put out doinker and back up
-    doinkerDeployR.set(true);
+    currentDoinker->set(true);
     vex::wait(0.25, vex::sec);
     asyncDrive.setDriveTarget(art::Inches(-15));
     waitUntil(asyncDrive.driveComplete());
 
-    doinkerDeployR.set(false);
-    asyncDrive.setTurnTarget(art::Degrees(160 + 15));
+    currentDoinker->set(false);
+    asyncDrive.setTurnTarget(art::Degrees(165 + 15));
     asyncDrive.setState(AsyncDrive::TURN);
     waitUntil(asyncDrive.turnComplete());
 
@@ -76,7 +83,7 @@ void flippingAWPAuton()
     intake.setState(Intake::CONTROL);
     intake.handleInput(100);
 
-    asyncDrive.setDriveTarget(art::Inches(30));
+    asyncDrive.setDriveTarget(art::Inches(32));
     asyncDrive.setState(AsyncDrive::DRIVE);
     waitUntil(asyncDrive.driveComplete());
 

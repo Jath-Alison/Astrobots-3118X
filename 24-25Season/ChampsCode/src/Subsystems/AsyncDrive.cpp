@@ -40,9 +40,15 @@ void AsyncDrive::setXFlip(bool flip)
 {
     m_flipX = flip;
 }
+bool AsyncDrive::getXFlip(){
+    return m_flipX;
+}
 void AsyncDrive::setYFlip(bool flip)
 {
     m_flipY = flip;
+}
+bool AsyncDrive::getYFlip(){
+    return m_flipY;
 }
 int AsyncDrive::track()
 {

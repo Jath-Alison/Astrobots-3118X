@@ -113,6 +113,11 @@ art::Vec2 AsyncDrive::getPos()
 {
     return m_pos;
 }
+art::Vec2
+    AsyncDrive::getCenterPos()
+{
+    return m_centerPos;
+}
 art::Vec2 AsyncDrive::getVel()
 {
     return m_vel;

@@ -23,17 +23,17 @@ vex::controller Controller1;
 vex::gps gpsSensorL(vex::PORT10, -5.0, 0, vex::inches, 270);
 vex::gps gpsSensorR(vex::PORT6, 5.0, 0, vex::inches, 90);
 
-vex::motor leftMotorA (vex::PORT19, vex::gearSetting::ratio6_1, true);
-vex::motor leftMotorB (vex::PORT11, vex::gearSetting::ratio6_1, true);
-vex::motor leftMotorC (vex::PORT12, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorA (vex::PORT1, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorB (vex::PORT2, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorC (vex::PORT3, vex::gearSetting::ratio6_1, true);
 vex::motor_group leftMotors (leftMotorA, leftMotorB, leftMotorC);
 
-vex::motor rightMotorA (vex::PORT9, vex::gearSetting::ratio6_1, false);
-vex::motor rightMotorB (vex::PORT1, vex::gearSetting::ratio6_1, false);
-vex::motor rightMotorC (vex::PORT2, vex::gearSetting::ratio6_1, false);
+vex::motor rightMotorA (vex::PORT11, vex::gearSetting::ratio6_1, false);
+vex::motor rightMotorB (vex::PORT12, vex::gearSetting::ratio6_1, false);
+vex::motor rightMotorC (vex::PORT13, vex::gearSetting::ratio6_1, false);
 vex::motor_group rightMotors (rightMotorA, rightMotorB, rightMotorC);
 
-vex::inertial inert (vex::PORT18);
+vex::inertial inert (vex::PORT7);
 
 art::TankDrive drive = art::TankDrive(leftMotors, rightMotors);
 AsyncDrive asyncDrive = AsyncDrive(drive, inert)
@@ -41,7 +41,7 @@ AsyncDrive asyncDrive = AsyncDrive(drive, inert)
     .withWheelSize(art::Inches(2.75))
     .withDefaultPIDs(oldDrivePID, oldTurnPID)
     .withHorizontalTracker(
-      vex::rotation(vex::PORT13, false),
+      vex::rotation(vex::PORT19, false),
       art::Inches(2),
       1.0
     );
@@ -70,11 +70,11 @@ AsyncDrive asyncDrive = AsyncDrive(drive, inert)
 
 // art::SimpleMotor intake  = art::SimpleMotor(vex::motor(vex::PORT3, vex::gearSetting::ratio6_1, false))
 //     .withSpeedMode(false);
-Intake intake(vex::motor(vex::PORT3, vex::gearSetting::ratio6_1, false), vex::optical(vex::PORT17));
+Intake intake(vex::motor(vex::PORT14, vex::gearSetting::ratio6_1, false), vex::optical(vex::PORT17));
 
 vex::digital_out clamp(Brain.ThreeWirePort.A); bool clampState = false;;
 
-Arm arm = Arm(vex::motor(vex::PORT4, vex::gearSetting::ratio36_1, false), vex::rotation(vex::PORT14, true), art::PID()
+Arm arm = Arm(vex::motor(vex::PORT10, vex::gearSetting::ratio36_1, true), vex::rotation(vex::PORT11, true), art::PID()
         .withConstants(3/(art::Degrees(1)), 0, -100)
         .withSettleZone(art::Degrees(5))
         .withSettleTimeout(0.07)

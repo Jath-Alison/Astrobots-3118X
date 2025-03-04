@@ -70,11 +70,11 @@ AsyncDrive asyncDrive = AsyncDrive(drive, inert)
 
 // art::SimpleMotor intake  = art::SimpleMotor(vex::motor(vex::PORT3, vex::gearSetting::ratio6_1, false))
 //     .withSpeedMode(false);
-Intake intake(vex::motor(vex::PORT14, vex::gearSetting::ratio6_1, false), vex::optical(vex::PORT17));
+Intake intake(vex::motor(vex::PORT14, vex::gearSetting::ratio6_1, true), vex::optical(vex::PORT17));
 
 vex::digital_out clamp(Brain.ThreeWirePort.A); bool clampState = false;;
 
-Arm arm = Arm(vex::motor(vex::PORT10, vex::gearSetting::ratio36_1, true), vex::rotation(vex::PORT11, true), art::PID()
+Arm arm = Arm(vex::motor(vex::PORT10, vex::gearSetting::ratio36_1, true), vex::rotation(vex::PORT8, false), art::PID()
         .withConstants(3/(art::Degrees(1)), 0, -100)
         .withSettleZone(art::Degrees(5))
         .withSettleTimeout(0.07)

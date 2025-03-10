@@ -14,6 +14,7 @@ public:
         CONTROL,
         DRIVE,
         TURN,
+        CONTROL_HEADING_CORRECTED,
         DRIVE_HEADING_CORRECTED,
         SWING_ABOUT_LEFT,
         SWING_ABOUT_RIGHT,

@@ -40,14 +40,16 @@ void AsyncDrive::setXFlip(bool flip)
 {
     m_flipX = flip;
 }
-bool AsyncDrive::getXFlip(){
+bool AsyncDrive::getXFlip()
+{
     return m_flipX;
 }
 void AsyncDrive::setYFlip(bool flip)
 {
     m_flipY = flip;
 }
-bool AsyncDrive::getYFlip(){
+bool AsyncDrive::getYFlip()
+{
     return m_flipY;
 }
 int AsyncDrive::track()
@@ -120,7 +122,7 @@ art::Vec2 AsyncDrive::getPos()
     return m_pos;
 }
 art::Vec2
-    AsyncDrive::getCenterPos()
+AsyncDrive::getCenterPos()
 {
     return m_centerPos;
 }
@@ -150,6 +152,13 @@ void AsyncDrive::periodic()
         a = m_drivePID.calculate(m_driveTarget - pos);
 
         arcade(a, 0);
+
+        break;
+    case CONTROL_HEADING_CORRECTED:
+        
+        error = shortestTurnPath(art::Degrees(m_turnTarget.degrees() - m_dir.degrees()));
+
+        arcade(drive_input, m_turnPID.calculate(error));
 
         break;
     case DRIVE_HEADING_CORRECTED:
@@ -183,17 +192,16 @@ void AsyncDrive::periodic()
         m_left.set(a);
         break;
     case PATH:
-        
+
         m_lookahead = m_path.getLookahead(m_centerPos, m_lookaheadDist);
-        
+
         // m_closest = m_path.getClosestPoint(m_centerPos);
-        
 
         travel = art::Vec2(m_lookahead.m_pos - m_centerPos);
 
         error = shortestTurnPath(art::Degrees(art::Angle(travel.direction()).degrees() - m_dir.degrees()));
         arcade(m_lookahead.m_speed, m_turnPID.calculate(error));
-        
+
         break;
     default:
         break;
@@ -227,7 +235,7 @@ void AsyncDrive::setTurnTarget(art::Angle target)
     }
 
     m_turnTarget = targetCopy;
-    
+
     m_turnPID.reset();
 }
 void AsyncDrive::zeroGyro()

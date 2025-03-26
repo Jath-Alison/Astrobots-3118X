@@ -1,0 +1,48 @@
+{
+	// Place your ShadesDev workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"box":{
+		"scope": "xml",
+		"prefix": ["<box"],
+		"body": ["<box id=\"${1:0}\" x=\"${2:0}\" y=\"${3:0}\" width=\"${4:0}\" height=\"${5:0}\" color=\"${6:0xFFFFFFFF}\" callback=\"${7:function}\" />"],
+		"description": "Template for box display items."
+	},
+	"circle":{
+		"scope": "xml",
+		"prefix": ["<circle"],
+		"body": ["<circle id=\"${1:0}\" x=\"${2:0}\" y=\"${3:0}\" radius=\"${4:1}\" color=\"${5:0xFFFFFFFF}\" callback=\"${6:function}\" />"],
+		"description": "Template for circle display items."
+	},
+	"text":{
+		"scope": "xml",
+		"prefix": ["<text"],
+		"body": ["<text id=\"${1:0}\" x=\"${2:0}\" y=\"${3:0}\" text=\"${4:text}\" color=\"${5:0xFFFFFFFF}\" callback=\"${6:function}\" />"],
+		"description": "Template for box display items."
+	}
+	,"smartText":{
+		"scope": "xml",
+		"prefix": ["<smart_text"],
+		"body": ["<smart_text id=\"${1:0}\" x=\"${2:0}\" y=\"${3:0}\" format=\"${4:text}\" color=\"${5:0xFFFFFFFF}\" callback=\"${6:function}\">\n     <data id=\"${7:data}\"/> \n</smart_text>"],
+		"description": "Template for box display items."
+	},
+	"image":{
+		"scope": "xml",
+		"prefix": ["<image"],
+		"body": ["<image id=\"${1:0}\" x=\"${2:0}\" y=\"${3:0}\" src=\"${4:image.png}\" callback=\"${5:function}\" />"],
+		"description": "Template for image display items."
+	}
+}

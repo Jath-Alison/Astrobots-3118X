@@ -20,16 +20,16 @@
 vex::brain Brain;
 vex::controller Controller1;
 
-vex::inertial inert (vex::PORT18);
+vex::inertial inert (vex::PORT8);
 
 vex::motor mot_lf_a(vex::PORT20, !true);
 vex::motor mot_lf_b(vex::PORT19, !false);
-vex::motor mot_lb_a(vex::PORT10, !!false);
-vex::motor mot_lb_b(vex::PORT9, !!true);
+vex::motor mot_lb_a(vex::PORT10, !true);
+vex::motor mot_lb_b(vex::PORT9, !false);
 vex::motor mot_rf_a(vex::PORT11, !false);
 vex::motor mot_rf_b(vex::PORT12, !true);
-vex::motor mot_rb_a(vex::PORT1, !!true);
-vex::motor mot_rb_b(vex::PORT2, !!false);
+vex::motor mot_rb_a(vex::PORT1, !false);
+vex::motor mot_rb_b(vex::PORT2, !true);
 
 art::HolonomicDrive holoDrive(
   art::SimpleMotorGroup(vex::motor_group(mot_lf_a, mot_lf_b)),

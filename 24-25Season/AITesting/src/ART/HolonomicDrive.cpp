@@ -31,23 +31,38 @@ namespace art
         update();
     }
 
+    void HolonomicDrive::rotateCommand(art::Angle angle)
+    {
+        art::Vec2 cmd = art::Vec2::XandY(m_cmdX, m_cmdY);
+        art::Vec2 new_cmd = art::Vec2::dirAndMag(cmd.direction() + angle, cmd.magnitude());
+
+        m_cmdX = new_cmd.x;
+        m_cmdY = new_cmd.y;
+
+        update();
+    }
+
     void HolonomicDrive::update()
     {
         m_leftFront.set(
-            m_cmdY + m_cmdRot
-            -m_cmdX 
+            m_cmdY 
+            + m_cmdX 
+            + m_cmdRot
         );
         m_leftBack.set(
-            m_cmdY + m_cmdRot
-            +m_cmdX 
+            m_cmdY 
+            - m_cmdX 
+            + m_cmdRot
         );
         m_rightFront.set(
-            m_cmdY - m_cmdRot
-            +m_cmdX 
+            m_cmdY 
+            - m_cmdX 
+            - m_cmdRot
         );
         m_rightBack.set(
-            m_cmdY - m_cmdRot
-            -m_cmdX 
+            m_cmdY 
+            + m_cmdX 
+            - m_cmdRot
         );
     }
 } // namespace art

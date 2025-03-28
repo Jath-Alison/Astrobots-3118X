@@ -100,10 +100,34 @@ void usercontrol(void)
 		vex::wait(10, vex::msec);
 	}
 
+	art::Angle offset = 0;
+
+	art::Vec2 input;
+	art::Angle target;
+	double out;
+
 	while (1)
 	{
 
 		holoDrive.LeftSplitArcadeCurved(Controller1);
+
+		if(!Controller1.ButtonR1.pressing()){
+			holoDrive.rotateCommand(art::Degrees(-inert.heading(vex::deg)) - offset);
+		}
+
+		if(Controller1.ButtonA.PRESSED){
+			offset = art::Degrees(-inert.heading(vex::deg)); 
+		}
+
+		input = art::Vec2::XandY(Controller1.Axis1.position(),Controller1.Axis2.position());
+
+		if(input.magnitude() > 70)
+			target = art::Angle(input.direction() - offset);
+
+		out = oldTurnPID.calculate(art::shortestTurnPath(target - art::Degrees(inert.heading(vex::deg))));
+
+		holoDrive.m_cmdRot = out;
+		holoDrive.update();
 
 		vex::wait(20, vex::msec);
 	}

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ART/SimpleMotorGroup.h"
+#include "ART/Units.h"
+#include "ART/Vec2.h"
 
 namespace art
 {
@@ -14,6 +16,8 @@ namespace art
 		void LeftSplitArcade(const vex::controller &cont);
 		
 		void LeftSplitArcadeCurved(const vex::controller &cont);
+
+		void rotateCommand(art::Angle angle);
 
 
 		void update();

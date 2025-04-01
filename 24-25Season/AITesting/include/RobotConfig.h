@@ -25,3 +25,8 @@
 
 extern vex::inertial inert;
 extern art::HolonomicDrive holoDrive;
+
+extern art::SmartDrive::HorizontalTracker horizontalTracker;
+extern art::SmartDrive::HorizontalTracker verticalTracker;
+
+extern art::Vec2 pos;

@@ -37,3 +37,8 @@ art::HolonomicDrive holoDrive(
   art::SimpleMotorGroup(vex::motor_group(mot_rf_a, mot_rf_b)),
   art::SimpleMotorGroup(vex::motor_group(mot_rb_a, mot_rb_b))
 );
+
+art::SmartDrive::HorizontalTracker horizontalTracker(vex::rotation(vex::PORT17), art::Inches(2.75), 1.0);
+art::SmartDrive::HorizontalTracker verticalTracker(vex::rotation(vex::PORT16, true), art::Inches(2.75), 1.0);
+
+art::Vec2 pos;

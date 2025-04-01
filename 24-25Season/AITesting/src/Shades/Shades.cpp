@@ -92,8 +92,26 @@ namespace sds
 
         int leftId = 0;
 
+        std::shared_ptr<sds::displayable> d;
+        std::stringstream ss;
+
         while (true)
         {
+            if (sds::Screen::getCurrentScreen() == "home")
+            {
+                // resetAutonView();
+                d = sds::Screen::getElementById("TitleMimicL");
+                ss.clear();
+                ss.str("");
+
+                if (d)
+                {
+                    ss << d->getBaseText() << int(art::Length(pos.x).inches()) << ", "
+                       << int(art::Length(pos.y).inches()) << ", " << int(inert.heading(vex::deg));
+                    d->setText(ss.str().c_str());
+                }
+            }
+
             vex::wait(100, vex::msec);
         }
 

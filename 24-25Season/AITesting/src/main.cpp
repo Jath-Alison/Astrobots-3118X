@@ -100,11 +100,18 @@ void usercontrol(void)
 		vex::wait(10, vex::msec);
 	}
 
+	art::PID xPid = oldDrivePID;
+	xPid.withConstants(5, 0.06, -5.0);
+	art::PID yPid = oldDrivePID;
+	yPid.withConstants(1, 0.06, -5.0);
+
 	art::Angle offset = 0;
 
 	art::Vec2 input;
 	art::Angle target;
 	double out;
+	horizontalTracker.getTravel();
+	verticalTracker.getTravel();
 
 	while (1)
 	{
@@ -119,16 +126,31 @@ void usercontrol(void)
 			offset = art::Degrees(-inert.heading(vex::deg)); 
 		}
 
+		art::Vec2 travel = art::Vec2::XandY(horizontalTracker.getTravel(), verticalTracker.getTravel());
+
+		pos += art::Vec2::dirAndMag(travel.direction() + art::Degrees(inert.heading(vex::deg)), travel.magnitude());
+
+		if(Controller1.ButtonLeft.PRESSED){
+			std::cout << art::Length(pos.x).inches() << ", " << art::Length(pos.y).inches() << ", " << inert.heading(vex::deg) << std::endl;
+		}
+
 		input = art::Vec2::XandY(Controller1.Axis1.position(),Controller1.Axis2.position());
 
 		if(input.magnitude() > 70)
 			target = art::Angle(input.direction() - offset);
-
+		
+		art::Vec2 dist = art::Vec2() - pos;
+		dist = art::Vec2::dirAndMag(dist.direction() - art::Degrees(inert.heading(vex::deg)), dist.magnitude());
+		if(Controller1.ButtonX.pressing()){
+			holoDrive.arcade(xPid.calculate(dist.x),yPid.calculate(dist.y),0); 
+			target = art::Angle(0);
+		}
+		
 		out = oldTurnPID.calculate(art::shortestTurnPath(target - art::Degrees(inert.heading(vex::deg))));
-
 		holoDrive.m_cmdRot = out;
-		holoDrive.update();
 
+		holoDrive.update();
+		
 		vex::wait(20, vex::msec);
 	}
 }

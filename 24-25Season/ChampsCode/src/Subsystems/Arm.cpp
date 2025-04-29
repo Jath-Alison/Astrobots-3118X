@@ -3,9 +3,13 @@
 Arm::Arm(vex::motor_group mot, art::PID pid) : m_motor(mot), m_pid(pid)
 {
     m_motor.setStopping(vex::hold);
-    m_motor.setPosition(-15 * .33333, vex::degrees);
+    resetPos();
 }
 
+void Arm::resetPos()
+{
+    m_motor.setPosition(-20 * 3.0, vex::degrees);
+}
 void Arm::periodic()
 {
 

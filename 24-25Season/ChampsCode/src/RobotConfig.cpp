@@ -33,7 +33,7 @@ vex::motor rightMotorB(vex::PORT12, vex::gearSetting::ratio6_1, false);
 vex::motor rightMotorC(vex::PORT13, vex::gearSetting::ratio6_1, !false);
 vex::motor_group rightMotors(rightMotorA, rightMotorB, rightMotorC);
 
-vex::inertial inert(vex::PORT20);
+vex::inertial inert(vex::PORT4);
 
 art::TankDrive drive = art::TankDrive(leftMotors, rightMotors);
 AsyncDrive asyncDrive = AsyncDrive(drive, inert)
@@ -42,7 +42,7 @@ AsyncDrive asyncDrive = AsyncDrive(drive, inert)
                             .withDefaultPIDs(oldDrivePID, oldTurnPID)
                             .withHorizontalTracker(
                                 vex::rotation(vex::PORT20, false),
-                                art::Inches(2),
+                                art::Inches(2.75),
                                 1.0);
 
 // .withDriveForPID(art::PID()

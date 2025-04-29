@@ -15,6 +15,8 @@ public:
 
     Arm(vex::motor_group mot, art::PID pid);
 
+    void resetPos();
+
     void periodic();
     void handlePosInput(art::Angle input);
     void handleCmdInput(double input);

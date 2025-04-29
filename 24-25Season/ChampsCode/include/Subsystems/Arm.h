@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Subsystems/Subsystem.h"
-#include "ART/SimpleMotor.h"
+#include "ART/SimpleMotorGroup.h"
 #include "ART/PID.h"
 #include "ART/Units.h"
 
@@ -13,7 +13,7 @@ public:
         POSITION
     };
 
-    Arm(vex::motor mot, vex::rotation rot, art::PID pid);
+    Arm(vex::motor_group mot, art::PID pid);
 
     void periodic();
     void handlePosInput(art::Angle input);
@@ -23,8 +23,7 @@ public:
 
     bool isComplete();
 
-    art::SimpleMotor& getMotor();
-    vex::rotation& getRotation();
+    art::SimpleMotorGroup& getMotor();
     art::Angle getPosCmd();
 
 private:
@@ -36,6 +35,5 @@ private:
 
     art::PID m_pid;
 
-    art::SimpleMotor m_motor;
-    vex::rotation m_rotation;
+    art::SimpleMotorGroup m_motor;
 };

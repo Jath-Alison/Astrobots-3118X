@@ -238,7 +238,7 @@ namespace logging
             logger.logDoubleEntry(Arm_Velocity, arm.getMotor().velocity(vex::velocityUnits::pct));
             logger.logDoubleEntry(Arm_Temperature, arm.getMotor().temperature(vex::celsius));
             logger.logDoubleEntry(Arm_Position, arm.getMotor().position(vex::rotationUnits::deg));
-            logger.logDoubleEntry(Arm_RotAngle, arm.getRotation().angle());
+            logger.logDoubleEntry(Arm_RotAngle, arm.getMotor().position(vex::degrees));
             logger.logDoubleEntry(Arm_TargetAngle, arm.getPosCmd());
 
             logger.logDoubleArrayEntry(Base_Motors_Voltage, baseMotorsVoltage);

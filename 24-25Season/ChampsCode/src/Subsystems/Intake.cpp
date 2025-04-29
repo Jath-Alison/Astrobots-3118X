@@ -1,6 +1,6 @@
 #include "Subsystems/Intake.h"
 
-Intake::Intake(vex::motor mot, vex::optical opt) : m_motor(mot), m_optical(opt)
+Intake::Intake(vex::motor_group mot, vex::optical opt) : m_motor(mot), m_optical(opt)
 {
     m_optical.integrationTime(5);
 }
@@ -171,7 +171,7 @@ double Intake::timeMoving()
 }
 void Intake::setAntiJam(bool runningAntiJam) { m_runningAntijam = runningAntiJam; };
 bool Intake::getAntiJam() { return m_runningAntijam; };
-art::SimpleMotor &Intake::getMotor()
+art::SimpleMotorGroup &Intake::getMotor()
 {
     return m_motor;
 }

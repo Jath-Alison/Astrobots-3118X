@@ -26,12 +26,12 @@ vex::gps gpsSensorR(vex::PORT20, 5.0, 0, vex::inches, 90);
 vex::motor leftMotorA(vex::PORT1, vex::gearSetting::ratio6_1, true);
 vex::motor leftMotorB(vex::PORT2, vex::gearSetting::ratio6_1, !true);
 vex::motor leftMotorC(vex::PORT3, vex::gearSetting::ratio6_1, true);//not front?
-vex::motor_group leftMotors(leftMotorA, leftMotorB, leftMotorC);
+vex::motor_group leftMotors(leftMotorB, leftMotorA, leftMotorC);
 
 vex::motor rightMotorA(vex::PORT11, vex::gearSetting::ratio6_1, false);
 vex::motor rightMotorB(vex::PORT12, vex::gearSetting::ratio6_1, false);
 vex::motor rightMotorC(vex::PORT13, vex::gearSetting::ratio6_1, !false);
-vex::motor_group rightMotors(rightMotorA, rightMotorB, rightMotorC);
+vex::motor_group rightMotors(rightMotorC, rightMotorA, rightMotorB);
 
 vex::inertial inert(vex::PORT4);
 
@@ -41,7 +41,7 @@ AsyncDrive asyncDrive = AsyncDrive(drive, inert)
                             .withWheelSize(art::Inches(2.75))
                             .withDefaultPIDs(oldDrivePID, oldTurnPID)
                             .withHorizontalTracker(
-                                vex::rotation(vex::PORT20, false),
+                                vex::rotation(vex::PORT15, true),
                                 art::Inches(2.75),
                                 1.0);
 
@@ -76,7 +76,7 @@ vex::motor_group intakeMotors(intakeMotorA, intakeMotorB);
 
 Intake intake(intakeMotors, vex::optical(vex::PORT17));
 
-vex::digital_out clamp(Brain.ThreeWirePort.A);
+vex::digital_out clamp(Brain.ThreeWirePort.D);
 bool clampState = false;
 ;
 
@@ -106,10 +106,15 @@ Arm arm = Arm(
 //         // .withSettleTimeout(0.75)
 //         ;
 
-vex::digital_out doinkerDeployR(Brain.ThreeWirePort.B);
+vex::digital_out doinkerDeployR(Brain.ThreeWirePort.G);
 bool doinkerDeployRState = false;
-vex::digital_out doinkerDeployL(Brain.ThreeWirePort.H);
+vex::digital_out doinkerDeployL(Brain.ThreeWirePort.B);
 bool doinkerDeployLState = false;
+
+vex::digital_out climbDeployR(Brain.ThreeWirePort.H);
+bool climbDeployRState = false;
+vex::digital_out climbDeployL(Brain.ThreeWirePort.A);
+bool climbDeployLState = false;
 
 vex::aivision FrontVision(vex::PORT20);
 // vex::optical intakeOptical(vex::PORT17);

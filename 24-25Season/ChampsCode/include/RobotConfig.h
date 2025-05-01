@@ -55,6 +55,9 @@ extern Arm arm;
 extern vex::digital_out doinkerDeployR; extern bool doinkerDeployRState;
 extern vex::digital_out doinkerDeployL; extern bool doinkerDeployLState;
 
+extern vex::digital_out climbDeployR; extern bool climbDeployRState;
+extern vex::digital_out climbDeployL; extern bool climbDeployLState;
+
 extern vex::aivision FrontVision;
 // extern vex::optical intakeOptical;
 // extern vex::optical outtakeOptical;

@@ -112,7 +112,8 @@ namespace sds
 
                 if (d)
                 {
-                    ss << d->getBaseText() << asyncDrive.getDir().degrees();
+                    // ss << d->getBaseText() << asyncDrive.getDir().degrees();
+                    ss << "Pos: (" << int(4*art::Length(asyncDrive.getPos().x).inches())/4.0 << "," << int(4*art::Length(asyncDrive.getPos().y).inches())/4.0 << ")";
                     d->setText(ss.str().c_str());
                 }
 

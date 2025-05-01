@@ -209,6 +209,8 @@ void pre_auton(void)
 void autonomous(void)
 {
 
+	localizing = true;
+
 	while (asyncDrive.isCalibrating())
 	{
 		vex::wait(10, vex::msec);
@@ -354,7 +356,7 @@ void usercontrol(void)
 			intake.setState(Intake::CONTROL);
 		}
 
-		localizing = false;
+		localizing = true;
 
 		vex::wait(20, vex::msec);
 	}

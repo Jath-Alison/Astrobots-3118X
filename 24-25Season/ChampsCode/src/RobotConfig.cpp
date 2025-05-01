@@ -21,7 +21,7 @@ vex::brain Brain;
 vex::controller Controller1;
 
 vex::gps gpsSensorL(vex::PORT20, -5.0, 0, vex::inches, 270);
-vex::gps gpsSensorR(vex::PORT20, 5.0, 0, vex::inches, 90);
+vex::gps gpsSensorR(vex::PORT14, 6.0, 6.0, vex::inches, 90);
 
 vex::motor leftMotorA(vex::PORT1, vex::gearSetting::ratio6_1, true);
 vex::motor leftMotorB(vex::PORT2, vex::gearSetting::ratio6_1, !true);

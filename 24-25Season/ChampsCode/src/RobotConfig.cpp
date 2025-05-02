@@ -72,7 +72,7 @@ AsyncDrive asyncDrive = AsyncDrive(drive, inert)
 
 vex::motor intakeMotorA(vex::PORT5, vex::gearSetting::ratio6_1, false);
 vex::motor intakeMotorB(vex::PORT7, vex::gearSetting::ratio6_1, false);
-vex::motor_group intakeMotors(intakeMotorA, intakeMotorB);
+vex::motor_group intakeMotors(intakeMotorB, intakeMotorA);
 
 Intake intake(intakeMotors, vex::optical(vex::PORT17));
 
@@ -115,6 +115,10 @@ vex::digital_out climbDeployR(Brain.ThreeWirePort.H);
 bool climbDeployRState = false;
 vex::digital_out climbDeployL(Brain.ThreeWirePort.A);
 bool climbDeployLState = false;
+
+vex::digital_out pto(Brain.ThreeWirePort.F);
+bool ptoState = false;
+bool climbControls = false;
 
 vex::aivision FrontVision(vex::PORT20);
 // vex::optical intakeOptical(vex::PORT17);

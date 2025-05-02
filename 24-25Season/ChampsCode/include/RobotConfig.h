@@ -58,6 +58,9 @@ extern vex::digital_out doinkerDeployL; extern bool doinkerDeployLState;
 extern vex::digital_out climbDeployR; extern bool climbDeployRState;
 extern vex::digital_out climbDeployL; extern bool climbDeployLState;
 
+extern vex::digital_out pto; extern bool ptoState; extern bool climbControls;
+
+
 extern vex::aivision FrontVision;
 // extern vex::optical intakeOptical;
 // extern vex::optical outtakeOptical;

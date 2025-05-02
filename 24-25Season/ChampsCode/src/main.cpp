@@ -252,14 +252,14 @@ void usercontrol(void)
 
 	while (1)
 	{
-		if (Controller1.ButtonX.PRESSED)
+		if (Controller1.ButtonX.PRESSED && !climbControls)
 		{
 			oldDrivePID.withSettleZone(art::Revolutions(art::Inches(1.5) / (M_PI * art::Inches(2.75) * (36.f / 48.f))))
 			.withSettleTimeout(0.0625);
 			asyncDrive.driveForA(art::Inches(-7));
 
 		}
-		if (Controller1.ButtonX.pressing())
+		if (Controller1.ButtonX.pressing() && !climbControls)
 		{
 			if (asyncDrive.driveComplete())
 			{
@@ -354,6 +354,18 @@ void usercontrol(void)
 
 			asyncDrive.setState(AsyncDrive::CONTROL);
 			intake.setState(Intake::CONTROL);
+		}
+
+		if(Controller1.ButtonY.PRESSED){
+			climbControls = !climbControls;
+			ptoState = !ptoState;
+			pto.set(ptoState);
+		}
+		if(Controller1.ButtonB.PRESSED){
+			climbDeployLState = !climbDeployLState;
+			climbDeployRState = !climbDeployRState;
+			climbDeployL.set(climbDeployLState);
+			climbDeployR.set(climbDeployRState);
 		}
 
 		localizing = true;

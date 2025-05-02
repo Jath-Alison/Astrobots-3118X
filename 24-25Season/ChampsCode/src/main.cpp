@@ -268,8 +268,13 @@ void usercontrol(void)
 		}
 		else
 		{
-			asyncDrive.setState(AsyncDrive::CONTROL);
-			asyncDrive.handleInputs(Controller1.Axis3.position(), Controller1.Axis1.position());
+			if(!climbControls){
+				asyncDrive.setState(AsyncDrive::CONTROL);
+				asyncDrive.handleInputs(Controller1.Axis3.position(), Controller1.Axis1.position());
+			}else{
+				asyncDrive.setState(AsyncDrive::CONTROL);
+				asyncDrive.handleInputs(Controller1.Axis3.position() + Controller1.Axis2.position(), Controller1.Axis3.position() - Controller1.Axis2.position());
+			}
 		}
 
 		if (Controller1.ButtonR1.pressing())
@@ -295,8 +300,8 @@ void usercontrol(void)
 		{
 			doinkerDeployRState = !doinkerDeployRState;
 			doinkerDeployR.set(doinkerDeployRState);
-			// doinkerDeployLState = !doinkerDeployLState;
-			// doinkerDeployL.set(doinkerDeployLState);
+			doinkerDeployLState = !doinkerDeployLState;
+			doinkerDeployL.set(doinkerDeployLState);
 		}
 
 		if (Controller1.ButtonL2.pressing())

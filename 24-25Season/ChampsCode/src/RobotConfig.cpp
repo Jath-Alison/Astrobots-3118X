@@ -74,7 +74,7 @@ vex::motor intakeMotorA(vex::PORT5, vex::gearSetting::ratio6_1, false);
 vex::motor intakeMotorB(vex::PORT7, vex::gearSetting::ratio6_1, false);
 vex::motor_group intakeMotors(intakeMotorB, intakeMotorA);
 
-Intake intake(intakeMotors, vex::optical(vex::PORT17));
+Intake intake(intakeMotors, vex::optical(vex::PORT9));
 
 vex::digital_out clamp(Brain.ThreeWirePort.D);
 bool clampState = false;
@@ -106,7 +106,7 @@ Arm arm = Arm(
 //         // .withSettleTimeout(0.75)
 //         ;
 
-vex::digital_out doinkerDeployR(Brain.ThreeWirePort.G);
+vex::digital_out doinkerDeployR(Brain.ThreeWirePort.E);
 bool doinkerDeployRState = false;
 vex::digital_out doinkerDeployL(Brain.ThreeWirePort.B);
 bool doinkerDeployLState = false;

@@ -360,8 +360,10 @@ void usercontrol(void)
 			climbControls = !climbControls;
 			ptoState = !ptoState;
 			pto.set(ptoState);
+			intakeRetractState = !intakeRetractState;
+			intakeRetract.set(intakeRetractState);
 		}
-		if(Controller1.ButtonB.PRESSED){
+		if(Controller1.ButtonB.PRESSED && climbControls){
 			climbDeployLState = !climbDeployLState;
 			climbDeployRState = !climbDeployRState;
 			climbDeployL.set(climbDeployLState);

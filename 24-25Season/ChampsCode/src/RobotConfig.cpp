@@ -120,6 +120,9 @@ vex::digital_out pto(Brain.ThreeWirePort.F);
 bool ptoState = false;
 bool climbControls = false;
 
+vex::digital_out intakeRetract(Brain.ThreeWirePort.C);
+bool intakeRetractState = false;
+
 vex::aivision FrontVision(vex::PORT20);
 // vex::optical intakeOptical(vex::PORT17);
 // vex::optical outtakeOptical(vex::PORT15);

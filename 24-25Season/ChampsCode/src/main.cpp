@@ -333,8 +333,8 @@ void usercontrol(void)
 
 			intake.handleInput(-30);
 		}
-
-		if (fabs(10 - arm.getMotor().position(vex::deg)) > 10)
+		
+		if (fabs(10 - arm.getMotor().position(vex::deg) * 0.3333) > 10)
 		{
 			intake.setAntiJam(true);
 		}else{

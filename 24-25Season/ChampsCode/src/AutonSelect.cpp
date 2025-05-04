@@ -1,5 +1,6 @@
 #include "AutonSelect.h"
 #include "Autons.h"
+#include "Autons/FlippingAutons.h"
 
 // Current Autons
 /*
@@ -11,11 +12,15 @@ void ringSideToCorner();
 
 void skills();*/
 
-Auton SimpleSkills("Simple Skills", simpleSkills);
-Auton Skills("Skills", skills);
+Auton RedFlippingAWPNeg("Red Flipping AWP Neg", []()
+                        { flippingAWPAuton_redNeg(); });
+Auton BlueFlippingAWPNeg("Blue Flipping AWP Neg", []()
+                         { flippingAWPAuton_blueNeg(); });
 
-Auton Drive5In("Drive 5 Inches {Backward}", []()
-                        { asyncDrive.driveForS(art::Inches(-5)); });
+Auton RedFlippingAWPPos("Red Flipping AWP Pos", []()
+                        { flippingAWPAuton_redPos(); });
+Auton BlueFlippingAWPPos("Blue Flipping AWP Pos", []()
+                         { flippingAWPAuton_bluePos(); });
 
 Auton RedCenterRingsPos("Red Center Rings Pos", []()
                         { asyncDrive.setXFlip(true); centerRings(); });
@@ -27,35 +32,31 @@ Auton RedCenterRingsNeg("Red(Wall) Center Rings Neg", []()
 Auton BlueCenterRingsNeg("Blue(Wall) Center Rings Neg", []()
                          { asyncDrive.setXFlip(true); centerRingsWWallstake; });
 
-Auton RedFlippingAWPNeg("Red Flipping AWP Neg", []()
-                        { flippingAWPAuton(); });
-Auton BlueFlippingAWPNeg("Blue Flipping AWP Neg", []()
-                         { asyncDrive.setXFlip(true); flippingAWPAuton(); });
-
-Auton RedFlippingAWPPos("Red Flipping AWP Pos", []()
-                        { asyncDrive.setYFlip(true); flippingAWPAuton(); });
-Auton BlueFlippingAWPPos("Blue Flipping AWP Pos", []()
-                         { asyncDrive.setYFlip(true); asyncDrive.setXFlip(true); flippingAWPAuton(); });
-
 Auton RedRingsToCorner("Red Rings To Corner", []()
                        { centerRings(); });
 Auton BlueRingsToCorner("Blue Rings To Corner", []()
                         { asyncDrive.setXFlip(true); centerRings(); });
+                        
+Auton SimpleSkills("Simple Skills", simpleSkills);
+Auton Skills("Skills", skills);
+
+Auton Drive5In("Drive 5 Inches {Backward}", []()
+               { asyncDrive.driveForS(art::Inches(-5)); });
 
 std::vector<Auton> autons = {
-    SimpleSkills,
-    Skills,
-    Drive5In,
-    RedCenterRingsPos,
-    BlueCenterRingsPos,
-    RedCenterRingsNeg,
-    BlueCenterRingsNeg,
     RedFlippingAWPNeg,
     RedFlippingAWPPos,
     BlueFlippingAWPNeg,
     BlueFlippingAWPPos,
+    RedCenterRingsPos,
+    BlueCenterRingsPos,
+    RedCenterRingsNeg,
+    BlueCenterRingsNeg,
+    BlueRingsToCorner,
     RedRingsToCorner,
-    BlueRingsToCorner};
+    Drive5In,
+    SimpleSkills,
+    Skills};
 
 AutonSelect autonSelect(autons);
 int currentAutonId = 0;

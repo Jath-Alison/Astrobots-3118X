@@ -3,6 +3,10 @@
 
 void flippingAWPAuton_redNeg()
 {
+
+    asyncDrive.setYFlip(false);
+    asyncDrive.setXFlip(false);
+    
     vex::digital_out *currentDoinker = &doinkerDeployL;
     if (asyncDrive.getYFlip() == asyncDrive.getXFlip())
     { // there was a typo here
@@ -29,7 +33,7 @@ void flippingAWPAuton_redNeg()
     asyncDrive.turnToS(art::Degrees(165), oldTurnPID);
     waitUntil(asyncDrive.turnComplete());
 
-    asyncDrive.setDriveTarget(art::Inches(15));
+    asyncDrive.setDriveTarget(art::Inches(11));
     asyncDrive.setState(AsyncDrive::DRIVE);
     waitUntil(asyncDrive.driveComplete());
 
@@ -64,7 +68,7 @@ void flippingAWPAuton_redNeg()
     asyncDrive.setState(AsyncDrive::TURN);
     waitUntil(asyncDrive.turnComplete());
 
-    asyncDrive.setDriveTarget(art::Inches(-20));
+    asyncDrive.setDriveTarget(art::Inches(-21));
     asyncDrive.setState(AsyncDrive::DRIVE);
     waitUntil(asyncDrive.driveComplete());
 
@@ -127,6 +131,7 @@ void flippingAWPAuton_redNeg()
 
 void flippingAWPAuton_redPos()
 {
+    asyncDrive.setXFlip(false);
     asyncDrive.setYFlip(true);
 
     vex::digital_out *currentDoinker = &doinkerDeployL;
@@ -190,7 +195,7 @@ void flippingAWPAuton_redPos()
     asyncDrive.setState(AsyncDrive::TURN);
     waitUntil(asyncDrive.turnComplete());
 
-    asyncDrive.setDriveTarget(art::Inches(-20));
+    asyncDrive.setDriveTarget(art::Inches(-21));
     asyncDrive.setState(AsyncDrive::DRIVE);
     waitUntil(asyncDrive.driveComplete());
 
@@ -254,6 +259,7 @@ void flippingAWPAuton_redPos()
 void flippingAWPAuton_blueNeg()
 {
     asyncDrive.setXFlip(true);
+    asyncDrive.setYFlip(false);
 
     vex::digital_out *currentDoinker = &doinkerDeployL;
     if (asyncDrive.getYFlip() == asyncDrive.getXFlip())
@@ -316,7 +322,7 @@ void flippingAWPAuton_blueNeg()
     asyncDrive.setState(AsyncDrive::TURN);
     waitUntil(asyncDrive.turnComplete());
 
-    asyncDrive.setDriveTarget(art::Inches(-20));
+    asyncDrive.setDriveTarget(art::Inches(-21));
     asyncDrive.setState(AsyncDrive::DRIVE);
     waitUntil(asyncDrive.driveComplete());
 
@@ -443,7 +449,7 @@ void flippingAWPAuton_bluePos()
     asyncDrive.setState(AsyncDrive::TURN);
     waitUntil(asyncDrive.turnComplete());
 
-    asyncDrive.setDriveTarget(art::Inches(-20));
+    asyncDrive.setDriveTarget(art::Inches(-21));
     asyncDrive.setState(AsyncDrive::DRIVE);
     waitUntil(asyncDrive.driveComplete());
 

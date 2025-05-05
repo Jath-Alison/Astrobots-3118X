@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Subsystems/Subsystem.h"
-#include "ART/SimpleMotorGroup.h"
+#include "ART/SimpleMotor.h"
 #include "ART/PID.h"
 
 class Intake : public Subsystem
@@ -18,7 +18,7 @@ public:
         ANTI_JAM_REVERSE
     };
 
-    Intake(vex::motor_group mot, vex::optical opt);
+    Intake(vex::motor motIntake, vex::motor motHooks, vex::optical opt);
 
     void periodic();
     void handleInput(double input);
@@ -32,11 +32,12 @@ public:
     void setAntiJam(bool runningAntiJam);
     bool getAntiJam();
 
-    art::SimpleMotorGroup& getMotor();
+    art::SimpleMotor& getMotor();
 
 private:
     double m_input_cmd{0.0};
     double m_cmd{0.0};
+    double m_cmd_intake{0.0};
 
     art::TimePoint m_startTime;
     art::TimePoint m_startMovingTime;
@@ -50,6 +51,7 @@ private:
     bool m_runningAntijam{false};
     bool m_continousSorting{false};
 
-    art::SimpleMotorGroup m_motor;
+    art::SimpleMotor m_motor_intake;
+    art::SimpleMotor m_motor_hooks;
     vex::optical m_optical;
 };

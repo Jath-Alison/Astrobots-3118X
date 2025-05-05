@@ -1,6 +1,6 @@
 #include "Subsystems/Intake.h"
 
-Intake::Intake(vex::motor_group mot, vex::optical opt) : m_motor(mot), m_optical(opt)
+Intake::Intake(vex::motor motIntake, vex::motor motHooks, vex::optical opt) : m_motor_intake(motIntake), m_motor_hooks(motHooks), m_optical(opt)
 {
     m_optical.integrationTime(5);
 }
@@ -11,10 +11,12 @@ void Intake::periodic()
     {
     case CONTROL:
         m_cmd = m_input_cmd;
+        m_cmd_intake = m_input_cmd;
         m_optical.setLight(vex::ledState::off);
         break;
     case REJECT_RED:
         m_cmd = 100;
+        m_cmd_intake = 100;
         m_optical.setLight(vex::ledState::on);
         if (m_optical.getRgb().red > 75 && m_optical.getRgb().blue < 75)
         {
@@ -26,6 +28,7 @@ void Intake::periodic()
         break;
     case REJECT_BLUE:
         m_cmd = 100;
+        m_cmd_intake = 100;
         m_optical.setLight(vex::ledState::on);
         if (m_optical.getRgb().blue > 75 && m_optical.getRgb().red < 75)
         {
@@ -37,6 +40,7 @@ void Intake::periodic()
         break;
     case STOP_RED:
         m_cmd = 100;
+        m_cmd_intake = 100;
         m_optical.setLight(vex::ledState::on);
         if (m_optical.getRgb().red > 75 && m_optical.getRgb().blue < 75)
         {
@@ -48,6 +52,7 @@ void Intake::periodic()
         break;
     case STOP_BLUE:
         m_cmd = 100;
+        m_cmd_intake = 100;
         m_optical.setLight(vex::ledState::on);
         if (m_optical.getRgb().blue > 75 && m_optical.getRgb().red < 75)
         {
@@ -61,6 +66,7 @@ void Intake::periodic()
         if (timePassed() > m_delay)
         {
             m_cmd = 0;
+            m_cmd_intake = 0;
             if (m_continousSorting)
             {
                 setState(m_lastState);
@@ -76,12 +82,14 @@ void Intake::periodic()
         else
         {
             m_cmd = 100;
+            m_cmd_intake = 100;
         }
         break;
     case DELAY_ON:
         if (timePassed() > m_delay)
         {
             m_cmd = 100;
+            m_cmd_intake = 100;
             if (m_continousSorting)
             {
                 setState(m_lastState);
@@ -94,6 +102,8 @@ void Intake::periodic()
         else
         {
             m_cmd = 0;
+            m_cmd_intake = 0;
+
         }
         break;
     case ANTI_JAM_REVERSE:
@@ -113,7 +123,7 @@ void Intake::periodic()
     }
 
     if (m_runningAntijam && timeMoving() > 0.125 &&
-        m_motor.get() > 50 && m_motor.velocity(vex::pct) < 5 &&
+        m_motor_hooks.get() > 50 && m_motor_hooks.velocity(vex::pct) < 5 &&
         m_state != ANTI_JAM_REVERSE)
     {
         m_delay = 0.25;
@@ -122,7 +132,8 @@ void Intake::periodic()
         m_state = ANTI_JAM_REVERSE;
     }
 
-    m_motor.set(m_cmd);
+    m_motor_hooks.set(m_cmd);
+    m_motor_intake.set(m_cmd_intake);
 }
 
 void Intake::handleInput(double input)
@@ -171,7 +182,7 @@ double Intake::timeMoving()
 }
 void Intake::setAntiJam(bool runningAntiJam) { m_runningAntijam = runningAntiJam; };
 bool Intake::getAntiJam() { return m_runningAntijam; };
-art::SimpleMotorGroup &Intake::getMotor()
+art::SimpleMotor &Intake::getMotor()
 {
-    return m_motor;
+    return m_motor_hooks;
 }

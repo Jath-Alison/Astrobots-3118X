@@ -14,7 +14,7 @@ void Arm::resetPos()
 void Arm::periodic()
 {
 
-    double motorPos = ((m_motor.position(vex::degrees)* .33333) + (m_motor2.position(vex::degrees)* .33333) * 0.5);
+    double motorPos = ((m_motor.position(vex::degrees)* .33333) + (m_motor2.position(vex::degrees)* .33333)) * 0.5;
 
     art::Angle adjusted_pos_cmd = art::Angle(m_pos_cmd) - art::Degrees(90);
     art::Angle feedbackAngle = art::Degrees(motorPos) - art::Degrees(90);

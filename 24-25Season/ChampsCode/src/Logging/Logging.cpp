@@ -225,12 +225,12 @@ namespace logging
                 baseMotorsPosition.push_back(motor->position(vex::rotationUnits::deg));
             }
 
-            logger.logDoubleEntry(Intake_Cmd, intake.getMotor().get());
-            logger.logDoubleEntry(Intake_Voltage, intake.getMotor().voltage());
-            logger.logDoubleEntry(Intake_Current, intake.getMotor().current());
-            logger.logDoubleEntry(Intake_Velocity, intake.getMotor().velocity(vex::velocityUnits::pct));
-            logger.logDoubleEntry(Intake_Temperature, intake.getMotor().temperature(vex::celsius));
-            logger.logDoubleEntry(Intake_Position, intake.getMotor().position(vex::rotationUnits::deg));
+            // logger.logDoubleEntry(Intake_Cmd, intake.getMotor().get());
+            // logger.logDoubleEntry(Intake_Voltage, intake.getMotor().voltage());
+            // logger.logDoubleEntry(Intake_Current, intake.getMotor().current());
+            // logger.logDoubleEntry(Intake_Velocity, intake.getMotor().velocity(vex::velocityUnits::pct));
+            // logger.logDoubleEntry(Intake_Temperature, intake.getMotor().temperature(vex::celsius));
+            // logger.logDoubleEntry(Intake_Position, intake.getMotor().position(vex::rotationUnits::deg));
 
             logger.logDoubleEntry(Arm_Cmd, arm.getMotor().get());
             logger.logDoubleEntry(Arm_Voltage, arm.getMotor().voltage());

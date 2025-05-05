@@ -300,8 +300,8 @@ void usercontrol(void)
 		{
 			doinkerDeployRState = !doinkerDeployRState;
 			doinkerDeployR.set(doinkerDeployRState);
-			doinkerDeployLState = !doinkerDeployLState;
-			doinkerDeployL.set(doinkerDeployLState);
+			// doinkerDeployLState = !doinkerDeployLState;
+			// doinkerDeployL.set(doinkerDeployLState);
 		}
 
 		if (Controller1.ButtonL2.pressing())

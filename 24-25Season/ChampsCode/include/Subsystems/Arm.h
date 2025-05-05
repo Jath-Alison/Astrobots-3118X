@@ -13,7 +13,7 @@ public:
         POSITION
     };
 
-    Arm(vex::motor_group mot, art::PID pid);
+    Arm(vex::motor mot, vex::motor mot2, art::PID pid);
 
     void resetPos();
 
@@ -38,4 +38,5 @@ private:
     art::PID m_pid;
 
     art::SimpleMotorGroup m_motor;
+    art::SimpleMotorGroup m_motor2;
 };

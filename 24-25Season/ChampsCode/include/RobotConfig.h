@@ -61,6 +61,7 @@ extern vex::digital_out climbDeployL; extern bool climbDeployLState;
 extern vex::digital_out pto; extern bool ptoState; extern bool climbControls;
 extern vex::digital_out intakeRetract; extern bool intakeRetractState;
 
+extern vex::limit armLimit;
 
 extern vex::aivision FrontVision;
 // extern vex::optical intakeOptical;

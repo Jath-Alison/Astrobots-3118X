@@ -16,6 +16,10 @@ vex::thread periodicThread;
 int periodicLoop()
 {
     while(true){
+        if(armLimit.pressing()){
+            arm.resetPos();
+        }
+
         intake.periodic();
 		arm.periodic();
         asyncDrive.periodic();

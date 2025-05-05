@@ -82,10 +82,11 @@ bool clampState = false;
 
 vex::motor armMotorA(vex::PORT6, vex::gearSetting::ratio6_1, true);
 vex::motor armMotorB(vex::PORT16, vex::gearSetting::ratio6_1, false);
-vex::motor_group armMotors(armMotorA, armMotorB);
+// vex::motor_group armMotors(armMotorA, armMotorB);
 
 Arm arm = Arm(
-    armMotors,
+    armMotorA,
+    armMotorB,
      art::PID()
       .withConstants(3 / (art::Degrees(1)), 0, -100)
       .withSettleZone(art::Degrees(5))
@@ -106,14 +107,14 @@ Arm arm = Arm(
 //         // .withSettleTimeout(0.75)
 //         ;
 
-vex::digital_out doinkerDeployR(Brain.ThreeWirePort.E);
+vex::digital_out doinkerDeployR(Brain.ThreeWirePort.H);
 bool doinkerDeployRState = false;
 vex::digital_out doinkerDeployL(Brain.ThreeWirePort.B);
 bool doinkerDeployLState = false;
 
-vex::digital_out climbDeployR(Brain.ThreeWirePort.H);
+vex::digital_out climbDeployR(Brain.ThreeWirePort.E);
 bool climbDeployRState = false;
-vex::digital_out climbDeployL(Brain.ThreeWirePort.A);
+vex::digital_out climbDeployL(Brain.ThreeWirePort.E);
 bool climbDeployLState = false;
 
 vex::digital_out pto(Brain.ThreeWirePort.F);
@@ -122,6 +123,8 @@ bool climbControls = false;
 
 vex::digital_out intakeRetract(Brain.ThreeWirePort.C);
 bool intakeRetractState = false;
+
+vex::limit armLimit(Brain.ThreeWirePort.G);
 
 vex::aivision FrontVision(vex::PORT20);
 // vex::optical intakeOptical(vex::PORT17);

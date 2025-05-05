@@ -255,9 +255,8 @@ void usercontrol(void)
 		if (Controller1.ButtonX.PRESSED && !climbControls)
 		{
 			oldDrivePID.withSettleZone(art::Revolutions(art::Inches(1.5) / (M_PI * art::Inches(2.75) * (36.f / 48.f))))
-			.withSettleTimeout(0.0625);
+				.withSettleTimeout(0.0625);
 			asyncDrive.driveForA(art::Inches(-7));
-
 		}
 		if (Controller1.ButtonX.pressing() && !climbControls)
 		{
@@ -337,7 +336,9 @@ void usercontrol(void)
 		if (fabs(10 - arm.getMotor().position(vex::deg) * 0.3333) > 10)
 		{
 			intake.setAntiJam(true);
-		}else{
+		}
+		else
+		{
 			intake.setAntiJam(false);
 		}
 
@@ -355,7 +356,21 @@ void usercontrol(void)
 
 			// waitUntil(Controller1.ButtonRight.PRESSED);
 
-			autonSelect.runAuton(currentAutonId);
+			
+			asyncDrive.turnToS(art::Degrees(90), oldTurnPID);
+			asyncDrive.driveForHeadingCorrectedS(art::Inches(24), art::Degrees(90), oldDrivePID, oldTurnPID);
+			
+			asyncDrive.turnToS(art::Degrees(-90), bigTurnPID);
+			asyncDrive.driveForHeadingCorrectedS(art::Inches(24), art::Degrees(-90), oldDrivePID, oldTurnPID);
+			
+			asyncDrive.turnToS(art::Degrees(-45), smallTurnPID);
+			asyncDrive.driveForHeadingCorrectedS(art::Inches(24), art::Degrees(-45), oldDrivePID, oldTurnPID);
+			
+			asyncDrive.turnToS(art::Degrees(-45 + 180), bigTurnPID);
+			asyncDrive.driveForHeadingCorrectedS(art::Inches(24), art::Degrees(-45 + 180), oldDrivePID, oldTurnPID);
+
+
+			// autonSelect.runAuton(currentAutonId);
 
 			asyncDrive.setState(AsyncDrive::CONTROL);
 			intake.setState(Intake::CONTROL);

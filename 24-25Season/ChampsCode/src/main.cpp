@@ -356,21 +356,7 @@ void usercontrol(void)
 
 			// waitUntil(Controller1.ButtonRight.PRESSED);
 
-			
-			asyncDrive.turnToS(art::Degrees(90), oldTurnPID);
-			asyncDrive.driveForHeadingCorrectedS(art::Inches(24), art::Degrees(90), oldDrivePID, oldTurnPID);
-			
-			asyncDrive.turnToS(art::Degrees(-90), bigTurnPID);
-			asyncDrive.driveForHeadingCorrectedS(art::Inches(24), art::Degrees(-90), oldDrivePID, oldTurnPID);
-			
-			asyncDrive.turnToS(art::Degrees(-45), smallTurnPID);
-			asyncDrive.driveForHeadingCorrectedS(art::Inches(24), art::Degrees(-45), oldDrivePID, oldTurnPID);
-			
-			asyncDrive.turnToS(art::Degrees(-45 + 180), bigTurnPID);
-			asyncDrive.driveForHeadingCorrectedS(art::Inches(24), art::Degrees(-45 + 180), oldDrivePID, oldTurnPID);
-
-
-			// autonSelect.runAuton(currentAutonId);
+			autonSelect.runAuton(currentAutonId);
 
 			asyncDrive.setState(AsyncDrive::CONTROL);
 			intake.setState(Intake::CONTROL);

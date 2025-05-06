@@ -1,6 +1,7 @@
 #include "AutonSelect.h"
 #include "Autons.h"
 #include "Autons/FlippingAutons.h"
+#include "Autons/SoloAWP.h"
 
 // Current Autons
 /*
@@ -22,6 +23,11 @@ Auton RedFlippingAWPPos("Red Flipping AWP Pos", []()
 Auton BlueFlippingAWPPos("Blue Flipping AWP Pos", []()
                          { flippingAWPAuton_bluePos(); });
 
+Auton RedSoloAWP("Red Solo AWP", []()
+                 { redSoloAWP(); });
+Auton BlueSoloAWP("Blue Solo AWP", []()
+                 { blueSoloAWP(); });
+
 Auton RedCenterRingsPos("Red Center Rings Pos", []()
                         { asyncDrive.setXFlip(true); centerRings(); });
 Auton BlueCenterRingsPos("Blue Center Rings Pos", []()
@@ -36,7 +42,7 @@ Auton RedRingsToCorner("Red Rings To Corner", []()
                        { centerRings(); });
 Auton BlueRingsToCorner("Blue Rings To Corner", []()
                         { asyncDrive.setXFlip(true); centerRings(); });
-                        
+
 Auton SimpleSkills("Simple Skills", simpleSkills);
 Auton Skills("Skills", skills);
 
@@ -48,6 +54,8 @@ std::vector<Auton> autons = {
     RedFlippingAWPPos,
     BlueFlippingAWPNeg,
     BlueFlippingAWPPos,
+    RedSoloAWP,
+    BlueSoloAWP,
     RedCenterRingsPos,
     BlueCenterRingsPos,
     RedCenterRingsNeg,

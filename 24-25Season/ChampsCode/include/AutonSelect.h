@@ -100,3 +100,6 @@ extern Auton BlueFlippingAWPNeg;
 
 extern Auton RedRingsToCorner;
 extern Auton BlueRingsToCorner;
+
+extern Auton RedSoloAWP;
+extern Auton BlueSoloAWP;

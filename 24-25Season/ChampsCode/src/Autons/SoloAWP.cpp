@@ -1,4 +1,4 @@
-#include "Autons/FlippingAutons.h"
+#include "Autons/SoloAWP.h"
 #include "SubAutons.h"
 
 void redSoloAWP(){
@@ -9,6 +9,9 @@ void redSoloAWP(){
         currentDoinker = &doinkerDeployR;
         oppDoinker = &doinkerDeployL;
     }
+
+    art::PID doinkerTurnPID = oldTurnPID;
+    doinkerTurnPID.setConstants(doinkerTurnPID.getkp() * 1.25, doinkerTurnPID.getki(), doinkerTurnPID.getkd());
 
     intake.setAntiJam(true);
 
@@ -43,7 +46,7 @@ void redSoloAWP(){
 
     // currentDoinker->set(false);
     currentDoinker->set(false);
-    asyncDrive.turnToS(art::Degrees(15 - 20), smallTurnPID);
+    asyncDrive.turnToS(art::Degrees(15-15), doinkerTurnPID);
 
     if (asyncDrive.getXFlip())
     {
@@ -59,38 +62,92 @@ void redSoloAWP(){
     waitUntil(asyncDrive.driveComplete());
 
     // TurnToGoal
-    asyncDrive.setTurnTarget(art::Degrees(-65));
+    asyncDrive.setTurnTarget(art::Degrees(-60));
     asyncDrive.setState(AsyncDrive::TURN);
     waitUntil(asyncDrive.turnComplete());
 
-    asyncDrive.setDriveTarget(art::Inches(-21));
+    asyncDrive.setDriveTarget(art::Inches(-21 - 8)); // added additional 8 for no slow
     asyncDrive.setState(AsyncDrive::DRIVE);
     waitUntil(asyncDrive.driveComplete());
 
-    asyncDrive.setState(AsyncDrive::CONTROL);
-    asyncDrive.handleInputs(-60, 0);
-    vex::wait(0.75, vex::sec);
+    // asyncDrive.setState(AsyncDrive::CONTROL);
+    // asyncDrive.handleInputs(-60, 0);
+    // vex::wait(0.75, vex::sec);
 
     clamp.set(true);
 
     vex::wait(0.25, vex::sec);
 
-    asyncDrive.turnToS(art::Degrees(45), medTurnPID);
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(18), art::Degrees(45), newDrivePID, medTurnPID);
+    intake.setState(Intake::CONTROL);
+    intake.handleInput(100);
+
+    intake.setState(Intake::DELAY_OFF);
+    intake.resetDelay(0.5);
+
+    asyncDrive.turnToS(art::Degrees(45), oldTurnPID);
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(18), art::Degrees(45), oldDrivePID, oldTurnPID);
 
     oppDoinker->set(true);
     vex::wait(0.25, vex::sec);
 
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(-30), art::Degrees(45), newDrivePID, medTurnPID);
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(-32), art::Degrees(45), oldDrivePID, oldTurnPID);
 
     oppDoinker->set(false);
-    vex::wait(0.25, vex::sec);
 
-    asyncDrive.turnToS(art::Degrees(45 + 15), medTurnPID);
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(10), art::Degrees(45 + 15), newDrivePID, medTurnPID);
+    asyncDrive.turnToS(art::Degrees(45 + 20), doinkerTurnPID);
+    intake.setState(Intake::CONTROL);
+    intake.handleInput(100);
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(15), art::Degrees(45 + 15), oldDrivePID, oldTurnPID);
 
+    asyncDrive.turnToS(art::Degrees(180), oldTurnPID);
+
+    redSoloAWP_part2();
 
 }
+
+void redSoloAWP_part2()
+{
+    intake.setState(Intake::CONTROL);
+    intake.handleInput(100);
+
+    asyncDrive.driveForS(art::Inches(24 + 4));//added 4
+    if (asyncDrive.getXFlip())
+    {
+        intake.setState(Intake::STOP_BLUE);
+    }
+    else
+    {
+        intake.setState(Intake::STOP_RED);
+    }
+
+    asyncDrive.turnToS(art::Degrees(45));
+    clamp.set(false);
+
+    arm.setState(Arm::POSITION);
+    arm.handlePosInput(art::Degrees(65));
+
+    asyncDrive.turnToS(art::Degrees(-89));
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(-15.5), art::Degrees(-89));
+
+    clamp.set(true);
+    vex::wait(0.125, vex::sec);
+    intake.setState(Intake::CONTROL);
+    intake.handleInput(100);
+    
+    asyncDrive.setState(AsyncDrive::CONTROL);
+    asyncDrive.handleInputs(85, 80);//Cubic scaled
+    vex::wait(0.75, vex::sec);
+    asyncDrive.handleInputs(85, 0);
+    vex::wait(0.25, vex::sec);
+    arm.setState(Arm::CONTROL);
+    arm.handleCmdInput(40);
+    asyncDrive.handleInputs(0, 0);
+
+    vex::wait(1, vex::sec);
+    
+
+}
+
 void blueSoloAWP(){
 
 }

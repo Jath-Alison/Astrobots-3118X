@@ -23,6 +23,9 @@ Auton RedFlippingAWPPos("Red Flipping AWP Pos", []()
 Auton BlueFlippingAWPPos("Blue Flipping AWP Pos", []()
                          { flippingAWPAuton_bluePos(); });
 
+Auton RedSoloAWP_part2("Red Solo AWP Part2", []()
+                 { redSoloAWP_part2(); });
+
 Auton RedSoloAWP("Red Solo AWP", []()
                  { redSoloAWP(); });
 Auton BlueSoloAWP("Blue Solo AWP", []()
@@ -56,6 +59,7 @@ std::vector<Auton> autons = {
     BlueFlippingAWPPos,
     RedSoloAWP,
     BlueSoloAWP,
+    RedSoloAWP_part2,
     RedCenterRingsPos,
     BlueCenterRingsPos,
     RedCenterRingsNeg,

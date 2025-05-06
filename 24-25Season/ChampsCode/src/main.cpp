@@ -255,8 +255,9 @@ void usercontrol(void)
 		if (Controller1.ButtonX.PRESSED && !climbControls)
 		{
 			oldDrivePID.withSettleZone(art::Revolutions(art::Inches(1.5) / (M_PI * art::Inches(2.75) * (36.f / 48.f))))
-				.withSettleTimeout(0.0625);
+			.withSettleTimeout(0.0625);
 			asyncDrive.driveForA(art::Inches(-7));
+
 		}
 		if (Controller1.ButtonX.pressing() && !climbControls)
 		{
@@ -336,9 +337,7 @@ void usercontrol(void)
 		if (fabs(10 - arm.getMotor().position(vex::deg) * 0.3333) > 10)
 		{
 			intake.setAntiJam(true);
-		}
-		else
-		{
+		}else{
 			intake.setAntiJam(false);
 		}
 

@@ -25,18 +25,18 @@ void Arm::periodic()
     {
     case CONTROL:
         m_output = m_cmd;
-        if (m_cmd == 0 && fabs(m_motor.velocity(vex::pct)) < 10)
-        {
-            if (fabs(art::Angle(adjusted_pos_cmd - feedbackAngle).degrees()) >= 0.5)
-            {
-                m_output = m_pid.calculate(adjusted_pos_cmd - feedbackAngle);
-            }
-            else
-            {
-                m_output = 0;
-            }
-        }
-        else
+        // if (m_cmd == 0 && fabs(m_motor.velocity(vex::pct)) < 10)
+        // {
+        //     if (fabs(art::Angle(adjusted_pos_cmd - feedbackAngle).degrees()) >= 0.5)
+        //     {
+        //         m_output = m_pid.calculate(adjusted_pos_cmd - feedbackAngle);
+        //     }
+        //     else
+        //     {
+        //         m_output = 0;
+        //     }
+        // }
+        // else
         {
             m_pos_cmd = art::Degrees(motorPos);
         }

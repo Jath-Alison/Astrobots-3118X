@@ -1,6 +1,6 @@
 #include "Subsystems\Arm.h"
 
-Arm::Arm(vex::motor mot, vex::motor mot2, art::PID pid) : m_motor(mot),m_motor2(mot2), m_pid(pid)
+Arm::Arm(vex::motor mot, vex::motor mot2, art::PID pid) : m_motor(mot), m_motor2(mot2), m_pid(pid)
 {
     m_motor.setStopping(vex::hold);
     resetPos();
@@ -14,24 +14,40 @@ void Arm::resetPos()
 void Arm::periodic()
 {
 
-    double motorPos = ((m_motor.position(vex::degrees)* .33333) + (m_motor2.position(vex::degrees)* .33333)) * 0.5;
+    double motorPos = ((m_motor.position(vex::degrees) * .33333) + (m_motor2.position(vex::degrees) * .33333)) * 0.5;
 
     art::Angle adjusted_pos_cmd = art::Angle(m_pos_cmd) - art::Degrees(90);
     art::Angle feedbackAngle = art::Degrees(motorPos) - art::Degrees(90);
     feedbackAngle.constrain();
     adjusted_pos_cmd.constrain();
-    
+
     switch (m_state)
     {
     case CONTROL:
         m_output = m_cmd;
-        m_pos_cmd = art::Degrees(motorPos);
+        if (m_cmd == 0 && fabs(m_motor.velocity(vex::pct)) < 10)
+        {
+            if (fabs(art::Angle(adjusted_pos_cmd - feedbackAngle).degrees()) >= 0.5)
+            {
+                m_output = m_pid.calculate(adjusted_pos_cmd - feedbackAngle);
+            }
+            else
+            {
+                m_output = 0;
+            }
+        }
+        else
+        {
+            m_pos_cmd = art::Degrees(motorPos);
+        }
         break;
     case POSITION:
         if (fabs(art::Angle(adjusted_pos_cmd - feedbackAngle).degrees()) >= 0.5)
         {
             m_output = m_pid.calculate(adjusted_pos_cmd - feedbackAngle);
-        }else{
+        }
+        else
+        {
             m_output = 0;
         }
         break;

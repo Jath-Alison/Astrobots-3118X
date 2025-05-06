@@ -72,7 +72,6 @@ void Intake::periodic()
                 setState(m_lastState);
                 setState(DELAY_ON);
                 resetDelay(0.25);
-
             }
             else
             {
@@ -103,7 +102,6 @@ void Intake::periodic()
         {
             m_cmd = 0;
             m_cmd_intake = 0;
-
         }
         break;
     case ANTI_JAM_REVERSE:
@@ -122,14 +120,20 @@ void Intake::periodic()
         break;
     }
 
-    if (m_runningAntijam && timeMoving() > 0.125 &&
-        m_motor_hooks.get() > 50 && m_motor_hooks.velocity(vex::pct) < 5 &&
+    if (m_motor_hooks.get() > 50 && m_motor_hooks.velocity(vex::pct) < 5 &&
         m_state != ANTI_JAM_REVERSE)
     {
-        m_delay = 0.25;
-        resetDelay();
-        m_lastState = m_state;
-        m_state = ANTI_JAM_REVERSE;
+        if (m_runningAntijam && timeMoving() > 0.125)
+        {
+            m_delay = 0.25;
+            resetDelay();
+            m_lastState = m_state;
+            m_state = ANTI_JAM_REVERSE;
+        }
+    }
+    else
+    {
+        m_startMovingTime = std::chrono::high_resolution_clock::now();
     }
 
     m_motor_hooks.set(m_cmd);

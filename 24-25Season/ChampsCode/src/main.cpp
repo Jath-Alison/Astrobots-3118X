@@ -332,6 +332,9 @@ void usercontrol(void)
 			arm.handlePosInput(art::Degrees(135));
 
 			intake.handleInput(-30);
+		}else if(Controller1.ButtonRight.PRESSED){
+			arm.setState(Arm::POSITION);
+			arm.handlePosInput( art::Degrees(arm.getMotor().position(vex::deg) * 0.3333 - 1));
 		}
 		
 		if (fabs(10 - arm.getMotor().position(vex::deg) * 0.3333) > 15)

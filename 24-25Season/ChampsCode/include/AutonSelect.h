@@ -109,3 +109,4 @@ extern Auton RedSoloAWP_part2;
 extern Auton BlueSoloAWPNeg;
 
 extern Auton BlueSimpleAWPPos;
+extern Auton RedSimpleAWPPos;

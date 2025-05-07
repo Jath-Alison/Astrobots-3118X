@@ -2,6 +2,8 @@
 
 #include "RobotConfig.h"
 
+void redAWPNoWall();
+
 void blueSimplAWP();
 void redSimplAWP();
 

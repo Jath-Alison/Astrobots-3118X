@@ -1,6 +1,44 @@
 #include "Autons/SoloAWP.h"
 #include "SubAutons.h"
 
+void redAWPNoWall(){
+    //pos
+    asyncDrive.driveForS(art::Inches(-27));
+    
+    clamp.set(true);
+
+    vex::wait(.25, vex::sec);
+    
+    intake.setState(Intake::CONTROL);
+    intake.handleInput(100);
+
+    vex::wait(2, vex::sec);
+
+
+    
+    asyncDrive.turnToS(art::Degrees(-175));
+    asyncDrive.driveForS(art::Inches(27));
+    
+    asyncDrive.driveForS(art::Inches(-27));
+    asyncDrive.turnToS(art::Degrees(42));
+    
+    // asyncDrive.setDriveTarget(art::Inches(-40));
+    // waitUntil(asyncDrive.driveComplete());
+    
+    asyncDrive.driveForS(art::Inches(3));
+    
+    arm.handlePosInput(art::Degrees(115));
+    vex::wait(1, vex::sec);
+
+    arm.setState(Arm::CONTROL);
+    arm.handleCmdInput(40);
+    asyncDrive.handleInputs(0, 0);
+
+    vex::wait(0.75, vex::sec);
+
+    arm.handleCmdInput(0);
+}
+
 void blueSimplAWP(){
     //Pos
 

@@ -113,3 +113,5 @@ extern Auton RedSimpleAWPPos;
 
 extern Auton BlueSimpleAWPNeg;
 extern Auton RedSimpleAWPNeg;
+
+extern Auton RedSimpleAWPPosNoWall;

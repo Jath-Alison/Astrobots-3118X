@@ -23,6 +23,9 @@ Auton RedFlippingAWPPos("Red Flipping AWP Pos", []()
 Auton BlueFlippingAWPPos("Blue Flipping AWP Pos", []()
                          { flippingAWPAuton_bluePos(); });
 
+Auton RedSimpleAWPPosNoWall("Red Pos No wall AWP",[]()
+{ redAWPNoWall(); });
+
 Auton RedSoloAWP_part2("Red Solo AWP Part2", []()
                        { redSoloAWP_part2(); });
 
@@ -74,6 +77,7 @@ std::vector<Auton> autons = {
     BlueSoloAWP,
     BlueSimpleAWPPos,
     RedSimpleAWPPos,
+    RedSimpleAWPPosNoWall,
     BlueSimpleAWPNeg,
     RedSimpleAWPNeg,
     RedSoloAWP_part2,

@@ -5,6 +5,9 @@
 void blueSimplAWP();
 void redSimplAWP();
 
+void blueSimplAWPNeg();
+void redSimplAWPNeg();
+
 void redSoloAWP();
 void redSoloAWP_part2();
 

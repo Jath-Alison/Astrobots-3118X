@@ -36,6 +36,11 @@ Auton BlueSimpleAWPPos("Blue Simple AWP (Pos)", []()
 Auton RedSimpleAWPPos("Red Simple AWP (Pos)", []()
                       { redSimplAWP(); });
 
+Auton BlueSimpleAWPNeg("Blue Simple AWP (Neg)", []()
+                       { blueSimplAWPNeg(); });
+Auton RedSimpleAWPNeg("Red Simple AWP (Neg)", []()
+                      { redSimplAWPNeg(); });
+
 Auton BlueSoloAWPNeg("Blue Solo AWP (NEG)", []()
                      { blueSoloAWPNeg(); });
 
@@ -69,6 +74,8 @@ std::vector<Auton> autons = {
     BlueSoloAWP,
     BlueSimpleAWPPos,
     RedSimpleAWPPos,
+    BlueSimpleAWPNeg,
+    RedSimpleAWPNeg,
     RedSoloAWP_part2,
     BlueSoloAWPNeg,
     RedCenterRingsPos,

@@ -217,6 +217,224 @@ void redSimplAWP(){
 
 
 }
+void blueSimplAWPNeg(){
+    //Neg
+
+    asyncDrive.setXFlip(true);
+    asyncDrive.setYFlip(true);
+
+    vex::digital_out *currentDoinker = &doinkerDeployL;
+    vex::digital_out *oppDoinker = &doinkerDeployR;
+    if (asyncDrive.getXFlip() != asyncDrive.getYFlip())
+    { // there was a typo here
+        currentDoinker = &doinkerDeployR;
+        oppDoinker = &doinkerDeployL;
+    }
+
+    art::PID doinkerTurnPID = oldTurnPID;
+    doinkerTurnPID.setConstants(doinkerTurnPID.getkp() * 1.25, doinkerTurnPID.getki(), doinkerTurnPID.getkd());
+
+    intake.setAntiJam(true);
+
+    // drive 2 inches and score ladybrown
+    asyncDrive.driveForS(art::Inches(2), oldDrivePID);
+    asyncDrive.setState(AsyncDrive::WAIT);
+
+    arm.handlePosInput(art::Degrees(180));
+    arm.setState(Arm::POSITION);
+    waitUntil(arm.isComplete());
+
+    // Back out
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    asyncDrive.setDriveTarget(art::Inches(-22));
+    waitUntil(asyncDrive.driveComplete());
+    arm.handlePosInput(art::Degrees(-20));
+
+    // Move to Rings
+    asyncDrive.turnToS(art::Degrees(13), oldTurnPID);
+    waitUntil(asyncDrive.turnComplete());
+
+    asyncDrive.setDriveTarget(art::Inches(15));
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    // Put out doinker and back up
+    // currentDoinker->set(true);
+    currentDoinker->set(true);
+    vex::wait(0.25, vex::sec);
+    asyncDrive.setDriveTarget(art::Inches(-15));
+    waitUntil(asyncDrive.driveComplete());
+
+    // currentDoinker->set(false);
+    currentDoinker->set(false);
+    asyncDrive.turnToS(art::Degrees(13 - 15), doinkerTurnPID);
+
+    if (asyncDrive.getXFlip())
+    {
+        intake.setState(Intake::STOP_BLUE);
+    }
+    else
+    {
+        intake.setState(Intake::STOP_RED);
+    }
+
+    asyncDrive.setDriveTarget(art::Inches(20));
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    // TurnToGoal
+    asyncDrive.setTurnTarget(art::Degrees(-60));
+    asyncDrive.setState(AsyncDrive::TURN);
+    waitUntil(asyncDrive.turnComplete());
+
+    asyncDrive.setDriveTarget(art::Inches(-21 - 8)); // added additional 8 for no slow
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    // asyncDrive.setState(AsyncDrive::CONTROL);
+    // asyncDrive.handleInputs(-60, 0);
+    // vex::wait(0.75, vex::sec);
+
+    clamp.set(true);
+
+    vex::wait(0.25, vex::sec);
+
+    intake.setState(Intake::CONTROL);
+    intake.handleInput(100);
+
+    arm.handlePosInput(art::Degrees(115));
+
+    asyncDrive.turnToS(art::Degrees(-170));
+    asyncDrive.driveForS(art::Inches(29));
+
+    asyncDrive.driveForS(art::Inches(-27));
+    asyncDrive.turnToS(art::Degrees(42));
+
+    asyncDrive.setState(AsyncDrive::CONTROL);
+    asyncDrive.handleInputs(73, 0);
+
+    // asyncDrive.setDriveTarget(art::Inches(-40));
+    // waitUntil(asyncDrive.driveComplete());
+
+    vex::wait(1, vex::sec);
+
+    arm.setState(Arm::CONTROL);
+    arm.handleCmdInput(40);
+    asyncDrive.handleInputs(0, 0);
+
+    vex::wait(0.75, vex::sec);
+
+
+}
+
+void redSimplAWPNeg(){
+    //Neg
+    asyncDrive.setYFlip(true);
+
+    vex::digital_out *currentDoinker = &doinkerDeployL;
+    vex::digital_out *oppDoinker = &doinkerDeployR;
+    if (asyncDrive.getXFlip() != asyncDrive.getYFlip())
+    { // there was a typo here
+        currentDoinker = &doinkerDeployR;
+        oppDoinker = &doinkerDeployL;
+    }
+
+    art::PID doinkerTurnPID = oldTurnPID;
+    doinkerTurnPID.setConstants(doinkerTurnPID.getkp() * 1.25, doinkerTurnPID.getki(), doinkerTurnPID.getkd());
+
+    intake.setAntiJam(true);
+
+    // drive 2 inches and score ladybrown
+    asyncDrive.driveForS(art::Inches(2), oldDrivePID);
+    asyncDrive.setState(AsyncDrive::WAIT);
+
+    arm.handlePosInput(art::Degrees(180));
+    arm.setState(Arm::POSITION);
+    waitUntil(arm.isComplete());
+
+    // Back out
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    asyncDrive.setDriveTarget(art::Inches(-22));
+    waitUntil(asyncDrive.driveComplete());
+    arm.handlePosInput(art::Degrees(-15));
+
+    // Move to Rings
+    asyncDrive.turnToS(art::Degrees(10), oldTurnPID);
+    waitUntil(asyncDrive.turnComplete());
+
+    asyncDrive.setDriveTarget(art::Inches(15));
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    // Put out doinker and back up
+    // currentDoinker->set(true);
+    currentDoinker->set(true);
+    vex::wait(0.25, vex::sec);
+    asyncDrive.setDriveTarget(art::Inches(-15));
+    waitUntil(asyncDrive.driveComplete());
+
+    // currentDoinker->set(false);
+    currentDoinker->set(false);
+    asyncDrive.turnToS(art::Degrees(10 - 15), doinkerTurnPID);
+
+    if (asyncDrive.getXFlip())
+    {
+        intake.setState(Intake::STOP_BLUE);
+    }
+    else
+    {
+        intake.setState(Intake::STOP_RED);
+    }
+
+    asyncDrive.setDriveTarget(art::Inches(20));
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    // TurnToGoal
+    asyncDrive.setTurnTarget(art::Degrees(-60));
+    asyncDrive.setState(AsyncDrive::TURN);
+    waitUntil(asyncDrive.turnComplete());
+
+    asyncDrive.setDriveTarget(art::Inches(-21 - 8)); // added additional 8 for no slow
+    asyncDrive.setState(AsyncDrive::DRIVE);
+    waitUntil(asyncDrive.driveComplete());
+
+    // asyncDrive.setState(AsyncDrive::CONTROL);
+    // asyncDrive.handleInputs(-60, 0);
+    // vex::wait(0.75, vex::sec);
+
+    clamp.set(true);
+
+    vex::wait(0.25, vex::sec);
+
+    intake.setState(Intake::CONTROL);
+    intake.handleInput(100);
+
+    arm.handlePosInput(art::Degrees(115));
+
+    asyncDrive.turnToS(art::Degrees(-170));
+    asyncDrive.driveForS(art::Inches(27));
+
+    asyncDrive.driveForS(art::Inches(-27));
+    asyncDrive.turnToS(art::Degrees(42));
+
+    // asyncDrive.setDriveTarget(art::Inches(-40));
+    // waitUntil(asyncDrive.driveComplete());
+
+    asyncDrive.driveForS(art::Inches(3));
+
+    vex::wait(0.5, vex::sec);
+
+    arm.setState(Arm::CONTROL);
+    arm.handleCmdInput(40);
+    asyncDrive.handleInputs(0, 0);
+
+    vex::wait(0.75, vex::sec);
+
+    arm.handleCmdInput(0);
+
+
+}
 
 void redSoloAWP()
 {

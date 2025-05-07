@@ -110,3 +110,6 @@ extern Auton BlueSoloAWPNeg;
 
 extern Auton BlueSimpleAWPPos;
 extern Auton RedSimpleAWPPos;
+
+extern Auton BlueSimpleAWPNeg;
+extern Auton RedSimpleAWPNeg;

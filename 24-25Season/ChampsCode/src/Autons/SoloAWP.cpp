@@ -98,9 +98,9 @@ void redSoloAWP()
     asyncDrive.turnToS(art::Degrees(45 - 7 + 20), doinkerTurnPID);
     intake.setState(Intake::CONTROL);
     intake.handleInput(100);
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(15), art::Degrees(45 - 7 + 20), oldDrivePID, oldTurnPID);
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(20), art::Degrees(45 - 7 + 20), oldDrivePID, oldTurnPID);
 
-    asyncDrive.turnToS(art::Degrees(180), oldTurnPID);
+    asyncDrive.turnToS(art::Degrees(-170), oldTurnPID);
 
     redSoloAWP_part2();
 }
@@ -111,6 +111,7 @@ void redSoloAWP_part2()
     intake.handleInput(100);
 
     asyncDrive.driveForS(art::Inches(24 + 4 - 8)); // added 4
+    asyncDrive.driveForS(art::Inches(-4));
     if (asyncDrive.getXFlip())
     {
         intake.setState(Intake::STOP_BLUE);
@@ -120,8 +121,9 @@ void redSoloAWP_part2()
         intake.setState(Intake::STOP_RED);
     }
 
-    asyncDrive.turnToS(art::Degrees(45));
+    asyncDrive.turnToS(art::Degrees(135));
     clamp.set(false);
+    asyncDrive.turnToS(art::Degrees(45));
 
     arm.setState(Arm::POSITION);
     arm.handlePosInput(art::Degrees(65));

@@ -2,6 +2,8 @@
 
 #include "RobotConfig.h"
 
+void blueSimplAWP();
+
 void redSoloAWP();
 void redSoloAWP_part2();
 

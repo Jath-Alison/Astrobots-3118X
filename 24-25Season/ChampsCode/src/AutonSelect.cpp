@@ -31,8 +31,11 @@ Auton RedSoloAWP("Red Solo AWP", []()
 Auton BlueSoloAWP("Blue Solo AWP", []()
                   { blueSoloAWP(); });
 
+Auton BlueSimpleAWPPos("Blue Simple AWP (Pos)", []()
+                     { blueSimplAWP(); });
+
 Auton BlueSoloAWPNeg("Blue Solo AWP (NEG)", []()
-                  { blueSoloAWPNeg(); });
+                     { blueSoloAWPNeg(); });
 
 Auton RedCenterRingsPos("Red Center Rings Pos", []()
                         { asyncDrive.setXFlip(true); centerRings(); });
@@ -62,6 +65,7 @@ std::vector<Auton> autons = {
     BlueFlippingAWPPos,
     RedSoloAWP,
     BlueSoloAWP,
+    BlueSimpleAWPPos,
     RedSoloAWP_part2,
     BlueSoloAWPNeg,
     RedCenterRingsPos,

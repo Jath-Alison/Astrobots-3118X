@@ -177,7 +177,7 @@ void blueSoloAWP()
     asyncDrive.setState(AsyncDrive::DRIVE);
     asyncDrive.setDriveTarget(art::Inches(-22));
     waitUntil(asyncDrive.driveComplete());
-    arm.handlePosInput(art::Degrees(-15));
+    arm.handlePosInput(art::Degrees(-20));
 
     // Move to Rings
     asyncDrive.turnToS(art::Degrees(10), oldTurnPID);
@@ -235,6 +235,8 @@ void blueSoloAWP()
     intake.resetDelay(0.5);
 
     asyncDrive.turnToS(art::Degrees(45 - 7), oldTurnPID);
+    intake.setState(Intake::CONTROL);
+    intake.handleInput(0);
     asyncDrive.driveForHeadingCorrectedS(art::Inches(18), art::Degrees(45 - 7), oldDrivePID, oldTurnPID);
 
     oppDoinker->set(true);
@@ -255,7 +257,7 @@ void blueSoloAWP()
     intake.handleInput(100);
 
     asyncDrive.driveForS(art::Inches(24 + 4 - 8)); // added 4
-    asyncDrive.driveForS(art::Inches(-4));
+    // asyncDrive.driveForS(art::Inches(-6));
     if (asyncDrive.getXFlip())
     {
         intake.setState(Intake::STOP_BLUE);

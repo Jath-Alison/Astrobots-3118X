@@ -37,12 +37,12 @@ void Intake::periodic()
             m_delay = 0.17;
             resetDelay();
         }
-        break;
+        break; 
     case STOP_RED:
         m_cmd = 100;
         m_cmd_intake = 100;
         m_optical.setLight(vex::ledState::on);
-        if (m_optical.getRgb().red > 75 && m_optical.getRgb().blue < 75)
+        if (m_optical.getRgb().red > 75 && m_optical.getRgb().blue < 75 || m_optical.isNearObject())
         {
             m_cmd = 0;
             m_input_cmd = 0;
@@ -54,7 +54,7 @@ void Intake::periodic()
         m_cmd = 100;
         m_cmd_intake = 100;
         m_optical.setLight(vex::ledState::on);
-        if (m_optical.getRgb().blue > 75 && m_optical.getRgb().red < 75)
+        if (m_optical.getRgb().blue > 75 && m_optical.getRgb().red < 75 || m_optical.isNearObject())
         {
             m_cmd = 0;
             m_input_cmd = 0;

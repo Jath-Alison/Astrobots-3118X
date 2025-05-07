@@ -170,7 +170,10 @@ void centerRings()
     vex::wait(0.55, vex::sec);
 
     // asyncDrive.driveForS(art::Inches(-47), driveFastExit);
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(-47), asyncDrive.getDir(), driveFastExit, oldTurnPID);
+    if(asyncDrive.getXFlip())
+        asyncDrive.driveForHeadingCorrectedS(art::Inches(-47), -asyncDrive.getDir(), driveFastExit, oldTurnPID);
+    else
+        asyncDrive.driveForHeadingCorrectedS(art::Inches(-47), asyncDrive.getDir(), driveFastExit, oldTurnPID);
 
     currentDoinker->set(false);
     oppDoinker->set(false);

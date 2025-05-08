@@ -289,7 +289,7 @@ void blueSimplAWPNeg(){
     arm.handlePosInput(art::Degrees(-20));
 
     // Move to Rings
-    asyncDrive.turnToS(art::Degrees(13), oldTurnPID);
+    asyncDrive.turnToS(art::Degrees(8), oldTurnPID);
     waitUntil(asyncDrive.turnComplete());
 
     asyncDrive.setDriveTarget(art::Inches(15));
@@ -305,7 +305,7 @@ void blueSimplAWPNeg(){
 
     // currentDoinker->set(false);
     currentDoinker->set(false);
-    asyncDrive.turnToS(art::Degrees(13 - 15), doinkerTurnPID);
+    asyncDrive.turnToS(art::Degrees(8 - 15), doinkerTurnPID);
 
     if (asyncDrive.getXFlip())
     {

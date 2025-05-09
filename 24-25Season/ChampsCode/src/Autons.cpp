@@ -186,15 +186,15 @@ void centerRings()
     intake.setState(Intake::CONTROL);
     intake.handleInput(100);
 
-    asyncDrive.driveForS(art::Inches(14), oldDrivePID);
+    asyncDrive.driveForS(art::Inches(16), oldDrivePID);
     vex::wait(0.25, vex::sec);
-    asyncDrive.turnToS(art::Degrees(-145), doinkerTurnPID);
+    asyncDrive.turnToS(art::Degrees(-150), doinkerTurnPID);
 
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(15), art::Degrees(-145), oldDrivePID, oldTurnPID);
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(15), art::Degrees(-150), oldDrivePID, oldTurnPID);
     vex::wait(0.5, vex::sec);
     asyncDrive.driveForHeadingCorrectedS(art::Inches(36 - 15), art::Degrees(-145), oldDrivePID, oldTurnPID);
     vex::wait(0.125, vex::sec);
-    asyncDrive.driveForHeadingCorrectedS(art::Inches(2), art::Degrees(-145), oldDrivePID, oldTurnPID);
+    asyncDrive.driveForHeadingCorrectedS(art::Inches(5), art::Degrees(-145), oldDrivePID, oldTurnPID);
 
     asyncDrive.turnToS(art::Degrees(-100));
 

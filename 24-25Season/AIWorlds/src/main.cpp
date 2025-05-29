@@ -13,6 +13,8 @@ using namespace vex;
 
 // A global instance of competition
 competition Competition;
+vex::brain Brain;
+vex::controller Controller1;
 
 // define your global instances of motors and other devices here
 

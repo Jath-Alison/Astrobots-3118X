@@ -14,3 +14,7 @@
 
 #define repeat(iterations)                                                     \
   for (int iterator = 0; iterator < iterations; iterator++)
+
+extern vex::competition Competition;
+extern vex::brain Brain;
+extern vex::controller Controller1;

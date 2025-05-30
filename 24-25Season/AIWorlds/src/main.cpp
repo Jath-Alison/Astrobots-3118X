@@ -8,33 +8,38 @@
 /*----------------------------------------------------------------------------*/
 
 #include "vex.h"
+#include "Logging/Logging.h"
 
 vex::competition Competition;
 vex::brain Brain;
 vex::controller Controller1;
 
-void pre_auton(void) {
-}
-
-void autonomous(void) {
-}
-
-
-void usercontrol(void) {
-  while (1) {
-
-    vex::wait(20, vex::msec);
-  }
-}
-
+vex::thread periodicThread;
+std::string RobotName;
 
 int main() {
-  Competition.autonomous(autonomous);
-  Competition.drivercontrol(usercontrol);
+  logging::logger.logHeader();
 
-  pre_auton();
+	// Set up callbacks for autonomous and driver control periods.
+	Competition.autonomous(autonomous);
+	Competition.drivercontrol(usercontrol);
 
-  while (true) {
-    vex::wait(100, vex::msec);
-  }
+	// Run the pre-autonomous function.
+	pre_auton();
+
+	vex::wait(0.25, vex::sec);
+
+	// trackingThread = vex::thread(tracking);
+	periodicThread = vex::thread(periodic);
+	logging::logThread = vex::thread(logging::logLoop);
+
+	vex::wait(0.25, vex::sec);
+
+	// sds::shadesInit();
+
+	// Prevent main from exiting with an infinite loop.
+	while (true)
+	{
+		vex::wait(100, vex::msec);
+	}
 }

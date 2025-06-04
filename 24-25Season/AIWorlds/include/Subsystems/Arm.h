@@ -16,6 +16,7 @@ public:
     Arm(vex::motor mot, vex::motor mot2, art::PID pid);
 
     void resetPos();
+    void resetPos(double pos);
     double getPos();
 
     void periodic();

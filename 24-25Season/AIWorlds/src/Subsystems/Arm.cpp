@@ -11,6 +11,11 @@ void Arm::resetPos()
     m_motor.setPosition(-15 * 3.0, vex::degrees);
     m_motor2.setPosition(-15 * 3.0, vex::degrees);
 }
+void Arm::resetPos(double pos)
+{
+    m_motor.setPosition(pos * 3.0, vex::degrees);
+    m_motor2.setPosition(pos * 3.0, vex::degrees);
+}
 double Arm::getPos(){
     return ((m_motor.position(vex::degrees) * .33333) + (m_motor2.position(vex::degrees) * .33333)) * 0.5;
 }

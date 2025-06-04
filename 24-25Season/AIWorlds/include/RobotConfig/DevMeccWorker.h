@@ -30,3 +30,5 @@ extern art::SimpleMotorGroup mot_rb;
 //   art::SimpleMotorGroup(vex::motor_group(mot_rf_a, mot_rf_b)),
 //   art::SimpleMotorGroup(vex::motor_group(mot_rb_a, mot_rb_b))
 // );
+
+void receive_message( const char *message, const char *linkname, int32_t index, double value );

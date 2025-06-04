@@ -137,7 +137,8 @@ void Intake::periodic()
     }
 
     m_motor_hooks.set(m_cmd);
-    m_motor_intake.set(m_cmd_intake);
+    m_motor_intake.set(m_cmd);
+    // m_motor_intake.set(m_cmd_intake);
 }
 
 void Intake::handleInput(double input)

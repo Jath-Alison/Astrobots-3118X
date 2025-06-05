@@ -6,15 +6,17 @@ double armCmd = 0.0;
 
 void pre_auton(void)
 {
-  RobotName = "Backpack_Red";
+  RobotName = "Backpack_Blue";
   armCmd = 0.0;
+
+  link.received(receive_message);
 }
 
 void deployArm()
 {
   while (armDeployMotor.position(vex::degrees) < 3750)
   {
-    armCmd = 100.0;
+    armCmd = 10.0;
     vex::wait(20, vex::msec);
   }
   armCmd = 0.0;
@@ -24,10 +26,6 @@ std::string currentCmd = "";
 void receive_message(const char *message, const char *linkname, int32_t index, double value)
 {
   currentCmd = message;
-  if (message == "Go Time")
-  {
-    deployArm();
-  }
 }
 
 void autonomous(void)
@@ -68,6 +66,13 @@ void periodic(void)
 
     Brain.Screen.setCursor(4, 1); // cmd
     Brain.Screen.print("Arm Pos: %.2f", armDeployMotor.position(vex::degrees));
+    
+    Brain.Screen.setCursor(5, 1); // cmd
+    Brain.Screen.print("currentCmd");
+
+    Brain.Screen.setCursor(5, 15); // cmd
+    Brain.Screen.print(currentCmd.c_str());
+
 
     armDeployMotor.set(armCmd);
 

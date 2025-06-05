@@ -1,5 +1,4 @@
 #include "RobotConfig/RobotConfig.h"
-#include <iostream>
 
 #if CURRENT_ROBOT == Backpack_Red
 
@@ -26,9 +25,7 @@ void deployArm()
 std::string currentCmd = "";
 void receive_message(const char *message, const char *linkname, int32_t index, double value)
 {
-  std::cout << "messag Recieved";
   currentCmd = message;
-  std::cout << message;
 }
 
 void autonomous(void)

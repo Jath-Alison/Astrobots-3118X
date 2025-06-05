@@ -29,6 +29,7 @@ extern AsyncDrive asyncDrive;
 extern Intake intake;
 
 extern vex::digital_out clamp; extern bool clampState;
+extern vex::digital_out clamp2;
 
 extern vex::rotation armRot;
 extern art::PID armPID;
@@ -36,3 +37,5 @@ extern art::PID armPID;
 extern Arm arm;
 
 extern vex::digital_out pto; extern bool ptoState; extern bool climbControls;
+extern vex::digital_out climbDeploy; extern bool climbDeployState;
+extern vex::digital_out climbDeploy2;

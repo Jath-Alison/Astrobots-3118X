@@ -70,7 +70,8 @@ vex::motor_group intakeMotors(intakeMotorB, intakeMotorA);
 
 Intake intake(intakeMotorA, intakeMotorB, vex::optical(vex::PORT9));
 
-vex::digital_out clamp(Brain.ThreeWirePort.D);
+vex::digital_out clamp(Brain.ThreeWirePort.G);
+vex::digital_out clamp2(Brain.ThreeWirePort.H);
 bool clampState = false;
 
 vex::motor armMotorA(vex::PORT12, vex::gearSetting::ratio6_1, true);
@@ -88,7 +89,11 @@ Arm arm = Arm(
 
 );
 
-vex::digital_out pto(Brain.ThreeWirePort.F);
+vex::digital_out pto(Brain.ThreeWirePort.E);
 bool ptoState = false;
 bool climbControls = false;
+
+vex::digital_out climbDeploy(Brain.ThreeWirePort.A);
+vex::digital_out climbDeploy2(Brain.ThreeWirePort.B);
+bool climbDeployState = false;
 #endif

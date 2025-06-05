@@ -48,16 +48,16 @@ void usercontrol(void)
 		}
 		else
 		{
-			if (!climbControls)
-			{
+			
 				asyncDrive.setState(AsyncDrive::CONTROL);
 				asyncDrive.handleInputs(Controller1.Axis3.position(), Controller1.Axis1.position());
-			}
-			else
-			{
-				asyncDrive.setState(AsyncDrive::CONTROL);
-				asyncDrive.handleInputs(Controller1.Axis3.position() + Controller1.Axis2.position(), Controller1.Axis3.position() - Controller1.Axis2.position());
-			}
+		}
+		if (Controller1.ButtonY.PRESSED){
+			climbControls = !climbControls;
+			ptoState = !ptoState;
+		}
+		if (Controller1.ButtonLeft.PRESSED){
+			climbDeployState = !climbDeployState;
 		}
 
 		if (Controller1.ButtonR1.pressing())

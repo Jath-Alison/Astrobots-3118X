@@ -12,25 +12,19 @@ void pre_auton(void)
 
 void autonomous(void)
 {
-  armCmd = 0.0;
-  vex::wait(0.25, vex::sec);
-  armCmd = 50.0;
-  vex::wait(1.0, vex::sec);
-  armCmd = 0.0;
 }
+
+bool sent = false;
 
 void usercontrol(void)
 {
   while (1)
   {
 
-    if (Brain.Screen.pressing())
+    if (Controller1.ButtonA.pressing())
     {
-      armCmd = 75.0;
-    }
-    else
-    {
-      armCmd = 0.0;
+      link.send("Go Time");
+sent = true;
     }
 
     vex::wait(20, vex::msec);
@@ -50,6 +44,10 @@ void periodic(void)
 
     Brain.Screen.setCursor(3, 1);//cmd
     Brain.Screen.print("Arm Cmd: %.2f", armCmd);
+
+    if(sent){
+      Brain.Screen.drawRectangle(100,100,100,100);
+    }
 
     armDeployMotor.spin(vex::fwd, armCmd * 12.0/100.0, vex::volt);
 

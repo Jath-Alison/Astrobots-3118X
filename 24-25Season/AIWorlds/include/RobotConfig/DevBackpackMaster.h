@@ -1,5 +1,6 @@
 #pragma once
 #include "vex.h"
+#include "ART/ART.h"
 
-extern vex::motor armDeployMotor;
+extern art::SimpleMotor armDeployMotor;
 extern vex::message_link link;

@@ -1,8 +1,33 @@
 #include "RobotConfig/RobotConfig.h"
 
 #if CURRENT_ROBOT == Backpack_Blue
+
+double armCmd = 0.0;
+
 void pre_auton(void)
 {
+  RobotName = "Backpack_Red";
+  armCmd = 0.0;
+}
+
+void deployArm()
+{
+  while (armDeployMotor.position(vex::degrees) < 3750)
+  {
+    armCmd = 100.0;
+    vex::wait(20, vex::msec);
+  }
+  armCmd = 0.0;
+}
+
+std::string currentCmd = "";
+void receive_message(const char *message, const char *linkname, int32_t index, double value)
+{
+  currentCmd = message;
+  if (message == "Go Time")
+  {
+    deployArm();
+  }
 }
 
 void autonomous(void)
@@ -11,15 +36,42 @@ void autonomous(void)
 
 void usercontrol(void)
 {
+  while (1)
+  {
 
-    while (1)
+    if (Controller1.ButtonA.pressing() && armDeployMotor.position(vex::degrees) < 3750)
     {
-
-        vex::wait(20, vex::msec);
+      deployArm();
     }
+    else
+    {
+      armCmd = Controller1.Axis2.position();
+    }
+
+    vex::wait(20, vex::msec);
+  }
 }
 
 void periodic(void)
 {
+  while (1)
+  {
+    Brain.Screen.clearScreen();
+    Brain.Screen.setCursor(1, 1);
+    Brain.Screen.print(RobotName.c_str());
+
+    Brain.Screen.setCursor(2, 1); // time
+    Brain.Screen.print("Time: %d:%02d", (int)vex::timer::system() / (60 * 1000), (int)vex::timer::system() % (60 * 1000));
+
+    Brain.Screen.setCursor(3, 1); // cmd
+    Brain.Screen.print("Arm Cmd: %.2f", armCmd);
+
+    Brain.Screen.setCursor(4, 1); // cmd
+    Brain.Screen.print("Arm Pos: %.2f", armDeployMotor.position(vex::degrees));
+
+    armDeployMotor.set(armCmd);
+
+    vex::wait(20, vex::msec);
+  }
 }
 #endif

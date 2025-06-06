@@ -20,10 +20,15 @@ art::SimpleMotorGroup mot_lb(vex::motor_group(mot_lb_a, mot_lb_b));
 art::SimpleMotorGroup mot_rf(vex::motor_group(mot_rf_a, mot_rf_b));
 art::SimpleMotorGroup mot_rb(vex::motor_group(mot_rb_a, mot_rb_b));
 
-// art::HolonomicDrive holoDrive(
-//   art::SimpleMotorGroup(vex::motor_group(mot_lf_a, mot_lf_b)),
-//   art::SimpleMotorGroup(vex::motor_group(mot_lb_a, mot_lb_b)),
-//   art::SimpleMotorGroup(vex::motor_group(mot_rf_a, mot_rf_b)),
-//   art::SimpleMotorGroup(vex::motor_group(mot_rb_a, mot_rb_b))
-// );
+vex::gps leftGps(vex::PORT7, -5.0, 0, vex::inches, 270);
+vex::gps rightGps(vex::PORT13, 5.0, 0, vex::inches, 90);
+
+art::HolonomicDrive holoDrive(
+  art::SimpleMotorGroup(vex::motor_group(mot_lf_a, mot_lf_b)),
+  art::SimpleMotorGroup(vex::motor_group(mot_lb_a, mot_lb_b)),
+  art::SimpleMotorGroup(vex::motor_group(mot_rf_a, mot_rf_b)),
+  art::SimpleMotorGroup(vex::motor_group(mot_rb_a, mot_rb_b))
+);
+
+art::Vec2 pos;
 #endif

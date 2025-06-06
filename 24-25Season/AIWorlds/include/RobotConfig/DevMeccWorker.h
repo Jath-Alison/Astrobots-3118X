@@ -1,6 +1,6 @@
 #pragma once
 #include "vex.h"
-#include "ART/SimpleMotorGroup.h"
+#include "ART/ART.h"
 
 
 extern  vex::message_link link;
@@ -23,12 +23,11 @@ extern vex::motor mot_rb_a;
 extern vex::motor mot_rb_b;
 extern art::SimpleMotorGroup mot_rb;
 
+extern vex::gps leftGps;
+extern vex::gps rightGps;
 
-// art::HolonomicDrive holoDrive(
-//   art::SimpleMotorGroup(vex::motor_group(mot_lf_a, mot_lf_b)),
-//   art::SimpleMotorGroup(vex::motor_group(mot_lb_a, mot_lb_b)),
-//   art::SimpleMotorGroup(vex::motor_group(mot_rf_a, mot_rf_b)),
-//   art::SimpleMotorGroup(vex::motor_group(mot_rb_a, mot_rb_b))
-// );
+extern art::HolonomicDrive holoDrive;
+
+extern art::Vec2 pos;
 
 void receive_message( const char *message, const char *linkname, int32_t index, double value );

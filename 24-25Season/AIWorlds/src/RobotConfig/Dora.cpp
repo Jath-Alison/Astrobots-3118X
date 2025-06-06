@@ -21,14 +21,14 @@ vex::message_link link( vex::PORT17, "linkA", vex::linkType::manager);
 // vex::gps gpsSensorL(vex::PORT20, -5.0, 0, vex::inches, 270);
 // vex::gps gpsSensorR(vex::PORT14, 6.0, 6.0, vex::inches, 90);
 
-vex::motor leftMotorA(vex::PORT1, vex::gearSetting::ratio6_1, !true);
-vex::motor leftMotorB(vex::PORT2, vex::gearSetting::ratio6_1, true);
-vex::motor leftMotorC(vex::PORT11, vex::gearSetting::ratio6_1, true);
+vex::motor leftMotorA(vex::PORT1, vex::gearSetting::ratio18_1, !true);
+vex::motor leftMotorB(vex::PORT2, vex::gearSetting::ratio18_1, true);
+vex::motor leftMotorC(vex::PORT11, vex::gearSetting::ratio18_1, true);
 vex::motor_group leftMotors(leftMotorB, leftMotorA, leftMotorC);
 
-vex::motor rightMotorA(vex::PORT10, vex::gearSetting::ratio6_1, !false);
-vex::motor rightMotorB(vex::PORT9, vex::gearSetting::ratio6_1, false);
-vex::motor rightMotorC(vex::PORT16, vex::gearSetting::ratio6_1, false);//20->16
+vex::motor rightMotorA(vex::PORT10, vex::gearSetting::ratio18_1, !false);
+vex::motor rightMotorB(vex::PORT9, vex::gearSetting::ratio18_1, false);
+vex::motor rightMotorC(vex::PORT16, vex::gearSetting::ratio18_1, false);//20->16
 vex::motor_group rightMotors(rightMotorC, rightMotorA, rightMotorB);
 
 vex::inertial inert(vex::PORT14);

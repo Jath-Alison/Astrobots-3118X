@@ -21,3 +21,4 @@
 #include "ART/Vec2.h"
 #include "ART/TankDrive.h"
 #include "ART/SmartDrive.h"
+#include "ART/HolonomicDrive.h"

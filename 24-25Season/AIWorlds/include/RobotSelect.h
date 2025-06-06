@@ -6,7 +6,7 @@
 #define Dev_Backpack_Master 3
 #define Dev_Mecc_Worker 4
 
-#define CURRENT_ROBOT Backpack_Red
+#define CURRENT_ROBOT Dora
 
 #if CURRENT_ROBOT == Backpack_Red
 #warning "Using Backpack Red robot configuration"
